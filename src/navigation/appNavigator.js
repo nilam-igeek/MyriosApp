@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import GetStarted from '../screens/GetStarted/GetStarted';
-import Language from '../screens/Language';
+import GetStarted from '../screens/GetStarted';
+import Language from '../screens/Language/index';
 
 const Stack = createNativeStackNavigator();
 const Router = () => {
