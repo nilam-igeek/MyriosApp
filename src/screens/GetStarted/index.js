@@ -4,8 +4,10 @@ import { COLORS } from '../../common/style/Colors';
 import RightArrowSvg from '../../common/svgs/RightArrowSvg';
 import Button from '../../components/core/Button';
 import styles from './styles';
-
+import '../../../assets/i18n/i18n';
+import {useTranslation} from 'react-i18next';
 const GetStarted = (props) => {
+    const {t} = useTranslation();
     return (
         <ImageBackground
             resizeMode='cover'
@@ -19,7 +21,7 @@ const GetStarted = (props) => {
                     </View>
                 </View>
                 <View style={styles.btnView}>
-                    <Button title={'Get Started'}
+                    <Button title={t('Get Started')}
                         onPress={()=> {props.navigation.navigate('Language')}}
                         borderWidth={1}
                         borderColor={COLORS.white}

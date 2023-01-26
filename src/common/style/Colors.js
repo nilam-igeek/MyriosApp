@@ -4,5 +4,8 @@ export const COLORS = {
     transparent: 'transparent',
     cornflowerblue: '#6495ed',
     yellow: '#ffd700',
-    darkgrey: '#a9a9a9'
+    darkgrey: '#a9a9a9',
+    grey: 'grey',
+    lemonchiffon: '#f0e68c',
+    red:'red'
 };

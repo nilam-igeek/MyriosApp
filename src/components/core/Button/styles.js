@@ -5,7 +5,7 @@ import { FONTS } from '../../../common/style/Fonts';
 
 export default styles = StyleSheet.create({
     textStyle: {
-        fontFamily: FONTS.Poppins_SemiBold,
+        // fontStyle: FONTS.Poppins_SemiBold,
     },
     btnStyle: {
         justifyContent: 'center',

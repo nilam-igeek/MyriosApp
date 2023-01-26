@@ -20,7 +20,7 @@ export default styles = StyleSheet.create({
         color: COLORS.white,
         fontSize: 28,
         marginRight: 10,
-        fontFamily: FONTS.Poppins_SemiBold,
+        // fontStyle: FONTS.Poppins_SemiBold,
     },
     btnView: {
         position: 'absolute',
