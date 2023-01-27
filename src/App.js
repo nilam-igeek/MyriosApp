@@ -1,46 +1,26 @@
 
 import React from 'react';
 import {
-  SafeAreaView,
   StatusBar,
-  StyleSheet,
-  Text,
   View,
+  SafeAreaView,
+  Platform
 } from 'react-native';
+import { COLORS } from './common/style/Colors';
 import Router from './navigation/appNavigator';
-import Button from './components/core/Button';
-import Input from './components/core/InputField';
 
 const App = () => {
-return (
-    <SafeAreaView style={{backgroundColor:'white',flex:1}}>
+  return (
+  <>
+    {/* <SafeAreaView style={{backgroundColor:COLORS.transparent,flex:1}}> */}
       <StatusBar
-        barStyle={'dark-content'}
-        backgroundColor={'white'}/>
+         barStyle={Platform.OS === 'ios' ? 'light-content' :'dark-content'}
+         backgroundColor={COLORS.transparent}/>
         <View style={{flex:1}}>
           <Router />
         </View>
-    </SafeAreaView>
+      {/* </SafeAreaView> */}
+      </>
   );
 }
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
 export default App;

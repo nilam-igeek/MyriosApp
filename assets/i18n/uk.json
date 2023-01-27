@@ -8,6 +8,18 @@
         "I'm a...": "я...",
         "Refugee": "Біженець",
         "Shelter": "притулок",
-        "Donor": "донор"
+        "Donor": "донор",
+        "Log In": "Увійти",
+        "Email": "Електронна пошта",
+        "Password": "Пароль",
+        "Enter your email": "Введіть адресу електронної пошти",
+        "Enter your password": "Введіть ваш пароль",
+        "Please enter valid email": "Введіть дійсну адресу електронної пошти",
+        "Email Address is Required": "Адреса електронної пошти обов'язкова",
+        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character":"Має містити 8 символів, один верхній регістр, один малий регістр, одну цифру та один спеціальний символ",
+        "Password is required": "Необхідно ввести пароль",
+        "Next": "Далі",
+        "Sign Up": "Зареєструватися",
+        "Sign In": "Увійти"
     }
 }

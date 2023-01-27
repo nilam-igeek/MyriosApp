@@ -11,11 +11,20 @@ export default styles = StyleSheet.create({
         height: 45,
         justifyContent: 'center',
         alignItems: "center",
+        shadowColor: COLORS.black,
+        shadowOffset: {
+          width: 0,
+          height: 4,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 2.84,
+        elevation: 3,
     },
     titleText: {
         fontSize: 14,
         // fontStyle: FONTS.Popins_Black,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        marginTop:5,
     }
 
 });

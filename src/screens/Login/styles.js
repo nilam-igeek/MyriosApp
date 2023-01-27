@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { COLORS } from '../../common/style/Colors';
 import { FONTS } from '../../common/style/Fonts';
+import BaseStyle  from '../../common/style/BaseStyle';
 export default styles = StyleSheet.create({
  
  container: {
@@ -17,7 +18,8 @@ export default styles = StyleSheet.create({
     subContainer: {
         alignSelf: 'center',
         justifyContent: 'center',
-        alignItems:'center',
+        alignItems: 'center',
+   
         width: (BaseStyle.WIDTH / 100) * 80,
     },
         titleText: {
@@ -25,8 +27,14 @@ export default styles = StyleSheet.create({
         fontSize: 28,
         marginVertical:25,
         color: COLORS.black,
-        textAlign: "center",
+        textAlign: "left",
+        marginLeft: 20,
         // fontStyle: FONTS.Poppins_SemiBold,
     },
+    signUpText: {
+        color: COLORS.cornflowerblue,
+        marginVertical: 25,
+        fontSize: 16
+        }
 
 });

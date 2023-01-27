@@ -8,6 +8,18 @@
         "I'm a...": "Soy un",
         "Refugee": "Refugiada",
         "Shelter": "refugio",
-        "Donor": "donante"
+        "Donor": "donante",
+        "Log In": "Iniciar sesión",
+        "Email": "Correo electrónico",
+        "Password": "Contraseña",
+        "Enter your email": "Introduce tu correo electrónico",
+        "Enter your password": "Ingresa tu contraseña",
+        "Please enter valid email": "Por favor introduzca un correo electrónico válido",
+        "Email Address is Required": "Se requiere Dirección de correo electrónico",
+        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character": "Debe contener 8 caracteres, uno en mayúscula, uno en minúscula, un número y un carácter de caso especial",
+        "Password is required": "se requiere contraseña",
+        "Next": "Próxima",
+        "Sign Up": "Inscribirse",
+        "Sign In": "Registrarse"
     }
 }

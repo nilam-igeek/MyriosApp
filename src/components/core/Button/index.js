@@ -16,12 +16,12 @@ const Button = ({
     color,
     isRight,
     marginTop,
-    // disabled
+    disabled
 }) => {
     return (
         <>
             <Pressable onPress={onPress}
-                // disabled={disabled}
+                disabled={disabled}
                 style={[styles.btnStyle, {
                     backgroundColor: bgColor ? bgColor : COLORS.cornflowerblue,
                     width: width ? width : 200,

@@ -7,5 +7,6 @@ export const COLORS = {
     darkgrey: '#a9a9a9',
     grey: 'grey',
     lemonchiffon: '#f0e68c',
-    red:'red'
+    red: 'red',
+    seashell: `#fff5ee`
 };

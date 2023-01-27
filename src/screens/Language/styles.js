@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { COLORS } from '../../common/style/Colors';
 import { FONTS } from '../../common/style/Fonts';
+import BaseStyle  from '../../common/style/BaseStyle';
 export default styles = StyleSheet.create({
  
     btnStyle: {

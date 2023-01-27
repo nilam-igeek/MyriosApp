@@ -8,6 +8,18 @@
         "I'm a...": "मैं एक...",
         "Refugee": "शरणार्थी",
         "Shelter": "आश्रय",
-        "Donor": "दाता"
+        "Donor": "दाता",
+        "Log In": "लॉग इन करें",
+        "Email": "ईमेल",
+        "Password": "पासवर्ड",
+        "Enter your email": "अपना ईमेल दर्ज करें",
+        "Enter your password": "अपना पासवर्ड दर्ज भरें",
+        "Please enter valid email": "कृपया मान्य ईमेल दर्ज करें",
+        "Email Address is Required": "ईमेल पता आवश्यक है",
+        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character": "इसमें 8 अक्षर, एक अपरकेस, एक लोअरकेस, एक नंबर और एक विशेष केस कैरेक्टर होना चाहिए",
+        "Password is required": "पासवर्ड की आवश्यकता है",
+        "Next": "अगला",
+        "Sign Up": "साइन अप करें",
+        "Sign In": "साइन इन करें"
     }
 }

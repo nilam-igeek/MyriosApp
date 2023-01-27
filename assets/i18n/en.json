@@ -8,6 +8,19 @@
         "I'm a...":"I'm a...",
         "Refugee":"Refugee",
         "Shelter":"Shelter",
-        "Donor":"Donor"
+        "Donor":"Donor",
+        "Log In":"Log In",
+        "Email":"Email",
+        "Password":"Password",
+        "Enter your email":"Enter your email",
+        "Enter your password":"Enter your password",
+        "Please enter valid email":"Please enter valid email",
+        "Email Address is Required":"Email Address is Required",
+        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character":"Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
+        "Password is required":"Password is required",
+        "Next":"Next",
+        "Sign Up":"Sign Up",
+        "Sign In": "Sign In"
+        
     }
 }

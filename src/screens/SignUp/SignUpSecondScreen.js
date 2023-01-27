@@ -11,9 +11,10 @@ import EmailSvg from '../../common/svgs/EmailSvg';
 import LockSvg from '../../common/svgs/LockSvg';
 import LockOpenSvg from '../../common/svgs/LockOpenSvg';
 import { PASSWORD_PATTERN, EMAIL_PATTERN } from '../../constants/BaseValidation';
+import CloseButton from '../../components/core/CloseButton';
 import { Formik ,Field} from 'formik';
 import * as yup from 'yup';
-const SignUp = (props) => {
+const SignUpSecondScreen = (props) => {
 
     const { t } = useTranslation();
     const [isShow, setIsShow] = useState(false);
@@ -22,37 +23,50 @@ const SignUp = (props) => {
     const loginValidationSchema = yup.object().shape({
         email: yup
             .string()
-            .email("Please enter valid email")
-            .required('Email Address is Required'),
+            .matches(EMAIL_PATTERN, 'Please enter valid email')
+            // .email(t("Please enter valid email"))
+            .required(t('Email Address is Required')),
        password: yup
             .string()
-            .min(8, ({ min }) => `Password must be at least ${min} characters`)
-            .required('Password is required'),
+            .required(t('Password is required'))
+            //.min(8, ({ min }) => { `${('Password must be at least')} ${min} ${('characters')}` })
+            .matches(PASSWORD_PATTERN,'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character')            
     })
 
+
+
+    const onClickSubmit = async values => {
+    const { email, password } = values;
+    var body = {
+      password: password,
+      email: email
+    };
+    if (body) {
+        props.navigation.navigate('Welcome');
+    }
+  };
     return (
         <ImageBackground
             resizeMode='cover'
             style={{ flex: 1 }}
             source={{ uri: 'https://images.statusfacebook.com/profile_pictures/kids-dp/kids-dp-101.jpg' }}>
-            <Pressable onPress={() => props.navigation.goBack()}>
-                <CloseSvg marginLeft={25} marginTop={20} fill={COLORS.white} />
-            </Pressable>
+            <CloseButton onPress={() => props.navigation.goBack()}>
+                <CloseSvg fill={COLORS.white} />
+            </CloseButton>
             <View style={styles.container}>
                 <View style={styles.card}>
                     <ScrollView contentContainerStyle={{ flexGrow: 1, }}>
                         <View style={styles.subContainer}>
-                            <Text style={styles.titleText}>{t('Log In')}</Text>
+                            <Text style={styles.titleText}>{t('Sign Up')}</Text>
                             <Formik
                                 validationSchema={loginValidationSchema}
                                 initialValues={{ email: '', password: '' }}
-                                onSubmit={values => console.log(values)}
-                            >
+                                onSubmit={onClickSubmit}>
                                 {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, }) => (
                                     <>
                                         <Field
                                             name={'email'}
-                                            title={'Email'}
+                                            title={t('Email')}
                                             component={Input}
                                             isLeft
                                             value={values.email}
@@ -60,29 +74,26 @@ const SignUp = (props) => {
                                             onBlur={handleBlur('email')}
                                             width={(BaseStyle.WIDTH / 100) * 80}
                                             inputWidth={(BaseStyle.WIDTH / 100) * 60}
-                                            placeholder={'Enter your email'}
+                                            placeholder={t('Enter your email')}
                                             keyboardType="email-address"
-                                           
                                             isError={errors.email}>
                                             <EmailSvg marginRight={10} />
                                         </Field>
                                      
                                         <Field
                                             name={'password'}
+                                            title={t('Password')}
                                             component={Input}
-                                            marginTop={30}
-                                            secureTextEntry={isShow ? false : true}
-                                            title={'Password'}
                                             isLeft
                                             value={values.password}
+                                            marginTop={20}
+                                            secureTextEntry={isShow ? false : true}
                                             onChangeText={handleChange('password')}
                                             onBlur={handleBlur('password')}
                                             width={(BaseStyle.WIDTH / 100) * 80}
                                             inputWidth={(BaseStyle.WIDTH / 100) * 60}
-                                           
-                                            placeholder={'Enter your password'}
-                                         isError={errors.password}
-                                        >
+                                            placeholder={t('Enter your password')}
+                                            isError={errors.password}>
                                             <Pressable onPress={() => { setIsShow(!isShow) }}>
                                                 {isShow ? <LockOpenSvg marginRight={10} /> : <LockSvg marginRight={10} />}
                                             </Pressable>
@@ -95,15 +106,13 @@ const SignUp = (props) => {
                                             height={50}
                                             marginTop={35}
                                             width={'60%'}
-                                            onPress={() => (handleSubmit(),props.navigation.navigate('Login'))}
-                                        // disabled={!isValid}
+                                            onPress={handleSubmit}
                                         />
-                                        <Text style={{ color: COLORS.cornflowerblue, marginVertical: 20, fontSize: 16 }}>{'Sign In'}</Text>
+                                        <Text onPress={() => { props.navigation.navigate('Login') }} style={styles.signUpText}>{t('Sign In')}</Text>
                                     </>
                                 )}
 
                             </Formik>
-
                         </View>
                     </ScrollView>
                 </View>
@@ -112,4 +121,4 @@ const SignUp = (props) => {
     );
 };
 
-export default SignUp;
+export default SignUpSecondScreen;
