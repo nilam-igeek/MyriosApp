@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, ImageBackground, ScrollView, Pressable, FlatList, Image } from 'react-native';
 import { COLORS } from '../../common/style/Colors';
 import { IMAGES } from '../../common/style/Images';
@@ -7,23 +7,26 @@ import styles from './styles';
 import CloseSvg from '../../common/svgs/CloseSvg';
 import '../../../assets/i18n/i18n';
 import { useTranslation } from 'react-i18next';
+import { donorProfile,shelterProfile,refugeeProfile } from './ArrayList';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { USER } from '../../constants/types';
 import CloseButton from '../../components/core/CloseButton';
 const ChooseProfile = (props) => {
 
     const { t } = useTranslation();
-
-    const profileData = [
-        { id: 1, profile: IMAGES.profilePic1 },
-        { id: 2, profile: IMAGES.profilePic2 },
-        { id: 3, profile: IMAGES.profilePic3 },
-        { id: 4, profile: IMAGES.profilePic4 },
-        { id: 5, profile: IMAGES.profilePic5 },
-        { id: 6, profile: IMAGES.profilePic6 },
-
-    ]
+ const [isType, setIsType] = useState('');
+ 
     const onClickProfile = (item) => {
-        console.log("item============>", item.profile);
+        // console.log("item============>", item.profile);
     }
+
+   useEffect(() => {
+    async function check() {
+        var item = await AsyncStorage.getItem('userType');
+        setIsType(item)
+    }
+    check();
+  }, [])
 
     return (
         <ImageBackground
@@ -41,7 +44,7 @@ const ChooseProfile = (props) => {
                             <Text style={styles.profileSubText}>{t('To protect your privacy we want you\n to select a profile picture that\n matches your personality!')}</Text>
                             <View style={styles.MainContainer}>
                                 <FlatList
-                                    data={profileData}
+                                    data={isType=== USER.SHELTER ? shelterProfile: donorProfile}
                                     renderItem={({ item }) =>
                                         <Pressable onPress={()=> onClickProfile(item)} style={styles.GridViewBlockStyle}>
                                             <Image resizeMode='contain' source={item.profile} style={styles.profilePic} />

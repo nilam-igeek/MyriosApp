@@ -10,6 +10,11 @@ import SignUpSecondScreen from '../screens/SignUp/SignUpSecondScreen';
 import ChooseProfile from '../screens/SignUp/ChooseProfile';
 import Welcome from '../screens/Welcome/index';
 import WishLists from '../screens/WishLists/index';
+import ContactUs from '../screens/SideMenu/ContactUs/index';
+import HowTo from '../screens/SideMenu/HowTo/index';
+import Profile from '../screens/SideMenu/Profile/index';
+import Helped from '../screens/SideMenu/Helped/index';
+import Chat from '../screens/Chat/index';
 const Stack = createNativeStackNavigator();
 const Router = () => {
  
@@ -18,7 +23,7 @@ return (
       <Stack.Navigator
         screenOptions={{headerShown: false}}
         transparentCard={true}
-        initialRouteName={'GetStarted'}>
+        initialRouteName={'Chat'}>
       <Stack.Screen name="GetStarted" component={GetStarted} />
       <Stack.Screen name="Language" component={Language} />
       <Stack.Screen name="TypesOfUser" component={TypesOfUser} />
@@ -28,7 +33,11 @@ return (
       <Stack.Screen name="ChooseProfile" component={ChooseProfile} />
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="WishLists" component={WishLists} />
-      
+      <Stack.Screen name="ContactUs" component={ContactUs} />
+      <Stack.Screen name="HowTo" component={HowTo} />
+      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="Helped" component={Helped} />
+      <Stack.Screen name="Chat" component={Chat} />
       
       
       </Stack.Navigator>

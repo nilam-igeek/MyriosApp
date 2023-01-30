@@ -13,10 +13,10 @@ const CloseButton = ({
                 width: 30,
                 height: 30,
                 position: 'absolute',
-                top:Platform.OS === 'ios' ? 30 : 20 ,
+                top:Platform.OS === 'ios' ? 50 : 20 ,
                 left: 28,
                 justifyContent: 'center',
-                alignItems: 'center'
+                alignItems: 'center',
             }}>
             <>{children}</>
         </Pressable>

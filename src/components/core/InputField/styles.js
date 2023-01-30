@@ -20,6 +20,13 @@ export default styles = StyleSheet.create({
         shadowRadius: 2.84,
         elevation: 3,
     },
+     inputCard: {
+        flexDirection: 'row',
+        width: (BaseStyle.WIDTH / 100) * 85,
+        height: 45,
+        justifyContent: 'center',
+        alignItems: "center",
+    },
     titleText: {
         fontSize: 14,
         // fontStyle: FONTS.Popins_Black,

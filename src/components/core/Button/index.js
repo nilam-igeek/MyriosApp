@@ -1,5 +1,5 @@
-import React from 'react';
-import { Text, Pressable } from 'react-native';
+import React, { Children } from 'react';
+import { Text, Pressable, View } from 'react-native';
 import styles from './styles';
 import { COLORS } from '../../../common/style/Colors';
 
@@ -16,7 +16,9 @@ const Button = ({
     color,
     isRight,
     marginTop,
-    disabled
+    disabled,
+    marginBottom,
+children
 }) => {
     return (
         <>
@@ -30,11 +32,14 @@ const Button = ({
                     borderColor: borderColor ? borderColor : COLORS.transparent,
                     borderRadius: borderRadius ? borderRadius : 50,
                     flexDirection: isRight ? 'row' : 'column',
-                    justifyContent: isRight ? 'space-around' : 'center',
-                    marginTop:marginTop? marginTop:0
+                    justifyContent: isRight ? 'space-between' : 'center',
+                    marginTop: marginTop ? marginTop : 0,
+                    marginBottom:marginBottom?marginBottom:0
+                    
                 }]}>
-                <Text style={[styles.textStyle, { color: color ? color : COLORS.black, fontSize: fontSize ? fontSize : 12 }]}>{title}</Text>
-                {isRight && <Text style={{ marginLeft: 20 }}>X</Text>}
+                <Text style={[styles.textStyle,
+                { color: color ? color : COLORS.black, fontSize: fontSize ? fontSize : 12, marginLeft: isRight ? 25 : 0 }]}>{title}</Text>
+                {isRight && <View style={{marginRight: isRight ? 25 : 0 }}>{children}</View>}
             </Pressable>
         </>
     );

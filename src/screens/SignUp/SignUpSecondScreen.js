@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { View, Text, ImageBackground, ScrollView, Pressable,TextInput } from 'react-native';
 import { COLORS } from '../../common/style/Colors';
 import Button from '../../components/core/Button';
@@ -14,6 +14,7 @@ import { PASSWORD_PATTERN, EMAIL_PATTERN } from '../../constants/BaseValidation'
 import CloseButton from '../../components/core/CloseButton';
 import { Formik ,Field} from 'formik';
 import * as yup from 'yup';
+
 const SignUpSecondScreen = (props) => {
 
     const { t } = useTranslation();

@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet,Platform } from 'react-native';
 import { COLORS } from '../../common/style/Colors';
 import { FONTS } from '../../common/style/Fonts';
 import BaseStyle  from '../../common/style/BaseStyle';
@@ -8,7 +8,8 @@ export default styles = StyleSheet.create({
         flex: 1,
         justifyContent: "flex-end",
         alignItems: 'center',
-        marginVertical: 30,
+        marginTop: 30,
+        marginBottom: Platform.OS === 'ios' ? 65 :30
     },
     titleText: {
         width: '100%',

@@ -1,5 +1,5 @@
 import React, { Children } from 'react';
-import { View, TextInput, Text } from 'react-native';
+import { View, TextInput, Text, Platform } from 'react-native';
 import styles from './styles';
 import { COLORS } from '../../../common/style/Colors';
 import BaseStyle from '../../../common/style/BaseStyle';
@@ -23,6 +23,11 @@ const Input = ({
     borderColor,
     isError,
     ErrorText,
+    placeholderColor,
+    multiline,
+    height,
+    mt,
+    numberOfLines,
     field: { name, onBlur, onChange, value },
     form: { errors, touched, setFieldTouched },
     ...inputProps
@@ -30,23 +35,25 @@ const Input = ({
     const hasError = errors[name] && touched[name]
     return (
         <>
-           <Text style={[styles.titleText, {
+           {title &&<Text style={[styles.titleText, {
                 marginTop: marginTop ? marginTop : 0,
                 marginLeft: 22,
                 marginBottom: 10,
                 width: width ? width : (BaseStyle.WIDTH / 100) * 100,
                 color: color ? color : COLORS.black,
-            }]}>{title}</Text>
-            <View style={[styles.inputView, {
+            }]}>{title}</Text>}
+            <View style={[isBottomLineInput ?  styles.inputCard : styles.inputView, {
                 width: width ? width : (BaseStyle.WIDTH / 100) * 100,
                 backgroundColor: isBottomLineInput ? COLORS.transparent : COLORS.lemonchiffon,
                 borderBottomWidth: isBottomLineInput ? 1 : 0,
                 borderRadius: isBottomLineInput ? 0 : 50,
+                height: height? height:45,
+                marginTop: mt
 
             }]}>
                 {isLeft && <>{children}</>}
                 <TextInput
-                    style={{ width: inputWidth ? inputWidth : (BaseStyle.WIDTH / 100) * 100 }}
+                    style={{marginTop:(multiline && Platform.OS === 'ios') && 70, height: height? height:45,width: inputWidth ? inputWidth : (BaseStyle.WIDTH / 100) * 100 }}
                     secureTextEntry={secureTextEntry}
                     value={value}
                     onChangeText={(text) => onChange(name)(text)}
@@ -55,13 +62,15 @@ const Input = ({
                         onBlur(name)
                     }}
                     {...inputProps}
-                    placeholderTextColor={placeholder && COLORS.lightgray}
+                    multiline={multiline}
+                    numberOfLines={numberOfLines}
+                    placeholderTextColor={placeholderColor? placeholderColor : placeholder && COLORS.lightgray}
                     placeholder={placeholder ? placeholder : ''}
+                 
                 />
             </View>
-            {hasError && <Text style={[styles.titleText, {
-                
-                marginLeft: 22,
+            {hasError && <Text style={[styles.titleText, { 
+                marginLeft: isBottomLineInput ? 0 : 22,
                 width: width ? width : (BaseStyle.WIDTH / 100) * 100,
                 color: COLORS.red,
             }]}>{errors[name]}</Text>}

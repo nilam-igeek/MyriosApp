@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { View, Text, StatusBar, FlatList, Modal, Alert, Pressable } from 'react-native';
 import '../../../assets/i18n/i18n';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +12,8 @@ import CloseButton from '../../components/core/CloseButton';
 import CloseSvg from '../../common/svgs/CloseSvg';
 import BaseStyle from '../../common/style/BaseStyle';
 import { FONTS } from '../../common/style/Fonts';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { USER } from '../../constants/types';
 const WishLists = (props) => {
 
     const { t } = useTranslation();
@@ -19,7 +21,14 @@ const WishLists = (props) => {
     const [showModal, setShowModal] = useState(false);
     const [menu, setMenu] = useState(0);
 
-
+     const [isType, setIsType] = useState('');
+ useEffect(() => {
+    async function check() {
+        var item = await AsyncStorage.getItem('userType');
+        setIsType(item)
+    }
+    check();
+  }, [])
     const wishListData = [
         { id: 1, image: IMAGES.wishList1, name: 'Kvitkas', gender: 'Girl', age: '6', country: 'Ukraine' },
         { id: 2, image: IMAGES.wishList2, name: 'Stefan', gender: 'Girl', age: '10', country: 'Ukraine' },
@@ -31,12 +40,49 @@ const WishLists = (props) => {
 
     const menuData = [
         { id: 1, title: 'HOW TO' },
-        { id: 2, title: 'EXPLORE' },
+        { id: 2, title: 'WISHLIST'},
         { id: 3, title: 'PROFILE' },
-        { id: 4, title: 'HELPED' },
+        { id: 4, title: 'PEOPLE'},
         { id: 5, title: 'CONTACT' },
-
     ]
+
+   const onClickMenu = (item) => {
+        if (item.title === "HOW TO") {
+            setShowModal(false)
+            props.navigation.navigate('HowTo')
+        }
+         else if (item.title ===  "WISHLIST") {
+            setShowModal(false)
+             props.navigation.navigate('WishLists')
+        }
+        //      else if (item.title ===  (isType === USER.SHELTER) ? "WISHLIST" :"EXPLORE") {
+        //     setShowModal(false)
+        //      props.navigation.navigate('WishLists')
+        // }
+             else if (item.title === "PROFILE") {
+            setShowModal(false)
+             props.navigation.navigate('Profile')
+        }
+        //     else if (item.title === (isType === USER.SHELTER) ? "PEOPLE" : "HELPED") {
+        //     setShowModal(false)
+        //      props.navigation.navigate('Helped')
+        // }
+             else if (item.title === "PEOPLE") {
+            setShowModal(false)
+             props.navigation.navigate('Helped')
+        }
+         else if (item.title === "CONTACT") {
+            setShowModal(false)
+             props.navigation.navigate('ContactUs')
+        }
+       
+       
+        else {
+            console.log('dsfff')
+        }
+        
+
+}
 
     return (
         <>
@@ -50,6 +96,8 @@ const WishLists = (props) => {
                 </View>
                 <View style={styles.listContainer}>
                     <FlatList
+                        showsVerticalScrollIndicator ={false}
+                        showsHorizontalScrollIndicator={false}
                         data={wishListData}
                         renderItem={({ item }) =>
                             <WishListCard
@@ -79,7 +127,7 @@ const WishLists = (props) => {
                             {menuData.map((item, i) => {
                                 return (
                                     <Pressable
-                                        onPress={() => { setMenu(i) }}
+                                        onPress={()=> { setMenu(i),onClickMenu(item)}}
                                         style={{
                                             backgroundColor: menu === i ? COLORS.black : COLORS.transparent,
                                             width: (BaseStyle.WIDTH / 100) * 100,

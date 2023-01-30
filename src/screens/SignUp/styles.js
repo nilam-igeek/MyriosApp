@@ -9,7 +9,8 @@ export default styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         justifyContent: 'space-between',
-        alignItems: "center"
+        alignItems: "center",
+        marginBottom:30
     },
     profileContainer: {
         width: '35%',
@@ -108,7 +109,7 @@ export default styles = StyleSheet.create({
         alignItems: "center"
     },
     profilePic: {
-        width: '100%',
+        width: '90%',
         height: '100%',
         justifyContent: 'center',
         flex: 1,
