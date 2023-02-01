@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, ImageBackground, ScrollView, Pressable } from 'react-native';
+import { View, Text, ImageBackground, ScrollView, Platform,Pressable,  LogBox,TouchableOpacity, StatusBar, SafeAreaView } from 'react-native';
 import { COLORS } from '../../common/style/Colors';
 import Button from '../../components/core/Button';
 import styles from './styles';
@@ -10,7 +10,7 @@ import '../../../assets/i18n/i18n';
 import { useTranslation } from 'react-i18next';
 import CloseButton from '../../components/core/CloseButton';
 const Language = (props) => {
-
+// console.log("props.navigation----->",props.navigation.goBack());
     const { t, i18n } = useTranslation();
     const [currentLanguage, setLanguage] = useState('en');
 
@@ -33,8 +33,7 @@ const Language = (props) => {
             resizeMode='cover'
             style={{ flex: 1 }}
             source={{ uri: 'https://images.statusfacebook.com/profile_pictures/kids-dp/kids-dp-101.jpg' }}>
-
-            <CloseButton onPress={() => props.navigation.goBack()}>
+          <CloseButton onPress={() => props.navigation.goBack()}>
                 <CloseSvg fill={COLORS.white} />
             </CloseButton>
             <View style={styles.container}>
@@ -58,7 +57,8 @@ const Language = (props) => {
                         </View>
                     </ScrollView>
                 </View>
-            </View>
+                </View>
+             
         </ImageBackground>
     );
 };

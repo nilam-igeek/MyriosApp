@@ -2,24 +2,23 @@
 
 
 import React from 'react';
-import { Pressable,Platform } from 'react-native';
+import { Pressable, Platform, TouchableOpacity } from 'react-native';
 const CloseButton = ({
     onPress,
     children
 }) => {
     return (
-        <Pressable onPress={onPress}
+        <TouchableOpacity onPress={onPress}
             style={{
-                width: 30,
-                height: 30,
-                position: 'absolute',
-                top:Platform.OS === 'ios' ? 50 : 20 ,
-                left: 28,
+                width: 60,
+                height: 60,
+                marginTop: Platform.OS === 'ios' ? 50 : 20,
+                marginLeft: 10,
                 justifyContent: 'center',
                 alignItems: 'center',
             }}>
             <>{children}</>
-        </Pressable>
+        </TouchableOpacity>
     );
 };
 

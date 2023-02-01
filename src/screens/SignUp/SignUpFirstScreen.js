@@ -1,5 +1,5 @@
-import React, { useState,useEffect } from 'react';
-import { View, Text, ImageBackground, ScrollView, Pressable, TextInput, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, ImageBackground, ScrollView, Pressable, Image } from 'react-native';
 import { COLORS } from '../../common/style/Colors';
 import Button from '../../components/core/Button';
 import styles from './styles';
@@ -7,20 +7,29 @@ import CloseSvg from '../../common/svgs/CloseSvg';
 import '../../../assets/i18n/i18n';
 import { useTranslation } from 'react-i18next';
 import Input from '../../components/core/InputField';
-import EmailSvg from '../../common/svgs/EmailSvg';
-import LockSvg from '../../common/svgs/LockSvg';
 import ProfileSvg from '../../common/svgs/ProfileSvg';
-import { IMAGES } from '../../common/style/Images';
 import CloseButton from '../../components/core/CloseButton';
 import { Formik, Field } from 'formik';
 import * as yup from 'yup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { USER } from '../../constants/types';
+import { ROLE } from '../../constants/types';
 const SignUpFirstScreen = (props) => {
 
     const { t } = useTranslation();
     const [profile, setProfile] = useState('');
-    const [isType, setIsType] = useState('');
+    const [isUserType, setIsUserType] = useState('');
+     const [isRole, setIsRole] = useState('');
+    const isRefugee = isRole === ROLE.REFUGEE
+    const isShelter = isRole === ROLE.SHELTER
+    useEffect(() => {
+        async function check() {
+            var item = await AsyncStorage.getItem('userType');
+            setIsRole(item)
+        }
+        check();
+    }, []);
+
+
 
     const loginValidationSchema = yup.object().shape({
         firstName: yup
@@ -30,32 +39,35 @@ const SignUpFirstScreen = (props) => {
             .string()
             .required(t('Address is required')),
         about: yup
-        .string()
-            .required(t('about is required'))
+            .string()
+            .required(t('About is required')),
+        age: yup
+            .string()
+            .required(t('Age is required'))
     })
 
     const onClickSubmit = async values => {
-        const { firstName, address,about } = values;
+        
+        const { firstName, address, about, age, } = values;
         var body = {
             firstName: firstName,
             address: address,
-            about:about
+            about: about,
+            age: age,
+            isUserType: isUserType
         };
         if (profile || body) {
-             props.navigation.navigate('ChooseProfile');
+            props.navigation.navigate('ChooseProfile');
         } else if (body) {
             props.navigation.navigate('SignUpSecondScreen');
         }
-  
+
     };
 
-    useEffect(() => {
-    async function check() {
-        var item = await AsyncStorage.getItem('userType');
-        setIsType(item)
+    const onClick = (type) => {
+        setIsUserType(type)
     }
-    check();
-  }, [])
+
 
     return (
         <ImageBackground
@@ -72,7 +84,7 @@ const SignUpFirstScreen = (props) => {
                             <Text style={styles.titleText}>{t('Sign Up')}</Text>
                             <Formik
                                 validationSchema={loginValidationSchema}
-                                initialValues={{ firstName: '', address: '',about:'' }}
+                                initialValues={{ firstName: '', address: '', about: '', age: '' }}
                                 onSubmit={onClickSubmit}>
                                 {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, }) => (
                                     <>
@@ -81,9 +93,9 @@ const SignUpFirstScreen = (props) => {
                                                 <Pressable onPress={() => { props.navigation.navigate('ChooseProfile') }} style={styles.profile}>
                                                     {profile ?
                                                         <Image
-                                                        resizeMode='cover'
-                                                        source={profile}
-                                                        style={styles.profileStyle} /> :
+                                                            resizeMode='cover'
+                                                            source={profile}
+                                                            style={styles.profileStyle} /> :
                                                         <ProfileSvg />}
                                                 </Pressable>
                                             </View>
@@ -98,7 +110,7 @@ const SignUpFirstScreen = (props) => {
                                                     inputWidth={(BaseStyle.WIDTH / 100) * 40}
                                                     placeholder={t('First Name')}
                                                     isError={errors.firstName}
-                                                 placeholderColor={COLORS.black}
+                                                    placeholderColor={COLORS.black}
                                                 />
                                             </View>
                                         </View>
@@ -106,7 +118,6 @@ const SignUpFirstScreen = (props) => {
                                         <Field
                                             name={'address'}
                                             component={Input}
-                                            marginTop={20}
                                             value={values.address}
                                             onChangeText={handleChange('address')}
                                             onBlur={handleBlur('address')}
@@ -115,25 +126,83 @@ const SignUpFirstScreen = (props) => {
                                             placeholder={t('Country of Residence')}
                                             placeholderColor={COLORS.black}
                                             isError={errors.address} />
-                                        
-                                        {isType === USER.SHELTER && <Field
-                                            name={'about'}
-                                            component={Input}
-                                            marginTop={30}
-                                            value={values.about}
-                                            onChangeText={handleChange('about')}
-                                            onBlur={handleBlur('about')}
-                                            width={(BaseStyle.WIDTH / 100) * 80}
-                                            inputWidth={(BaseStyle.WIDTH / 100) * 70}
-                                            placeholder={t('Desc./About')}
-                                            placeholderColor={COLORS.black}
-                                            isError={errors.about}
-                                            multiline
-                                            height={100}
-                                        
-                                            numberOfLines={3}
-                                            mt={20}
-                                        />}
+
+                                        {isRefugee &&
+                                            <>
+                                                <Field
+                                                    name={'age'}
+                                                    component={Input}
+                                                    value={values.age}
+                                                    onChangeText={handleChange('age')}
+                                                    onBlur={handleBlur('age')}
+                                                    width={(BaseStyle.WIDTH / 100) * 80}
+                                                    inputWidth={(BaseStyle.WIDTH / 100) * 70}
+                                                    placeholder={'Age'}
+                                                    mt={20}
+                                                    placeholderColor={COLORS.black}
+                                                    isError={errors.age} />
+                                                <Text style={styles.chooseOneText}>{'Choose one...'}</Text>
+                                                <View style={styles.chooseOneCard}>
+                                                    <Button
+                                                        title={t('Girl')}
+                                                        fontSize={14}
+                                                        bgColor={COLORS.lemonchiffon}
+                                                        color={COLORS.black}
+                                                        height={45}
+                                                        width={'48%'}
+                                                        onPress={() => { onClick('Girl') }}
+                                                    />
+                                                    <Button
+                                                        bgColor={COLORS.lemonchiffon}
+                                                        title={t('Boy')}
+                                                        fontSize={14}
+                                                        color={COLORS.black}
+                                                        height={45}
+                                                        width={'48%'}
+                                                        onPress={() => { onClick('Boy') }}
+                                                    />
+                                                </View>
+                                                <View style={[styles.chooseOneCard, { marginTop: 10 }]}>
+                                                    <Button
+                                                        title={t('Mom')}
+                                                        fontSize={14}
+                                                        bgColor={COLORS.lemonchiffon}
+                                                        color={COLORS.black}
+                                                        height={45}
+                                                        width={'48%'}
+                                                        onPress={() => { onClick('Mom') }}
+                                                    />
+                                                    <Button
+                                                        bgColor={COLORS.lemonchiffon}
+                                                        title={t('Woman')}
+                                                        fontSize={14}
+                                                        color={COLORS.black}
+                                                        height={45}
+                                                        width={'48%'}
+                                                        onPress={() => { onClick('Woman') }}
+                                                    />
+                                                </View>
+                                            </>
+                                        }
+                                        {isShelter &&
+                                            <Field
+                                                name={'about'}
+                                                component={Input}
+                                                marginTop={30}
+                                                value={values.about}
+                                                onChangeText={handleChange('about')}
+                                                onBlur={handleBlur('about')}
+                                                width={(BaseStyle.WIDTH / 100) * 80}
+                                                inputWidth={(BaseStyle.WIDTH / 100) * 70}
+                                                placeholder={t('Desc./About')}
+                                                placeholderColor={COLORS.black}
+                                                isError={errors.about}
+                                                multiline
+                                                height={100}
+                                                borderRadius={20}
+                                                numberOfLines={3}
+                                                mt={20}
+                                            />}
 
                                         <Button
                                             title={t('Next')}

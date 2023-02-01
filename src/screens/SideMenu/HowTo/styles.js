@@ -8,12 +8,13 @@ export default styles = StyleSheet.create({
         flex: 1,
         backgroundColor: COLORS.seashell
     },
-    wrapper: {},
+    wrapper: {
+    //    flex: 1,
+    },
     slide1: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: COLORS.seashell
     },
     dot: {
         backgroundColor: 'aliceblue',

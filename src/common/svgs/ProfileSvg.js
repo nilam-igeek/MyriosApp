@@ -4,8 +4,8 @@ import Svg, { Path } from "react-native-svg"
 function ProfileSvg(props) {
   return (
       <Svg
-      width={45}
-      height={45}
+      width={60}
+      height={60}
       viewBox="0 0 32 40"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

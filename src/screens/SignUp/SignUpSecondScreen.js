@@ -23,15 +23,13 @@ const SignUpSecondScreen = (props) => {
 
     const loginValidationSchema = yup.object().shape({
         email: yup
-            .string()
-            .matches(EMAIL_PATTERN, 'Please enter valid email')
-            // .email(t("Please enter valid email"))
-            .required(t('Email Address is Required')),
+            .string(),
+            // .matches(EMAIL_PATTERN, 'Please enter valid email')
+            // .required(t('Email Address is Required')),
        password: yup
             .string()
-            .required(t('Password is required'))
-            //.min(8, ({ min }) => { `${('Password must be at least')} ${min} ${('characters')}` })
-            .matches(PASSWORD_PATTERN,'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character')            
+            // .required(t('Password is required'))
+            // .matches(PASSWORD_PATTERN,'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character')            
     })
 
 

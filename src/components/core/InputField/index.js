@@ -27,7 +27,10 @@ const Input = ({
     multiline,
     height,
     mt,
+    borderRadius,
     numberOfLines,
+    bgColor,
+    inputColor,
     field: { name, onBlur, onChange, value },
     form: { errors, touched, setFieldTouched },
     ...inputProps
@@ -44,16 +47,16 @@ const Input = ({
             }]}>{title}</Text>}
             <View style={[isBottomLineInput ?  styles.inputCard : styles.inputView, {
                 width: width ? width : (BaseStyle.WIDTH / 100) * 100,
-                backgroundColor: isBottomLineInput ? COLORS.transparent : COLORS.lemonchiffon,
+                backgroundColor:bgColor?bgColor:isBottomLineInput ? COLORS.transparent : COLORS.lemonchiffon,
                 borderBottomWidth: isBottomLineInput ? 1 : 0,
-                borderRadius: isBottomLineInput ? 0 : 50,
-                height: height? height:45,
-                marginTop: mt
+                borderRadius: isBottomLineInput ? 0 :borderRadius ?borderRadius: 50,
+                height: height? height : 45,
+                marginTop: mt ? mt : 0 
 
             }]}>
                 {isLeft && <>{children}</>}
                 <TextInput
-                    style={{marginTop:(multiline && Platform.OS === 'ios') && 70, height: height? height:45,width: inputWidth ? inputWidth : (BaseStyle.WIDTH / 100) * 100 }}
+                    style={{color:inputColor?inputColor:COLORS.black, marginTop:(multiline && Platform.OS === 'ios') ? 70 :0, height: height? height:45,width: inputWidth ? inputWidth : (BaseStyle.WIDTH / 100) * 100 }}
                     secureTextEntry={secureTextEntry}
                     value={value}
                     onChangeText={(text) => onChange(name)(text)}

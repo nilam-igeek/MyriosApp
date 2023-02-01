@@ -33,7 +33,7 @@ const Welcome = (props) => {
                         borderRadius={10}
                         marginTop={10}
                         fontSize={16}
-                    onPress={() => {props.navigation.navigate('WishLists')}}
+                    onPress={() => {props.navigation.navigate('HowTo')}}
                     />
                 </View>
             </View>

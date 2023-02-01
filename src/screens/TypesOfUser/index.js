@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { View, Text, ImageBackground, ScrollView } from 'react-native';
 import { COLORS } from '../../common/style/Colors';
 import Button from '../../components/core/Button';
@@ -7,23 +7,32 @@ import CloseSvg from '../../common/svgs/CloseSvg';
 import '../../../assets/i18n/i18n';
 import { useTranslation } from 'react-i18next';
 import CloseButton from '../../components/core/CloseButton';
-import { USER } from '../../constants/types';
+import { ROLE } from '../../constants/types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const TypesOfUser = (props) => {
 
     const { t } = useTranslation();
-    const [isType,setIsType] = useState(USER.MASTER)
+    const [isRole, setIsRole] = useState(ROLE.MASTER);
 
     const onClick = async (type) => {
-        setIsType(type);
-    try {
-    await AsyncStorage.setItem('userType', type)
-  } catch (e) {
-    console.log("e--->",e);
-  }
+        setIsRole(type);
+        try {
+            await AsyncStorage.setItem('userType', type)
+        } catch (e) {
+        }
     }
 
-return (
+    useEffect(() => {
+        if (isRole !== (ROLE.DONOR || ROLE.SHELTER|| ROLE.REFUGEE) && isRole === ROLE.MASTER) {
+             async function check() {
+             var item = await AsyncStorage.setItem('userType', ROLE.MASTER);
+            setIsRole(item)
+        }
+        check(); 
+         }
+    }, [isRole]);
+
+    return (
         <ImageBackground
             resizeMode='cover'
             style={{ flex: 1 }}
@@ -35,7 +44,7 @@ return (
                 <View style={styles.card}>
                     <ScrollView contentContainerStyle={{ flexGrow: 1, }}>
                         <View style={styles.subContainer}>
-                            <Text style={styles.titleText}>{isType ? `${t(`I'm a `)}${isType}` : t(`I'm a...`)}</Text>
+                            <Text style={styles.titleText}>{isRole ? `${t(`I'm a `)}${isRole}` : t(`I'm a...`)}</Text>
                             <Button borderRadius={50}
                                 title={t(`Refugee`)}
                                 bgColor={COLORS.lemonchiffon}
@@ -43,7 +52,7 @@ return (
                                 color={COLORS.black}
                                 height={50}
                                 width={'100%'}
-                                onPress={() => onClick(USER.REFUGEE)}
+                                onPress={() => onClick(ROLE.REFUGEE)}
                             />
 
                             <Button
@@ -55,7 +64,7 @@ return (
                                 height={50}
                                 marginTop={20}
                                 width={'100%'}
-                                onPress={() => onClick(USER.SHELTER)} />
+                                onPress={() => onClick(ROLE.SHELTER)} />
 
                             <Button
                                 borderRadius={50}
@@ -66,7 +75,7 @@ return (
                                 height={50}
                                 marginTop={20}
                                 width={'100%'}
-                                onPress={() => onClick(USER.DONOR)} />
+                                onPress={() => onClick(ROLE.DONOR)} />
 
                             <Button
                                 borderRadius={50}

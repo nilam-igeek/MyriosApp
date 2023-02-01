@@ -14,22 +14,38 @@ import { PASSWORD_PATTERN, EMAIL_PATTERN } from '../../constants/BaseValidation'
 import CloseButton from '../../components/core/CloseButton';
 import { Formik, Field } from 'formik';
 import * as yup from 'yup';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ROLE } from '../../constants/types';
+
 const Login = (props) => {
 
     const { t } = useTranslation();
     const [isShow, setIsShow] = useState(false);
   
+  const [isRole, setIsRole] = useState('');
+    const isMaster = isRole === ROLE.MASTER
+    const isDonor = isRole === ROLE.DONOR
+    const isShelter = isRole === ROLE.SHELTER
+    const isRefugee = isRole === ROLE.REFUGEE
+    
+    useEffect(() => {
+        async function check() {
+            var item = await AsyncStorage.getItem('userType');
+            setIsRole(item)
+        }
+        check();
+    }, []);
 
     const loginValidationSchema = yup.object().shape({
         email: yup
-            .string()
-            .matches(EMAIL_PATTERN, 'Please enter valid email')
-            // .email(t("Please enter valid email"))
-            .required(t('Email Address is Required')),
+            .string(),
+            // .matches(EMAIL_PATTERN, 'Please enter valid email')
+            // // .email(t("Please enter valid email"))
+            // .required(t('Email Address is Required')),
        password: yup
             .string()
-            .required(t('Password is required'))
-            //.min(8, ({ min }) => { `${('Password must be at least')} ${min} ${('characters')}` })
+            // .required(t('Password is required'))
+            // //.min(8, ({ min }) => { `${('Password must be at least')} ${min} ${('characters')}` })
             .matches(PASSWORD_PATTERN,'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character')
             
     })
@@ -42,9 +58,12 @@ const Login = (props) => {
       password: password,
       email: email
     };
-    if (body) {
+    if (body && (isDonor || isRefugee || isShelter)) {
         props.navigation.navigate('Welcome');
+    } {
+        props.navigation.navigate('RefugeesList');
     }
+        
   };
 
 
@@ -111,7 +130,7 @@ const Login = (props) => {
                                             width={'60%'}
                                             onPress={handleSubmit}
                                         />
-                                        <Text onPress={() => { props.navigation.navigate('SignUpFirstScreen') }} style={styles.signUpText}>{t('Sign Up')}</Text>
+                                        {!isMaster && <Text onPress={() => { props.navigation.navigate('SignUpFirstScreen') }} style={styles.signUpText}>{t('Sign Up')}</Text>}
                                     </>
                                 )}
 

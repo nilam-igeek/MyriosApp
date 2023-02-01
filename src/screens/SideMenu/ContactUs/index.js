@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { View, Text, StatusBar} from 'react-native';
 
 import Button from '../../../components/core/Button';
@@ -8,11 +8,24 @@ import { useTranslation } from 'react-i18next';
 import { COLORS } from '../../../common/style/Colors';
 import Header from '../../../components/core/Header';
 import Input from '../../../components/core/InputField';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ROLE } from '../../../constants/types';
 import { Formik, Field } from 'formik';
 import * as yup from 'yup';
 const ContactUs = (props) => {
 
     const { t } = useTranslation();
+     const [isRole, setIsRole] = useState('');
+    const isShelter = isRole === ROLE.SHELTER
+
+   
+    useEffect(() => {
+        async function check() {
+            var item = await AsyncStorage.getItem('userType');
+            setIsRole(item)
+        }
+        check();
+    }, []);
 
      const loginValidationSchema = yup.object().shape({
         firstName: yup
@@ -37,12 +50,15 @@ const ContactUs = (props) => {
     if (body) {
         // props.navigation.navigate('Welcome');
     }
-  };
+ };
+    
+
+    
 
     return (
         <View style={styles.container}>
             <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.seashell} />
-            <Header title={'Myrios'} onPress={() => { }} />
+            <Header title={'Myrios'} onPress={() => { props.navigation.toggleDrawer() }} />
             <View style={{justifyContent:'center',alignItems:"center"}}>
             <Text style={styles.titleText}>{'CONTACT US'}</Text>
             <Text style={styles.subText}>{'You are always welcome to get in touch with us'}</Text>
@@ -53,7 +69,7 @@ const ContactUs = (props) => {
                 {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, }) => (
                     <>
                             <Field
-                                mt={30}
+                            mt={30}
                             isBottomLineInput
                             name={'firstName'}
                              marginTop={20}
@@ -63,7 +79,7 @@ const ContactUs = (props) => {
                             onBlur={handleBlur('firstName')}
                             width={(BaseStyle.WIDTH / 100) * 80}
                             inputWidth={(BaseStyle.WIDTH / 100) * 80}
-                            placeholder={('First Name')}
+                            placeholder={isShelter ? ('Shelter Name') : ('First Name')}
                             isError={errors.firstName}
                             placeholderColor={COLORS.black}/>
 
@@ -94,7 +110,7 @@ const ContactUs = (props) => {
                             onBlur={handleBlur('email')}
                             width={(BaseStyle.WIDTH / 100) * 80}
                             inputWidth={(BaseStyle.WIDTH / 100) * 80}
-                            placeholder={t('Enter your email')}
+                            placeholder={t('Email Address')}
                             keyboardType="email-address"
                             isError={errors.email}
                             placeholderColor={COLORS.black}/>

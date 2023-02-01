@@ -10,7 +10,7 @@ export default styles = StyleSheet.create({
     width: (BaseStyle.WIDTH / 100) * 85,
     alignSelf: 'center',
     paddingVertical: 20,
-    marginTop:Platform.OS === 'ios' ? 35 :10
+    marginTop:Platform.OS === 'ios' ? 40 :10
     },
     headerText: {
         textAlign: "center",

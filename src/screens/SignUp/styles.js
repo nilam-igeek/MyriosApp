@@ -37,6 +37,20 @@ export default styles = StyleSheet.create({
         height: 89,
         borderRadius: 89 / 2,
     },
+    chooseOneText: {
+        width: '100%',
+        alignSelf:"center",
+        marginBottom: 5,
+        marginTop: 20,
+        fontSize: 18,
+        color: COLORS.black,
+        fontFamily: FONTS.Poppins_SemiBold
+    },
+    chooseOneCard: {
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between' 
+},
     // second screen styles
 
     container: {

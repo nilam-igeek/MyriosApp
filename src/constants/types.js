@@ -1,4 +1,4 @@
-export const USER = {
+export const ROLE = {
     DONOR: 'Donor',
     REFUGEE:'Refugee',
     SHELTER: 'Shelter',

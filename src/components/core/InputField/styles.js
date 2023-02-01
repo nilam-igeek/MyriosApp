@@ -19,6 +19,7 @@ export default styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 2.84,
         elevation: 3,
+        backgroundColor:'red'
     },
      inputCard: {
         flexDirection: 'row',

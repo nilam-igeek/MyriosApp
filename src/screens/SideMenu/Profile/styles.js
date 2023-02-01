@@ -23,9 +23,9 @@ container: {
          alignSelf: 'center',
     },
       profileStyle: {
-        width: 89,
-        height: 89,
-        borderRadius: 89 / 2,
+        width: 100,
+        height: 100,
+        borderRadius: 100 / 2,
     },
     profileNameContainer: {
         // flexDirection: 'row',
@@ -39,9 +39,9 @@ container: {
         alignSelf: 'center',
     },
     profile: {
-        width: 90,
-        height: 90,
-        borderRadius: 90 / 2,
+        width: 110,
+        height: 110,
+        borderRadius: 110 / 2,
         backgroundColor: COLORS.black,
         justifyContent: 'center',
         alignItems: "center",

@@ -46,7 +46,7 @@ container: {
         color: COLORS.black,
         marginLeft: 20,
         fontFamily: FONTS.Poppins_SemiBold,
-        fontSize:14
+        fontSize:12
   }
 
 });
