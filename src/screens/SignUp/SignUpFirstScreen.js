@@ -21,6 +21,7 @@ const SignUpFirstScreen = (props) => {
      const [isRole, setIsRole] = useState('');
     const isRefugee = isRole === ROLE.REFUGEE
     const isShelter = isRole === ROLE.SHELTER
+    const isDonor= isRole === ROLE.DONOR
     useEffect(() => {
         async function check() {
             var item = await AsyncStorage.getItem('userType');
@@ -33,17 +34,17 @@ const SignUpFirstScreen = (props) => {
 
     const loginValidationSchema = yup.object().shape({
         firstName: yup
-            .string()
-            .required(t('Firstname is Required')),
+            .string(),
+            // .required(t('Firstname is Required')),
         address: yup
-            .string()
-            .required(t('Address is required')),
+            .string(),
+            // .required(t('Address is required')),
         about: yup
-            .string()
-            .required(t('About is required')),
+            .string(),
+            // .required(t('About is required')),
         age: yup
-            .string()
-            .required(t('Age is required'))
+            .string(),
+            // .required(t('Age is required'))
     })
 
     const onClickSubmit = async values => {
@@ -56,11 +57,18 @@ const SignUpFirstScreen = (props) => {
             age: age,
             isUserType: isUserType
         };
-        if (profile || body) {
-            props.navigation.navigate('ChooseProfile');
-        } else if (body) {
+        if (isRefugee) {
+            props.navigation.navigate('Chat');
+        } else if (isShelter || isDonor) {
             props.navigation.navigate('SignUpSecondScreen');
         }
+        // if (profile || body) {
+        //     props.navigation.navigate('ChooseProfile');
+        // } else if (body) {
+        //     props.navigation.navigate('SignUpSecondScreen');
+        // } else if (isRefugee) { 
+        //      props.navigation.navigate('Chat');
+        // }
 
     };
 
