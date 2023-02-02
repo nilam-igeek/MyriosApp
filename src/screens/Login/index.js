@@ -60,7 +60,7 @@ const Login = (props) => {
     };
     if (body && (isDonor || isRefugee || isShelter)) {
         props.navigation.navigate('Welcome');
-    } {
+    } else if (isMaster) {
         props.navigation.navigate('RefugeesList');
     }
         

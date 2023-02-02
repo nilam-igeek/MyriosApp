@@ -24,6 +24,7 @@ import DonorsList from '../screens/Master/DonorsList';
 import ContactRequests from '../screens/Master/ContactRequestsList';
 import SheltersList from '../screens/Master/SheltersList';
 import RefugeesList from '../screens/Master/RefugeesList';
+import SchedulingOfCalls from '../screens/Master/SchedulingOfCalls';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -66,6 +67,7 @@ function MyDrawer() {
         <Drawer.Screen name="ContactRequests" component={ContactRequests} />
         <Drawer.Screen name="SheltersList" component={SheltersList} />
         <Drawer.Screen name="ProfileOfRole" component={ProfileOfRole} />
+        <Drawer.Screen name="SchedulingOfCalls" component={SchedulingOfCalls} />
       </Drawer.Navigator>
     );
   }
@@ -90,12 +92,13 @@ function MyDrawer() {
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="Helped" component={Helped} />
         <Stack.Screen name="ShelterWishList" component={ShelterWishList} />
-        <Drawer.Screen name="RefugeesList" component={MyMasterDrawer} />
-         <Drawer.Screen name="DonorsList" component={DonorsList} />
-        <Drawer.Screen name="ContactRequests" component={ContactRequests} />
-        <Drawer.Screen name="SheltersList" component={SheltersList} />
+        <Stack.Screen name="RefugeesList" component={MyMasterDrawer} />
+        <Stack.Screen name="DonorsList" component={DonorsList} />
+        <Stack.Screen name="ContactRequests" component={ContactRequests} />
+        <Stack.Screen name="SheltersList" component={SheltersList} />
         <Stack.Screen name="ProfileOfRole" component={ProfileOfRole} />
         <Stack.Screen name="Chat" component={Chat} />
+        <Stack.Screen name="SchedulingOfCalls" component={SchedulingOfCalls} />
       </Stack.Navigator>
     </NavigationContainer>
   );

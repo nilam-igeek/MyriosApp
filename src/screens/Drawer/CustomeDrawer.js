@@ -88,7 +88,9 @@ export const CustomeDrawer = (props) => {
     }
     else if (item.title === "ANALYTICS") {
     }
-    else if (item.title === "SCHEDULING OF CALLS") {
+ else if (item.title === "SCHEDULING OF CALLS") {
+   props.navigation.navigate('SchedulingOfCalls')
+   
     }
   }
 
