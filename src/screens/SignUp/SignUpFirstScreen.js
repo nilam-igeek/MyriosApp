@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ImageBackground, ScrollView, Pressable, Image } from 'react-native';
+import { View, Text, ImageBackground, ScrollView, Pressable, Image ,Alert} from 'react-native';
 import { COLORS } from '../../common/style/Colors';
 import Button from '../../components/core/Button';
 import styles from './styles';
@@ -13,12 +13,16 @@ import { Formik, Field } from 'formik';
 import * as yup from 'yup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ROLE } from '../../constants/types';
+import CountryPickerModal from '../../components/core/CountryPickerModal';
+import ImagePicker from 'react-native-image-crop-picker';
+
 const SignUpFirstScreen = (props) => {
 
     const { t } = useTranslation();
     const [profile, setProfile] = useState('');
     const [isUserType, setIsUserType] = useState('');
-     const [isRole, setIsRole] = useState('');
+    const [isRole, setIsRole] = useState('');
+    const [isImages, setIsImages] = useState('')
     const isRefugee = isRole === ROLE.REFUGEE
     const isShelter = isRole === ROLE.SHELTER
     const isDonor= isRole === ROLE.DONOR
@@ -76,6 +80,17 @@ const SignUpFirstScreen = (props) => {
         setIsUserType(type)
     }
 
+const onClickProfile = () => {
+  ImagePicker.openPicker({
+  width: 300,
+  height: 400,
+  cropping: true
+}).then(image => {
+    setIsImages(image.path)
+});
+    }
+    
+
 
     return (
         <ImageBackground
@@ -98,13 +113,14 @@ const SignUpFirstScreen = (props) => {
                                     <>
                                         <View style={styles.profileNameContainer}>
                                             <View style={styles.profileContainer}>
-                                                <Pressable onPress={() => { props.navigation.navigate('ChooseProfile') }} style={styles.profile}>
-                                                    {profile ?
+                                                <Pressable
+                                                    onPress={onClickProfile}
+                                                    style={styles.profile}>
                                                         <Image
                                                             resizeMode='cover'
-                                                            source={profile}
-                                                            style={styles.profileStyle} /> :
-                                                        <ProfileSvg />}
+                                                            source={{uri:isImages}}
+                                                            style={styles.profileStyle} />
+                                                    {/* :<ProfileSvg /> */}
                                                 </Pressable>
                                             </View>
                                             <View style={styles.nameInput}>
@@ -123,17 +139,9 @@ const SignUpFirstScreen = (props) => {
                                             </View>
                                         </View>
 
-                                        <Field
-                                            name={'address'}
-                                            component={Input}
-                                            value={values.address}
-                                            onChangeText={handleChange('address')}
-                                            onBlur={handleBlur('address')}
-                                            width={(BaseStyle.WIDTH / 100) * 80}
-                                            inputWidth={(BaseStyle.WIDTH / 100) * 70}
-                                            placeholder={t('Country of Residence')}
-                                            placeholderColor={COLORS.black}
-                                            isError={errors.address} />
+                                        <CountryPickerModal
+                                            isOnSelect={(text) => { console.log(text) }}
+                                            placeholder="Country of Residence" />
 
                                         {isRefugee &&
                                             <>

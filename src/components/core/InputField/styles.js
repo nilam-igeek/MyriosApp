@@ -19,7 +19,6 @@ export default styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 2.84,
         elevation: 3,
-        backgroundColor:'red'
     },
      inputCard: {
         flexDirection: 'row',
@@ -30,7 +29,7 @@ export default styles = StyleSheet.create({
     },
     titleText: {
         fontSize: 14,
-        // fontStyle: FONTS.Popins_Black,
+        fontFamily:FONTS.Poppins_Regular,
         alignSelf: 'center',
         marginTop:5,
     }

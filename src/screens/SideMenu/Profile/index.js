@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StatusBar, Pressable, ScrollView } from 'react-native';
-
 import Button from '../../../components/core/Button';
 import styles from './styles';
 import '../../../../assets/i18n/i18n';
@@ -14,8 +13,9 @@ import * as yup from 'yup';
 import EditSvg from '../../../common/svgs/EditSvg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ROLE } from '../../../constants/types';
-const Profile = (props) => {
+import CountryPickerModal from '../../../components/core/CountryPickerModal';
 
+const Profile = (props) => {
     const { t } = useTranslation();
     const [profile, setProfile] = useState('');
     const [isRole, setIsRole] = useState('');
@@ -29,9 +29,7 @@ const Profile = (props) => {
         check();
     }, []);
 
-
-
-    const loginValidationSchema = yup.object().shape({
+const loginValidationSchema = yup.object().shape({
         firstName: yup
             .string(),
         // .required(t('Firstname is Required')),
@@ -66,8 +64,7 @@ const Profile = (props) => {
                         onSubmit={onClickSubmit}>
                         {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, }) => (
                             <>
-
-                                <View style={styles.profileNameContainer}>
+                            <View style={styles.profileNameContainer}>
                                     <Pressable onPress={() => { props.navigation.navigate('ChooseProfile') }} style={styles.profile}>
                                         {profile ?
                                             <Image
@@ -91,22 +88,12 @@ const Profile = (props) => {
                                         isError={errors.firstName}
                                     />
 
-
-
-
-                                    {(isShelter || isRefugee) && <Field
-                                        name={'country'}
-                                        component={Input}
-                                        mt={30}
-                                        value={values.country}
-                                        onChangeText={handleChange('country')}
-                                        onBlur={handleBlur('country')}
-                                        width={(BaseStyle.WIDTH / 100) * 80}
-                                        inputWidth={(BaseStyle.WIDTH / 100) * 70}
-                                        placeholder={'Country'}
-                                        placeholderColor={COLORS.black}
-                                        isError={errors.country} />
-                                    }
+                                    {(isShelter || isRefugee) &&
+                                        <CountryPickerModal
+                                        marginTop={30}
+                                        isOnSelect={(text) => { console.log(text) }}
+                                        placeholder="Country" />}
+                                    
                                     {isRefugee &&
                                         <>
                                             <Field
@@ -134,13 +121,11 @@ const Profile = (props) => {
                                                 placeholder={'Girl/Boy/Mom'}
                                                 placeholderColor={COLORS.black}
                                                 isError={errors.type} />
-                                        </>
-                                    }
+                                        </>}
 
                                     {isShelter && <Field
                                         name={'about'}
                                         component={Input}
-                                        // marginTop={30}
                                         value={values.about}
                                         onChangeText={handleChange('about')}
                                         onBlur={handleBlur('about')}
@@ -152,12 +137,9 @@ const Profile = (props) => {
                                         multiline
                                         borderRadius={20}
                                         height={100}
-
                                         numberOfLines={3}
                                         mt={30}
                                     />}
-
-
 
                                     <Button
                                         bgColor={COLORS.lemonchiffon}
