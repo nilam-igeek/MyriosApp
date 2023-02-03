@@ -8,10 +8,7 @@ import Header from '../../components/core/Header';
 import { donorList } from './ArrayList'
 const DonorsList = (props) => {
 
-
-   
-
-    const { t } = useTranslation();
+const { t } = useTranslation();
 
     return (
         <View style={styles.container}>

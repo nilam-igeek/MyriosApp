@@ -4,7 +4,6 @@ import { COLORS } from '../../common/style/Colors';
 import CloseSvg from '../../common/svgs/CloseSvg';
 import { Pressable, Text } from 'react-native';
 import styles from './styles';
-import CloseButton from '../../components/core/CloseButton';
 import BaseStyle from '../../common/style/BaseStyle';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ROLE } from '../../constants/types';
@@ -51,7 +50,6 @@ export const CustomeDrawer = (props) => {
 
   const Data =  (isShelter || isDonor) ? Donor_Shelter : isRefugee ? Refugee : Master
   const onClickMenu = (item, i) => {
-    console.log("item=====>",item);
 
  if (item.title === "HOW TO") {
       props.navigation.navigate('HowToo')
@@ -86,7 +84,8 @@ export const CustomeDrawer = (props) => {
     else if (item.title === "CONTACT REQUESTS") {
       props.navigation.navigate('ContactRequests')
     }
-    else if (item.title === "ANALYTICS") {
+ else if (item.title === "ANALYTICS") {
+  props.navigation.navigate('Analytics')
     }
  else if (item.title === "SCHEDULING OF CALLS") {
    props.navigation.navigate('SchedulingOfCalls')

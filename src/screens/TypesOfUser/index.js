@@ -44,7 +44,7 @@ const TypesOfUser = (props) => {
                 <View style={styles.card}>
                     <ScrollView contentContainerStyle={{ flexGrow: 1, }}>
                         <View style={styles.subContainer}>
-                            <Text style={styles.titleText}>{isRole ? `${t(`I'm a `)}${isRole}` : t(`I'm a...`)}</Text>
+                            <Text style={styles.titleText}>{`${t(`I'm a `)}${isRole?isRole :ROLE.MASTER}`}</Text>
                             <Button borderRadius={50}
                                 title={t(`Refugee`)}
                                 bgColor={COLORS.lemonchiffon}
@@ -54,7 +54,6 @@ const TypesOfUser = (props) => {
                                 width={'100%'}
                                 onPress={() => onClick(ROLE.REFUGEE)}
                             />
-
                             <Button
                                 borderRadius={50}
                                 title={t(`Shelter`)}
@@ -65,7 +64,6 @@ const TypesOfUser = (props) => {
                                 marginTop={20}
                                 width={'100%'}
                                 onPress={() => onClick(ROLE.SHELTER)} />
-
                             <Button
                                 borderRadius={50}
                                 title={t(`Donor`)}
@@ -76,7 +74,6 @@ const TypesOfUser = (props) => {
                                 marginTop={20}
                                 width={'100%'}
                                 onPress={() => onClick(ROLE.DONOR)} />
-
                             <Button
                                 borderRadius={50}
                                 title={t(`Let's go!`)}
