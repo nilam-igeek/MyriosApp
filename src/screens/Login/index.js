@@ -16,9 +16,12 @@ import { Formik, Field } from 'formik';
 import * as yup from 'yup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ROLE } from '../../constants/types';
-
+import loginApi from '../../redux/actions/ApiActionCreator';
+import {useDispatch, useSelector} from 'react-redux';
 const Login = (props) => {
-
+const dispatch = useDispatch();
+  const data = useSelector((state) => state.apiReducer.data);
+  const loading = useSelector((state) => state.apiReducer.loading);
     const { t } = useTranslation();
     const [isShow, setIsShow] = useState(false);
   
@@ -58,15 +61,23 @@ const Login = (props) => {
       password: password,
       email: email
     };
-    if (body && (isDonor || isRefugee || isShelter)) {
+        if (body && (isDonor || isRefugee || isShelter)) {
         props.navigation.navigate('Welcome');
     } else if (isMaster) {
         props.navigation.navigate('RefugeesList');
-    }
-        
+    }  
   };
 
 
+    useEffect(() => {
+          const data = {
+    email: 'pratik.igeek@gmail.com',
+     password: 'password',
+   };
+    dispatch(loginApi(data));
+  }, []); 
+ 
+    
     return (
         <ImageBackground
             resizeMode='cover'
