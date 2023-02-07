@@ -27,8 +27,9 @@ const GetStarted = (props) => {
                         borderColor={COLORS.white}
                         bgColor={COLORS.transparent}
                         color={COLORS.white}
-                        width={120}
-                        height={30}
+                        width={130}
+                        height={35}
+                        fontSize={14}
                     />
                 </View>
             </View>

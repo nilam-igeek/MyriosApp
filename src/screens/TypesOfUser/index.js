@@ -48,7 +48,7 @@ const TypesOfUser = (props) => {
                             <Text style={styles.titleText}>{`${t(`I'm a `)}${isRole?isRole :'Master'}`}</Text>
                             <Button borderRadius={50}
                                 title={t(`Refugee`)}
-                                bgColor={COLORS.lemonchiffon}
+                                bgColor={isRole === ROLE.REFUGEE ? COLORS.floralwhite: COLORS.lemonchiffon}
                                 fontSize={18}
                                 color={COLORS.black}
                                 height={50}
@@ -58,7 +58,7 @@ const TypesOfUser = (props) => {
                             <Button
                                 borderRadius={50}
                                 title={t(`Shelter`)}
-                                bgColor={COLORS.lemonchiffon}
+                                bgColor={isRole === ROLE.SHELTER ? COLORS.floralwhite: COLORS.lemonchiffon}
                                 fontSize={18}
                                 color={COLORS.black}
                                 height={50}
@@ -68,7 +68,7 @@ const TypesOfUser = (props) => {
                             <Button
                                 borderRadius={50}
                                 title={t(`Donor`)}
-                                bgColor={COLORS.lemonchiffon}
+                                bgColor={isRole === ROLE.DONOR ? COLORS.floralwhite: COLORS.lemonchiffon}
                                 fontSize={18}
                                 color={COLORS.black}
                                 height={50}
