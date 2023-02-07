@@ -1,4 +1,4 @@
-import React, { Children } from 'react';
+import React from 'react';
 import { View, TextInput, Text, Platform } from 'react-native';
 import styles from './styles';
 import { COLORS } from '../../../common/style/Colors';

@@ -1,26 +1,28 @@
 import axios from 'axios';
 import { loginData, loginSuccess, loginError, } from './ApiAction';
-import APIS from '../../constants/index';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const url = "http://9b31-2405-201-2014-3157-a1ff-4b9a-4f17-3151.ngrok.io/api/"
 
-const loginApi = (data) => (dispatch) => {
+export const loginApi = (data) => async (dispatch) => {
+  var role = await AsyncStorage.getItem('userType');
   dispatch(loginData());
   return new Promise(() => {
   axios
-      .post(`http://4204-49-36-91-14.ngrok.io/api/Donor/login`, data, {
+      .post(`${url}${role}/login`, data, {
          headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
           },
        })
         .then((response) => {
-          console.log("response of login api ====>",JSON.stringify(response.data));
-        dispatch(loginSuccess(response.data));
+          dispatch(loginSuccess(response.data));
       })
-        .catch((error) => { 
-        dispatch(loginError(error));
-        console.log("error of login api==========>",error);
+    .catch((error) => { 
+      dispatch(loginError(error));
+      return error
       });
   });
 };
-export default loginApi;
+
+
 

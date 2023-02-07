@@ -7,7 +7,6 @@ const initialState = {
 };
 
 const apiReducer = (state = initialState, action) => {
-  console.log("action.apiReducer------>",action);
   switch (action.type) {
 
     //======================== LOGIN =======================//  

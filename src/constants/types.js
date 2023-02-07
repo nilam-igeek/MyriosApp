@@ -1,6 +1,6 @@
 export const ROLE = {
     DONOR: 'Donor',
-    REFUGEE:'Refugee',
+    REFUGEE: 'Refugee',
     SHELTER: 'Shelter',
-    MASTER:'Master'
+    MASTER: 'Admin'
 };

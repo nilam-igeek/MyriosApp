@@ -20,6 +20,7 @@ const TypesOfUser = (props) => {
             await AsyncStorage.setItem('userType', type)
         } catch (e) {
         }
+        props.navigation.navigate('Login')
     }
 
     useEffect(() => {
@@ -44,7 +45,7 @@ const TypesOfUser = (props) => {
                 <View style={styles.card}>
                     <ScrollView contentContainerStyle={{ flexGrow: 1, }}>
                         <View style={styles.subContainer}>
-                            <Text style={styles.titleText}>{`${t(`I'm a `)}${isRole?isRole :ROLE.MASTER}`}</Text>
+                            <Text style={styles.titleText}>{`${t(`I'm a `)}${isRole?isRole :'Master'}`}</Text>
                             <Button borderRadius={50}
                                 title={t(`Refugee`)}
                                 bgColor={COLORS.lemonchiffon}
@@ -82,11 +83,12 @@ const TypesOfUser = (props) => {
                                 height={50}
                                 marginTop={35}
                                 width={'80%'}
-                                onPress={() => { props.navigation.navigate('Login') }}
+                                onPress={() => onClick(ROLE.MASTER)}
                             />
                         </View>
                     </ScrollView>
                 </View>
+                
             </View>
         </ImageBackground>
     );

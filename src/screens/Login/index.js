@@ -16,16 +16,19 @@ import { Formik, Field } from 'formik';
 import * as yup from 'yup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ROLE } from '../../constants/types';
-import loginApi from '../../redux/actions/ApiActionCreator';
+import {loginApi} from '../../redux/actions/ApiActionCreator';
 import {useDispatch, useSelector} from 'react-redux';
+import Indicator from '../../components/core/Indicator';
+import _ from 'lodash';
+
 const Login = (props) => {
-const dispatch = useDispatch();
-  const data = useSelector((state) => state.apiReducer.data);
-  const loading = useSelector((state) => state.apiReducer.loading);
+    const dispatch = useDispatch();
+    const data = useSelector((state) => state.apiReducer.data);
+    const success = useSelector((state) => state.apiReducer.data.success);
+    const loading = useSelector((state) => state.apiReducer.loading);
     const { t } = useTranslation();
     const [isShow, setIsShow] = useState(false);
-  
-  const [isRole, setIsRole] = useState('');
+    const [isRole, setIsRole] = useState('');
     const isMaster = isRole === ROLE.MASTER
     const isDonor = isRole === ROLE.DONOR
     const isShelter = isRole === ROLE.SHELTER
@@ -49,11 +52,9 @@ const dispatch = useDispatch();
             .string()
             // .required(t('Password is required'))
             // //.min(8, ({ min }) => { `${('Password must be at least')} ${min} ${('characters')}` })
-            .matches(PASSWORD_PATTERN,'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character')
+            // .matches(PASSWORD_PATTERN,'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character')
             
     })
-
-
 
     const onClickSubmit = async values => {
     const { email, password } = values;
@@ -61,22 +62,18 @@ const dispatch = useDispatch();
       password: password,
       email: email
     };
-        if (body && (isDonor || isRefugee || isShelter)) {
-        props.navigation.navigate('Welcome');
-    } else if (isMaster) {
-        props.navigation.navigate('RefugeesList');
-    }  
+    dispatch(loginApi(body));
   };
 
-
     useEffect(() => {
-          const data = {
-    email: 'pratik.igeek@gmail.com',
-     password: 'password',
-   };
-    dispatch(loginApi(data));
-  }, []); 
- 
+        if (success) {
+            if (isDonor || isRefugee || isShelter) {
+                 props.navigation.navigate('Welcome');
+            } else if (isMaster) {
+                props.navigation.navigate('RefugeesList');
+            }
+        } 
+    },[success])
     
     return (
         <ImageBackground
@@ -150,6 +147,7 @@ const dispatch = useDispatch();
                     </ScrollView>
                 </View>
             </View>
+            <Indicator isLoader animate={loading}/>
         </ImageBackground>
     );
 };
