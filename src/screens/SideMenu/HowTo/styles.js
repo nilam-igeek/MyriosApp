@@ -1,4 +1,4 @@
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { COLORS } from '../../../common/style/Colors';
 import { FONTS } from '../../../common/style/Fonts';
 import BaseStyle from '../../../common/style/BaseStyle';
@@ -37,9 +37,11 @@ export default styles = StyleSheet.create({
         marginBottom: 35,
     },
     text: {
-        color: '#000',
-        fontSize: 30,
-        fontWeight: 'bold'
+        width: (BaseStyle.WIDTH / 100) * 90,
+        alignSelf: 'center',
+        color: COLORS.black,
+        fontSize: 18,
+        fontFamily:FONTS.Poppins_Regular
     }
 
 });

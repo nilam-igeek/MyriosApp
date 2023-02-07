@@ -34,9 +34,24 @@ export default styles = StyleSheet.create({
         backgroundColor: COLORS.lemonchiffon,
         borderRadius: 50,
     },
+    pickerView: {
+        width: (BaseStyle.WIDTH / 100) * 80,
+        height: 45,
+        justifyContent: 'center',
+        backgroundColor: COLORS.transparent,
+        borderBottomColor: COLORS.black,
+        borderBottomWidth:1
+    },
     text: {
         width: (BaseStyle.WIDTH / 100) * 70,
         alignSelf: 'center',
-        color: COLORS.black
+        color: COLORS.black,
+        fontFamily:FONTS.Poppins_Regular
+    },
+      textPerson: {
+        width: (BaseStyle.WIDTH / 100) * 80,
+        alignSelf: 'center',
+        color: COLORS.black,
+        fontFamily:FONTS.Poppins_Regular
     }
 });

@@ -43,6 +43,43 @@ export default styles = StyleSheet.create({
         color: COLORS.black,
         marginTop: 10
     },
+     responseText: {
+        fontSize: 20,
+        fontFamily: FONTS.Poppins_SemiBold,
+         color: COLORS.black,
+         width: '40%',
+         alignSelf:'center'
+    },
+    sendText: {
+        fontSize: 20,
+        fontFamily: FONTS.Poppins_SemiBold,
+        color: COLORS.black,
+        marginTop: 20,
+        textAlign:'right'
+    },
+    responseView: {
+        marginTop: 10,
+        alignItems: "center",
+        flexDirection: 'row',
+        width: '100%',
+        justifyContent: "space-between"
+    },
+    inputView: {
+        padding: 10,
+        borderRadius: 10,
+        width: '60%',
+        backgroundColor: 'ghostwhite',
+        height: 80,
+        alignSelf: "center",
+         shadowColor: COLORS.black,
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.20,
+        shadowRadius: 2.84,
+        elevation: 3,
+    },
     itemCard: {
         flexDirection: "row",
         width: (BaseStyle.WIDTH / 100) * 80,

@@ -26,7 +26,7 @@ import SheltersList from '../screens/Master/SheltersList';
 import RefugeesList from '../screens/Master/RefugeesList';
 import SchedulingOfCalls from '../screens/Master/SchedulingOfCalls';
 import Analytics from '../screens/Master/Analytics';
-
+import AddPerson from '../screens/SideMenu/Helped/AddPerson';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 const Router = () => {
@@ -48,6 +48,7 @@ function MyDrawer() {
         <Drawer.Screen name="Profile" component={Profile} />
         <Drawer.Screen name="Helped" component={Helped} />
         <Drawer.Screen name="ShelterWishList" component={ShelterWishList} />
+        <Drawer.Screen name="AddPerson" component={AddPerson} />
       </Drawer.Navigator>
     );
 }
@@ -102,6 +103,7 @@ function MyDrawer() {
         <Stack.Screen name="Chat" component={Chat} />
         <Stack.Screen name="SchedulingOfCalls" component={SchedulingOfCalls} />
         <Stack.Screen name="Analytics" component={Analytics} />
+        <Stack.Screen name="AddPerson" component={AddPerson} />
       </Stack.Navigator>
     </NavigationContainer>
   );

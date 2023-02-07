@@ -36,8 +36,13 @@ const Helped = (props) => {
         { id: 1, name: 'Kvitkas',gender:'Girl',age:'6', profile: IMAGES.donor1 },
         { id: 1, name: 'Ola',gender:'Mom',age:'20', profile: IMAGES.donor1 },
         { id: 1, name: 'Sophie', gender:'Boy',age:'1',profile: IMAGES.donor1 },
-    ]
-
+      ]
+    
+    const onClick = () => {
+        if (isShelter) {
+            props.navigation.navigate('AddPerson')
+        }
+    }
 
 
     return (
@@ -74,7 +79,7 @@ const Helped = (props) => {
                     height={50}
                     marginBottom={50}
                     width={(BaseStyle.WIDTH / 100) * 80}
-                    onPress={() => { }}
+                    onPress={onClick}
                 />
             </View>
         </View>
