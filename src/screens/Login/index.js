@@ -23,7 +23,7 @@ import _ from 'lodash';
 
 const Login = (props) => {
     const dispatch = useDispatch();
-    const data = useSelector((state) => state.apiReducer.data);
+    // const data = useSelector((state) => state.apiReducer.data);
     const success = useSelector((state) => state.apiReducer.data.success);
     const loading = useSelector((state) => state.apiReducer.loading);
     const { t } = useTranslation();

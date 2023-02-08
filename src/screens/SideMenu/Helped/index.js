@@ -4,18 +4,28 @@ import { View, Text, StatusBar, Image, FlatList } from 'react-native';
 import Button from '../../../components/core/Button';
 import styles from './styles';
 import '../../../../assets/i18n/i18n';
-import { IMAGES } from '../../../common/style/Images';
 import { useTranslation } from 'react-i18next';
 import { COLORS } from '../../../common/style/Colors';
 import Header from '../../../components/core/Header';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ROLE } from '../../../constants/types';
+import ProfileSvg from '../../../common/svgs/ProfileSvg';
+import { peopleApi,helpedApi } from '../../../redux/actions/ApiActionCreator';
+import { useDispatch, useSelector } from 'react-redux';
+import Indicator from '../../../components/core/Indicator';
+import _ from 'lodash';
 const Helped = (props) => {
 
     const { t } = useTranslation();
 
     const [isRole, setIsRole] = useState('');
     const isShelter = isRole === ROLE.SHELTER
+    const isDonor = isRole === ROLE.DONOR
+    const dispatch = useDispatch();
+    const dataOfHelped = useSelector((state) => state.apiReducer.data);
+    const isData = dataOfHelped.data.data
+    const success = useSelector((state) => state.apiReducer.data.success);
+    const loading = useSelector((state) => state.apiReducer.loading);
 
    
     useEffect(() => {
@@ -25,18 +35,6 @@ const Helped = (props) => {
         }
         check();
     }, []);
-
-    const list = [
-        { id: 1, name: 'Kvitkas', profile: IMAGES.donor1 },
-        { id: 1, name: 'Ola', profile: IMAGES.donor1 },
-        { id: 1, name: 'Sophie', profile: IMAGES.donor1 },
-    ]
-
-      const listOfShelter = [
-        { id: 1, name: 'Kvitkas',gender:'Girl',age:'6', profile: IMAGES.donor1 },
-        { id: 1, name: 'Ola',gender:'Mom',age:'20', profile: IMAGES.donor1 },
-        { id: 1, name: 'Sophie', gender:'Boy',age:'1',profile: IMAGES.donor1 },
-      ]
     
     const onClick = () => {
         if (isShelter) {
@@ -44,6 +42,10 @@ const Helped = (props) => {
         }
     }
 
+    useEffect(() => {
+        { isShelter && dispatch(peopleApi) }
+        { isDonor && dispatch(helpedApi) }
+    }, [peopleApi,helpedApi])
 
     return (
         <View style={styles.container}>
@@ -57,16 +59,21 @@ const Helped = (props) => {
                     'Here you can see all the people you have helped'}</Text>
                 <View style={{ flex: 1 }}>
                     <FlatList
-                        data={isShelter ? listOfShelter : list}
-                        extraData={isShelter ? listOfShelter : list}
+                        data={isData}
+                        extraData={isData}
                         keyExtractor={item => item.id}
                         renderItem={({ item }) =>
                             <View style={styles.itemCard}>
-                                <Image
-                                    resizeMode='cover'
-                                    source={item.profile}
-                                    style={styles.profileStyle} />
-                                {isShelter ? <Text style={styles.userName}>{item.name}, {item.gender}, {item.age} Years</Text> : <Text style={styles.userName}>{item.name}</Text>}
+                                 <View style={styles.profile}>
+                                    {item.image ?
+                                        <Image
+                                            resizeMode='cover'
+                                            source={item.image}
+                                            style={styles.profileStyle} />
+                                        : <ProfileSvg height={30} width={30} />}
+                                    </View>
+                                {isShelter ? <Text style={styles.userName}>{item.name}, {item.gender}, {item.age} Years</Text> :
+                                    <Text style={styles.userName}>{item.name}</Text>}
                             </View>}
                     />
                 </View>
@@ -82,6 +89,7 @@ const Helped = (props) => {
                     onPress={onClick}
                 />
             </View>
+             <Indicator isLoader animate={loading}/>
         </View>
     );
 };

@@ -1,7 +1,33 @@
 import axios from 'axios';
-import { loginData, loginSuccess, loginError,refugeesData,refugeesSuccess, refugeesError} from './ApiAction';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const url = "http://9b31-2405-201-2014-3157-a1ff-4b9a-4f17-3151.ngrok.io/api/"
+import {
+  loginData,
+  loginSuccess,
+  loginError,
+  refugeesData,
+  refugeesSuccess,
+  refugeesError,
+  donorData,
+  donorSuccess,
+  donorError,
+  sheltersData,
+  sheltersSuccess,
+  sheltersError,
+  requestsData,
+  requestsSuccess,
+  requestsError,
+  helpedData,
+  helpedSuccess,
+  helpedError,
+  peopleData,
+  peopleSuccess,
+  peopleError,
+  meetingData,
+  meetingSuccess,
+  meetingError
+} from './ApiAction';
+
+const url = "http://8d71-2405-201-2014-3157-e179-513a-b42c-c90.ngrok.io/api/"
 
 //======================== LOGIN =======================//
 export const loginApi = (data) => async (dispatch) => {
@@ -17,7 +43,7 @@ export const loginApi = (data) => async (dispatch) => {
        })
     .then(async (response) => {
           dispatch(loginSuccess(response.data));
-          await AsyncStorage.setItem('token', response.data.data.token)
+      await AsyncStorage.setItem('token', response.data.data.token)
       })
     .catch((error) => { 
       dispatch(loginError(error));
@@ -30,17 +56,121 @@ export const loginApi = (data) => async (dispatch) => {
 export const refugeesListApi = async (dispatch) => {
   var isToken = await AsyncStorage.getItem('token');
   dispatch(refugeesData());
-  // return new Promise(() => {
+  return new Promise(() => {
     axios
-      .get(`http://9b31-2405-201-2014-3157-a1ff-4b9a-4f17-3151.ngrok.io/api/refugees`, {headers: {'Authorization': `Bearer ${isToken}`}})
+        .get(`${url}refugees`, {
+          headers: {'Authorization': `Bearer ${isToken}`}
+      })
       .then((response) => {
-        console.log("response--of refugee list-->",JSON.stringify(response.data));
         dispatch(refugeesSuccess(response.data));
       })
       .catch((error) => {
-        dispatch(refugeesError(error));
-        console.log(error);
+      dispatch(refugeesError(error));
       });
-// });
+    });
 };
 
+export const donorsListApi = async (dispatch) => {
+  var isToken = await AsyncStorage.getItem('token');
+  dispatch(donorData());
+  return new Promise(() => {
+    axios
+        .get(`${url}donors`, {
+          headers: {'Authorization': `Bearer ${isToken}`}
+      })
+      .then((response) => {
+        dispatch(donorSuccess(response.data));
+      })
+      .catch((error) => {
+      dispatch(donorError(error));
+      });
+    });
+};
+
+export const sheltersListApi = async (dispatch) => {
+  var isToken = await AsyncStorage.getItem('token');
+  dispatch(sheltersData());
+  return new Promise(() => {
+    axios
+        .get(`${url}shelters`, {
+          headers: {'Authorization': `Bearer ${isToken}`}
+      })
+      .then((response) => {
+        dispatch(sheltersSuccess(response.data));
+      })
+      .catch((error) => {
+      dispatch(sheltersError(error));
+      });
+    });
+};
+
+export const requestsListApi = async (dispatch) => {
+  var isToken = await AsyncStorage.getItem('token');
+  dispatch(requestsData());
+  return new Promise(() => {
+    axios
+        .get(`${url}shelters`, {
+          headers: {'Authorization': `Bearer ${isToken}`}
+      })
+      .then((response) => {
+        dispatch(requestsSuccess(response.data));
+      })
+      .catch((error) => {
+      dispatch(requestsError(error));
+      });
+    });
+};
+
+ //======================== HELPED ========================//
+ export const helpedApi = async (dispatch) => {
+  var isToken = await AsyncStorage.getItem('token');
+  dispatch(helpedData());
+  return new Promise(() => {
+    axios
+        .get(`${url}helped`, {
+          headers: {'Authorization': `Bearer ${isToken}`}
+      })
+      .then((response) => {
+        dispatch(helpedSuccess(response.data));
+      })
+      .catch((error) => {
+      dispatch(helpedError(error));
+      });
+    });
+ };
+
+  //======================== PEOPLE ========================//
+ export const peopleApi = async (dispatch) => {
+  var isToken = await AsyncStorage.getItem('token');
+  dispatch(peopleData());
+  return new Promise(() => {
+    axios
+        .get(`${url}people`, {
+          headers: {'Authorization': `Bearer ${isToken}`}
+      })
+      .then((response) => {
+        dispatch(peopleSuccess(response.data));
+      })
+      .catch((error) => {
+      dispatch(peopleError(error));
+      });
+    });
+ };
+
+  //======================== MEETING ========================//
+ export const meetingsApi = async (dispatch) => {
+  var isToken = await AsyncStorage.getItem('token');
+  dispatch(meetingData());
+  return new Promise(() => {
+    axios
+        .get(`${url}meetings`, {
+          headers: {'Authorization': `Bearer ${isToken}`}
+      })
+      .then((response) => {
+        dispatch(meetingSuccess(response.data));
+      })
+      .catch((error) => {
+      dispatch(meetingError(error));
+      });
+    });
+};

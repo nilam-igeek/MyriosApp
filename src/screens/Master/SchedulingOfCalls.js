@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { View, Text, StatusBar} from 'react-native';
 import styles from './styles';
 import '../../../assets/i18n/i18n';
@@ -10,7 +10,6 @@ import _ from 'lodash'
 import ListOfCallLink from './ListOfCallLink';
 
 const SchedulingOfCalls = (props) => {
-    const Url = "https://us05web.zoom.us/j/83962414337?pwd=YVRxQlB3U3ZKMDZsRFBBTGlNemZWQT09";
     const { t } = useTranslation();
     const [time, setTime] = useState('');
     const [isShowModal, setIsShowModal] = useState(false);
@@ -28,6 +27,7 @@ const SchedulingOfCalls = (props) => {
     const onChangeDate = (date) => {
         setIsShowModal(true)
     }
+
 
     return (
         <View style={styles.container}>

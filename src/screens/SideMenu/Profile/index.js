@@ -19,6 +19,7 @@ const Profile = (props) => {
     const { t } = useTranslation();
     const [profile, setProfile] = useState('');
     const [isRole, setIsRole] = useState('');
+    const [isSelected,setIsSelected] = useState('G')
     const isRefugee = isRole === ROLE.REFUGEE
     const isShelter = isRole === ROLE.SHELTER
     useEffect(() => {
@@ -47,8 +48,9 @@ const loginValidationSchema = yup.object().shape({
         };
     };
 
-
-
+    const onClick = (type) => {
+    setIsSelected(type)
+}
 
     return (
         <View style={styles.container}>
@@ -109,19 +111,50 @@ const loginValidationSchema = yup.object().shape({
                                                 placeholderColor={COLORS.black}
                                                 isError={errors.age}
                                             />
-                                            <Field
-                                                name={'type'}
-                                                component={Input}
-                                                mt={30}
-                                                value={values.type}
-                                                onChangeText={handleChange('type')}
-                                                onBlur={handleBlur('type')}
-                                                width={(BaseStyle.WIDTH / 100) * 80}
-                                                inputWidth={(BaseStyle.WIDTH / 100) * 70}
-                                                placeholder={'Girl/Boy/Mom'}
-                                                placeholderColor={COLORS.black}
-                                                isError={errors.type} />
-                                        </>}
+                                           
+                                            <Text style={styles.chooseOneText}>{'Choose one...'}</Text>
+                                            <View style={styles.chooseOneCard}>
+                                                <Button
+                                                    title={t('Girl')}
+                                                    fontSize={14}
+                                                    bgColor={isSelected === 'G' ? COLORS.floralwhite : COLORS.lemonchiffon}
+                                                    color={COLORS.black}
+                                                    height={45}
+                                                    width={'48%'}
+                                                    onPress={() => { onClick('G') }}
+                                                />
+                                                <Button
+                                                    bgColor={isSelected === 'B' ? COLORS.floralwhite : COLORS.lemonchiffon}
+                                                    title={t('Boy')}
+                                                    fontSize={14}
+                                                    color={COLORS.black}
+                                                    height={45}
+                                                    width={'48%'}
+                                                    onPress={() => { onClick('B') }}
+                                                />
+                                            </View>
+                                            <View style={[styles.chooseOneCard, { marginTop: 10 }]}>
+                                                <Button
+                                                    title={t('Mom')}
+                                                    fontSize={14}
+                                                    bgColor={isSelected === 'M' ? COLORS.floralwhite : COLORS.lemonchiffon}
+                                                    color={COLORS.black}
+                                                    height={45}
+                                                    width={'48%'}
+                                                    onPress={() => { onClick('M') }}
+                                                />
+                                                <Button
+                                                    bgColor={isSelected === 'W' ? COLORS.floralwhite : COLORS.lemonchiffon}
+                                                    title={t('Woman')}
+                                                    fontSize={14}
+                                                    color={COLORS.black}
+                                                    height={45}
+                                                    width={'48%'}
+                                                    onPress={() => { onClick('W') }}
+                                                />
+                                            </View>
+                                        </>
+                                    }
 
                                     {isShelter && <Field
                                         name={'about'}

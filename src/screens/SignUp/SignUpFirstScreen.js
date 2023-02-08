@@ -20,7 +20,7 @@ const SignUpFirstScreen = (props) => {
 
     const { t } = useTranslation();
     const [profile, setProfile] = useState('');
-    const [isUserType, setIsUserType] = useState('');
+    const [isSelected,setIsSelected] = useState('G')
     const [isRole, setIsRole] = useState('');
     const [isImages, setIsImages] = useState('')
     const isRefugee = isRole === ROLE.REFUGEE
@@ -59,7 +59,7 @@ const SignUpFirstScreen = (props) => {
             address: address,
             about: about,
             age: age,
-            isUserType: isUserType
+            isUserType: isSelected
         };
         if (isRefugee) {
             props.navigation.navigate('Chat');
@@ -77,7 +77,7 @@ const SignUpFirstScreen = (props) => {
     };
 
     const onClick = (type) => {
-        setIsUserType(type)
+        setIsSelected(type)
     }
 
 const onClickProfile = () => {
@@ -162,40 +162,40 @@ const onClickProfile = () => {
                                                     <Button
                                                         title={t('Girl')}
                                                         fontSize={14}
-                                                        bgColor={COLORS.lemonchiffon}
+                                                        bgColor={isSelected === 'G' ? COLORS.floralwhite:COLORS.lemonchiffon}
                                                         color={COLORS.black}
                                                         height={45}
                                                         width={'48%'}
-                                                        onPress={() => { onClick('Girl') }}
+                                                        onPress={() => { onClick('G') }}
                                                     />
                                                     <Button
-                                                        bgColor={COLORS.lemonchiffon}
+                                                        bgColor={isSelected === 'B' ? COLORS.floralwhite:COLORS.lemonchiffon}
                                                         title={t('Boy')}
                                                         fontSize={14}
                                                         color={COLORS.black}
                                                         height={45}
                                                         width={'48%'}
-                                                        onPress={() => { onClick('Boy') }}
+                                                        onPress={() => { onClick('B') }}
                                                     />
                                                 </View>
                                                 <View style={[styles.chooseOneCard, { marginTop: 10 }]}>
                                                     <Button
                                                         title={t('Mom')}
                                                         fontSize={14}
-                                                        bgColor={COLORS.lemonchiffon}
+                                                        bgColor={isSelected === 'M' ? COLORS.floralwhite:COLORS.lemonchiffon}
                                                         color={COLORS.black}
                                                         height={45}
                                                         width={'48%'}
-                                                        onPress={() => { onClick('Mom') }}
+                                                        onPress={() => { onClick('M') }}
                                                     />
                                                     <Button
-                                                        bgColor={COLORS.lemonchiffon}
+                                                        bgColor={isSelected === 'W' ? COLORS.floralwhite:COLORS.lemonchiffon}
                                                         title={t('Woman')}
                                                         fontSize={14}
                                                         color={COLORS.black}
                                                         height={45}
                                                         width={'48%'}
-                                                        onPress={() => { onClick('Woman') }}
+                                                        onPress={() => { onClick('W') }}
                                                     />
                                                 </View>
                                             </>

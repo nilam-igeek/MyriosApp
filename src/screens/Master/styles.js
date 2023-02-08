@@ -270,5 +270,23 @@ export default styles = StyleSheet.create({
         color: COLORS.white,
         fontSize: 10,
         fontFamily: FONTS.Poppins_SemiBold
+    },
+    profile: {
+        width: 60,
+        height: 60,
+        borderRadius: 60 / 2,
+        backgroundColor: COLORS.black,
+        justifyContent: 'center',
+        alignItems: "center",
+    },
+    analyticsContainer: {
+         width: (BaseStyle.WIDTH / 100) * 90,
+        alignSelf: 'center',
+    },
+    analyticsText: {
+        textAlign: "left",
+        color: COLORS.black,
+        fontSize: 20,
+        fontFamily: FONTS.Poppins_SemiBold
     }
 });

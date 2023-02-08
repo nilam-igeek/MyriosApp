@@ -11,5 +11,6 @@ export const COLORS = {
     red: 'red',
     seashell: `#fff5ee`,
     floralwhite: 'floralwhite',
-    orangered:'orangered'
+    orangered: 'orangered',
+    cream:'#FFECDF'
 };

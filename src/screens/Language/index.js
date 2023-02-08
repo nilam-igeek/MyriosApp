@@ -15,7 +15,7 @@ const Language = (props) => {
     const [currentLanguage, setLanguage] = useState('en');
 
 
-    const data = [
+    const dataLanguage = [
         { key: 'en', value: 'English' },
         { key: 'hi', value: 'Hindi' },
         { key: 'es', value: 'Spanish' },
@@ -47,7 +47,7 @@ const Language = (props) => {
                                 dropdownStyles={{ width: '100%', zIndex: 2, backgroundColor: COLORS.white }}
                                 // fontFamily={FONTS.Poppins_Regular}
                                 setSelected={changeLanguage}
-                                data={data}
+                                data={dataLanguage}
                                 save="key"
                                 boxStyles={{ borderRadius: 50, }} />
                         </View>

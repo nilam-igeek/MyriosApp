@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StatusBar } from 'react-native';
 import styles from './styles';
 import '../../../../assets/i18n/i18n';
@@ -6,55 +6,27 @@ import { useTranslation } from 'react-i18next';
 import Swiper from 'react-native-swiper';
 import { COLORS } from '../../../common/style/Colors';
 import Header from '../../../components/core/Header';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ROLE } from '../../../constants/types';
+import { dataOfSwiper, donorSwiper,dataSwiper } from './ArrayOfSwiperData';
+import ArrowLeftSvg from '../../../common/svgs/ArrowLeftSvg';
+import ArrowRightSvg from '../../../common/svgs/ArrowRightSvg';
 const HowTo = (props) => {
 
     const { t } = useTranslation();
 
-    const donorSwiper = [
-        {
-            id: 1,
-            des: 'Welcome to Myrios! We are so glad you are here! This page is to walk you through a step-by-step process on how to find refugees or shelters’ wishlists and fufill them!',
-        },
-        {
-            id: 2,
-            des: 'First, head over to your explore page where you can see descriptors of the Refugee or shelter you would be donating to. Once you find someone you would like to help, you can click on their wishlist and add to cart something you would like to purchase for them!\n Add the item you would like to donate, and make sure “this is a gift” is clicked',
-        },
-        {
-            id: 3,
-            des: 'After, click the address that states, “Gift Registry Address”\n This address will send the donation to the refugee or shelter without disclosing its address for privacy purposes.\n After that, you can go ahead and purchase! Thank you for your help changing lives!'
-        }
-    ]
+    const [isRole, setIsRole] = useState('');
+    const isShelter = isRole === ROLE.SHELTER
+    const isDonor = isRole === ROLE.DONOR
 
-     const refugeeSwiper = [
-        {
-            id: 1,
-            des: 'Welcome to Myrios! We are so glad you are here! This page is to walk you through a step-by-step process on how to create and upload your wishlist, as well as utilize the Myrios app as a whole!',
-        },
-        {
-            id: 2,
-            des: 'First, head over to your explore page where you can see descriptors of the Refugee or shelter you would be donating to. Once you find someone you would like to help, you can click on their wishlist and add to cart something you would like to purchase for them!\n Add the item you would like to donate, and make sure “this is a gift” is clicked',
-        },
-        {
-            id: 3,
-            des: 'After, click the address that states, “Gift Registry Address”\n This address will send the donation to the refugee or shelter without disclosing its address for privacy purposes.\n After that, you can go ahead and purchase! Thank you for your help changing lives!'
+    useEffect(() => {
+        async function check() {
+            var item = await AsyncStorage.getItem('userType');
+            setIsRole(item)
         }
-     ]
-    
-    const shelterSwiper = [
-        {
-            id: 1,
-            des: 'Welcome to Myrios! We are so glad you are here! This page is to walk you through a step-by-step process on how to create and upload your wishlist, as well as utilize the Myrios app as a whole!',
-        },
-        {
-            id: 2,
-            des: 'First, head over to your explore page where you can see descriptors of the Refugee or shelter you would be donating to. Once you find someone you would like to help, you can click on their wishlist and add to cart something you would like to purchase for them!\n Add the item you would like to donate, and make sure “this is a gift” is clicked',
-        },
-        {
-            id: 3,
-            des: 'After, click the address that states, “Gift Registry Address”\n This address will send the donation to the refugee or shelter without disclosing its address for privacy purposes.\n After that, you can go ahead and purchase! Thank you for your help changing lives!'
-        }
-    ]
-
+        check();
+    }, []);
+    const dataList = isDonor ? donorSwiper : dataOfSwiper
 
     return (
         <View style={styles.container}>
@@ -62,15 +34,26 @@ const HowTo = (props) => {
             <Header title={'Myrios'} onPress={() => { props.navigation.toggleDrawer() }} />
             <Swiper
                 style={styles.wrapper}
-                showsButtons={false}
+                showsButtons={true}
                 dot={<View style={styles.dot} />}
                 activeDot={<View style={styles.activeDot} />}
+                nextButton={<View style={{width:20,height:20}}><ArrowRightSvg/></View>}
+                prevButton={<View style={{ width: 20, height: 20 }}><ArrowLeftSvg/></View>}
+                buttonWrapperStyle={{
+                    backgroundColor: 'transparent',
+                    flexDirection: 'row',
+                    position: 'absolute',
+                    top: 0, left: 0, flex: 1,
+                    paddingHorizontal: 18,
+                    paddingVertical: 50, justifyContent: 'space-between', alignItems: 'flex-end'
+                }}
             >
-                {donorSwiper.map((item) => {
+                {dataSwiper.map((item) => {
                     return (
                         <View style={styles.slide1}>
-                            <Text style={styles.text}>{item.des}</Text>
-                            <Text style={styles.text}>{item.des2}</Text>
+                            <Text style={styles.skipText}>{'Skip'}</Text>
+                            <Text style={styles.titleText}>{item.title}</Text>
+                          <Text style={styles.subText}>{item.subTitle}</Text>
                         </View>
                     )
                 })}

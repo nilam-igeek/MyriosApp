@@ -47,6 +47,14 @@ container: {
         marginLeft: 20,
         fontFamily: FONTS.Poppins_SemiBold,
         fontSize:12
-  }
+    },
+     profile: {
+        width: 60,
+        height: 60,
+        borderRadius: 60 / 2,
+        backgroundColor: COLORS.black,
+        justifyContent: 'center',
+        alignItems: "center",
+    },
 
 });

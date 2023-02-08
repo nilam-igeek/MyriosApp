@@ -45,8 +45,22 @@ container: {
         backgroundColor: COLORS.black,
         justifyContent: 'center',
         alignItems: "center",
-marginBottom:30
-
+        marginBottom:30
+  
     },
+        chooseOneText: {
+        width: (BaseStyle.WIDTH / 100) * 80,
+        alignSelf:"center",
+        marginBottom: 5,
+        marginTop: 20,
+        fontSize: 18,
+        color: COLORS.black,
+        fontFamily: FONTS.Poppins_SemiBold
+    },
+    chooseOneCard: {
+        width: (BaseStyle.WIDTH / 100) * 80,
+        flexDirection: 'row',
+        justifyContent: 'space-between' 
+},
 
 });
