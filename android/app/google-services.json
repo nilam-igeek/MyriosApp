@@ -29,6 +29,13 @@
             {
               "client_id": "82918564592-25ur29fjqar1s4l3l52ohnnctdkooott.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "82918564592-3s1bngq7q1lhjrhjdi38b9r7lamtdm97.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.myriosapp"
+              }
             }
           ]
         }

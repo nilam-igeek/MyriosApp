@@ -16,7 +16,7 @@ export default styles = StyleSheet.create({
         fontSize: 28,
         color: COLORS.black,
         textAlign: "left",
-        // fontStyle: FONTS.Poppins_SemiBold,
+        fontFamily:FONTS.Poppins_SemiBold,
     },
     container: {
         flex: 1,
@@ -35,7 +35,7 @@ export default styles = StyleSheet.create({
     },
     lanText: {
         fontSize: 14,
-        // fontStyle: FONTS.Poppins_SemiBold,                     
+        fontFamily:FONTS.Poppins_SemiBold,                    
         alignSelf: 'center',
         marginTop:40,
         marginLeft: 22,

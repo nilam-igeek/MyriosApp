@@ -27,7 +27,8 @@ import {
   meetingError
 } from './ApiAction';
 
-const url = "http://8d71-2405-201-2014-3157-e179-513a-b42c-c90.ngrok.io/api/"
+
+const url = "https://47d5-2405-201-2014-3157-5084-b5f2-b4b1-4e99.ngrok.io/api/"
 
 //======================== LOGIN =======================//
 export const loginApi = (data) => async (dispatch) => {

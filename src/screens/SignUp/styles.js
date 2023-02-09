@@ -147,6 +147,38 @@ export default styles = StyleSheet.create({
         backgroundColor: COLORS.white,
         borderWidth: 0.5,
         borderColor: COLORS.grey
-
+    },
+    blurView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0,0.6)',
+    },
+    blurSubView: {
+        backgroundColor: COLORS.white,
+        width: (BaseStyle.WIDTH / 100) * 70,
+        alignSelf: 'center',
+        borderRadius: 5,
+        padding: 15,
+    },
+    takePhotoText: {
+        color: COLORS.black,
+        fontSize: 16,
+        marginTop: 18,
+        textAlign: 'left',
+        fontFamily: FONTS.Poppins_Regular
+    },
+    cancelText: {
+        color: COLORS.black,
+        fontSize: 16,
+        marginTop: 18,
+        textAlign: 'right',
+        fontFamily: FONTS.Poppins_SemiBold
+    },
+    titleOfPicker: {
+        fontSize: 18,
+        color: COLORS.black,
+        fontFamily: FONTS.Poppins_SemiBold,
+        textAlign:'left'
     }
 });

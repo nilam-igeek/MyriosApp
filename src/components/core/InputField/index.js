@@ -8,7 +8,7 @@ const Input = ({
     placeholder,
     secureTextEntry,
     maxLength,
-    onEndEditing,
+    // onEndEditing,
     onChangeValue,
     isBottomLineInput,
     width,
@@ -31,6 +31,8 @@ const Input = ({
     numberOfLines,
     bgColor,
     inputColor,
+    ref,
+    onEndEditing,
     field: { name, onBlur, onChange, value },
     form: { errors, touched, setFieldTouched },
     ...inputProps
@@ -56,6 +58,7 @@ const Input = ({
             }]}>
                 {isLeft && <>{children}</>}
                 <TextInput
+                    ref={ref}
                     style={{color:inputColor?inputColor:COLORS.black, marginTop:(multiline && Platform.OS === 'ios') ? 70 :0, height: height? height:45,width: inputWidth ? inputWidth : (BaseStyle.WIDTH / 100) * 100 }}
                     secureTextEntry={secureTextEntry}
                     value={value}
@@ -69,7 +72,8 @@ const Input = ({
                     numberOfLines={numberOfLines}
                     placeholderTextColor={placeholderColor? placeholderColor : placeholder && COLORS.lightgray}
                     placeholder={placeholder ? placeholder : ''}
-                 
+                    returnKeyType={'next'}
+                    onEndEditing={onEndEditing}
                 />
             </View>
             {hasError && <Text style={[styles.titleText, { 

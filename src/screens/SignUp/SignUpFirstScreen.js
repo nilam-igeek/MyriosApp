@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ImageBackground, ScrollView, Pressable, Image ,Alert} from 'react-native';
+import { View, Text, ImageBackground, ScrollView, Pressable, Image, Alert, Modal } from 'react-native';
 import { COLORS } from '../../common/style/Colors';
 import Button from '../../components/core/Button';
 import styles from './styles';
@@ -20,12 +20,13 @@ const SignUpFirstScreen = (props) => {
 
     const { t } = useTranslation();
     const [profile, setProfile] = useState('');
-    const [isSelected,setIsSelected] = useState('G')
+    const [isSelected, setIsSelected] = useState('G');
     const [isRole, setIsRole] = useState('');
-    const [isImages, setIsImages] = useState('')
+    const [isImages, setIsImages] = useState('');
+    const [modalVisible, setModalVisible] = useState(false);
     const isRefugee = isRole === ROLE.REFUGEE
     const isShelter = isRole === ROLE.SHELTER
-    const isDonor= isRole === ROLE.DONOR
+    const isDonor = isRole === ROLE.DONOR
     useEffect(() => {
         async function check() {
             var item = await AsyncStorage.getItem('userType');
@@ -34,25 +35,23 @@ const SignUpFirstScreen = (props) => {
         check();
     }, []);
 
-
-
-    const loginValidationSchema = yup.object().shape({
+ const loginValidationSchema = yup.object().shape({
         firstName: yup
             .string(),
-            // .required(t('Firstname is Required')),
+        // .required(t('Firstname is Required')),
         address: yup
             .string(),
-            // .required(t('Address is required')),
+        // .required(t('Address is required')),
         about: yup
             .string(),
-            // .required(t('About is required')),
+        // .required(t('About is required')),
         age: yup
             .string(),
-            // .required(t('Age is required'))
+        // .required(t('Age is required'))
     })
 
     const onClickSubmit = async values => {
-        
+
         const { firstName, address, about, age, } = values;
         var body = {
             firstName: firstName,
@@ -80,17 +79,29 @@ const SignUpFirstScreen = (props) => {
         setIsSelected(type)
     }
 
-const onClickProfile = () => {
-  ImagePicker.openPicker({
-  width: 300,
-  height: 400,
-  cropping: true
-}).then(image => {
-    setIsImages(image.path)
-});
+    const openLibrary = () => {
+        // props.navigation.navigate('ChooseProfile') 
+        ImagePicker.openPicker({
+            width: 300,
+            height: 400,
+            cropping: true
+        }).then(image => {
+            setIsImages(image.path)
+            setModalVisible(false)
+        });
     }
-    
 
+    const openCamera = () => {
+        // props.navigation.navigate('ChooseProfile') 
+        ImagePicker.openCamera({
+            width: 300,
+            height: 400,
+            cropping: true,
+        }).then(image => {
+            setIsImages(image.path)
+            setModalVisible(false)
+        });
+    }
 
     return (
         <ImageBackground
@@ -113,15 +124,28 @@ const onClickProfile = () => {
                                     <>
                                         <View style={styles.profileNameContainer}>
                                             <View style={styles.profileContainer}>
-                                                <Pressable
-                                                    onPress={onClickProfile}
-                                                    style={styles.profile}>
+                                                <Pressable onPress={() => { setModalVisible(!modalVisible) }} style={styles.profile}>
+                                                    {isImages ?
                                                         <Image
                                                             resizeMode='cover'
-                                                            source={{uri:isImages}}
-                                                            style={styles.profileStyle} />
-                                                    {/* :<ProfileSvg /> */}
+                                                            source={{ uri: isImages }}
+                                                            style={styles.profileStyle} /> :
+                                                        <ProfileSvg />}
                                                 </Pressable>
+                                                <Modal
+                                                    animationType="slide"
+                                                    transparent={true}
+                                                    visible={modalVisible}
+                                                    onRequestClose={() => {setModalVisible(!modalVisible)}}>
+                                                    <View style={styles.blurView}>
+                                                        <View style={styles.blurSubView}>
+                                                            <Text style={styles.titleOfPicker}>{'Select Image'}</Text>
+                                                            <Text onPress={openCamera} style={styles.takePhotoText}>{'Take Photo...'}</Text>
+                                                            <Text onPress={openLibrary} style={styles.takePhotoText}>{'Choose from Library...'}</Text>
+                                                            <Text onPress={() => setModalVisible(false)} style={styles.cancelText}>{'CANCEL'}</Text>
+                                                        </View>
+                                                    </View>
+                                                </Modal>
                                             </View>
                                             <View style={styles.nameInput}>
                                                 <Field
@@ -162,14 +186,14 @@ const onClickProfile = () => {
                                                     <Button
                                                         title={t('Girl')}
                                                         fontSize={14}
-                                                        bgColor={isSelected === 'G' ? COLORS.floralwhite:COLORS.lemonchiffon}
+                                                        bgColor={isSelected === 'G' ? COLORS.floralwhite : COLORS.lemonchiffon}
                                                         color={COLORS.black}
                                                         height={45}
                                                         width={'48%'}
                                                         onPress={() => { onClick('G') }}
                                                     />
                                                     <Button
-                                                        bgColor={isSelected === 'B' ? COLORS.floralwhite:COLORS.lemonchiffon}
+                                                        bgColor={isSelected === 'B' ? COLORS.floralwhite : COLORS.lemonchiffon}
                                                         title={t('Boy')}
                                                         fontSize={14}
                                                         color={COLORS.black}
@@ -182,14 +206,14 @@ const onClickProfile = () => {
                                                     <Button
                                                         title={t('Mom')}
                                                         fontSize={14}
-                                                        bgColor={isSelected === 'M' ? COLORS.floralwhite:COLORS.lemonchiffon}
+                                                        bgColor={isSelected === 'M' ? COLORS.floralwhite : COLORS.lemonchiffon}
                                                         color={COLORS.black}
                                                         height={45}
                                                         width={'48%'}
                                                         onPress={() => { onClick('M') }}
                                                     />
                                                     <Button
-                                                        bgColor={isSelected === 'W' ? COLORS.floralwhite:COLORS.lemonchiffon}
+                                                        bgColor={isSelected === 'W' ? COLORS.floralwhite : COLORS.lemonchiffon}
                                                         title={t('Woman')}
                                                         fontSize={14}
                                                         color={COLORS.black}

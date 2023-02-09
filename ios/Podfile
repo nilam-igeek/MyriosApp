@@ -43,6 +43,10 @@ target 'MyriosApp' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
    permissions_path = '../node_modules/react-native-permissions/ios'
+    pod 'Firebase', :modular_headers => true
+    pod 'FirebaseCoreInternal', :modular_headers => true
+    pod 'GoogleUtilities', :modular_headers => true
+    pod 'FirebaseCore', :modular_headers => true
   target 'MyriosAppTests' do
     inherit! :complete
     # Pods for testing

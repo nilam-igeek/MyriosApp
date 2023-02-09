@@ -27,4 +27,13 @@ export const IMAGES = {
     //Common
     wishList1: require('../assets/wishList1.jpg'),
     wishList2: require('../assets/wishList2.jpg'),
+
+    //Swiper
+    screen1: require('../assets/Swiper/screen1.png'),
+    screen2: require('../assets/Swiper/screen2.png'),
+    screen3: require('../assets/Swiper/screen3.png'),
+    screen4: require('../assets/Swiper/screen4.png'),
+    screen5: require('../assets/Swiper/screen5.png'),
+    screen6: require('../assets/Swiper/screen6.png'),
+    screen7: require('../assets/Swiper/screen7.png')
 };

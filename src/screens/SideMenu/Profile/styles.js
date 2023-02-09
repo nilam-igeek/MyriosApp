@@ -23,12 +23,11 @@ container: {
          alignSelf: 'center',
     },
       profileStyle: {
-        width: 100,
-        height: 100,
-        borderRadius: 100 / 2,
+        width: 105,
+        height: 105,
+        borderRadius: 105 / 2,
     },
     profileNameContainer: {
-        // flexDirection: 'row',
         alignItems: 'center',
         width: '100%',
         justifyContent: 'space-between',
@@ -62,5 +61,37 @@ container: {
         flexDirection: 'row',
         justifyContent: 'space-between' 
 },
-
+  blurView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0,0.6)',
+    },
+    blurSubView: {
+        backgroundColor: COLORS.white,
+        width: (BaseStyle.WIDTH / 100) * 70,
+        alignSelf: 'center',
+        borderRadius: 5,
+        padding: 15,
+    },
+    takePhotoText: {
+        color: COLORS.black,
+        fontSize: 16,
+        marginTop: 18,
+        textAlign: 'left',
+        fontFamily: FONTS.Poppins_Regular
+    },
+    cancelText: {
+        color: COLORS.black,
+        fontSize: 16,
+        marginTop: 18,
+        textAlign: 'right',
+        fontFamily: FONTS.Poppins_SemiBold
+    },
+    titleOfPicker: {
+        fontSize: 18,
+        color: COLORS.black,
+        fontFamily: FONTS.Poppins_SemiBold,
+        textAlign:'left'
+    }
 });

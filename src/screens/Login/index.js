@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useRef } from 'react';
 import { View, Text, ImageBackground, ScrollView, Pressable,TextInput } from 'react-native';
 import { COLORS } from '../../common/style/Colors';
 import Button from '../../components/core/Button';
@@ -22,6 +22,8 @@ import Indicator from '../../components/core/Indicator';
 import _ from 'lodash';
 
 const Login = (props) => {
+    // const emailRef = useRef();
+    // const passwordRef = useRef();
     const dispatch = useDispatch();
     // const data = useSelector((state) => state.apiReducer.data);
     const success = useSelector((state) => state.apiReducer.data.success);

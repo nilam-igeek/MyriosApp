@@ -43,19 +43,19 @@ export default styles = StyleSheet.create({
         color: COLORS.black,
         marginTop: 10
     },
-     responseText: {
+    responseText: {
         fontSize: 20,
         fontFamily: FONTS.Poppins_SemiBold,
-         color: COLORS.black,
-         width: '40%',
-         alignSelf:'center'
+        color: COLORS.black,
+        width: '40%',
+        alignSelf: 'center'
     },
     sendText: {
         fontSize: 20,
         fontFamily: FONTS.Poppins_SemiBold,
         color: COLORS.black,
         marginTop: 20,
-        textAlign:'right'
+        textAlign: 'right'
     },
     responseView: {
         marginTop: 10,
@@ -71,10 +71,10 @@ export default styles = StyleSheet.create({
         backgroundColor: 'ghostwhite',
         height: 80,
         alignSelf: "center",
-         shadowColor: COLORS.black,
+        shadowColor: COLORS.black,
         shadowOffset: {
-          width: 0,
-          height: 2,
+            width: 0,
+            height: 2,
         },
         shadowOpacity: 0.20,
         shadowRadius: 2.84,
@@ -280,13 +280,111 @@ export default styles = StyleSheet.create({
         alignItems: "center",
     },
     analyticsContainer: {
-         width: (BaseStyle.WIDTH / 100) * 90,
+        flex: 1,
+        width: (BaseStyle.WIDTH / 100) * 90,
         alignSelf: 'center',
     },
     analyticsText: {
         textAlign: "left",
         color: COLORS.black,
-        fontSize: 20,
+        fontSize: 24,
         fontFamily: FONTS.Poppins_SemiBold
+    },
+    item: {
+        flex: 1,
+        alignItems: "center",
+        padding: 10,
+        backgroundColor: COLORS.cream,
+        borderRadius: 10,
+        borderWidth: 3,
+        borderColor: COLORS.seashell
+    },
+    listView: {
+        marginTop: 20,
+        // flex: 1,
+        marginHorizontal: "auto",
+        width: '100%',
+        alignSelf: 'center'
+    },
+    itemText1: {
+        color: COLORS.black,
+        fontSize: 12,
+        fontFamily: FONTS.Poppins_SemiBold
+    },
+    itemText2: {
+        marginVertical:10,
+        color: COLORS.black,
+        fontSize: 18,
+        fontFamily: FONTS.Poppins_SemiBold
+    },
+    itemText3: {
+        color: COLORS.black,
+        fontSize: 12,
+        fontFamily: FONTS.Poppins_Regular
+    },
+    overView: {
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginTop: 20,
+        width: '100%',
+        alignSelf: 'center',
+        flexDirection: 'row'
+    },
+    overViewText: {
+        fontSize: 20,
+        color: COLORS.black,
+        fontFamily: FONTS.Poppins_SemiBold
+    },
+    dateTimeText: {
+        fontSize: 16,
+        color: COLORS.black,
+        marginRight: 8,
+        fontFamily: FONTS.Poppins_Regular
+    },
+    pieCard: {
+        flexDirection: 'row',
+        alignItems: 'center' 
+    },
+    pieBox: {
+        width: 25,
+        height: 25,
+        backgroundColor: "red",
+        borderRadius: 5,
+        marginRight: 10
+    },
+    pieText: {
+        fontSize: 12,
+        color: COLORS.black,
+        fontFamily: FONTS.Poppins_Regular
+    },
+    mostPopularText: {
+        marginBottom:15,
+        textAlign:'left',
+          fontSize: 20,
+        color: COLORS.black,
+        fontFamily: FONTS.Poppins_SemiBold
+    },
+     pieContainer: {
+         justifyContent: 'center', 
+        alignItems: "center",
+        marginTop: 20 
+    },
+    pieSubContainer: {
+        marginVertical: 38,
+        flexDirection: 'row',
+        width: '100%',
+        alignSelf: 'center',
+        justifyContent: 'space-between'
+    },
+    popularScreen: {
+        alignItems: "center",
+        width: 320,
+        height: 570,
+        alignSelf: 'center',
+        marginBottom:10
+    },
+    popularScreenImg: {
+        width: '100%',
+        height: '100%'
     }
 });

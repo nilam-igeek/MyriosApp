@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StatusBar, Pressable, ScrollView } from 'react-native';
+import { View, Text, StatusBar, Pressable, ScrollView, Image, Modal } from 'react-native';
 import Button from '../../../components/core/Button';
 import styles from './styles';
 import '../../../../assets/i18n/i18n';
@@ -14,12 +14,15 @@ import EditSvg from '../../../common/svgs/EditSvg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ROLE } from '../../../constants/types';
 import CountryPickerModal from '../../../components/core/CountryPickerModal';
+import ImagePicker from 'react-native-image-crop-picker';
 
 const Profile = (props) => {
     const { t } = useTranslation();
     const [profile, setProfile] = useState('');
     const [isRole, setIsRole] = useState('');
-    const [isSelected,setIsSelected] = useState('G')
+    const [isSelected, setIsSelected] = useState('G');
+    const [isImages, setIsImages] = useState('');
+    const [modalVisible, setModalVisible] = useState(false);
     const isRefugee = isRole === ROLE.REFUGEE
     const isShelter = isRole === ROLE.SHELTER
     useEffect(() => {
@@ -30,7 +33,7 @@ const Profile = (props) => {
         check();
     }, []);
 
-const loginValidationSchema = yup.object().shape({
+    const loginValidationSchema = yup.object().shape({
         firstName: yup
             .string(),
         // .required(t('Firstname is Required')),
@@ -49,13 +52,38 @@ const loginValidationSchema = yup.object().shape({
     };
 
     const onClick = (type) => {
-    setIsSelected(type)
-}
+        setIsSelected(type)
+    }
+
+    const openLibrary = () => {
+        // props.navigation.navigate('ChooseProfile') 
+        ImagePicker.openPicker({
+            width: 300,
+            height: 400,
+            cropping: true
+        }).then(image => {
+            setIsImages(image.path)
+            setModalVisible(false)
+        });
+    }
+
+    const openCamera = () => {
+        // props.navigation.navigate('ChooseProfile') 
+        ImagePicker.openCamera({
+            width: 300,
+            height: 400,
+            cropping: true,
+        }).then(image => {
+            setIsImages(image.path)
+            setModalVisible(false)
+        });
+    }
+
 
     return (
         <View style={styles.container}>
             <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.seashell} />
-            <Header title={'Myrios'} onPress={() => {props.navigation.toggleDrawer()}} />
+            <Header title={'Myrios'} onPress={() => { props.navigation.toggleDrawer() }} />
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <View style={{ justifyContent: 'center', alignItems: "center" }}>
                     <Text style={styles.titleText}>{'PROFILE'}</Text>
@@ -66,16 +94,30 @@ const loginValidationSchema = yup.object().shape({
                         onSubmit={onClickSubmit}>
                         {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, }) => (
                             <>
-                            <View style={styles.profileNameContainer}>
-                                    <Pressable onPress={() => { props.navigation.navigate('ChooseProfile') }} style={styles.profile}>
-                                        {profile ?
+                                <View style={styles.profileNameContainer}>
+                                    <Pressable onPress={() => { setModalVisible(!modalVisible) }} style={styles.profile}>
+                                        {isImages ?
                                             <Image
                                                 resizeMode='cover'
-                                                source={profile}
+                                                source={{ uri: isImages }}
                                                 style={styles.profileStyle} /> :
                                             <ProfileSvg />}
                                     </Pressable>
-
+                                    <Modal
+                                        animationType="slide"
+                                        transparent={true}
+                                        visible={modalVisible}
+                                        onRequestClose={() => {setModalVisible(!modalVisible);
+                                        }}>
+                                        <View style={styles.blurView}>
+                                            <View style={styles.blurSubView}>
+                                                <Text style={styles.titleOfPicker}>{'Select Image'}</Text>
+                                                <Text onPress={openCamera} style={styles.takePhotoText}>{'Take Photo...'}</Text>
+                                                <Text onPress={openLibrary} style={styles.takePhotoText}>{'Choose from Library...'}</Text>
+                                                <Text onPress={() => setModalVisible(false)} style={styles.cancelText}>{'CANCEL'}</Text>
+                                            </View>
+                                        </View>
+                                    </Modal>
                                     <Field
                                         name={'firstName'}
                                         placeholderColor={COLORS.black}
@@ -92,10 +134,10 @@ const loginValidationSchema = yup.object().shape({
 
                                     {(isShelter || isRefugee) &&
                                         <CountryPickerModal
-                                        marginTop={30}
-                                        isOnSelect={(text) => { console.log(text) }}
-                                        placeholder="Country" />}
-                                    
+                                            marginTop={30}
+                                            isOnSelect={(text) => { console.log(text) }}
+                                            placeholder="Country" />}
+
                                     {isRefugee &&
                                         <>
                                             <Field
@@ -111,7 +153,7 @@ const loginValidationSchema = yup.object().shape({
                                                 placeholderColor={COLORS.black}
                                                 isError={errors.age}
                                             />
-                                           
+
                                             <Text style={styles.chooseOneText}>{'Choose one...'}</Text>
                                             <View style={styles.chooseOneCard}>
                                                 <Button
