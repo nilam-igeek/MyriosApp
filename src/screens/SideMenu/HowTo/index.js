@@ -50,8 +50,7 @@ const HowTo = (props) => {
                             {item.image && <Image resizeMode='contain' source={item.image} style={{ flex: 1 }} />}
                             <Text style={styles.titleText}>{item.title}</Text>
                             <Text style={styles.subText}>{item.subTitle}</Text>
-                        </View>
-                    )
+                        </View>)
                 })}
             </Swiper>
         </View>

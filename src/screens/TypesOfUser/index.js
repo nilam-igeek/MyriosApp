@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, ImageBackground, ScrollView } from 'react-native';
 import { COLORS } from '../../common/style/Colors';
 import Button from '../../components/core/Button';
@@ -20,17 +20,17 @@ const TypesOfUser = (props) => {
             await AsyncStorage.setItem('userType', type)
         } catch (e) {
         }
-        props.navigation.navigate('Login')
+        
     }
 
     useEffect(() => {
-        if (isRole !== (ROLE.DONOR || ROLE.SHELTER|| ROLE.REFUGEE) && isRole === ROLE.MASTER) {
-             async function check() {
-             var item = await AsyncStorage.setItem('userType', ROLE.MASTER);
-            setIsRole(item)
+        if (isRole !== (ROLE.DONOR || ROLE.SHELTER || ROLE.REFUGEE) && isRole === ROLE.MASTER) {
+            async function check() {
+                var item = await AsyncStorage.setItem('userType', ROLE.MASTER);
+                setIsRole(item)
+            }
+            check();
         }
-        check(); 
-         }
     }, [isRole]);
 
     return (
@@ -45,10 +45,12 @@ const TypesOfUser = (props) => {
                 <View style={styles.card}>
                     <ScrollView contentContainerStyle={{ flexGrow: 1, }}>
                         <View style={styles.subContainer}>
-                            <Text style={styles.titleText}>{`${t(`I'm a `)}${isRole?isRole :'Master'}`}</Text>
+                            <Text style={styles.titleText}>{`${t(`I'm a `)}${isRole ? isRole : 'Master'}`}</Text>
                             <Button borderRadius={50}
+                                borderWidth={1}
+                                borderColor={isRole === ROLE.REFUGEE ? COLORS.cornflowerblue : COLORS.transparent}
                                 title={t(`Refugee`)}
-                                bgColor={isRole === ROLE.REFUGEE ? COLORS.floralwhite: COLORS.lemonchiffon}
+                                bgColor={COLORS.lemonchiffon}
                                 fontSize={18}
                                 color={COLORS.black}
                                 height={50}
@@ -56,9 +58,11 @@ const TypesOfUser = (props) => {
                                 onPress={() => onClick(ROLE.REFUGEE)}
                             />
                             <Button
+                                borderWidth={1}
+                                borderColor={isRole === ROLE.SHELTER ? COLORS.cornflowerblue : COLORS.transparent}
                                 borderRadius={50}
                                 title={t(`Shelter`)}
-                                bgColor={isRole === ROLE.SHELTER ? COLORS.floralwhite: COLORS.lemonchiffon}
+                                bgColor={COLORS.lemonchiffon}
                                 fontSize={18}
                                 color={COLORS.black}
                                 height={50}
@@ -66,9 +70,11 @@ const TypesOfUser = (props) => {
                                 width={'100%'}
                                 onPress={() => onClick(ROLE.SHELTER)} />
                             <Button
+                                borderWidth={1}
+                                borderColor={isRole === ROLE.DONOR ? COLORS.cornflowerblue : COLORS.transparent}
                                 borderRadius={50}
                                 title={t(`Donor`)}
-                                bgColor={isRole === ROLE.DONOR ? COLORS.floralwhite: COLORS.lemonchiffon}
+                                bgColor={COLORS.lemonchiffon}
                                 fontSize={18}
                                 color={COLORS.black}
                                 height={50}
@@ -83,12 +89,12 @@ const TypesOfUser = (props) => {
                                 height={50}
                                 marginTop={35}
                                 width={'80%'}
-                                onPress={() => onClick(ROLE.MASTER)}
+                                onPress={() => props.navigation.navigate('Login')}
                             />
                         </View>
                     </ScrollView>
                 </View>
-                
+
             </View>
         </ImageBackground>
     );

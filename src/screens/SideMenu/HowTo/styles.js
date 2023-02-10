@@ -6,7 +6,7 @@ export default styles = StyleSheet.create({
 
     container: {
         flex: 1,
-        backgroundColor: COLORS.seashell
+        backgroundColor: COLORS.lightwhite
     },
     wrapper: {
         //    flex: 1,
@@ -20,7 +20,7 @@ export default styles = StyleSheet.create({
         height: (BaseStyle.HEIGHT / 100) * 60,
     },
     dot: {
-        backgroundColor: '#EEEEEE',
+        backgroundColor: COLORS.skyBlue,
         width: 12,
         height: 12,
         borderRadius: 12 / 2,
@@ -28,7 +28,7 @@ export default styles = StyleSheet.create({
         marginBottom: Platform.OS === 'ios' ? 33 : 12,
     },
     activeDot: {
-        backgroundColor: '#FFC49B',
+        backgroundColor: COLORS.cornflowerblue,
         width: 12,
         height: 12,
         borderRadius: 12 / 2,

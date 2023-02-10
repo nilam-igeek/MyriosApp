@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, ImageBackground, ScrollView, TextInput } from 'react-native';
+import { View, Text, ImageBackground, ScrollView, TextInput,Linking } from 'react-native';
 import { COLORS } from '../../common/style/Colors';
 import Button from '../../components/core/Button';
 import styles from './styles';
@@ -31,7 +31,10 @@ return (
                             <Text style={styles.titleText}>{`Let's Chat`}</Text>
                             <Text style={styles.subText}>{`To get started, verify your shelter! Schedule a five minute call with a Myrios team member now!`}</Text>
                             <Button borderRadius={50} title={'Schedule Now'} fontSize={18} color={COLORS.white} height={50} marginTop={35} width={'70%'}
-                                onPress={() => {props.navigation.navigate('ChooseProfile');}}
+                            onPress={() => {
+                                Linking.openURL('https://calendly.com/vatsal-igeek');
+                                // props.navigation.navigate('ChooseProfile');
+                            }}
                             />
                         </View>}
 

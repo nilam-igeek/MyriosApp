@@ -18,16 +18,27 @@ export default styles = StyleSheet.create({
         textAlign: "left",
         fontFamily:FONTS.Poppins_SemiBold,
     },
-    container: {
+     container: {
         flex: 1,
         justifyContent: 'flex-end' 
     },
-    card: {
+        card: {
         backgroundColor: COLORS.white,
         height: '65%',
-        width: '90%',
-        borderTopRightRadius: 40
+        width: '100%',
+        borderTopRightRadius: 40,
+        borderTopLeftRadius:40
     },
+    // container: {
+    //     flex: 1,
+    //     justifyContent: 'flex-end' 
+    // },
+    // card: {
+    //     backgroundColor: COLORS.white,
+    //     height: '65%',
+    //     width: '90%',
+    //     borderTopRightRadius: 40
+    // },
     subContainer: {
         marginTop: 20,
         marginLeft: 25,

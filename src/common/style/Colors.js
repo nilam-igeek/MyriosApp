@@ -2,15 +2,17 @@ export const COLORS = {
     white: '#FFFFFF',
     black: '#000000',
     transparent: 'transparent',
-    cornflowerblue: '#6495ed',
+    cornflowerblue: '#3072E2',
     yellow: '#ffd700',
+    skyBlue: '#EDF4FF',
     darkgrey: '#a9a9a9',
-    green:'green',
+    green: 'green',
     grey: 'grey',
-    lemonchiffon: '#f0e68c',
+    lemonchiffon: '#EDF4FF',
     red: 'red',
     seashell: `#fff5ee`,
     floralwhite: 'floralwhite',
     orangered: 'orangered',
-    cream:'#FFECDF'
+    cream: '#FFECDF',
+    lightwhite:'#F8FAFF'
 };

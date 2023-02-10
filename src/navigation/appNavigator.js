@@ -27,10 +27,13 @@ import RefugeesList from '../screens/Master/RefugeesList';
 import SchedulingOfCalls from '../screens/Master/SchedulingOfCalls';
 import Analytics from '../screens/Master/Analytics';
 import AddPerson from '../screens/SideMenu/Helped/AddPerson';
+import analytics from '@react-native-firebase/analytics';
+
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 const Router = () => {
-
+ const routeNameRef = React.useRef();
+  const navigationRef = React.useRef();
 function MyDrawer() {
     return (
       <Drawer.Navigator
@@ -76,7 +79,25 @@ function MyDrawer() {
   }
 
   return (
-    <NavigationContainer>
+    <NavigationContainer
+    ref={navigationRef}
+      onReady={() => {
+        routeNameRef.current = navigationRef.current.getCurrentRoute().name;
+      }}
+      onStateChange={async () => {
+        const previousRouteName = routeNameRef.current;
+        const currentRouteName = navigationRef.current.getCurrentRoute().name;
+
+        if (previousRouteName !== currentRouteName) {
+          await analytics().logScreenView({
+            screen_name: currentRouteName,
+            screen_class: currentRouteName,
+          });
+          console.log("currentRouteName---->", currentRouteName);
+        }
+        routeNameRef.current = currentRouteName;
+      }}
+    >
       <Stack.Navigator
         screenOptions={{ headerShown: false }}
         transparentCard={true}
