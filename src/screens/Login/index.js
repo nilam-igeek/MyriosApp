@@ -87,7 +87,7 @@ const Login = (props) => {
             </CloseButton>
             <View style={styles.container}>
                 <View style={styles.card}>
-                    <ScrollView contentContainerStyle={{ flexGrow: 1, }}>
+                    <ScrollView contentContainerStyle={{ flexGrow: 1, }} bounces={false}>
                         <View style={styles.subContainer}>
                             <Text style={styles.titleText}>{t('Log In')}</Text>
                             <Formik

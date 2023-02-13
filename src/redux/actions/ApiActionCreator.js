@@ -1,4 +1,5 @@
 import axios from 'axios';
+import ACTION_TYPES from './ActionTypes.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   loginData,
@@ -24,11 +25,17 @@ import {
   peopleError,
   meetingData,
   meetingSuccess,
-  meetingError
+  meetingError,
+  registerData,
+  registerSuccess,
+  registerError,
+  profileData,
+  profileSuccess,
+  profileError
 } from './ApiAction';
 
 
-const url = "https://7112-2405-201-2014-3157-ed23-5c5a-72a8-b043.ngrok.io/api/"
+const url = "https://0452-2405-201-2014-3157-a947-f6df-5271-a4ec.ngrok.io/api/"
 
 //======================== LOGIN =======================//
 export const loginApi = (data) => async (dispatch) => {
@@ -52,6 +59,30 @@ export const loginApi = (data) => async (dispatch) => {
       });
   });
 };
+
+//======================== REGISTER ========================//
+export const registerApi = (data) => async (dispatch) => {
+  var role = await AsyncStorage.getItem('userType');
+  dispatch(registerData());
+  return new Promise(() => {
+  axios
+      .post(`${url}${role}/register`, data, {
+         headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+       })
+    .then(async (response) => {
+          dispatch(registerSuccess(response.data));
+      // await AsyncStorage.setItem('token', response.data.data.token)
+      })
+    .catch((error) => { 
+      dispatch(registerError(error));
+      return error
+      });
+  });
+};
+
 
 //======================== MASTER =======================//
 export const refugeesListApi = async (dispatch) => {
@@ -174,4 +205,36 @@ export const requestsListApi = async (dispatch) => {
       dispatch(meetingError(error));
       });
     });
+ };
+
+ //======================== SET_PROFILE ========================//
+
+export const signUpDataOfUser = (data) => {
+  return {
+    type: ACTION_TYPES.PROFILE_SET_DATA,
+    payload: data,
+  };
+};
+
+//======================== PROFILE ========================//
+export const updateProfileApi = (data) => async (dispatch) => {
+   console.log("updateProfileApi======>",data);
+  dispatch(profileData());
+  return new Promise(() => {
+  axios
+      .post(`${url}update-profile`, data, {
+         headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+       })
+    .then(async (response) => {
+      console.log("updateProfileApi_resposne11111======>",JSON.stringify(response.data));
+          dispatch(profileSuccess(response.data));
+      })
+    .catch((error) => { 
+      dispatch(profileError(error));
+      return error
+      });
+  });
 };

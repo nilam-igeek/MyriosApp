@@ -47,7 +47,7 @@ const HowTo = (props) => {
                 {dataList.map((item) => {
                     return (
                         <View style={styles.slide1}>
-                            {item.image && <Image resizeMode='contain' source={item.image} style={{ flex: 1 }} />}
+                            {item.image && <Image resizeMode='contain' source={item.image} style={{ height:'80%',  width:'100%' }} />}
                             <Text style={styles.titleText}>{item.title}</Text>
                             <Text style={styles.subText}>{item.subTitle}</Text>
                         </View>)

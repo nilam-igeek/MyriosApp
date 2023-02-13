@@ -9,7 +9,7 @@ export default styles = StyleSheet.create({
     },
         card: {
         backgroundColor: COLORS.white,
-        height: '65%',
+        height: '70%',
         width: '100%',
         borderTopRightRadius: 40,
         borderTopLeftRadius:40
@@ -26,7 +26,7 @@ export default styles = StyleSheet.create({
         marginVertical:25,
         color: COLORS.black,
         textAlign: "center",
-        // fontStyle: FONTS.Poppins_SemiBold,
+        fontFamily:FONTS.Poppins_SemiBold,
     },
 
 });

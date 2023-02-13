@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ImageBackground } from 'react-native';
+import { View, Text, ImageBackground, Pressable } from 'react-native';
 import { COLORS } from '../../common/style/Colors';
 import RightArrowSvg from '../../common/svgs/RightArrowSvg';
 import Button from '../../components/core/Button';
@@ -15,10 +15,10 @@ const GetStarted = (props) => {
             source={{ uri: 'https://images.statusfacebook.com/profile_pictures/kids-dp/kids-dp-101.jpg' }}>
             <View style={styles.blurView}>
                 <View style={styles.myriosContainer}>
-                    <View style={styles.myriosSubContainer}>
+                    <Pressable onPress={()=> {props.navigation.navigate('Language')}} style={styles.myriosSubContainer}>
                         <Text style={styles.myriosText}>Myrios</Text>
                         <RightArrowSvg fill={COLORS.white} marginRight={10} />
-                    </View>
+                    </Pressable>
                 </View>
                 <View style={styles.btnView}>
                     <Button title={t('Get Started')}
@@ -29,7 +29,7 @@ const GetStarted = (props) => {
                         color={COLORS.white}
                         width={130}
                         height={35}
-                        fontSize={14}
+                        fontSize={15}
                     />
                 </View>
             </View>

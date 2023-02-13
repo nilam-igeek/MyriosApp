@@ -4,6 +4,7 @@ const initialState = {
   loading: false,
   data: '',
   error: '',
+  dataProfile:''
 };
 
 const apiReducer = (state = initialState, action) => {
@@ -288,6 +289,13 @@ const apiReducer = (state = initialState, action) => {
         ...state,
         error: action.payload,
         loading: false,
+      };
+    
+     //======================== SET_PROFILE ========================//
+    case ACTION_TYPES.PROFILE_SET_DATA:
+      return {
+        ...state,
+        dataProfile: action.payload,
       };
     
     default:

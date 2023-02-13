@@ -4,25 +4,25 @@ import { FONTS } from '../../../common/style/Fonts';
 import BaseStyle from '../../../common/style/BaseStyle';
 export default styles = StyleSheet.create({
 
-container: {
+    container: {
         flex: 1,
         backgroundColor: COLORS.seashell
     },
     titleText: {
-       marginVertical:28,
+        marginVertical: 28,
         fontSize: 24,
         fontFamily: FONTS.Poppins_SemiBold,
-        color:COLORS.black,
+        color: COLORS.black,
     },
-    subText:{
-        textAlign:'center',
+    subText: {
+        textAlign: 'center',
         fontSize: 12,
         fontFamily: FONTS.Poppins_Regular,
         color: COLORS.black,
         width: (BaseStyle.WIDTH / 100) * 60,
-         alignSelf: 'center',
+        alignSelf: 'center',
     },
-      profileStyle: {
+    profileStyle: {
         width: 105,
         height: 105,
         borderRadius: 105 / 2,
@@ -44,12 +44,12 @@ container: {
         backgroundColor: COLORS.black,
         justifyContent: 'center',
         alignItems: "center",
-        marginBottom:30
-  
+        marginBottom: 30
+
     },
-        chooseOneText: {
+    chooseOneText: {
         width: (BaseStyle.WIDTH / 100) * 80,
-        alignSelf:"center",
+        alignSelf: "center",
         marginBottom: 5,
         marginTop: 20,
         fontSize: 18,
@@ -59,9 +59,9 @@ container: {
     chooseOneCard: {
         width: (BaseStyle.WIDTH / 100) * 80,
         flexDirection: 'row',
-        justifyContent: 'space-between' 
-},
-  blurView: {
+        justifyContent: 'space-between'
+    },
+    blurView: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
@@ -70,6 +70,13 @@ container: {
     blurSubView: {
         backgroundColor: COLORS.white,
         width: (BaseStyle.WIDTH / 100) * 70,
+        alignSelf: 'center',
+        borderRadius: 5,
+        padding: 15,
+    },
+     blurIsSubView: {
+        backgroundColor: COLORS.white,
+        width: (BaseStyle.WIDTH / 100) * 85,
         alignSelf: 'center',
         borderRadius: 5,
         padding: 15,
@@ -92,6 +99,20 @@ container: {
         fontSize: 18,
         color: COLORS.black,
         fontFamily: FONTS.Poppins_SemiBold,
-        textAlign:'left'
+        textAlign: 'left'
+    },
+    countryView: {
+        width: (BaseStyle.WIDTH / 100) * 80,
+        alignSelf: 'center',
+        backgroundColor: COLORS.lemonchiffon,
+        borderRadius: 50,
+        height: 45,
+        marginTop: 30,
+        justifyContent: 'center',
+    },
+    countryText: {
+        marginLeft: 23,
+        color: COLORS.black,
+        fontFamily: FONTS.Poppins_Regular
     }
 });

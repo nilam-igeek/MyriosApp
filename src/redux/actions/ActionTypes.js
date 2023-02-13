@@ -69,5 +69,7 @@ const ACTION_TYPES = {
   MEETING_API_SUCCESS: 'MEETING_API_SUCCESS',
   MEETING_API_ERROR: 'MEETING_API_ERROR',
 
+  //======================== SET_PROFILE ========================//
+  PROFILE_SET_DATA:'PROFILE_SET_DATA'
 };
 export default ACTION_TYPES;

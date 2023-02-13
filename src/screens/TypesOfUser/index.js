@@ -15,6 +15,7 @@ const TypesOfUser = (props) => {
     const [isRole, setIsRole] = useState(ROLE.MASTER);
 
     const onClick = async (type) => {
+        await AsyncStorage.setItem('token', '')
         setIsRole(type);
         try {
             await AsyncStorage.setItem('userType', type)
@@ -43,7 +44,7 @@ const TypesOfUser = (props) => {
             </CloseButton>
             <View style={styles.container}>
                 <View style={styles.card}>
-                    <ScrollView contentContainerStyle={{ flexGrow: 1, }}>
+                    <ScrollView contentContainerStyle={{ flexGrow: 1, }} bounces={false}>
                         <View style={styles.subContainer}>
                             <Text style={styles.titleText}>{`${t(`I'm a `)}${isRole ? isRole : 'Master'}`}</Text>
                             <Button borderRadius={50}
@@ -88,7 +89,7 @@ const TypesOfUser = (props) => {
                                 color={COLORS.white}
                                 height={50}
                                 marginTop={35}
-                                width={'80%'}
+                                width={'60%'}
                                 onPress={() => props.navigation.navigate('Login')}
                             />
                         </View>

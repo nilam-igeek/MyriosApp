@@ -13,18 +13,26 @@ import * as yup from 'yup';
 import EditSvg from '../../../common/svgs/EditSvg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ROLE } from '../../../constants/types';
-import CountryPickerModal from '../../../components/core/CountryPickerModal';
+import { updateProfileApi } from '../../../redux/actions/ApiActionCreator';
 import ImagePicker from 'react-native-image-crop-picker';
+import CountryPickerModal from '../../../components/core/CountryPickerModal';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Profile = (props) => {
+
+    const isdataProfile = useSelector((state) => state.apiReducer.dataProfile);
+    console.log("isdataProfile---->",isdataProfile);
     const { t } = useTranslation();
-    const [profile, setProfile] = useState('');
+    const dispatch = useDispatch();
     const [isRole, setIsRole] = useState('');
-    const [isSelected, setIsSelected] = useState('G');
-    const [isImages, setIsImages] = useState('');
+    const [isSelected, setIsSelected] = useState('Girl');
+     const [country,setCountry] = useState('');
+    const [isImages, setIsImages] = useState(isdataProfile.photo);
     const [modalVisible, setModalVisible] = useState(false);
+    const [isModalVisible, setIsModalVisible] = useState(false);
     const isRefugee = isRole === ROLE.REFUGEE
     const isShelter = isRole === ROLE.SHELTER
+
     useEffect(() => {
         async function check() {
             var item = await AsyncStorage.getItem('userType');
@@ -44,12 +52,25 @@ const Profile = (props) => {
     })
 
     const onClickSubmit = async values => {
-        const { firstName, address } = values;
-        var body = {
-            firstName: firstName,
-            address: address
-        };
-    };
+        const { firstName,about,age } = values;
+        if (isModalVisible) {
+            var isData = {
+            image:isImages,
+            email: 'fsdfd@gmail.com',
+            name: firstName,
+            country: country,
+            description:isShelter ? about: '',
+            age:age,
+            type: isSelected,
+            };
+            console.log("isData---updateProfileApi---111-->",isData);
+        dispatch(updateProfileApi(isData));
+        } else {
+          await AsyncStorage.setItem('token', '').then(() => [
+            props.navigation.navigate('Login')
+        ])}
+};
+  
 
     const onClick = (type) => {
         setIsSelected(type)
@@ -79,7 +100,9 @@ const Profile = (props) => {
         });
     }
 
-
+    const onClickEdit = () => {
+        setIsModalVisible(true)
+    }
     return (
         <View style={styles.container}>
             <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.seashell} />
@@ -90,7 +113,7 @@ const Profile = (props) => {
 
                     <Formik
                         validationSchema={loginValidationSchema}
-                        initialValues={{ firstName: '', country: '', about: '', age: '', type: '', about: '' }}
+                        initialValues={{ firstName: '', about: '', age: '', }}
                         onSubmit={onClickSubmit}>
                         {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, }) => (
                             <>
@@ -107,7 +130,8 @@ const Profile = (props) => {
                                         animationType="slide"
                                         transparent={true}
                                         visible={modalVisible}
-                                        onRequestClose={() => {setModalVisible(!modalVisible);
+                                        onRequestClose={() => {
+                                            setModalVisible(!modalVisible);
                                         }}>
                                         <View style={styles.blurView}>
                                             <View style={styles.blurSubView}>
@@ -118,7 +142,8 @@ const Profile = (props) => {
                                             </View>
                                         </View>
                                     </Modal>
-                                    <Field
+
+                                    {isModalVisible ? <Field
                                         name={'firstName'}
                                         placeholderColor={COLORS.black}
                                         component={Input}
@@ -130,17 +155,35 @@ const Profile = (props) => {
                                         inputWidth={(BaseStyle.WIDTH / 100) * 70}
                                         placeholder={isShelter ? ('Shelter Name') : t('First Name')}
                                         isError={errors.firstName}
-                                    />
+                                    /> :
+                                        <View style={styles.countryView}>
+                                            <Text style={styles.countryText}>{isdataProfile.firstName}</Text>
+                                        </View>
+                                    }
 
-                                    {(isShelter || isRefugee) &&
-                                        <CountryPickerModal
-                                            marginTop={30}
-                                            isOnSelect={(text) => { console.log(text) }}
-                                            placeholder="Country" />}
+                                    {isModalVisible ?
+                                        (<>
+                                            {(isShelter || isRefugee) &&
+                                                <CountryPickerModal
+                                                marginTop={30}
+                                                isOnSelect={(text) => { setCountry(text) }}
+                                                    // isOnSelect={(text) => { console.log(text) }}
+                                                    placeholder={"Country"} />}
+                                        </>
+                                        ) : (
+                                            <>
+                                                {(isShelter || isRefugee) &&
+                                                    <View style={styles.countryView}>
+                                                        <Text style={styles.countryText}>{isdataProfile.country}</Text>
+                                                    </View>}
+                                            </>
+                                        )
+                                    }
+
 
                                     {isRefugee &&
                                         <>
-                                            <Field
+                                            {isModalVisible ? <Field
                                                 name={'age'}
                                                 component={Input}
                                                 mt={30}
@@ -152,70 +195,93 @@ const Profile = (props) => {
                                                 placeholder={'Age'}
                                                 placeholderColor={COLORS.black}
                                                 isError={errors.age}
-                                            />
+                                            /> :
+                                                <View style={styles.countryView}>
+                                                    <Text style={styles.countryText}>{isdataProfile.age}</Text>
+                                                </View>
+                                            }
 
-                                            <Text style={styles.chooseOneText}>{'Choose one...'}</Text>
-                                            <View style={styles.chooseOneCard}>
-                                                <Button
-                                                    title={t('Girl')}
-                                                    fontSize={14}
-                                                    bgColor={isSelected === 'G' ? COLORS.floralwhite : COLORS.lemonchiffon}
-                                                    color={COLORS.black}
-                                                    height={45}
-                                                    width={'48%'}
-                                                    onPress={() => { onClick('G') }}
-                                                />
-                                                <Button
-                                                    bgColor={isSelected === 'B' ? COLORS.floralwhite : COLORS.lemonchiffon}
-                                                    title={t('Boy')}
-                                                    fontSize={14}
-                                                    color={COLORS.black}
-                                                    height={45}
-                                                    width={'48%'}
-                                                    onPress={() => { onClick('B') }}
-                                                />
-                                            </View>
-                                            <View style={[styles.chooseOneCard, { marginTop: 10 }]}>
-                                                <Button
-                                                    title={t('Mom')}
-                                                    fontSize={14}
-                                                    bgColor={isSelected === 'M' ? COLORS.floralwhite : COLORS.lemonchiffon}
-                                                    color={COLORS.black}
-                                                    height={45}
-                                                    width={'48%'}
-                                                    onPress={() => { onClick('M') }}
-                                                />
-                                                <Button
-                                                    bgColor={isSelected === 'W' ? COLORS.floralwhite : COLORS.lemonchiffon}
-                                                    title={t('Woman')}
-                                                    fontSize={14}
-                                                    color={COLORS.black}
-                                                    height={45}
-                                                    width={'48%'}
-                                                    onPress={() => { onClick('W') }}
-                                                />
-                                            </View>
+
+                                            {isModalVisible ? <>
+                                                <Text style={styles.chooseOneText}>{'Choose one...'}</Text>
+                                                <View style={styles.chooseOneCard}>
+                                                    <Button
+                                                        borderWidth={1}
+                                                        title={t('Girl')}
+                                                        fontSize={14}
+                                                        borderColor={isSelected === 'Girl' ? COLORS.cornflowerblue : COLORS.transparent}
+                                                        bgColor={COLORS.lemonchiffon}
+                                                        color={COLORS.black}
+                                                        height={45}
+                                                        width={'48%'}
+                                                        onPress={() => { onClick('Girl') }}
+                                                    />
+                                                    <Button
+                                                        borderWidth={1}
+                                                        borderColor={isSelected === 'Boy' ? COLORS.cornflowerblue : COLORS.transparent}
+                                                        bgColor={COLORS.lemonchiffon}
+                                                        title={t('Boy')}
+                                                        fontSize={14}
+                                                        color={COLORS.black}
+                                                        height={45}
+                                                        width={'48%'}
+                                                        onPress={() => { onClick('Boy') }}
+                                                    />
+                                                </View>
+                                                <View style={[styles.chooseOneCard, { marginTop: 10 }]}>
+                                                    <Button
+                                                        borderWidth={1}
+                                                        borderColor={isSelected === 'Mom' ? COLORS.cornflowerblue : COLORS.transparent}
+                                                        title={t('Mom')}
+                                                        fontSize={14}
+                                                        bgColor={COLORS.lemonchiffon}
+                                                        color={COLORS.black}
+                                                        height={45}
+                                                        width={'48%'}
+                                                        onPress={() => { onClick('Mom') }}
+                                                    />
+                                                    <Button
+                                                        borderWidth={1}
+                                                        borderColor={isSelected === 'Woman' ? COLORS.cornflowerblue : COLORS.transparent}
+                                                        bgColor={COLORS.lemonchiffon}
+                                                        title={t('Woman')}
+                                                        fontSize={14}
+                                                        color={COLORS.black}
+                                                        height={45}
+                                                        width={'48%'}
+                                                        onPress={() => { onClick('Woman') }}
+                                                    />
+                                                </View>
+                                            </> :
+                                                <View style={styles.countryView}>
+                                                    <Text style={styles.countryText}>{isdataProfile.isUserType}</Text>
+                                                </View>}
+                                        </>}
+                                    {isShelter &&
+                                        <>
+                                            {isModalVisible ? <Field
+                                                name={'about'}
+                                                component={Input}
+                                                value={values.about}
+                                                onChangeText={handleChange('about')}
+                                                onBlur={handleBlur('about')}
+                                                width={(BaseStyle.WIDTH / 100) * 80}
+                                                inputWidth={(BaseStyle.WIDTH / 100) * 70}
+                                                placeholder={t('Desc./About')}
+                                                placeholderColor={COLORS.black}
+                                                isError={errors.about}
+                                                multiline
+                                                borderRadius={20}
+                                                height={100}
+                                                numberOfLines={3}
+                                                mt={30}
+                                            /> :
+                                                <View style={styles.countryView}>
+                                                    <Text style={styles.countryText}>{isdataProfile.about}</Text>
+                                                </View>
+                                            }
                                         </>
                                     }
-
-                                    {isShelter && <Field
-                                        name={'about'}
-                                        component={Input}
-                                        value={values.about}
-                                        onChangeText={handleChange('about')}
-                                        onBlur={handleBlur('about')}
-                                        width={(BaseStyle.WIDTH / 100) * 80}
-                                        inputWidth={(BaseStyle.WIDTH / 100) * 70}
-                                        placeholder={t('Desc./About')}
-                                        placeholderColor={COLORS.black}
-                                        isError={errors.about}
-                                        multiline
-                                        borderRadius={20}
-                                        height={100}
-                                        numberOfLines={3}
-                                        mt={30}
-                                    />}
-
                                     <Button
                                         bgColor={COLORS.lemonchiffon}
                                         width={(BaseStyle.WIDTH / 100) * 80}
@@ -224,15 +290,15 @@ const Profile = (props) => {
                                         color={COLORS.black}
                                         height={45}
                                         marginTop={30}
-                                        onPress={handleSubmit}
+                                        onPress={onClickEdit}
                                         isRight
                                     >
                                         <EditSvg />
                                     </Button>
-
                                 </View>
                                 <Button
-                                    title={t('Sign Out')}
+                                    marginBottom={30}
+                                    title={isModalVisible ? 'Update Profile' : t('Sign Out')}
                                     fontSize={18}
                                     color={COLORS.white}
                                     height={50}

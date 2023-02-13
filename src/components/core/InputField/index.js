@@ -59,7 +59,7 @@ const Input = ({
                 {isLeft && <>{children}</>}
                 <TextInput
                     ref={ref}
-                    style={{color:inputColor?inputColor:COLORS.black, marginTop:(multiline && Platform.OS === 'ios') ? 70 :0, height: height? height:45,width: inputWidth ? inputWidth : (BaseStyle.WIDTH / 100) * 100 }}
+                    style={{color:inputColor?inputColor:COLORS.black, height: height? height:45,width: inputWidth ? inputWidth : (BaseStyle.WIDTH / 100) * 100 }}
                     secureTextEntry={secureTextEntry}
                     value={value}
                     onChangeText={(text) => onChange(name)(text)}
@@ -70,7 +70,7 @@ const Input = ({
                     {...inputProps}
                     multiline={multiline}
                     numberOfLines={numberOfLines}
-                    placeholderTextColor={placeholderColor? placeholderColor : placeholder && COLORS.lightgray}
+                    placeholderTextColor={placeholderColor? placeholderColor : placeholder && COLORS.grey}
                     placeholder={placeholder ? placeholder : ''}
                     returnKeyType={'next'}
                     onEndEditing={onEndEditing}

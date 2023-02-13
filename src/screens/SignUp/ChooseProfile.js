@@ -11,11 +11,14 @@ import { donorProfile, shelterProfile, refugeeProfile } from './ArrayList';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ROLE } from '../../constants/types';
 import CloseButton from '../../components/core/CloseButton';
+import { useDispatch, useSelector } from 'react-redux';
+import {signUpDataOfUser} from '../../redux/actions/ApiActionCreator';
 const ChooseProfile = (props) => {
 
     const { t } = useTranslation();
-
+ const dispatch = useDispatch();
     const onClickProfile = (item) => {
+        //  dispatch(signUpDataOfUser(item.profile));
         // console.log("item============>", item.profile);
     }
 
@@ -25,11 +28,9 @@ const ChooseProfile = (props) => {
     useEffect(() => {
         async function check() {
             var item = await AsyncStorage.getItem('userType');
-            setIsRole(item)
-        }
+            setIsRole(item) }
         check();
     }, []);
-
 
     return (
         <ImageBackground
@@ -39,10 +40,9 @@ const ChooseProfile = (props) => {
             <CloseButton onPress={() => props.navigation.goBack()}>
                 <CloseSvg fill={COLORS.white} />
             </CloseButton>
-           
             <View style={styles.container}>
                 <View style={styles.card}>
-                    <ScrollView contentContainerStyle={{ flexGrow: 1, }}>
+                    <ScrollView contentContainerStyle={{ flexGrow: 1, }} bounces={false}>
                         <View style={styles.subContainer}>
                             <Text style={styles.profileText}>{t('Choose Your Profile Photo...')}</Text>
                             <Text style={styles.profileSubText}>{t('To protect your privacy we want you\n to select a profile picture that\n matches your personality!')}</Text>
@@ -63,6 +63,7 @@ const ChooseProfile = (props) => {
                                 fontSize={18}
                                 color={COLORS.white}
                                 height={50}
+                                marginBottom={30}
                                 marginTop={20}
                                 width={'60%'}
                                 onPress={() => { props.navigation.navigate('SignUpSecondScreen'); }} />

@@ -1,5 +1,5 @@
-import React, { useState,useEffect } from 'react';
-import { View, Text, ImageBackground, ScrollView, Pressable,TextInput } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, ImageBackground, ScrollView, Pressable, TextInput } from 'react-native';
 import { COLORS } from '../../common/style/Colors';
 import Button from '../../components/core/Button';
 import styles from './styles';
@@ -12,38 +12,63 @@ import LockSvg from '../../common/svgs/LockSvg';
 import LockOpenSvg from '../../common/svgs/LockOpenSvg';
 import { PASSWORD_PATTERN, EMAIL_PATTERN } from '../../constants/BaseValidation';
 import CloseButton from '../../components/core/CloseButton';
-import { Formik ,Field} from 'formik';
+import { Formik, Field } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
+import { registerApi } from '../../redux/actions/ApiActionCreator';
 import * as yup from 'yup';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ROLE } from '../../constants/types';
+import Indicator from '../../components/core/Indicator';
 
 const SignUpSecondScreen = (props) => {
-
+     const isdataProfile = useSelector((state) => state.apiReducer.dataProfile);
+    const isUserData = useSelector((state) => state.apiReducer.data);
+    const loading = useSelector((state) => state.apiReducer.loading);
+    console.log("isUserData_SignUpSecondScreen--isdataProfile111111------>", isdataProfile);
+    const dispatch = useDispatch();
     const { t } = useTranslation();
     const [isShow, setIsShow] = useState(false);
-  
+    const [isRole, setIsRole] = useState('');
+     const isRefugee = isRole === ROLE.REFUGEE
+    const isShelter = isRole === ROLE.SHELTER
+    const isDonor = isRole === ROLE.DONOR
+    useEffect(() => {
+        async function check() {
+            var item = await AsyncStorage.getItem('userType');
+            setIsRole(item)
+        }
+        check();
+    }, []);
 
     const loginValidationSchema = yup.object().shape({
         email: yup
             .string(),
-            // .matches(EMAIL_PATTERN, 'Please enter valid email')
-            // .required(t('Email Address is Required')),
-       password: yup
+        // .matches(EMAIL_PATTERN, 'Please enter valid email')
+        // .required(t('Email Address is Required')),
+        password: yup
             .string()
-            // .required(t('Password is required'))
-            // .matches(PASSWORD_PATTERN,'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character')            
+        // .required(t('Password is required'))
+        // .matches(PASSWORD_PATTERN,'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character')            
     })
 
-
-
     const onClickSubmit = async values => {
-    const { email, password } = values;
-    var body = {
-      password: password,
-      email: email
+        const { email, password } = values;
+        var isData = {
+            email: email,
+            password: password,
+            name: isdataProfile.firstName,
+            country: isdataProfile.country,
+            age: isRefugee ? isdataProfile.age:'',
+            type: isRefugee ? isdataProfile.isUserType : '',
+            shelter: isRefugee ? isdataProfile.shelterName : '',
+            description: isShelter ? isdataProfile.about : '',
+            photo: isdataProfile.photo,
+        };
+         dispatch(registerApi(isData));
+        if (isData) {
+            props.navigation.navigate('Welcome');
+        }
     };
-    if (body) {
-        props.navigation.navigate('Welcome');
-    }
-  };
     return (
         <ImageBackground
             resizeMode='cover'
@@ -54,7 +79,7 @@ const SignUpSecondScreen = (props) => {
             </CloseButton>
             <View style={styles.container}>
                 <View style={styles.card}>
-                    <ScrollView contentContainerStyle={{ flexGrow: 1, }}>
+                    <ScrollView contentContainerStyle={{ flexGrow: 1, }} bounces={false}>
                         <View style={styles.subContainer}>
                             <Text style={styles.titleText}>{t('Sign Up')}</Text>
                             <Formik
@@ -78,7 +103,6 @@ const SignUpSecondScreen = (props) => {
                                             isError={errors.email}>
                                             <EmailSvg marginRight={10} />
                                         </Field>
-                                     
                                         <Field
                                             name={'password'}
                                             title={t('Password')}
@@ -97,7 +121,6 @@ const SignUpSecondScreen = (props) => {
                                                 {isShow ? <LockOpenSvg marginRight={10} /> : <LockSvg marginRight={10} />}
                                             </Pressable>
                                         </Field>
-                                      
                                         <Button
                                             title={t('Next')}
                                             fontSize={18}
@@ -110,12 +133,12 @@ const SignUpSecondScreen = (props) => {
                                         <Text onPress={() => { props.navigation.navigate('Login') }} style={styles.signUpText}>{t('Sign In')}</Text>
                                     </>
                                 )}
-
                             </Formik>
                         </View>
                     </ScrollView>
                 </View>
             </View>
+            <Indicator isLoader animate={loading}/>
         </ImageBackground>
     );
 };

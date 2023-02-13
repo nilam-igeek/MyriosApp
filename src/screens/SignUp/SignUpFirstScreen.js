@@ -15,14 +15,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ROLE } from '../../constants/types';
 import CountryPickerModal from '../../components/core/CountryPickerModal';
 import ImagePicker from 'react-native-image-crop-picker';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { signUpDataOfUser } from '../../redux/actions/ApiActionCreator';
 const SignUpFirstScreen = (props) => {
+    const dispatch = useDispatch();
 
+    const isUserData = useSelector((state) => state.apiReducer.data);
     const { t } = useTranslation();
     const [profile, setProfile] = useState('');
+    const [country,setCountry] = useState('');
     const [isSelected, setIsSelected] = useState('G');
     const [isRole, setIsRole] = useState('');
-    const [isImages, setIsImages] = useState('');
+    const [isImages, setIsImages] = useState(isUserData.photo);
     const [modalVisible, setModalVisible] = useState(false);
     const isRefugee = isRole === ROLE.REFUGEE
     const isShelter = isRole === ROLE.SHELTER
@@ -35,44 +39,44 @@ const SignUpFirstScreen = (props) => {
         check();
     }, []);
 
- const loginValidationSchema = yup.object().shape({
+    const loginValidationSchema = yup.object().shape({
         firstName: yup
             .string(),
-        // .required(t('Firstname is Required')),
-        address: yup
-            .string(),
-        // .required(t('Address is required')),
+            // .required(t('Firstname is Required')),
         about: yup
             .string(),
         // .required(t('About is required')),
         age: yup
-            .string(),
+            .string()
         // .required(t('Age is required'))
     })
 
-    const onClickSubmit = async values => {
-
-        const { firstName, address, about, age, } = values;
+    const onClickSubmit = values => {
+        const { firstName, about, age, } = values;
         var body = {
             firstName: firstName,
-            address: address,
+            country: country,
             about: about,
             age: age,
+            photo: isImages,
             isUserType: isSelected
         };
-        if (isRefugee) {
-            props.navigation.navigate('Chat');
-        } else if (isShelter || isDonor) {
-            props.navigation.navigate('SignUpSecondScreen');
+        dispatch(signUpDataOfUser(body));
+        console.log("isImages--------->", isImages);
+        // console.log("body------------>",body);
+        if (isImages) {
+             console.log("body---111--------->");
+            if (isRefugee) {
+                 console.log("body--2222---------->");
+                props.navigation.navigate('Chat');
+            } else if (isShelter || isDonor) {
+                 console.log("body---3333--------->");
+                props.navigation.navigate('SignUpSecondScreen');
+            }
+        } else {
+             console.log("body---444--------->");
+            props.navigation.navigate('ChooseProfile');
         }
-        // if (profile || body) {
-        //     props.navigation.navigate('ChooseProfile');
-        // } else if (body) {
-        //     props.navigation.navigate('SignUpSecondScreen');
-        // } else if (isRefugee) { 
-        //      props.navigation.navigate('Chat');
-        // }
-
     };
 
     const onClick = (type) => {
@@ -86,6 +90,7 @@ const SignUpFirstScreen = (props) => {
             height: 400,
             cropping: true
         }).then(image => {
+            // dispatch(signUpDataOfUser(image.path));
             setIsImages(image.path)
             setModalVisible(false)
         });
@@ -98,6 +103,7 @@ const SignUpFirstScreen = (props) => {
             height: 400,
             cropping: true,
         }).then(image => {
+            // dispatch(signUpDataOfUser(image.path));
             setIsImages(image.path)
             setModalVisible(false)
         });
@@ -113,12 +119,12 @@ const SignUpFirstScreen = (props) => {
             </CloseButton>
             <View style={styles.container}>
                 <View style={styles.card}>
-                    <ScrollView contentContainerStyle={{ flexGrow: 1, }}>
+                    <ScrollView contentContainerStyle={{ flexGrow: 1, }} bounces={false}>
                         <View style={styles.subContainer}>
                             <Text style={styles.titleText}>{t('Sign Up')}</Text>
                             <Formik
                                 validationSchema={loginValidationSchema}
-                                initialValues={{ firstName: '', address: '', about: '', age: '' }}
+                                initialValues={{ firstName: '', about: '', age: '' }}
                                 onSubmit={onClickSubmit}>
                                 {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, }) => (
                                     <>
@@ -126,17 +132,17 @@ const SignUpFirstScreen = (props) => {
                                             <View style={styles.profileContainer}>
                                                 <Pressable onPress={() => { setModalVisible(!modalVisible) }} style={styles.profile}>
                                                     {isImages ?
-                                                        <Image
-                                                            resizeMode='cover'
-                                                            source={{ uri: isImages }}
-                                                            style={styles.profileStyle} /> :
-                                                        <ProfileSvg />}
+                                                          <Image
+                                                             resizeMode='cover'
+                                                             source={{ uri: isImages }}
+                                                             style={styles.profileStyle} /> :
+                                                     <ProfileSvg />}
                                                 </Pressable>
                                                 <Modal
                                                     animationType="slide"
                                                     transparent={true}
                                                     visible={modalVisible}
-                                                    onRequestClose={() => {setModalVisible(!modalVisible)}}>
+                                                    onRequestClose={() => { setModalVisible(!modalVisible) }}>
                                                     <View style={styles.blurView}>
                                                         <View style={styles.blurSubView}>
                                                             <Text style={styles.titleOfPicker}>{'Select Image'}</Text>
@@ -158,13 +164,12 @@ const SignUpFirstScreen = (props) => {
                                                     inputWidth={(BaseStyle.WIDTH / 100) * 40}
                                                     placeholder={t('First Name')}
                                                     isError={errors.firstName}
-                                                    placeholderColor={COLORS.black}
                                                 />
                                             </View>
                                         </View>
 
                                         <CountryPickerModal
-                                            isOnSelect={(text) => { console.log(text) }}
+                                            isOnSelect={(text) => { setCountry(text) }}
                                             placeholder="Country of Residence" />
 
                                         {isRefugee &&
@@ -179,47 +184,54 @@ const SignUpFirstScreen = (props) => {
                                                     inputWidth={(BaseStyle.WIDTH / 100) * 70}
                                                     placeholder={'Age'}
                                                     mt={20}
-                                                    placeholderColor={COLORS.black}
                                                     isError={errors.age} />
                                                 <Text style={styles.chooseOneText}>{'Choose one...'}</Text>
                                                 <View style={styles.chooseOneCard}>
                                                     <Button
+                                                        borderColor={isSelected === 'Girl' ? COLORS.cornflowerblue : COLORS.transparent}
+                                                        borderWidth={1}
+                                                        bgColor={COLORS.lemonchiffon}
                                                         title={t('Girl')}
                                                         fontSize={14}
-                                                        bgColor={isSelected === 'G' ? COLORS.floralwhite : COLORS.lemonchiffon}
                                                         color={COLORS.black}
                                                         height={45}
                                                         width={'48%'}
-                                                        onPress={() => { onClick('G') }}
+                                                        onPress={() => { onClick('Girl') }}
                                                     />
                                                     <Button
-                                                        bgColor={isSelected === 'B' ? COLORS.floralwhite : COLORS.lemonchiffon}
+                                                        borderColor={isSelected === 'Boy' ? COLORS.cornflowerblue : COLORS.transparent}
+                                                        borderWidth={1}
+                                                        bgColor={COLORS.lemonchiffon}
                                                         title={t('Boy')}
                                                         fontSize={14}
                                                         color={COLORS.black}
                                                         height={45}
                                                         width={'48%'}
-                                                        onPress={() => { onClick('B') }}
+                                                        onPress={() => { onClick('Boy') }}
                                                     />
                                                 </View>
                                                 <View style={[styles.chooseOneCard, { marginTop: 10 }]}>
                                                     <Button
+                                                        borderColor={isSelected === 'Mom' ? COLORS.cornflowerblue : COLORS.transparent}
+                                                        borderWidth={1}
+                                                        bgColor={COLORS.lemonchiffon}
                                                         title={t('Mom')}
                                                         fontSize={14}
-                                                        bgColor={isSelected === 'M' ? COLORS.floralwhite : COLORS.lemonchiffon}
                                                         color={COLORS.black}
                                                         height={45}
                                                         width={'48%'}
-                                                        onPress={() => { onClick('M') }}
+                                                        onPress={() => { onClick('Mom') }}
                                                     />
                                                     <Button
-                                                        bgColor={isSelected === 'W' ? COLORS.floralwhite : COLORS.lemonchiffon}
+                                                        borderColor={isSelected === 'Woman' ? COLORS.cornflowerblue : COLORS.transparent}
+                                                        borderWidth={1}
+                                                        bgColor={COLORS.lemonchiffon}
                                                         title={t('Woman')}
                                                         fontSize={14}
                                                         color={COLORS.black}
                                                         height={45}
                                                         width={'48%'}
-                                                        onPress={() => { onClick('W') }}
+                                                        onPress={() => { onClick('Woman') }}
                                                     />
                                                 </View>
                                             </>
@@ -235,7 +247,7 @@ const SignUpFirstScreen = (props) => {
                                                 width={(BaseStyle.WIDTH / 100) * 80}
                                                 inputWidth={(BaseStyle.WIDTH / 100) * 70}
                                                 placeholder={t('Desc./About')}
-                                                placeholderColor={COLORS.black}
+                                                placeholderColor={COLORS.grey}
                                                 isError={errors.about}
                                                 multiline
                                                 height={100}
@@ -243,8 +255,8 @@ const SignUpFirstScreen = (props) => {
                                                 numberOfLines={3}
                                                 mt={20}
                                             />}
-
                                         <Button
+                                            marginBottom={30}
                                             title={t('Next')}
                                             fontSize={18}
                                             color={COLORS.white}

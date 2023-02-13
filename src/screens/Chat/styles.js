@@ -10,7 +10,7 @@ export default styles = StyleSheet.create({
     },
     card: {
         backgroundColor: COLORS.white,
-        height: '65%',
+        height: '70%',
         width: '100%',
         borderTopRightRadius: 40,
         borderTopLeftRadius: 40
@@ -38,13 +38,13 @@ export default styles = StyleSheet.create({
         fontFamily: FONTS.Poppins_SemiBold,
     },
     inputView: {
-        color: COLORS.white,
+        color: COLORS.black,
         flexDirection: 'row',
         height: 45,
         justifyContent: 'center',
         alignItems: "center",
-        width: (BaseStyle.WIDTH / 100) * 70,
-        backgroundColor: COLORS.cornflowerblue,
+        width: (BaseStyle.WIDTH / 100) * 80,
+        backgroundColor: COLORS.skyBlue,
         borderRadius: 50,
         paddingLeft: 30
     }

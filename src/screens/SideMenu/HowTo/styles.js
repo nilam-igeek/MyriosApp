@@ -12,9 +12,9 @@ export default styles = StyleSheet.create({
         //    flex: 1,
     },
     slide1: {
-        justifyContent: 'center',
         alignItems: 'center',
         height: (BaseStyle.HEIGHT / 100) * 70,
+      
     },
     imgStyle: {
         height: (BaseStyle.HEIGHT / 100) * 60,
