@@ -28,18 +28,18 @@ const ProfileOfRole = (props) => {
     return (
         <View style={styles.container}>
             <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.seashell} />
-            <Header title={'Myrios'} onPress={() => { props.navigation.toggleDrawer() }} />
+            <Header title={t('myrios')} onPress={() => { props.navigation.toggleDrawer() }} />
             <View style={styles.subProContainer}>
                 <ScrollView contentContainerStyle={{flexGrow:1}}>
                 <Image resizeMode='contain' style={styles.roleOfProfile} source={IMAGES.donor1} />
                 <Text style={styles.userTitleText}>{`John, France`}</Text>
-                <Text style={[styles.commonText, { marginTop: 20 }]}>{`DESC/ ABOUT`}</Text>
+                <Text style={[styles.commonText, { marginTop: 20 }]}>{t('descAbout')}</Text>
                 <Text style={styles.commonText}>{`Time of request submitted`}</Text>
                 <Text style={styles.commonText}>{`Date of request submitted`}</Text>
-                <Text style={styles.commonText}>{`Email: ${userEmail}`}</Text>
-                <Text style={styles.commonText}>{`Request:`}</Text>
+                <Text style={styles.commonText}>{`${t('isEmail')} ${userEmail}`}</Text>
+                <Text style={styles.commonText}>{t('request')}</Text>
                 <View style={styles.responseView}>
-                    <Text style={styles.responseText}>{`RESPONSE`}</Text>
+                    <Text style={styles.responseText}>{t('response')}</Text>
                     <TextInput
                         style={styles.inputView}
                         multiline={true}
@@ -47,7 +47,7 @@ const ProfileOfRole = (props) => {
                         onChangeText={(text) => setResponse(text)}
                         value={response} />
                 </View>
-                    <Text onPress={handleEmail} style={styles.sendText}>{`SEND`}</Text>
+                    <Text onPress={handleEmail} style={styles.sendText}>{t('send')}</Text>
                     </ScrollView>
             </View>
         </View>

@@ -16,18 +16,18 @@ const Welcome = (props) => {
             source={{ uri: 'https://images.statusfacebook.com/profile_pictures/kids-dp/kids-dp-101.jpg' }}>
             <View style={styles.container}>
                 <View style={styles.subContainer}>
-                    <Text style={styles.welcomeText}>{'WELCOME TO MYRIOS'}</Text>
-                    <Text style={styles.subTitleText}>{'we reccomend visiting our how-to page to show you what Myrios is and how it works!'}</Text>
+                    <Text style={styles.welcomeText}>{t('welcome')}</Text>
+                    <Text style={styles.subTitleText}>{t('welcomeSubDes')}</Text>
                     <Button
                         width={'100%'}
-                        title={'VISIT'}
+                        title={t('visit')}
                         bgColor={COLORS.white}
                         color={COLORS.black}
                         borderRadius={10}
                         fontSize={16} />
                     <Button
                         width={'100%'}
-                        title={'SKIP FOR NOW'}
+                        title={t('skipNow')}
                         bgColor={COLORS.black}
                         color={COLORS.white}
                         borderRadius={10}

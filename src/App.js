@@ -8,32 +8,43 @@ import {
 } from 'react-native';
 import { COLORS } from './common/style/Colors';
 import Router from './navigation/appNavigator';
-import {Provider} from 'react-redux';
-import {store} from './redux/store';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 import DeviceInfo from 'react-native-device-info';
 import analytics from '@react-native-firebase/analytics';
+
 const App = () => {
   const [id, setId] = useState('');
   useEffect(() => {
+    onProductView();
     DeviceInfo.getUniqueId().then((uniqueId) => {
       setId(uniqueId)
       // console.log("uniqueId=====>",uniqueId);
-});
+    });
   }, [])
- 
-return (
-  <>
+
+  async function onProductView() {
+    await analytics().logEvent('product_view', {
+      id: '123456789',
+      color: 'red',
+      via: 'ProductCatalog',
+    });
+  }
+
+
+  return (
+    <>
       {/* <SafeAreaView style={{backgroundColor:COLORS.transparent,flex:1}}> */}
-       <Provider store={store}>
-       <StatusBar
-         barStyle={Platform.OS === 'ios' ? 'light-content' :'dark-content'}
-         backgroundColor={COLORS.transparent}/>
-        <View style={{flex:1}}>
+      <Provider store={store}>
+        <StatusBar
+          barStyle={Platform.OS === 'ios' ? 'light-content' : 'dark-content'}
+          backgroundColor={COLORS.transparent} />
+        <View style={{ flex: 1 }}>
           <Router />
         </View>
-        </Provider>
+      </Provider>
       {/* </SafeAreaView> */}
-      </>
+    </>
   );
 }
 export default App;

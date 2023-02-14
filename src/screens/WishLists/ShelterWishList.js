@@ -24,12 +24,12 @@ const ShelterWishList = (props) => {
             style={{ flex: 1 }}
             source={{ uri: 'https://images.statusfacebook.com/profile_pictures/kids-dp/kids-dp-101.jpg' }}>
             <View style={styles.blurView}>
-                <Text style={styles.myriosTitleText}>{'MYRIOS'}</Text>
+                <Text style={styles.myriosTitleText}>{t('MYRIOS')}</Text>
                 <View style={styles.myriosContainer}>
-                    <Text style={styles.myriosText}>{`${'Hi'}, ${isShelter ? 'Shelter Name': 'First Name'}`}</Text>
-                    <Text style={styles.myriosSubText}>{'See My Wishlist'}</Text>
-                    <Text style={styles.myriosSubText}>{'Upload Wishlist'}</Text>
-                    <Text style={styles.myriosSubText}>{'Create Wishlist'}</Text>
+                    <Text style={styles.myriosText}>{`${t('hi')}, ${isShelter ? 'Shelter Name': 'First Name'}`}</Text>
+                    <Text style={styles.myriosSubText}>{t('seeWishList')}</Text>
+                    <Text style={styles.myriosSubText}>{t('uploadWishList')}</Text>
+                    <Text style={styles.myriosSubText}>{t('createWishList')}</Text>
                 </View>
             </View>
         </ImageBackground>

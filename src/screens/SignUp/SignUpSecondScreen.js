@@ -81,7 +81,7 @@ const SignUpSecondScreen = (props) => {
                 <View style={styles.card}>
                     <ScrollView contentContainerStyle={{ flexGrow: 1, }} bounces={false}>
                         <View style={styles.subContainer}>
-                            <Text style={styles.titleText}>{t('Sign Up')}</Text>
+                            <Text style={styles.titleText}>{t('signUp')}</Text>
                             <Formik
                                 validationSchema={loginValidationSchema}
                                 initialValues={{ email: '', password: '' }}
@@ -90,7 +90,7 @@ const SignUpSecondScreen = (props) => {
                                     <>
                                         <Field
                                             name={'email'}
-                                            title={t('Email')}
+                                            title={t('email')}
                                             component={Input}
                                             isLeft
                                             value={values.email}
@@ -98,14 +98,14 @@ const SignUpSecondScreen = (props) => {
                                             onBlur={handleBlur('email')}
                                             width={(BaseStyle.WIDTH / 100) * 80}
                                             inputWidth={(BaseStyle.WIDTH / 100) * 60}
-                                            placeholder={t('Enter your email')}
+                                            placeholder={t('enterEmail')}
                                             keyboardType="email-address"
                                             isError={errors.email}>
                                             <EmailSvg marginRight={10} />
                                         </Field>
                                         <Field
                                             name={'password'}
-                                            title={t('Password')}
+                                            title={t('password')}
                                             component={Input}
                                             isLeft
                                             value={values.password}
@@ -115,14 +115,14 @@ const SignUpSecondScreen = (props) => {
                                             onBlur={handleBlur('password')}
                                             width={(BaseStyle.WIDTH / 100) * 80}
                                             inputWidth={(BaseStyle.WIDTH / 100) * 60}
-                                            placeholder={t('Enter your password')}
+                                            placeholder={t('enterPassword')}
                                             isError={errors.password}>
                                             <Pressable onPress={() => { setIsShow(!isShow) }}>
                                                 {isShow ? <LockOpenSvg marginRight={10} /> : <LockSvg marginRight={10} />}
                                             </Pressable>
                                         </Field>
                                         <Button
-                                            title={t('Next')}
+                                            title={t('next')}
                                             fontSize={18}
                                             color={COLORS.white}
                                             height={50}
@@ -130,7 +130,7 @@ const SignUpSecondScreen = (props) => {
                                             width={'60%'}
                                             onPress={handleSubmit}
                                         />
-                                        <Text onPress={() => { props.navigation.navigate('Login') }} style={styles.signUpText}>{t('Sign In')}</Text>
+                                        <Text onPress={() => { props.navigation.navigate('Login') }} style={styles.signUpText}>{t('signIn')}</Text>
                                     </>
                                 )}
                             </Formik>

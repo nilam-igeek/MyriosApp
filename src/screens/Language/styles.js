@@ -12,8 +12,9 @@ export default styles = StyleSheet.create({
         marginBottom: Platform.OS === 'ios' ? 65 : 30
     },
     titleText: {
-        width: '100%',
-        fontSize: 28,
+        width: (BaseStyle.WIDTH / 100) * 90,
+        alignSelf: 'center',
+        fontSize: 26,
         color: COLORS.black,
         textAlign: "center",
         fontFamily: FONTS.Poppins_SemiBold,
@@ -45,11 +46,10 @@ export default styles = StyleSheet.create({
         alignSelf: 'center'
     },
     lanText: {
-        fontSize: 14,
+        fontSize: 16,
         fontFamily: FONTS.Poppins_SemiBold,
         alignSelf: 'center',
         marginTop: 40,
-        marginLeft: 22,
         marginBottom: 10,
         width: '100%',
         color: COLORS.black,

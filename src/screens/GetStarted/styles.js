@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { COLORS } from '../../common/style/Colors';
 import { FONTS } from '../../common/style/Fonts';
-import BaseStyle  from '../../common/style/BaseStyle';
 export default styles = StyleSheet.create({
     blurView: {
         flex: 1,
@@ -21,7 +20,7 @@ export default styles = StyleSheet.create({
         color: COLORS.white,
         fontSize: 28,
         marginRight: 10,
-        // fontStyle: FONTS.Poppins_SemiBold,
+        fontFamily:FONTS.Poppins_SemiBold
     },
     btnView: {
         position: 'absolute',

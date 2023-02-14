@@ -24,10 +24,10 @@ return (
         <>
             <View style={styles.container}>
                 <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.seashell} />
-                <Header title={'Myrios'} onPress={() => {props.navigation.toggleDrawer()}} />
-                <Text style={styles.wishListText}>{'WISHLISTS'}</Text>
+                <Header title={t('myrios')} onPress={() => {props.navigation.toggleDrawer()}} />
+                <Text style={styles.wishListText}>{t('wishList')}</Text>
                 <View style={styles.sortByContainer}>
-                    <Text style={styles.sortByText}>{'Sort By'}</Text>
+                    <Text style={styles.sortByText}>{t('sortBy')}</Text>
                     <Text style={styles.sortByText}>{' >'}</Text>
                 </View>
                 <View style={styles.listContainer}>

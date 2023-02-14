@@ -32,7 +32,7 @@ const SchedulingOfCalls = (props) => {
     return (
         <View style={styles.container}>
             <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.seashell} />
-            <Header title={'Myrios'} onPress={() => { props.navigation.toggleDrawer() }} />
+            <Header title={t('myrios')} onPress={() => { props.navigation.toggleDrawer() }} />
             <View style={{ height:(BaseStyle.HEIGHT / 100) * 100, alignItems: "center"}}>
                 <View style={styles.subViewOfCall}>
                     <View style={styles.calendarHeaderView}>

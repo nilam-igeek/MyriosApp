@@ -58,10 +58,10 @@ const ContactUs = (props) => {
     return (
         <View style={styles.container}>
             <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.seashell} />
-            <Header title={'Myrios'} onPress={() => { props.navigation.toggleDrawer() }} />
+            <Header title={t('myrios')} onPress={() => { props.navigation.toggleDrawer() }} />
             <View style={{justifyContent:'center',alignItems:"center"}}>
-            <Text style={styles.titleText}>{'CONTACT US'}</Text>
-            <Text style={styles.subText}>{'You are always welcome to get in touch with us'}</Text>
+            <Text style={styles.titleText}>{t('contactUs')}</Text>
+            <Text style={styles.subText}>{t('contactUsSubDes')}</Text>
             <Formik
                 validationSchema={loginValidationSchema}
                 initialValues={{ firstName: '', message: '', email: '' }}
@@ -72,20 +72,19 @@ const ContactUs = (props) => {
                             mt={30}
                             isBottomLineInput
                             name={'firstName'}
-                             marginTop={20}
+                            marginTop={20}
                             component={Input}
                             value={values.firstName}
                             onChangeText={handleChange('firstName')}
                             onBlur={handleBlur('firstName')}
                             width={(BaseStyle.WIDTH / 100) * 80}
                             inputWidth={(BaseStyle.WIDTH / 100) * 80}
-                            placeholder={isShelter ? ('Shelter Name') : ('First Name')}
+                            placeholder={isShelter ? t('shelterName') : t('fName')}
                             isError={errors.firstName}
-                            placeholderColor={COLORS.black}/>
-
-
+                            placeholderColor={COLORS.black} />
+                            
                             <Field
-                                  mt={30}
+                            mt={30}
                             isBottomLineInput
                             name={'message'}
                             component={Input}
@@ -96,11 +95,11 @@ const ContactUs = (props) => {
                             onBlur={handleBlur('message')}
                             width={(BaseStyle.WIDTH / 100) * 80}
                             inputWidth={(BaseStyle.WIDTH / 100) * 80}
-                            placeholder={('Message')}
+                            placeholder={t('message')}
                             isError={errors.message} />
 
                             <Field
-                                  mt={30}
+                            mt={30}
                             isBottomLineInput
                             name={'email'}
                             marginTop={20}
@@ -110,7 +109,7 @@ const ContactUs = (props) => {
                             onBlur={handleBlur('email')}
                             width={(BaseStyle.WIDTH / 100) * 80}
                             inputWidth={(BaseStyle.WIDTH / 100) * 80}
-                            placeholder={t('Email Address')}
+                            placeholder={t('emailAdd')}
                             keyboardType="email-address"
                             isError={errors.email}
                             placeholderColor={COLORS.black}/>
@@ -118,7 +117,7 @@ const ContactUs = (props) => {
                         <Button
                             borderRadius={10}
                             bgColor={COLORS.black}
-                            title={('SUBMIT')}
+                            title={t('submit')}
                             fontSize={18}
                             color={COLORS.white}
                             height={50}

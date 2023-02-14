@@ -89,7 +89,7 @@ const Login = (props) => {
                 <View style={styles.card}>
                     <ScrollView contentContainerStyle={{ flexGrow: 1, }} bounces={false}>
                         <View style={styles.subContainer}>
-                            <Text style={styles.titleText}>{t('Log In')}</Text>
+                            <Text style={styles.titleText}>{t('logIn')}</Text>
                             <Formik
                                 validationSchema={loginValidationSchema}
                                 initialValues={{ email: '', password: '' }}
@@ -98,7 +98,7 @@ const Login = (props) => {
                                     <>
                                         <Field
                                             name={'email'}
-                                            title={t('Email')}
+                                            title={t('email')}
                                             component={Input}
                                             isLeft
                                             value={values.email}
@@ -106,7 +106,7 @@ const Login = (props) => {
                                             onBlur={handleBlur('email')}
                                             width={(BaseStyle.WIDTH / 100) * 80}
                                             inputWidth={(BaseStyle.WIDTH / 100) * 60}
-                                            placeholder={t('Enter your email')}
+                                            placeholder={t('enterEmail')}
                                             keyboardType="email-address"
                                             isError={errors.email}>
                                             <EmailSvg marginRight={10} />
@@ -114,7 +114,7 @@ const Login = (props) => {
                                      
                                         <Field
                                             name={'password'}
-                                            title={t('Password')}
+                                            title={t('password')}
                                             component={Input}
                                             isLeft
                                             value={values.password}
@@ -124,7 +124,7 @@ const Login = (props) => {
                                             onBlur={handleBlur('password')}
                                             width={(BaseStyle.WIDTH / 100) * 80}
                                             inputWidth={(BaseStyle.WIDTH / 100) * 60}
-                                            placeholder={t('Enter your password')}
+                                            placeholder={t('enterPassword')}
                                             isError={errors.password}>
                                             <Pressable onPress={() => { setIsShow(!isShow) }}>
                                                 {isShow ? <LockOpenSvg marginRight={10} /> : <LockSvg marginRight={10} />}
@@ -132,7 +132,7 @@ const Login = (props) => {
                                         </Field>
                                       
                                         <Button
-                                            title={t('Next')}
+                                            title={t('next')}
                                             fontSize={18}
                                             color={COLORS.white}
                                             height={50}
@@ -140,7 +140,7 @@ const Login = (props) => {
                                             width={'60%'}
                                             onPress={handleSubmit}
                                         />
-                                        {!isMaster && <Text onPress={() => { props.navigation.navigate('SignUpFirstScreen') }} style={styles.signUpText}>{t('Sign Up')}</Text>}
+                                        {!isMaster && <Text onPress={() => { props.navigation.navigate('SignUpFirstScreen') }} style={styles.signUpText}>{t('signUp')}</Text>}
                                     </>
                                 )}
 

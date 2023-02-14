@@ -47,6 +47,12 @@ export default styles = StyleSheet.create({
         backgroundColor: COLORS.skyBlue,
         borderRadius: 50,
         paddingLeft: 30
+    },
+    subView: {
+        width: '100%',
+        alignSelf: 'center',
+        flexDirection: "row",
+        justifyContent: "space-between"
     }
 
 });

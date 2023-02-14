@@ -42,9 +42,9 @@ const Chat = (props) => {
                     <ScrollView contentContainerStyle={{ flexGrow: 1, }} bounces={false}>
                         
                         {isShelterUser === 'NO' && <View style={styles.subContainer}>
-                            <Text style={styles.titleText}>{`Let's Chat`}</Text>
-                            <Text style={styles.subText}>{`To get started, verify your shelter! Schedule a five minute call with a Myrios team member now!`}</Text>
-                            <Button borderRadius={50} title={'Schedule Now'} fontSize={18} color={COLORS.white} height={50} marginTop={35} width={'70%'}
+                            <Text style={styles.titleText}>{t('chat')}</Text>
+                            <Text style={styles.subText}>{t('chatSubDes')}</Text>
+                            <Button borderRadius={50} title={t('scheduleNow')} fontSize={18} color={COLORS.white} height={50} marginTop={35} width={'70%'}
                                 onPress={() => {
                                     Linking.openURL('https://calendly.com/vatsal-igeek');
                                     // props.navigation.navigate('ChooseProfile');
@@ -54,9 +54,9 @@ const Chat = (props) => {
 
                         {isShelterUser === 'YES' &&
                             <View style={styles.subContainer}>
-                                <Text style={[styles.titleText, { textAlign: "left" }]}>{`Please enter your Shelter's Name..`}</Text>
+                                <Text style={[styles.titleText, { textAlign: "left" }]}>{t('enterShelterName')}</Text>
                                 <TextInput
-                                    placeholder={`Enter shelter name`}
+                                    placeholder={t('enterSName')}
                                     value={name}
                                     onEndEditing={onSubmit}
                                     style={styles.inputView}
@@ -65,10 +65,10 @@ const Chat = (props) => {
 
                         {(isShelterUser === 'isDefault') &&
                             <View style={styles.subContainer}>
-                                <Text style={[styles.titleText, { textAlign: "left" }]}>{`Are you currently staying at a shelter?`}</Text>
-                                <View style={{ width: '100%', alignSelf: 'center', flexDirection: "row", justifyContent: "space-between" }}>
+                                <Text style={[styles.titleText, { textAlign: "left" }]}>{t('currentlyShelter')}</Text>
+                                <View style={styles.subView}>
                                     <Button
-                                        title={t('YES')}
+                                        title={t('yes')}
                                         fontSize={14}
                                         color={COLORS.white}
                                         height={45}
@@ -76,7 +76,7 @@ const Chat = (props) => {
                                         onPress={() => { onClick('YES') }}
                                     />
                                     <Button
-                                        title={t('NO')}
+                                        title={t('no')}
                                         fontSize={14}
                                         color={COLORS.white}
                                         height={45}

@@ -1,41 +1,34 @@
 {
   "project_info": {
-    "project_number": "82918564592",
-    "project_id": "myriosapp-ae8fe",
-    "storage_bucket": "myriosapp-ae8fe.appspot.com"
+    "project_number": "779282988810",
+    "project_id": "myrios-8cb55",
+    "storage_bucket": "myrios-8cb55.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:82918564592:android:d4bcb1f86cd07a30e1d835",
+        "mobilesdk_app_id": "1:779282988810:android:87fb3b38c9cb5eea4504f3",
         "android_client_info": {
           "package_name": "com.myriosapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "82918564592-25ur29fjqar1s4l3l52ohnnctdkooott.apps.googleusercontent.com",
+          "client_id": "779282988810-99b325l6kqq0qmc80eurpg9jjabj73o9.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBs4JL9oDrTOPbGLh2X9kQWbUGybsl6NSU"
+          "current_key": "AIzaSyAur7w1CpIbnozr43PVfNtllSkOK4gCEpk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "82918564592-25ur29fjqar1s4l3l52ohnnctdkooott.apps.googleusercontent.com",
+              "client_id": "779282988810-99b325l6kqq0qmc80eurpg9jjabj73o9.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "82918564592-3s1bngq7q1lhjrhjdi38b9r7lamtdm97.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.myriosapp"
-              }
             }
           ]
         }

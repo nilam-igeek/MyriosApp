@@ -35,7 +35,7 @@ import {
 } from './ApiAction';
 
 
-const url = "https://0452-2405-201-2014-3157-a947-f6df-5271-a4ec.ngrok.io/api/"
+const url = "https://f239-2405-201-2014-3157-d9bd-a00-9645-743.ngrok.io/api/"
 
 //======================== LOGIN =======================//
 export const loginApi = (data) => async (dispatch) => {

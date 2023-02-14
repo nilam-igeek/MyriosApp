@@ -7,8 +7,9 @@ import styles from './styles';
 import BaseStyle from '../../common/style/BaseStyle';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ROLE } from '../../constants/types';
-import { donorsListApi, refugeesListApi, sheltersListApi,requestsListApi,helpedApi,peopleApi,meetingsApi } from '../../redux/actions/ApiActionCreator';
 import { useDispatch } from 'react-redux';
+import '../../../assets/i18n/i18n';
+import { useTranslation } from 'react-i18next';
 
 export const CustomeDrawer = (props) => {
   const dispatch = useDispatch();
@@ -17,7 +18,8 @@ export const CustomeDrawer = (props) => {
   const isRefugee = isRole === ROLE.REFUGEE
   const isDonor = isRole === ROLE.DONOR
   const isShelter = isRole === ROLE.SHELTER
-
+  const { t } = useTranslation();
+  
   useEffect(() => {
     async function check() {
       var item = await AsyncStorage.getItem('userType');
@@ -28,76 +30,69 @@ export const CustomeDrawer = (props) => {
 
 
   const Donor_Shelter = [
-    { id: 1, title: 'HOW TO' },
-    { id: 2, title: isShelter ? 'WISHLIST' : 'EXPLORE' },
-    { id: 3, title: 'PROFILE' },
-    { id: 4, title: isShelter ? 'PEOPLE' : 'HELPED' },
-    { id: 5, title: 'CONTACT' },
+    { id: 1, title: t('howTo') },
+    { id: 2, title: isShelter ? t('wishList') : t('explore') },
+    { id: 3, title: t('profile') },
+    { id: 4, title: isShelter ? t('people') : t('helped') },
+    { id: 5, title: t('contact') },
   ]
 
   const Refugee = [
-    { id: 1, title: 'HOW TO' },
-    { id: 2, title: 'WISHLIST' },
-    { id: 3, title: 'PROFILE' },
-    { id: 4, title: 'CONTACT' },
+    { id: 1, title: t('howTo') },
+    { id: 2, title: t('wishList') },
+    { id: 3, title: t('profile') },
+    { id: 4, title: t('contact') },
   ]
 
   const Master = [
-    { id: 1, title: 'REFUGEES' },
-    { id: 2, title: 'SHELTERS' },
-    { id: 3, title: 'DONORS' },
-    { id: 5, title: 'CONTACT REQUESTS' },
-    { id: 6, title: 'ANALYTICS' },
-    { id: 7, title: 'SCHEDULING OF CALLS' },
+    { id: 1, title: t('refugeeType') },
+    { id: 2, title: t('shelterType') },
+    { id: 3, title: t('donorType') },
+    { id: 5, title: t('contactType') },
+    { id: 6, title: t('analytics') },
+    { id: 7, title: t('schedulingCalls') },
   ]
 
   const Data = (isShelter || isDonor) ? Donor_Shelter : isRefugee ? Refugee : Master
   const onClickMenu = (item, i) => {
 
-    if (item.title === "HOW TO") {
+    if (item.title === t('howTo')) {
       props.navigation.navigate('HowToo')
     }
-    else if (item.title === "WISHLIST") {
+    else if (item.title === t('wishList')) {
       props.navigation.navigate('ShelterWishList')
     }
-    else if (item.title === "EXPLORE") {
+    else if (item.title === t('explore')) {
       props.navigation.navigate('WishLists')
     }
-    else if (item.title === "PROFILE") {
+    else if (item.title === t('profile')) {
       props.navigation.navigate('Profile')
     }
-    else if (item.title === "PEOPLE") {
-      // dispatch(peopleApi);
+    else if (item.title === t('people')) {
       props.navigation.navigate('Helped')
     }
-    else if (item.title === "HELPED") {
-      // dispatch(helpedApi);
+    else if (item.title === t('helped')) {
       props.navigation.navigate('Helped')
     }
-    else if (item.title === "CONTACT") {
+    else if (item.title === t('contact')) {
       props.navigation.navigate('ContactUs')
     }
-    else if (item.title === "REFUGEES") {
-      // dispatch(refugeesListApi);
+    else if (item.title === t('refugeeType')) {
       props.navigation.navigate('RefugeesListt')
     }
-    else if (item.title === "SHELTERS") {
-      // dispatch(sheltersListApi);
+    else if (item.title === t('shelterType')) {
       props.navigation.navigate('SheltersList')
     }
-    else if (item.title === "DONORS") {
-      // dispatch(donorsListApi);
+    else if (item.title === t('donorType')) {
       props.navigation.navigate('DonorsList')
     }
-    else if (item.title === "CONTACT REQUESTS") {
-      //  dispatch(requestsListApi);
+    else if (item.title === t('contactType')) {
       props.navigation.navigate('ContactRequests')
     }
-    else if (item.title === "ANALYTICS") {
+    else if (item.title === t('analytics')) {
       props.navigation.navigate('Analytics')
     }
-    else if (item.title === "SCHEDULING OF CALLS") {
-      // dispatch(meetingsApi);
+    else if (item.title === t('schedulingCalls')) {
       props.navigation.navigate('SchedulingOfCalls')
 
     }

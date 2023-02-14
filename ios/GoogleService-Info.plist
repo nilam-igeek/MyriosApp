@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>82918564592-3s1bngq7q1lhjrhjdi38b9r7lamtdm97.apps.googleusercontent.com</string>
+	<string>779282988810-pfd3vs92iqelav6didj11afgkmv58qdp.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.82918564592-3s1bngq7q1lhjrhjdi38b9r7lamtdm97</string>
+	<string>com.googleusercontent.apps.779282988810-pfd3vs92iqelav6didj11afgkmv58qdp</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDdQqkrpjjuBNx7je-ZKl7EJSMHVLdwELk</string>
+	<string>AIzaSyABHu_VeUXWIQ2NTnrEK5bv-KjkvnJmdbE</string>
 	<key>GCM_SENDER_ID</key>
-	<string>82918564592</string>
+	<string>779282988810</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.myriosapp</string>
 	<key>PROJECT_ID</key>
-	<string>myriosapp-ae8fe</string>
+	<string>myrios-8cb55</string>
 	<key>STORAGE_BUCKET</key>
-	<string>myriosapp-ae8fe.appspot.com</string>
+	<string>myrios-8cb55.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:82918564592:ios:3fbfe16fe492b9cbe1d835</string>
+	<string>1:779282988810:ios:bb3d5aa59685c75c4504f3</string>
 </dict>
 </plist>

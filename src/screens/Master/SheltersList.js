@@ -28,9 +28,9 @@ const SheltersList = (props) => {
     return (
         <View style={styles.container}>
             <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.seashell} />
-            <Header title={'Myrios'} onPress={() => { props.navigation.toggleDrawer() }} />
+            <Header title={t('myrios')} onPress={() => { props.navigation.toggleDrawer() }} />
             <View style={{ flex: 1, justifyContent: 'center', alignItems: "center" }}>
-                <Text style={styles.titleText}>{`${'MASTER LIST OF\n'} ${'SHELTERS'}`}</Text>
+                <Text style={styles.titleText}>{`${t('masterTitle')}\n${t('shelterType')}`}</Text>
                 <View style={{ flex: 1 }}>
                     <FlatList
                         data={isShelterData}

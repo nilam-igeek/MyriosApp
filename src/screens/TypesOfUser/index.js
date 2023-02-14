@@ -15,8 +15,11 @@ const TypesOfUser = (props) => {
     const [isRole, setIsRole] = useState(ROLE.MASTER);
 
     const onClick = async (type) => {
+
+       
         await AsyncStorage.setItem('token', '')
         setIsRole(type);
+       
         try {
             await AsyncStorage.setItem('userType', type)
         } catch (e) {
@@ -46,11 +49,11 @@ const TypesOfUser = (props) => {
                 <View style={styles.card}>
                     <ScrollView contentContainerStyle={{ flexGrow: 1, }} bounces={false}>
                         <View style={styles.subContainer}>
-                            <Text style={styles.titleText}>{`${t(`I'm a `)}${isRole ? isRole : 'Master'}`}</Text>
+                            <Text style={styles.titleText}>{`${t('am')}${isRole ? isRole : 'Master'}`}</Text>
                             <Button borderRadius={50}
                                 borderWidth={1}
                                 borderColor={isRole === ROLE.REFUGEE ? COLORS.cornflowerblue : COLORS.transparent}
-                                title={t(`Refugee`)}
+                                title={t('refugee')}
                                 bgColor={COLORS.lemonchiffon}
                                 fontSize={18}
                                 color={COLORS.black}
@@ -62,7 +65,7 @@ const TypesOfUser = (props) => {
                                 borderWidth={1}
                                 borderColor={isRole === ROLE.SHELTER ? COLORS.cornflowerblue : COLORS.transparent}
                                 borderRadius={50}
-                                title={t(`Shelter`)}
+                                title={t('shelter')}
                                 bgColor={COLORS.lemonchiffon}
                                 fontSize={18}
                                 color={COLORS.black}
@@ -74,7 +77,7 @@ const TypesOfUser = (props) => {
                                 borderWidth={1}
                                 borderColor={isRole === ROLE.DONOR ? COLORS.cornflowerblue : COLORS.transparent}
                                 borderRadius={50}
-                                title={t(`Donor`)}
+                                title={t('donor')}
                                 bgColor={COLORS.lemonchiffon}
                                 fontSize={18}
                                 color={COLORS.black}
@@ -84,13 +87,13 @@ const TypesOfUser = (props) => {
                                 onPress={() => onClick(ROLE.DONOR)} />
                             <Button
                                 borderRadius={50}
-                                title={t(`Let's go!`)}
+                                title={t('go')}
                                 fontSize={18}
                                 color={COLORS.white}
                                 height={50}
                                 marginTop={35}
                                 width={'60%'}
-                                onPress={() => props.navigation.navigate('Login')}
+                                onPress={() => {props.navigation.navigate('Login')}}
                             />
                         </View>
                     </ScrollView>

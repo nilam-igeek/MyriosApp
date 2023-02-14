@@ -121,7 +121,7 @@ const SignUpFirstScreen = (props) => {
                 <View style={styles.card}>
                     <ScrollView contentContainerStyle={{ flexGrow: 1, }} bounces={false}>
                         <View style={styles.subContainer}>
-                            <Text style={styles.titleText}>{t('Sign Up')}</Text>
+                            <Text style={styles.titleText}>{t('signUp')}</Text>
                             <Formik
                                 validationSchema={loginValidationSchema}
                                 initialValues={{ firstName: '', about: '', age: '' }}
@@ -145,10 +145,10 @@ const SignUpFirstScreen = (props) => {
                                                     onRequestClose={() => { setModalVisible(!modalVisible) }}>
                                                     <View style={styles.blurView}>
                                                         <View style={styles.blurSubView}>
-                                                            <Text style={styles.titleOfPicker}>{'Select Image'}</Text>
-                                                            <Text onPress={openCamera} style={styles.takePhotoText}>{'Take Photo...'}</Text>
-                                                            <Text onPress={openLibrary} style={styles.takePhotoText}>{'Choose from Library...'}</Text>
-                                                            <Text onPress={() => setModalVisible(false)} style={styles.cancelText}>{'CANCEL'}</Text>
+                                                            <Text style={styles.titleOfPicker}>{t('selectImage')}</Text>
+                                                            <Text onPress={openCamera} style={styles.takePhotoText}>{t('takePhoto')}</Text>
+                                                            <Text onPress={openLibrary} style={styles.takePhotoText}>{t('chooseLibrary')}</Text>
+                                                            <Text onPress={() => setModalVisible(false)} style={styles.cancelText}>{t('cancel')}</Text>
                                                         </View>
                                                     </View>
                                                 </Modal>
@@ -162,7 +162,7 @@ const SignUpFirstScreen = (props) => {
                                                     onBlur={handleBlur('firstName')}
                                                     width={(BaseStyle.WIDTH / 100) * 50}
                                                     inputWidth={(BaseStyle.WIDTH / 100) * 40}
-                                                    placeholder={t('First Name')}
+                                                    placeholder={t('fName')}
                                                     isError={errors.firstName}
                                                 />
                                             </View>
@@ -170,7 +170,7 @@ const SignUpFirstScreen = (props) => {
 
                                         <CountryPickerModal
                                             isOnSelect={(text) => { setCountry(text) }}
-                                            placeholder="Country of Residence" />
+                                            placeholder={t('countryResidence')} />
 
                                         {isRefugee &&
                                             <>
@@ -182,16 +182,16 @@ const SignUpFirstScreen = (props) => {
                                                     onBlur={handleBlur('age')}
                                                     width={(BaseStyle.WIDTH / 100) * 80}
                                                     inputWidth={(BaseStyle.WIDTH / 100) * 70}
-                                                    placeholder={'Age'}
+                                                    placeholder={t('age')}
                                                     mt={20}
                                                     isError={errors.age} />
-                                                <Text style={styles.chooseOneText}>{'Choose one...'}</Text>
+                                                <Text style={styles.chooseOneText}>{t('chooseOne')}</Text>
                                                 <View style={styles.chooseOneCard}>
                                                     <Button
                                                         borderColor={isSelected === 'Girl' ? COLORS.cornflowerblue : COLORS.transparent}
                                                         borderWidth={1}
                                                         bgColor={COLORS.lemonchiffon}
-                                                        title={t('Girl')}
+                                                        title={t('girl')}
                                                         fontSize={14}
                                                         color={COLORS.black}
                                                         height={45}
@@ -202,7 +202,7 @@ const SignUpFirstScreen = (props) => {
                                                         borderColor={isSelected === 'Boy' ? COLORS.cornflowerblue : COLORS.transparent}
                                                         borderWidth={1}
                                                         bgColor={COLORS.lemonchiffon}
-                                                        title={t('Boy')}
+                                                        title={t('boy')}
                                                         fontSize={14}
                                                         color={COLORS.black}
                                                         height={45}
@@ -215,7 +215,7 @@ const SignUpFirstScreen = (props) => {
                                                         borderColor={isSelected === 'Mom' ? COLORS.cornflowerblue : COLORS.transparent}
                                                         borderWidth={1}
                                                         bgColor={COLORS.lemonchiffon}
-                                                        title={t('Mom')}
+                                                        title={t('mom')}
                                                         fontSize={14}
                                                         color={COLORS.black}
                                                         height={45}
@@ -226,7 +226,7 @@ const SignUpFirstScreen = (props) => {
                                                         borderColor={isSelected === 'Woman' ? COLORS.cornflowerblue : COLORS.transparent}
                                                         borderWidth={1}
                                                         bgColor={COLORS.lemonchiffon}
-                                                        title={t('Woman')}
+                                                        title={t('woman')}
                                                         fontSize={14}
                                                         color={COLORS.black}
                                                         height={45}
@@ -246,7 +246,7 @@ const SignUpFirstScreen = (props) => {
                                                 onBlur={handleBlur('about')}
                                                 width={(BaseStyle.WIDTH / 100) * 80}
                                                 inputWidth={(BaseStyle.WIDTH / 100) * 70}
-                                                placeholder={t('Desc./About')}
+                                                placeholder={t('about')}
                                                 placeholderColor={COLORS.grey}
                                                 isError={errors.about}
                                                 multiline
@@ -257,7 +257,7 @@ const SignUpFirstScreen = (props) => {
                                             />}
                                         <Button
                                             marginBottom={30}
-                                            title={t('Next')}
+                                            title={t('next')}
                                             fontSize={18}
                                             color={COLORS.white}
                                             height={50}

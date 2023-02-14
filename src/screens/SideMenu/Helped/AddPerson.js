@@ -53,9 +53,9 @@ const AddPerson = (props) => {
     return (
         <View style={styles.container}>
             <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.seashell} />
-            <Header title={'Myrios'} onPress={() => { props.navigation.toggleDrawer() }} />
+            <Header title={t('myrios')} onPress={() => { props.navigation.toggleDrawer() }} />
             <View style={{ justifyContent: 'center', alignItems: "center" }}>
-                <Text style={styles.titleText}>{'ADD A PERSON'}</Text>
+                <Text style={styles.titleText}>{t('addPerson')}</Text>
 
                 <Formik
                     validationSchema={loginValidationSchema}
@@ -74,7 +74,7 @@ const AddPerson = (props) => {
                                 onBlur={handleBlur('firstName')}
                                 width={(BaseStyle.WIDTH / 100) * 80}
                                 inputWidth={(BaseStyle.WIDTH / 100) * 80}
-                                placeholder={isShelter ? ('Shelter Name') : ('First Name')}
+                                placeholder={isShelter ? t('shelterName') : t('fName')}
                                 isError={errors.firstName}
                                 placeholderColor={COLORS.black} />
 
@@ -89,7 +89,7 @@ const AddPerson = (props) => {
                                 onBlur={handleBlur('email')}
                                 width={(BaseStyle.WIDTH / 100) * 80}
                                 inputWidth={(BaseStyle.WIDTH / 100) * 80}
-                                placeholder={t('Email Address')}
+                                placeholder={t('emailAdd')}
                                 keyboardType="email-address"
                                 isError={errors.email}
                                 placeholderColor={COLORS.black} />
@@ -99,12 +99,12 @@ const AddPerson = (props) => {
                                 marginTop={30}
                                 isPerson
                                 isOnSelect={(text) => { console.log(text) }}
-                                placeholder="Country of Residence" />
+                                placeholder={t('countryResidence')}/>
 
                             <Button
                                 borderRadius={10}
                                 bgColor={COLORS.black}
-                                title={('SUBMIT')}
+                                title={t('submit')}
                                 fontSize={18}
                                 color={COLORS.white}
                                 height={50}

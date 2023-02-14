@@ -106,10 +106,10 @@ const Profile = (props) => {
     return (
         <View style={styles.container}>
             <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.seashell} />
-            <Header title={'Myrios'} onPress={() => { props.navigation.toggleDrawer() }} />
+            <Header title={t('myrios')} onPress={() => { props.navigation.toggleDrawer() }} />
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <View style={{ justifyContent: 'center', alignItems: "center" }}>
-                    <Text style={styles.titleText}>{'PROFILE'}</Text>
+                    <Text style={styles.titleText}>{t('profile')}</Text>
 
                     <Formik
                         validationSchema={loginValidationSchema}
@@ -135,10 +135,10 @@ const Profile = (props) => {
                                         }}>
                                         <View style={styles.blurView}>
                                             <View style={styles.blurSubView}>
-                                                <Text style={styles.titleOfPicker}>{'Select Image'}</Text>
-                                                <Text onPress={openCamera} style={styles.takePhotoText}>{'Take Photo...'}</Text>
-                                                <Text onPress={openLibrary} style={styles.takePhotoText}>{'Choose from Library...'}</Text>
-                                                <Text onPress={() => setModalVisible(false)} style={styles.cancelText}>{'CANCEL'}</Text>
+                                                <Text style={styles.titleOfPicker}>{t('selectImage')}</Text>
+                                                <Text onPress={openCamera} style={styles.takePhotoText}>{t('takePhoto')}</Text>
+                                                <Text onPress={openLibrary} style={styles.takePhotoText}>{t('chooseLibrary')}</Text>
+                                                <Text onPress={() => setModalVisible(false)} style={styles.cancelText}>{t('cancel')}</Text>
                                             </View>
                                         </View>
                                     </Modal>
@@ -153,7 +153,7 @@ const Profile = (props) => {
                                         onBlur={handleBlur('firstName')}
                                         width={(BaseStyle.WIDTH / 100) * 80}
                                         inputWidth={(BaseStyle.WIDTH / 100) * 70}
-                                        placeholder={isShelter ? ('Shelter Name') : t('First Name')}
+                                        placeholder={isShelter ? ('shelterName') : t('fName')}
                                         isError={errors.firstName}
                                     /> :
                                         <View style={styles.countryView}>
@@ -168,7 +168,7 @@ const Profile = (props) => {
                                                 marginTop={30}
                                                 isOnSelect={(text) => { setCountry(text) }}
                                                     // isOnSelect={(text) => { console.log(text) }}
-                                                    placeholder={"Country"} />}
+                                                    placeholder={t("country")} />}
                                         </>
                                         ) : (
                                             <>
@@ -192,7 +192,7 @@ const Profile = (props) => {
                                                 onBlur={handleBlur('age')}
                                                 width={(BaseStyle.WIDTH / 100) * 80}
                                                 inputWidth={(BaseStyle.WIDTH / 100) * 70}
-                                                placeholder={'Age'}
+                                                placeholder={t('age')}
                                                 placeholderColor={COLORS.black}
                                                 isError={errors.age}
                                             /> :
@@ -203,11 +203,11 @@ const Profile = (props) => {
 
 
                                             {isModalVisible ? <>
-                                                <Text style={styles.chooseOneText}>{'Choose one...'}</Text>
+                                                <Text style={styles.chooseOneText}>{t('chooseOne')}</Text>
                                                 <View style={styles.chooseOneCard}>
                                                     <Button
                                                         borderWidth={1}
-                                                        title={t('Girl')}
+                                                        title={t('girl')}
                                                         fontSize={14}
                                                         borderColor={isSelected === 'Girl' ? COLORS.cornflowerblue : COLORS.transparent}
                                                         bgColor={COLORS.lemonchiffon}
@@ -220,7 +220,7 @@ const Profile = (props) => {
                                                         borderWidth={1}
                                                         borderColor={isSelected === 'Boy' ? COLORS.cornflowerblue : COLORS.transparent}
                                                         bgColor={COLORS.lemonchiffon}
-                                                        title={t('Boy')}
+                                                        title={t('boy')}
                                                         fontSize={14}
                                                         color={COLORS.black}
                                                         height={45}
@@ -232,7 +232,7 @@ const Profile = (props) => {
                                                     <Button
                                                         borderWidth={1}
                                                         borderColor={isSelected === 'Mom' ? COLORS.cornflowerblue : COLORS.transparent}
-                                                        title={t('Mom')}
+                                                        title={t('mom')}
                                                         fontSize={14}
                                                         bgColor={COLORS.lemonchiffon}
                                                         color={COLORS.black}
@@ -244,7 +244,7 @@ const Profile = (props) => {
                                                         borderWidth={1}
                                                         borderColor={isSelected === 'Woman' ? COLORS.cornflowerblue : COLORS.transparent}
                                                         bgColor={COLORS.lemonchiffon}
-                                                        title={t('Woman')}
+                                                        title={t('woman')}
                                                         fontSize={14}
                                                         color={COLORS.black}
                                                         height={45}
@@ -267,7 +267,7 @@ const Profile = (props) => {
                                                 onBlur={handleBlur('about')}
                                                 width={(BaseStyle.WIDTH / 100) * 80}
                                                 inputWidth={(BaseStyle.WIDTH / 100) * 70}
-                                                placeholder={t('Desc./About')}
+                                                placeholder={t('about')}
                                                 placeholderColor={COLORS.black}
                                                 isError={errors.about}
                                                 multiline
@@ -285,7 +285,7 @@ const Profile = (props) => {
                                     <Button
                                         bgColor={COLORS.lemonchiffon}
                                         width={(BaseStyle.WIDTH / 100) * 80}
-                                        title={t('Edit Profile')}
+                                        title={t('editProfile')}
                                         fontSize={14}
                                         color={COLORS.black}
                                         height={45}
@@ -298,7 +298,7 @@ const Profile = (props) => {
                                 </View>
                                 <Button
                                     marginBottom={30}
-                                    title={isModalVisible ? 'Update Profile' : t('Sign Out')}
+                                    title={isModalVisible ? t('updateProfile') : t('signOut')}
                                     fontSize={18}
                                     color={COLORS.white}
                                     height={50}

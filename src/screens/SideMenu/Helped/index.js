@@ -50,12 +50,10 @@ const Helped = (props) => {
     return (
         <View style={styles.container}>
             <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.seashell} />
-            <Header title={'Myrios'} onPress={() => { props.navigation.toggleDrawer() }} />
+            <Header title={t('myrios')} onPress={() => { props.navigation.toggleDrawer() }} />
             <View style={{ flex: 1, justifyContent: 'center', alignItems: "center" }}>
-                <Text style={styles.titleText}>{isShelter ? 'PEOPLE' : 'HELPED'}</Text>
-                <Text style={styles.subText}>{isShelter ?
-                    'Here you can see and upload all the refugees in your shelter who are using Myrios in order to verify them!' :
-                    'Here you can see all the people you have helped'}</Text>
+                <Text style={styles.titleText}>{isShelter ? t('people') : t('helped')}</Text>
+                <Text style={styles.subText}>{isShelter ? t('peopleSubDes') : t('helpedSubDes')}</Text>
                 {!_.isEmpty(isData) ?
                     (<View style={{ flex: 1 }}>
                     <FlatList
@@ -72,18 +70,18 @@ const Helped = (props) => {
                                             style={styles.profileStyle} />
                                         : <ProfileSvg height={30} width={30} />}
                                 </View>
-                                {isShelter ? <Text style={styles.userName}>{item.name}, {item.gender}, {item.age} Years</Text> :
+                                {isShelter ? <Text style={styles.userName}>{item.name}, {item.gender}, {item.age} {t('year')}</Text> :
                                     <Text style={styles.userName}>{item.name}</Text>}
                             </View>}
                     />
                 </View>) :
                     (<View style={{ flex: 1, justifyContent: "center", alignItems: 'center' }}>
-                        <Text style={{ fontSize: 20, color: COLORS.grey }}>{'People Is Not Found'}</Text>
+                        <Text style={{ fontSize: 20, color: COLORS.grey }}>{t('notFound')}</Text>
                     </View>)}
                 <Button
                     borderRadius={10}
                     bgColor={COLORS.black}
-                    title={(isShelter ? 'ADD A PERSON' : 'SEE MORE WISHLIST')}
+                    title={(isShelter ? t('addPerson') : t('moreWishList'))}
                     fontSize={18}
                     color={COLORS.white}
                     height={50}

@@ -16,12 +16,12 @@ const GetStarted = (props) => {
             <View style={styles.blurView}>
                 <View style={styles.myriosContainer}>
                     <Pressable onPress={()=> {props.navigation.navigate('Language')}} style={styles.myriosSubContainer}>
-                        <Text style={styles.myriosText}>Myrios</Text>
+                        <Text style={styles.myriosText}>{t('myrios')}</Text>
                         <RightArrowSvg fill={COLORS.white} marginRight={10} />
                     </Pressable>
                 </View>
                 <View style={styles.btnView}>
-                    <Button title={t('Get Started')}
+                    <Button title={t('getStarted')}
                         onPress={()=> {props.navigation.navigate('Language')}}
                         borderWidth={1}
                         borderColor={COLORS.white}
