@@ -30,6 +30,8 @@ const RefugeesList = (props) => {
                 <Text style={styles.titleText}>{`${t('masterTitle')}\n${t('refugeeType')}`}</Text>
                 <View style={{ flex: 1 }}>
                     <FlatList
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
                         data={isRefugeeData && isRefugeeData}
                         extraData={isRefugeeData && isRefugeeData}
                         keyExtractor={item => item.id}

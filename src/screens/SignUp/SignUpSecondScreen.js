@@ -14,7 +14,7 @@ import { PASSWORD_PATTERN, EMAIL_PATTERN } from '../../constants/BaseValidation'
 import CloseButton from '../../components/core/CloseButton';
 import { Formik, Field } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { registerApi } from '../../redux/actions/ApiActionCreator';
+import { registerApi,signUpDataOfUser } from '../../redux/actions/ApiActionCreator';
 import * as yup from 'yup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ROLE } from '../../constants/types';
@@ -24,7 +24,6 @@ const SignUpSecondScreen = (props) => {
      const isdataProfile = useSelector((state) => state.apiReducer.dataProfile);
     const isUserData = useSelector((state) => state.apiReducer.data);
     const loading = useSelector((state) => state.apiReducer.loading);
-    console.log("isUserData_SignUpSecondScreen--isdataProfile111111------>", isdataProfile);
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const [isShow, setIsShow] = useState(false);
@@ -32,6 +31,7 @@ const SignUpSecondScreen = (props) => {
      const isRefugee = isRole === ROLE.REFUGEE
     const isShelter = isRole === ROLE.SHELTER
     const isDonor = isRole === ROLE.DONOR
+
     useEffect(() => {
         async function check() {
             var item = await AsyncStorage.getItem('userType');
@@ -51,7 +51,7 @@ const SignUpSecondScreen = (props) => {
         // .matches(PASSWORD_PATTERN,'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character')            
     })
 
-    const onClickSubmit = async values => {
+    const onClickSubmit = async (values,actions) => {
         const { email, password } = values;
         var isData = {
             email: email,
@@ -64,7 +64,14 @@ const SignUpSecondScreen = (props) => {
             description: isShelter ? isdataProfile.about : '',
             photo: isdataProfile.photo,
         };
-         dispatch(registerApi(isData));
+
+         var body = {
+            ...isdataProfile,
+              email: email,
+        }
+        dispatch(signUpDataOfUser(body));
+        dispatch(registerApi(isData));
+         actions.resetForm();
         if (isData) {
             props.navigation.navigate('Welcome');
         }

@@ -1,5 +1,5 @@
-import React, { useEffect, useState,useRef } from 'react';
-import { View, Text, ImageBackground, ScrollView, Pressable,TextInput } from 'react-native';
+import React, { useEffect, useState, useRef } from 'react';
+import { View, Text, ImageBackground, ScrollView, Pressable, TextInput } from 'react-native';
 import { COLORS } from '../../common/style/Colors';
 import Button from '../../components/core/Button';
 import styles from './styles';
@@ -16,8 +16,8 @@ import { Formik, Field } from 'formik';
 import * as yup from 'yup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ROLE } from '../../constants/types';
-import {loginApi} from '../../redux/actions/ApiActionCreator';
-import {useDispatch, useSelector} from 'react-redux';
+import { loginApi, signUpDataOfUser } from '../../redux/actions/ApiActionCreator';
+import { useDispatch, useSelector } from 'react-redux';
 import Indicator from '../../components/core/Indicator';
 import _ from 'lodash';
 
@@ -25,7 +25,7 @@ const Login = (props) => {
     // const emailRef = useRef();
     // const passwordRef = useRef();
     const dispatch = useDispatch();
-    const data = useSelector((state) => state.apiReducer.data);
+   
     const success = useSelector((state) => state.apiReducer.data.success);
     const loading = useSelector((state) => state.apiReducer.loading);
     const { t } = useTranslation();
@@ -35,7 +35,7 @@ const Login = (props) => {
     const isDonor = isRole === ROLE.DONOR
     const isShelter = isRole === ROLE.SHELTER
     const isRefugee = isRole === ROLE.REFUGEE
-    
+
     useEffect(() => {
         async function check() {
             var item = await AsyncStorage.getItem('userType');
@@ -46,37 +46,40 @@ const Login = (props) => {
 
     const loginValidationSchema = yup.object().shape({
         email: yup
-            .string(),
-            // .matches(EMAIL_PATTERN, 'Please enter valid email')
-            // // .email(t("Please enter valid email"))
-            // .required(t('Email Address is Required')),
-       password: yup
             .string()
-            // .required(t('Password is required'))
-            // //.min(8, ({ min }) => { `${('Password must be at least')} ${min} ${('characters')}` })
-            // .matches(PASSWORD_PATTERN,'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character')
-            
+        .required(t('Email Address is Required')),
+        // .matches(EMAIL_PATTERN, 'Please enter valid email')
+        // // .email(t("Please enter valid email"))
+        // .required(t('Email Address is Required')),
+        password: yup
+            .string()
+        .required(t('Password is required'))
+        // //.min(8, ({ min }) => { `${('Password must be at least')} ${min} ${('characters')}` })
+        // .matches(PASSWORD_PATTERN,'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character')
+
     })
 
-    const onClickSubmit = async values => {
-    const { email, password } = values;
-    var body = {
-      password: password,
-      email: email
+    const onClickSubmit = async (values,actions) => {
+        const { email, password } = values;
+        var body = {
+            password: password,
+            email: email
+        };
+        dispatch(loginApi(body));
+        actions.resetForm();
+
     };
-    dispatch(loginApi(body));
-  };
 
     useEffect(() => {
         if (success) {
             if (isDonor || isRefugee || isShelter) {
-                 props.navigation.navigate('Welcome');
+                props.navigation.navigate('Welcome');
             } else if (isMaster) {
                 props.navigation.navigate('RefugeesList');
             }
-        } 
-    },[success])
-    
+        }
+    }, [success])
+
     return (
         <ImageBackground
             resizeMode='cover'
@@ -87,8 +90,8 @@ const Login = (props) => {
             </CloseButton>
             <View style={styles.container}>
                 <View style={styles.card}>
-                       <Text style={styles.titleText}>{t('logIn')}</Text>
-                        <ScrollView
+                    <Text style={styles.titleText}>{t('logIn')}</Text>
+                    <ScrollView
                         showsVerticalScrollIndicator={false}
                         showsHorizontalScrollIndicator={false}
                         contentContainerStyle={{ flexGrow: 1 }}
@@ -150,7 +153,7 @@ const Login = (props) => {
                     </ScrollView>
                 </View>
             </View>
-            <Indicator isLoader animate={loading}/>
+            <Indicator isLoader animate={loading} />
         </ImageBackground>
     );
 };

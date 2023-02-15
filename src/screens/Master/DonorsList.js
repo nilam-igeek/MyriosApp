@@ -31,6 +31,8 @@ const dispatch = useDispatch();
                 <Text style={styles.titleText}>{`${t('masterTitle')}\n${t('donorType')}`}</Text>
                 <View style={{ flex: 1 }}>
                     <FlatList
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
                         data={isDonorData}
                         extraData={isDonorData}
                         keyExtractor={item => item.id}

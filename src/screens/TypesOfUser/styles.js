@@ -25,6 +25,7 @@ export default styles = StyleSheet.create({
         titleText: {
         width: (BaseStyle.WIDTH / 100) * 80,
         alignItems: 'center',
+        textAlign:"center",
         fontSize: 26,
         marginVertical: 25,
         color: COLORS.black,

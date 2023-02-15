@@ -12,12 +12,15 @@ import { ROLE } from '../../../constants/types';
 import { Formik, Field } from 'formik';
 import * as yup from 'yup';
 import CountryPickerModal from '../../../components/core/CountryPickerModal';
+import { addPeopleApi } from '../../../redux/actions/ApiActionCreator';
+import { useDispatch, useSelector } from 'react-redux';
+import Indicator from '../../../components/core/Indicator';
 const AddPerson = (props) => {
-
+ const loading = useSelector((state) => state.apiReducer.loading);
     const { t } = useTranslation();
     const [isRole, setIsRole] = useState('');
     const isShelter = isRole === ROLE.SHELTER
-
+ const dispatch = useDispatch();
     useEffect(() => {
         async function check() {
             var item = await AsyncStorage.getItem('userType');
@@ -28,23 +31,30 @@ const AddPerson = (props) => {
 
     const loginValidationSchema = yup.object().shape({
         firstName: yup
-            .string()
-            .required(t('First Name is Required')),
+            .string(),
+            // .required(t('First Name is Required')),
         email: yup
             .string()
-            .required(t('Email Address is Required')),
+            // .required(t('Email Address is Required')),
 
     })
 
-    const onClickSubmit = async values => {
+    const onClickSubmit = async (values,actions) => {
         const { firstName, email } = values;
         var body = {
+            email: email,
+            password: 'password',
+            name: 'Taksh',
+            country: 'India',
+            age: '24',
+            type: 'Boy',
+            shelter: '2',
+            photo:'eiW3vs8iQ/2df8941f-92d7-4c2e-8358-a6a66b6ca637.jpg',
             firstName: firstName,
-            email: email
         };
-        if (body) {
-            // props.navigation.navigate('Welcome');
-        }
+        dispatch(addPeopleApi(body));
+        props.navigation.navigate('Helped');
+        actions.resetForm();
     };
 
 
@@ -116,6 +126,7 @@ const AddPerson = (props) => {
                     )}
                 </Formik>
             </View>
+            <Indicator isLoader animate={loading}/>
         </View>
     );
 };

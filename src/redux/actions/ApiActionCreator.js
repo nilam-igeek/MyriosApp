@@ -31,7 +31,13 @@ import {
   registerError,
   profileData,
   profileSuccess,
-  profileError
+  profileError,
+  addProfileData,
+  addProfileSuccess,
+  addProfileError,
+  contactUsData,
+  contactUsSuccess,
+  contactUsError
 } from './ApiAction';
 import Toast from 'react-native-simple-toast';
 
@@ -41,11 +47,13 @@ const url = "https://9977-2405-201-2014-3157-a84a-69ca-76d8-322.ngrok.io/api/"
 //======================== LOGIN =======================//
 export const loginApi = (data) => async (dispatch) => {
   var role = await AsyncStorage.getItem('userType');
+   var isToken = await AsyncStorage.getItem('token');
   dispatch(loginData());
   return new Promise(() => {
   axios
       .post(`${url}${role}/login`, data, {
-         headers: {
+        headers: {
+          'Authorization': `Bearer ${isToken}`,
             Accept: 'application/json',
             'Content-Type': 'application/json',
           },
@@ -57,7 +65,6 @@ export const loginApi = (data) => async (dispatch) => {
       })
     .catch((error) => { 
       dispatch(loginError(error));
-      console.log("error=======>",error);
       return error
       });
   });
@@ -70,7 +77,7 @@ export const registerApi = (data) => async (dispatch) => {
   return new Promise(() => {
   axios
       .post(`${url}${role}/register`, data, {
-         headers: {
+        headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
           },
@@ -78,7 +85,6 @@ export const registerApi = (data) => async (dispatch) => {
     .then(async (response) => {
        Toast.show(response.data.message);
           dispatch(registerSuccess(response.data));
-      // await AsyncStorage.setItem('token', response.data.data.token)
       })
     .catch((error) => { 
       dispatch(registerError(error));
@@ -180,7 +186,7 @@ export const requestsListApi = async (dispatch) => {
     });
  };
 
-  //======================== PEOPLE ========================//
+//======================== PEOPLE ========================//
  export const peopleApi = async (dispatch) => {
   var isToken = await AsyncStorage.getItem('token');
   dispatch(peopleData());
@@ -199,27 +205,7 @@ export const requestsListApi = async (dispatch) => {
     });
  };
 
-  //======================== MEETING ========================//
- export const meetingsApi = async (dispatch) => {
-  var isToken = await AsyncStorage.getItem('token');
-  dispatch(meetingData());
-  return new Promise(() => {
-    axios
-        .get(`${url}meetings`, {
-          headers: {'Authorization': `Bearer ${isToken}`}
-      })
-      .then((response) => {
-         Toast.show(response.data.message);
-        dispatch(meetingSuccess(response.data));
-      })
-      .catch((error) => {
-      dispatch(meetingError(error));
-      });
-    });
- };
-
- //======================== SET_PROFILE ========================//
-
+//======================== SET_PROFILE ========================//
 export const signUpDataOfUser = (data) => {
   return {
     type: ACTION_TYPES.PROFILE_SET_DATA,
@@ -229,22 +215,68 @@ export const signUpDataOfUser = (data) => {
 
 //======================== PROFILE ========================//
 export const updateProfileApi = (data) => async (dispatch) => {
-   console.log("updateProfileApi======>",data);
   dispatch(profileData());
   return new Promise(() => {
   axios
       .post(`${url}update-profile`, data, {
-         headers: {
+        headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
           },
        })
     .then(async (response) => {
-      console.log("updateProfileApi_resposne11111======>",JSON.stringify(response.data));
           dispatch(profileSuccess(response.data));
       })
     .catch((error) => { 
       dispatch(profileError(error));
+      return error
+      });
+  });
+};
+
+//======================== ADD PEOPLE ========================//
+export const addPeopleApi = (data) => async (dispatch) => {
+  var isToken = await AsyncStorage.getItem('token');
+  dispatch(addProfileData());
+  return new Promise(() => {
+  axios
+      .post(`${url}Refugee/add-people`, data, {
+        headers: {
+           'Authorization': `Bearer ${isToken}`,
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+       })
+    .then(async (response) => {
+      Toast.show(response.data.message);
+          dispatch(addProfileSuccess(response.data));
+      })
+    .catch((error) => { 
+      dispatch(addProfileError(error));
+      return error
+      });
+  });
+};
+
+//======================== CONTACT-US ========================//
+export const contactUsApi = (data) => async (dispatch) => {
+   var isToken = await AsyncStorage.getItem('token');
+  dispatch(contactUsData());  
+  return new Promise(() => {
+  axios
+      .post(`${url}contact-us`, data, {
+        headers: {
+            'Authorization': `Bearer ${isToken}`,
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+       })
+    .then(async (response) => {
+      Toast.show(response.data.message);
+          dispatch(contactUsSuccess(response.data));
+      })
+    .catch((error) => { 
+      dispatch(contactUsError(error));
       return error
       });
   });

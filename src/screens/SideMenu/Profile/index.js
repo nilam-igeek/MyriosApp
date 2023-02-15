@@ -17,11 +17,14 @@ import { updateProfileApi } from '../../../redux/actions/ApiActionCreator';
 import ImagePicker from 'react-native-image-crop-picker';
 import CountryPickerModal from '../../../components/core/CountryPickerModal';
 import { useDispatch, useSelector } from 'react-redux';
-
+import Indicator from '../../../components/core/Indicator';
 const Profile = (props) => {
 
     const isdataProfile = useSelector((state) => state.apiReducer.dataProfile);
-    console.log("isdataProfile---->",isdataProfile);
+    const loading = useSelector((state) => state.apiReducer.loading);
+    const data= useSelector((state) => state.apiReducer.data);
+    console.log("isdata-isdataProfile-------->", isdataProfile);
+    // console.log("isdata-isdataProfiledatadata-------->",data.data.name);
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const [isRole, setIsRole] = useState('');
@@ -32,6 +35,7 @@ const Profile = (props) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const isRefugee = isRole === ROLE.REFUGEE
     const isShelter = isRole === ROLE.SHELTER
+    const isDonor = isRole === ROLE.DONOR
 
     useEffect(() => {
         async function check() {
@@ -51,20 +55,25 @@ const Profile = (props) => {
 
     })
 
+
     const onClickSubmit = async values => {
         const { firstName,about,age } = values;
         if (isModalVisible) {
-            var isData = {
+            var body = {
             image:isImages,
-            email: 'fsdfd@gmail.com',
-            name: firstName,
-            country: country,
-            description:isShelter ? about: '',
-            age:age,
-            type: isSelected,
+                email: isdataProfile.email,
+                name: '',
+                country: '',
+                description: '',
+                age: '',
+            type:''
+            // name: firstName,
+            // country:(isShelter || isRefugee) ? country : '',
+            // description:isShelter ? about : '',
+            // age:isRefugee ? age :'',
+            // type:isRefugee ? isSelected :'',
             };
-            console.log("isData---updateProfileApi---111-->",isData);
-        dispatch(updateProfileApi(isData));
+            dispatch(updateProfileApi(body));
         } else {
           await AsyncStorage.setItem('token', '').then(() => [
             props.navigation.navigate('Login')
@@ -77,7 +86,6 @@ const Profile = (props) => {
     }
 
     const openLibrary = () => {
-        // props.navigation.navigate('ChooseProfile') 
         ImagePicker.openPicker({
             width: 300,
             height: 400,
@@ -89,7 +97,6 @@ const Profile = (props) => {
     }
 
     const openCamera = () => {
-        // props.navigation.navigate('ChooseProfile') 
         ImagePicker.openCamera({
             width: 300,
             height: 400,
@@ -157,7 +164,7 @@ const Profile = (props) => {
                                         isError={errors.firstName}
                                     /> :
                                         <View style={styles.countryView}>
-                                            <Text style={styles.countryText}>{isdataProfile.firstName}</Text>
+                                            <Text style={styles.countryText}>{isdataProfile.name}</Text>
                                         </View>
                                     }
 
@@ -277,7 +284,7 @@ const Profile = (props) => {
                                                 mt={30}
                                             /> :
                                                 <View style={styles.countryView}>
-                                                    <Text style={styles.countryText}>{isdataProfile.about}</Text>
+                                                    <Text numberOfLines={1} style={styles.countryText}>{isdataProfile.about}</Text>
                                                 </View>
                                             }
                                         </>
@@ -311,6 +318,7 @@ const Profile = (props) => {
                     </Formik>
                 </View>
             </ScrollView>
+             <Indicator isLoader animate={loading}/>
         </View>
     );
 };

@@ -31,6 +31,8 @@ const ContactRequests = (props) => {
                 <Text style={styles.titleText}>{`${t('masterTitle')}\n${t('contactType')}`}</Text>
                 <View style={{ flex: 1 }}>
                     <FlatList
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
                         data={isRequestsData}
                         extraData={isRequestsData}
                         keyExtractor={item => item.id}

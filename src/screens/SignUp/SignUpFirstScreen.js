@@ -42,27 +42,27 @@ const SignUpFirstScreen = (props) => {
     const loginDonorValidationSchema = yup.object().shape({
         firstName: yup
             .string()
-            .required(t('Name is Required')),
+            .required('Name is Required'),
     })
     const loginShelterValidationSchema = yup.object().shape({
         firstName: yup
             .string()
-            .required(t('Name is Required')),
+            .required('Name is Required'),
         about: yup
             .string()
-        .required(t('About is required')),
+        .required('About is required'),
        
     })
      const loginRefugeeValidationSchema = yup.object().shape({
         firstName: yup
             .string()
-            .required(t('Name is Required')),
+            .required('Name is Required'),
         age: yup
             .string()
-        .required(t('Age is required'))
+        .required('Age is required')
     })
 
-    const onClickSubmit = values => {
+    const onClickSubmit = (values,actions) => {
         const { firstName, about, age, } = values;
         var body = {
             firstName: firstName,
@@ -73,6 +73,7 @@ const SignUpFirstScreen = (props) => {
             isUserType: isSelected
         };
         dispatch(signUpDataOfUser(body));
+         actions.resetForm();
         if (isImages) {
             if (isRefugee) {
                 props.navigation.navigate('Chat');

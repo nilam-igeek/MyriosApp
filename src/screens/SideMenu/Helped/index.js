@@ -56,7 +56,9 @@ const Helped = (props) => {
                 <Text style={styles.subText}>{isShelter ? t('peopleSubDes') : t('helpedSubDes')}</Text>
                 {!_.isEmpty(isData) ?
                     (<View style={{ flex: 1 }}>
-                    <FlatList
+                        <FlatList
+                            showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
                         data={isData}
                         extraData={isData}
                         keyExtractor={item => item.id}

@@ -26,6 +26,8 @@ export default styles = StyleSheet.create({
         color: COLORS.black,
     },
     roleOfProfile: {
+        borderWidth: 1,
+        borderColor:COLORS.grey,
         marginVertical: 30,
         width: 150,
         height: 150,

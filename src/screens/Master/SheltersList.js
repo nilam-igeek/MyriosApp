@@ -33,6 +33,8 @@ const SheltersList = (props) => {
                 <Text style={styles.titleText}>{`${t('masterTitle')}\n${t('shelterType')}`}</Text>
                 <View style={{ flex: 1 }}>
                     <FlatList
+                         showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
                         data={isShelterData}
                         extraData={isShelterData}
                         keyExtractor={item => item.id}

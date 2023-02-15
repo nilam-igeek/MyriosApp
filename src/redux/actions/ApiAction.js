@@ -134,6 +134,21 @@ export const meetingStatusError = (error) => ({
   payload: error,
 });
 
+//======================== ADD PEOPLE ========================//
+export const addProfileData = () => ({
+  type: ACTION_TYPES.ADD_PEOPLE_API_PENDING,
+});
+
+export const addProfileSuccess = (data) => ({
+  type: ACTION_TYPES.ADD_PEOPLE_API_SUCCESS,
+  payload: data,
+});
+
+export const addProfileError = (error) => ({
+  type: ACTION_TYPES.ADD_PEOPLE_API_ERROR,
+  payload: error,
+});
+
 //======================== PROFILE ========================//
 export const profileData = () => ({
   type: ACTION_TYPES.PROFILE_API_PENDING,
@@ -195,34 +210,6 @@ export const peopleError = (error) => ({
   payload: error,
 });
 
-//======================== CREATE-MEETING ========================//
-export const createMeetingData = () => ({
-  type: ACTION_TYPES.CREATE_MEETING_API_PENDING,
-});
 
-export const createMeetingSuccess = (data) => ({
-  type: ACTION_TYPES.CREATE_MEETING_API_SUCCESS,
-  payload: data,
-});
-
-export const createMeetingError = (error) => ({
-  type: ACTION_TYPES.CREATE_MEETING_API_ERROR,
-  payload: error,
-});
-
-//======================== MEETING ========================//
-export const meetingData = () => ({
-  type: ACTION_TYPES.MEETING_API_PENDING,
-});
-
-export const meetingSuccess = (data) => ({
-  type: ACTION_TYPES.MEETING_API_SUCCESS,
-  payload: data,
-});
-
-export const meetingError = (error) => ({
-  type: ACTION_TYPES.MEETING_API_ERROR,
-  payload: error,
-});
 
 
