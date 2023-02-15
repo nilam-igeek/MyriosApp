@@ -42,9 +42,12 @@ const ChooseProfile = (props) => {
             </CloseButton>
             <View style={styles.container}>
                 <View style={styles.card}>
-                    <ScrollView contentContainerStyle={{ flexGrow: 1, }} bounces={false}>
+                     <Text style={styles.profileText}>{t('choosePhoto')}</Text>
+                    <ScrollView showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={{ flexGrow: 1 }}
+                        bounces={false}>
                         <View style={styles.subContainer}>
-                            <Text style={styles.profileText}>{t('choosePhoto')}</Text>
                             <Text style={styles.profileSubText}>{t('chooseSubDes')}</Text>
                             <View style={styles.MainContainer}>
                                 <FlatList

@@ -46,7 +46,8 @@ export default styles = StyleSheet.create({
         width: (BaseStyle.WIDTH / 100) * 70,
         alignSelf: 'center',
         color: COLORS.black,
-        fontFamily:FONTS.Poppins_Regular
+        fontFamily: FONTS.Poppins_Regular,
+        fontSize:14
     },
       textPerson: {
         width: (BaseStyle.WIDTH / 100) * 80,

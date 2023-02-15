@@ -7,26 +7,28 @@ export default styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-end' 
     },
-        card: {
+       card: {
         backgroundColor: COLORS.white,
-        height: '70%',
+        height: (BaseStyle.HEIGHT / 100) * 60,
         width: '100%',
         borderTopRightRadius: 40,
-        borderTopLeftRadius:40
+        borderTopLeftRadius: 40,
+        alignSelf: 'center',
+        alignItems:'center'
     },
     subContainer: {
         alignSelf: 'center',
         justifyContent: 'center',
-        alignItems:'center',
+        alignItems: 'center',
         width: (BaseStyle.WIDTH / 100) * 80,
     },
         titleText: {
-        width: '100%',
-        fontSize: 28,
-        marginVertical:25,
+        width: (BaseStyle.WIDTH / 100) * 80,
+        alignItems: 'center',
+        fontSize: 26,
+        marginVertical: 25,
         color: COLORS.black,
-        textAlign: "center",
-        fontFamily:FONTS.Poppins_SemiBold,
+        fontFamily:FONTS.Poppins_SemiBold
     },
 
 });

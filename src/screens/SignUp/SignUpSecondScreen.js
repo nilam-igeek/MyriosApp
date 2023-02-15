@@ -42,12 +42,12 @@ const SignUpSecondScreen = (props) => {
 
     const loginValidationSchema = yup.object().shape({
         email: yup
-            .string(),
+            .string()
         // .matches(EMAIL_PATTERN, 'Please enter valid email')
-        // .required(t('Email Address is Required')),
+        .required(t('Email Address is Required')),
         password: yup
             .string()
-        // .required(t('Password is required'))
+        .required(t('Password is required'))
         // .matches(PASSWORD_PATTERN,'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character')            
     })
 
@@ -79,9 +79,12 @@ const SignUpSecondScreen = (props) => {
             </CloseButton>
             <View style={styles.container}>
                 <View style={styles.card}>
-                    <ScrollView contentContainerStyle={{ flexGrow: 1, }} bounces={false}>
+                     <Text style={styles.titleText}>{t('signUp')}</Text>
+                    <ScrollView showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={{ flexGrow: 1 }}
+                        bounces={false}>
                         <View style={styles.subContainer}>
-                            <Text style={styles.titleText}>{t('signUp')}</Text>
                             <Formik
                                 validationSchema={loginValidationSchema}
                                 initialValues={{ email: '', password: '' }}

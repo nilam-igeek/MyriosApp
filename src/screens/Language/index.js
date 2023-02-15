@@ -68,11 +68,15 @@ const Language = (props) => {
             </CloseButton>
             <View style={styles.container}>
                 <View style={styles.card}>
-                    <ScrollView contentContainerStyle={{ flexGrow: 1, }} bounces={false}>
+                       <Text style={styles.titleText}>{t('chooselanguage')}</Text>
+                    <ScrollView
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={{ flexGrow: 1 }}
+                        bounces={false}>
                         <View style={[styles.subContainer,
                             // { zIndex: 1 }
                         ]}>
-                        <Text style={styles.titleText}>{t('chooselanguage')}</Text>
                         <Text style={styles.lanText}>{t('language')}</Text>
                         <DropDownPicker
                             style={styles.dropDownPicker}
@@ -98,6 +102,7 @@ const Language = (props) => {
                             height={50}
                             width={'60%'}
                             onPress={() => { props.navigation.navigate('TypesOfUser') }} />
+                            
                     </View>
                     </ScrollView>
                 </View>

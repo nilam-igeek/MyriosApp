@@ -11,45 +11,39 @@ export default styles = StyleSheet.create({
         marginTop: 30,
         marginBottom: Platform.OS === 'ios' ? 65 : 30
     },
-    titleText: {
-        width: (BaseStyle.WIDTH / 100) * 90,
-        alignSelf: 'center',
-        fontSize: 26,
-        color: COLORS.black,
-        textAlign: "center",
-        fontFamily: FONTS.Poppins_SemiBold,
-    },
+   
     container: {
         flex: 1,
         justifyContent: 'flex-end'
     },
-    card: {
+     card: {
         backgroundColor: COLORS.white,
-        height: '70%',
+        height: (BaseStyle.HEIGHT / 100) * 60,
         width: '100%',
         borderTopRightRadius: 40,
-        borderTopLeftRadius: 40
+        borderTopLeftRadius: 40,
+        alignSelf: 'center',
+        alignItems:'center'
     },
-    // container: {
-    //     flex: 1,
-    //     justifyContent: 'flex-end' 
-    // },
-    // card: {
-    //     backgroundColor: COLORS.white,
-    //     height: '65%',
-    //     width: '90%',
-    //     borderTopRightRadius: 40
-    // },
     subContainer: {
-        marginTop: 20,
+        alignSelf: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
         width: (BaseStyle.WIDTH / 100) * 80,
-        alignSelf: 'center'
+    },
+        titleText: {
+        width: (BaseStyle.WIDTH / 100) * 80,
+        alignItems: 'center',
+        fontSize: 26,
+        marginVertical: 25,
+        color: COLORS.black,
+        fontFamily:FONTS.Poppins_SemiBold
     },
     lanText: {
         fontSize: 16,
         fontFamily: FONTS.Poppins_SemiBold,
         alignSelf: 'center',
-        marginTop: 40,
+        marginTop: 10,
         marginBottom: 10,
         width: '100%',
         color: COLORS.black,

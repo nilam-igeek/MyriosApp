@@ -25,7 +25,7 @@ const Login = (props) => {
     // const emailRef = useRef();
     // const passwordRef = useRef();
     const dispatch = useDispatch();
-    // const data = useSelector((state) => state.apiReducer.data);
+    const data = useSelector((state) => state.apiReducer.data);
     const success = useSelector((state) => state.apiReducer.data.success);
     const loading = useSelector((state) => state.apiReducer.loading);
     const { t } = useTranslation();
@@ -87,9 +87,13 @@ const Login = (props) => {
             </CloseButton>
             <View style={styles.container}>
                 <View style={styles.card}>
-                    <ScrollView contentContainerStyle={{ flexGrow: 1, }} bounces={false}>
+                       <Text style={styles.titleText}>{t('logIn')}</Text>
+                        <ScrollView
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={{ flexGrow: 1 }}
+                        bounces={false}>
                         <View style={styles.subContainer}>
-                            <Text style={styles.titleText}>{t('logIn')}</Text>
                             <Formik
                                 validationSchema={loginValidationSchema}
                                 initialValues={{ email: '', password: '' }}
@@ -111,7 +115,6 @@ const Login = (props) => {
                                             isError={errors.email}>
                                             <EmailSvg marginRight={10} />
                                         </Field>
-                                     
                                         <Field
                                             name={'password'}
                                             title={t('password')}
@@ -130,7 +133,6 @@ const Login = (props) => {
                                                 {isShow ? <LockOpenSvg marginRight={10} /> : <LockSvg marginRight={10} />}
                                             </Pressable>
                                         </Field>
-                                      
                                         <Button
                                             title={t('next')}
                                             fontSize={18}
@@ -143,7 +145,6 @@ const Login = (props) => {
                                         {!isMaster && <Text onPress={() => { props.navigation.navigate('SignUpFirstScreen') }} style={styles.signUpText}>{t('signUp')}</Text>}
                                     </>
                                 )}
-
                             </Formik>
                         </View>
                     </ScrollView>

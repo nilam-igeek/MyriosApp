@@ -59,10 +59,12 @@ export default styles = StyleSheet.create({
     },
     card: {
         backgroundColor: COLORS.white,
-        height: '70%',
+        height: (BaseStyle.HEIGHT / 100) * 60,
         width: '100%',
         borderTopRightRadius: 40,
-        borderTopLeftRadius: 40
+        borderTopLeftRadius: 40,
+        alignSelf: 'center',
+        alignItems:'center'
     },
     subContainer: {
         alignSelf: 'center',
@@ -70,14 +72,13 @@ export default styles = StyleSheet.create({
         alignItems: 'center',
         width: (BaseStyle.WIDTH / 100) * 80,
     },
-    titleText: {
-        width: '100%',
-        fontSize: 28,
+        titleText: {
+        width: (BaseStyle.WIDTH / 100) * 80,
+        alignItems: 'center',
+        fontSize: 26,
         marginVertical: 25,
         color: COLORS.black,
-        textAlign: "left",
-        marginLeft: 20,
-        // fontStyle: FONTS.Poppins_SemiBold,
+        fontFamily:FONTS.Poppins_SemiBold
     },
     signUpText: {
         color: COLORS.cornflowerblue,
@@ -87,17 +88,19 @@ export default styles = StyleSheet.create({
 
     // Choose profile screen 
     profileText: {
-        width: '100%',
-        fontSize: 28,
+       width: (BaseStyle.WIDTH / 100) * 80,
+       alignItems: 'center',
+        fontSize: 26,
         marginTop: 25,
         color: COLORS.black,
-        textAlign: "left",
+        fontFamily: FONTS.Poppins_SemiBold,
     },
     profileSubText: {
         marginTop: 10,
         width: '100%',
         fontSize: 12,
         color: COLORS.black,
+        fontFamily: FONTS.Poppins_Regular,
     },
     profileCard: {
         width: '100%',

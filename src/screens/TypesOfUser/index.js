@@ -47,9 +47,12 @@ const TypesOfUser = (props) => {
             </CloseButton>
             <View style={styles.container}>
                 <View style={styles.card}>
-                    <ScrollView contentContainerStyle={{ flexGrow: 1, }} bounces={false}>
+                       <Text style={styles.titleText}>{`${t('am')}${isRole ? isRole : 'Master'}`}</Text>
+                     <ScrollView showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={{ flexGrow: 1 }}
+                        bounces={false}>
                         <View style={styles.subContainer}>
-                            <Text style={styles.titleText}>{`${t('am')}${isRole ? isRole : 'Master'}`}</Text>
                             <Button borderRadius={50}
                                 borderWidth={1}
                                 borderColor={isRole === ROLE.REFUGEE ? COLORS.cornflowerblue : COLORS.transparent}

@@ -24,7 +24,7 @@ const SignUpFirstScreen = (props) => {
     const { t } = useTranslation();
     const [profile, setProfile] = useState('');
     const [country,setCountry] = useState('');
-    const [isSelected, setIsSelected] = useState('G');
+    const [isSelected, setIsSelected] = useState('Girl');
     const [isRole, setIsRole] = useState('');
     const [isImages, setIsImages] = useState(isUserData.photo);
     const [modalVisible, setModalVisible] = useState(false);
@@ -39,16 +39,27 @@ const SignUpFirstScreen = (props) => {
         check();
     }, []);
 
-    const loginValidationSchema = yup.object().shape({
+    const loginDonorValidationSchema = yup.object().shape({
         firstName: yup
-            .string(),
-            // .required(t('Firstname is Required')),
+            .string()
+            .required(t('Name is Required')),
+    })
+    const loginShelterValidationSchema = yup.object().shape({
+        firstName: yup
+            .string()
+            .required(t('Name is Required')),
         about: yup
-            .string(),
-        // .required(t('About is required')),
+            .string()
+        .required(t('About is required')),
+       
+    })
+     const loginRefugeeValidationSchema = yup.object().shape({
+        firstName: yup
+            .string()
+            .required(t('Name is Required')),
         age: yup
             .string()
-        // .required(t('Age is required'))
+        .required(t('Age is required'))
     })
 
     const onClickSubmit = values => {
@@ -62,19 +73,13 @@ const SignUpFirstScreen = (props) => {
             isUserType: isSelected
         };
         dispatch(signUpDataOfUser(body));
-        console.log("isImages--------->", isImages);
-        // console.log("body------------>",body);
         if (isImages) {
-             console.log("body---111--------->");
             if (isRefugee) {
-                 console.log("body--2222---------->");
                 props.navigation.navigate('Chat');
             } else if (isShelter || isDonor) {
-                 console.log("body---3333--------->");
                 props.navigation.navigate('SignUpSecondScreen');
             }
         } else {
-             console.log("body---444--------->");
             props.navigation.navigate('ChooseProfile');
         }
     };
@@ -84,26 +89,22 @@ const SignUpFirstScreen = (props) => {
     }
 
     const openLibrary = () => {
-        // props.navigation.navigate('ChooseProfile') 
         ImagePicker.openPicker({
             width: 300,
             height: 400,
             cropping: true
         }).then(image => {
-            // dispatch(signUpDataOfUser(image.path));
             setIsImages(image.path)
             setModalVisible(false)
         });
     }
 
     const openCamera = () => {
-        // props.navigation.navigate('ChooseProfile') 
         ImagePicker.openCamera({
             width: 300,
             height: 400,
             cropping: true,
         }).then(image => {
-            // dispatch(signUpDataOfUser(image.path));
             setIsImages(image.path)
             setModalVisible(false)
         });
@@ -119,11 +120,14 @@ const SignUpFirstScreen = (props) => {
             </CloseButton>
             <View style={styles.container}>
                 <View style={styles.card}>
-                    <ScrollView contentContainerStyle={{ flexGrow: 1, }} bounces={false}>
+                     <Text style={styles.titleText}>{t('signUp')}</Text>
+                    <ScrollView showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={{ flexGrow: 1 }}
+                        bounces={false}>
                         <View style={styles.subContainer}>
-                            <Text style={styles.titleText}>{t('signUp')}</Text>
                             <Formik
-                                validationSchema={loginValidationSchema}
+                                validationSchema={isShelter? loginShelterValidationSchema: isDonor ? loginDonorValidationSchema : loginRefugeeValidationSchema}
                                 initialValues={{ firstName: '', about: '', age: '' }}
                                 onSubmit={onClickSubmit}>
                                 {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, }) => (
@@ -256,7 +260,7 @@ const SignUpFirstScreen = (props) => {
                                                 mt={20}
                                             />}
                                         <Button
-                                            marginBottom={30}
+                                            marginBottom={35}
                                             title={t('next')}
                                             fontSize={18}
                                             color={COLORS.white}

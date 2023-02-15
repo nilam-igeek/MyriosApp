@@ -33,9 +33,10 @@ import {
   profileSuccess,
   profileError
 } from './ApiAction';
+import Toast from 'react-native-simple-toast';
 
 
-const url = "https://f239-2405-201-2014-3157-d9bd-a00-9645-743.ngrok.io/api/"
+const url = "https://9977-2405-201-2014-3157-a84a-69ca-76d8-322.ngrok.io/api/"
 
 //======================== LOGIN =======================//
 export const loginApi = (data) => async (dispatch) => {
@@ -50,11 +51,13 @@ export const loginApi = (data) => async (dispatch) => {
           },
        })
     .then(async (response) => {
-          dispatch(loginSuccess(response.data));
+      Toast.show(response.data.message);
+      dispatch(loginSuccess(response.data));
       await AsyncStorage.setItem('token', response.data.data.token)
       })
     .catch((error) => { 
       dispatch(loginError(error));
+      console.log("error=======>",error);
       return error
       });
   });
@@ -73,6 +76,7 @@ export const registerApi = (data) => async (dispatch) => {
           },
        })
     .then(async (response) => {
+       Toast.show(response.data.message);
           dispatch(registerSuccess(response.data));
       // await AsyncStorage.setItem('token', response.data.data.token)
       })
@@ -94,6 +98,7 @@ export const refugeesListApi = async (dispatch) => {
           headers: {'Authorization': `Bearer ${isToken}`}
       })
       .then((response) => {
+         Toast.show(response.data.message);
         dispatch(refugeesSuccess(response.data));
       })
       .catch((error) => {
@@ -111,6 +116,7 @@ export const donorsListApi = async (dispatch) => {
           headers: {'Authorization': `Bearer ${isToken}`}
       })
       .then((response) => {
+         Toast.show(response.data.message);
         dispatch(donorSuccess(response.data));
       })
       .catch((error) => {
@@ -128,6 +134,7 @@ export const sheltersListApi = async (dispatch) => {
           headers: {'Authorization': `Bearer ${isToken}`}
       })
       .then((response) => {
+         Toast.show(response.data.message);
         dispatch(sheltersSuccess(response.data));
       })
       .catch((error) => {
@@ -145,6 +152,7 @@ export const requestsListApi = async (dispatch) => {
           headers: {'Authorization': `Bearer ${isToken}`}
       })
       .then((response) => {
+         Toast.show(response.data.message);
         dispatch(requestsSuccess(response.data));
       })
       .catch((error) => {
@@ -163,6 +171,7 @@ export const requestsListApi = async (dispatch) => {
           headers: {'Authorization': `Bearer ${isToken}`}
       })
       .then((response) => {
+         Toast.show(response.data.message);
         dispatch(helpedSuccess(response.data));
       })
       .catch((error) => {
@@ -181,6 +190,7 @@ export const requestsListApi = async (dispatch) => {
           headers: {'Authorization': `Bearer ${isToken}`}
       })
       .then((response) => {
+         Toast.show(response.data.message);
         dispatch(peopleSuccess(response.data));
       })
       .catch((error) => {
@@ -199,6 +209,7 @@ export const requestsListApi = async (dispatch) => {
           headers: {'Authorization': `Bearer ${isToken}`}
       })
       .then((response) => {
+         Toast.show(response.data.message);
         dispatch(meetingSuccess(response.data));
       })
       .catch((error) => {
