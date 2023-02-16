@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import CloseButton from '../../components/core/CloseButton';
 import { ROLE } from '../../constants/types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { IMAGES } from '../../common/style/Images';
 const TypesOfUser = (props) => {
 
     const { t } = useTranslation();
@@ -38,13 +39,15 @@ const TypesOfUser = (props) => {
     }, [isRole]);
 
     return (
+        <>
         <ImageBackground
             resizeMode='cover'
             style={{ flex: 1 }}
-            source={{ uri: 'https://images.statusfacebook.com/profile_pictures/kids-dp/kids-dp-101.jpg' }}>
+            source={IMAGES.languageBg}>
             <CloseButton onPress={() => props.navigation.goBack()}>
                 <CloseSvg fill={COLORS.white} />
-            </CloseButton>
+                </CloseButton>
+                  </ImageBackground>
             <View style={styles.container}>
                 <View style={styles.card}>
                        <Text style={styles.titleText}>{`${t('am')}${isRole ? isRole : 'Master'}`}</Text>
@@ -103,7 +106,8 @@ const TypesOfUser = (props) => {
                 </View>
 
             </View>
-        </ImageBackground>
+          
+            </>
     );
 };
 

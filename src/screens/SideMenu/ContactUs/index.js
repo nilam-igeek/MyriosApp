@@ -33,13 +33,13 @@ const ContactUs = (props) => {
     const loginValidationSchema = yup.object().shape({
         firstName: yup
             .string()
-            .required(t('First Name is Required')),
+            .required(t('nameRequired')),
         message: yup
             .string()
-            .required(t('Message is Required')),
+            .required(t('msgRequired')),
         email: yup
             .string()
-            .required(t('Email Address is Required')),
+            .required(t('emailRequired')),
 
     })
 

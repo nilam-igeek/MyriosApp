@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ImageBackground, ScrollView, Pressable, FlatList, Image,TouchableOpacity } from 'react-native';
+import { View, Text, ImageBackground, ScrollView, Pressable, FlatList, Image, TouchableOpacity } from 'react-native';
 import { COLORS } from '../../common/style/Colors';
 import { IMAGES } from '../../common/style/Images';
 import Button from '../../components/core/Button';
@@ -12,11 +12,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ROLE } from '../../constants/types';
 import CloseButton from '../../components/core/CloseButton';
 import { useDispatch, useSelector } from 'react-redux';
-import {signUpDataOfUser} from '../../redux/actions/ApiActionCreator';
+import { signUpDataOfUser } from '../../redux/actions/ApiActionCreator';
 const ChooseProfile = (props) => {
 
     const { t } = useTranslation();
- const dispatch = useDispatch();
+    const dispatch = useDispatch();
     const onClickProfile = (item) => {
         //  dispatch(signUpDataOfUser(item.profile));
         // console.log("item============>", item.profile);
@@ -28,21 +28,24 @@ const ChooseProfile = (props) => {
     useEffect(() => {
         async function check() {
             var item = await AsyncStorage.getItem('userType');
-            setIsRole(item) }
+            setIsRole(item)
+        }
         check();
     }, []);
 
     return (
-        <ImageBackground
-            resizeMode='cover'
-            style={{ flex: 1 }}
-            source={{ uri: 'https://images.statusfacebook.com/profile_pictures/kids-dp/kids-dp-101.jpg' }}>
-            <CloseButton onPress={() => props.navigation.goBack()}>
-                <CloseSvg fill={COLORS.white} />
-            </CloseButton>
+        <>
+            <ImageBackground
+                resizeMode='cover'
+                style={{ flex: 1 }}
+                source={IMAGES.languageBg}>
+                <CloseButton onPress={() => props.navigation.goBack()}>
+                    <CloseSvg fill={COLORS.white} />
+                </CloseButton>
+            </ImageBackground>
             <View style={styles.container}>
                 <View style={styles.card}>
-                     <Text style={styles.profileText}>{t('choosePhoto')}</Text>
+                    <Text style={styles.profileText}>{t('choosePhoto')}</Text>
                     <ScrollView showsVerticalScrollIndicator={false}
                         showsHorizontalScrollIndicator={false}
                         contentContainerStyle={{ flexGrow: 1 }}
@@ -74,7 +77,8 @@ const ChooseProfile = (props) => {
                     </ScrollView>
                 </View>
             </View>
-        </ImageBackground>
+
+        </>
     );
 };
 

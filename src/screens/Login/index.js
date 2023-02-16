@@ -20,12 +20,13 @@ import { loginApi, signUpDataOfUser } from '../../redux/actions/ApiActionCreator
 import { useDispatch, useSelector } from 'react-redux';
 import Indicator from '../../components/core/Indicator';
 import _ from 'lodash';
+import { IMAGES } from '../../common/style/Images';
 
 const Login = (props) => {
     // const emailRef = useRef();
     // const passwordRef = useRef();
     const dispatch = useDispatch();
-   
+
     const success = useSelector((state) => state.apiReducer.data.success);
     const loading = useSelector((state) => state.apiReducer.loading);
     const { t } = useTranslation();
@@ -47,19 +48,19 @@ const Login = (props) => {
     const loginValidationSchema = yup.object().shape({
         email: yup
             .string()
-        .required(t('Email Address is Required')),
+            .required(t('emailRequired')),
         // .matches(EMAIL_PATTERN, 'Please enter valid email')
         // // .email(t("Please enter valid email"))
         // .required(t('Email Address is Required')),
         password: yup
             .string()
-        .required(t('Password is required'))
+            .required(t('passRequired'))
         // //.min(8, ({ min }) => { `${('Password must be at least')} ${min} ${('characters')}` })
         // .matches(PASSWORD_PATTERN,'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character')
 
     })
 
-    const onClickSubmit = async (values,actions) => {
+    const onClickSubmit = async (values, actions) => {
         const { email, password } = values;
         var body = {
             password: password,
@@ -81,13 +82,15 @@ const Login = (props) => {
     }, [success])
 
     return (
-        <ImageBackground
-            resizeMode='cover'
-            style={{ flex: 1 }}
-            source={{ uri: 'https://images.statusfacebook.com/profile_pictures/kids-dp/kids-dp-101.jpg' }}>
-            <CloseButton onPress={() => props.navigation.goBack()}>
-                <CloseSvg fill={COLORS.white} />
-            </CloseButton>
+        <>
+            <ImageBackground
+                resizeMode='cover'
+                style={{ flex: 1 }}
+                source={IMAGES.languageBg}>
+                <CloseButton onPress={() => props.navigation.goBack()}>
+                    <CloseSvg fill={COLORS.white} />
+                </CloseButton>
+            </ImageBackground>
             <View style={styles.container}>
                 <View style={styles.card}>
                     <Text style={styles.titleText}>{t('logIn')}</Text>
@@ -154,7 +157,8 @@ const Login = (props) => {
                 </View>
             </View>
             <Indicator isLoader animate={loading} />
-        </ImageBackground>
+
+        </>
     );
 };
 

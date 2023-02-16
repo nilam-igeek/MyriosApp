@@ -48,7 +48,7 @@ const Profile = (props) => {
     const loginValidationSchema = yup.object().shape({
         firstName: yup
             .string(),
-        // .required(t('Firstname is Required')),
+        // .required(t('nameRequired')),
         address: yup
             .string()
         // .required(t('Address is required'))

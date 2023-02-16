@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import CloseButton from '../../components/core/CloseButton';
 import { signUpDataOfUser } from '../../redux/actions/ApiActionCreator';
 import { useDispatch, useSelector } from 'react-redux';
+import { IMAGES } from '../../common/style/Images';
 const Chat = (props) => {
  const dispatch = useDispatch();
     const { t } = useTranslation();
@@ -30,13 +31,15 @@ const Chat = (props) => {
     }
 
     return (
+        <>
         <ImageBackground
             resizeMode='cover'
             style={{ flex: 1 }}
-            source={{ uri: 'https://images.statusfacebook.com/profile_pictures/kids-dp/kids-dp-101.jpg' }}>
+            source={IMAGES.languageBg}>
             <CloseButton onPress={() => props.navigation.goBack()}>
                 <CloseSvg fill={COLORS.white} />
-            </CloseButton>
+                </CloseButton>
+                </ImageBackground>
             <View style={styles.container}>
                 <View style={styles.card}>
                     <ScrollView contentContainerStyle={{ flexGrow: 1, }} bounces={false}>
@@ -89,7 +92,8 @@ const Chat = (props) => {
                     </ScrollView>
                 </View>
             </View>
-        </ImageBackground>
+          
+            </>
     );
 };
 

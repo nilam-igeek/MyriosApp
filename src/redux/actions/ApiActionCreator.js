@@ -23,9 +23,6 @@ import {
   peopleData,
   peopleSuccess,
   peopleError,
-  meetingData,
-  meetingSuccess,
-  meetingError,
   registerData,
   registerSuccess,
   registerError,
@@ -42,7 +39,7 @@ import {
 import Toast from 'react-native-simple-toast';
 
 
-const url = "https://9977-2405-201-2014-3157-a84a-69ca-76d8-322.ngrok.io/api/"
+const url = "https://9ac9-2405-201-2014-3157-120-976f-9ffa-5a29.ngrok.io/api/"
 
 //======================== LOGIN =======================//
 export const loginApi = (data) => async (dispatch) => {

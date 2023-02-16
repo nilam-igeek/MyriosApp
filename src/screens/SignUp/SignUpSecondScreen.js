@@ -14,21 +14,22 @@ import { PASSWORD_PATTERN, EMAIL_PATTERN } from '../../constants/BaseValidation'
 import CloseButton from '../../components/core/CloseButton';
 import { Formik, Field } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { registerApi,signUpDataOfUser } from '../../redux/actions/ApiActionCreator';
+import { registerApi, signUpDataOfUser } from '../../redux/actions/ApiActionCreator';
 import * as yup from 'yup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ROLE } from '../../constants/types';
 import Indicator from '../../components/core/Indicator';
+import { IMAGES } from '../../common/style/Images';
 
 const SignUpSecondScreen = (props) => {
-     const isdataProfile = useSelector((state) => state.apiReducer.dataProfile);
+    const isdataProfile = useSelector((state) => state.apiReducer.dataProfile);
     const isUserData = useSelector((state) => state.apiReducer.data);
     const loading = useSelector((state) => state.apiReducer.loading);
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const [isShow, setIsShow] = useState(false);
     const [isRole, setIsRole] = useState('');
-     const isRefugee = isRole === ROLE.REFUGEE
+    const isRefugee = isRole === ROLE.REFUGEE
     const isShelter = isRole === ROLE.SHELTER
     const isDonor = isRole === ROLE.DONOR
 
@@ -43,50 +44,52 @@ const SignUpSecondScreen = (props) => {
     const loginValidationSchema = yup.object().shape({
         email: yup
             .string()
-        // .matches(EMAIL_PATTERN, 'Please enter valid email')
-        .required(t('Email Address is Required')),
+            // .matches(EMAIL_PATTERN, 'Please enter valid email')
+            .required(t('emailRequired')),
         password: yup
             .string()
-        .required(t('Password is required'))
+            .required(t('passRequired'))
         // .matches(PASSWORD_PATTERN,'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character')            
     })
 
-    const onClickSubmit = async (values,actions) => {
+    const onClickSubmit = async (values, actions) => {
         const { email, password } = values;
         var isData = {
             email: email,
             password: password,
             name: isdataProfile.firstName,
             country: isdataProfile.country,
-            age: isRefugee ? isdataProfile.age:'',
+            age: isRefugee ? isdataProfile.age : '',
             type: isRefugee ? isdataProfile.isUserType : '',
             shelter: isRefugee ? isdataProfile.shelterName : '',
             description: isShelter ? isdataProfile.about : '',
             photo: isdataProfile.photo,
         };
 
-         var body = {
+        var body = {
             ...isdataProfile,
-              email: email,
+            email: email,
         }
         dispatch(signUpDataOfUser(body));
         dispatch(registerApi(isData));
-         actions.resetForm();
+        actions.resetForm();
         if (isData) {
             props.navigation.navigate('Welcome');
         }
     };
     return (
-        <ImageBackground
-            resizeMode='cover'
-            style={{ flex: 1 }}
-            source={{ uri: 'https://images.statusfacebook.com/profile_pictures/kids-dp/kids-dp-101.jpg' }}>
-            <CloseButton onPress={() => props.navigation.goBack()}>
-                <CloseSvg fill={COLORS.white} />
-            </CloseButton>
+        <>
+            <ImageBackground
+                resizeMode='cover'
+                style={{ flex: 1 }}
+                source={IMAGES.languageBg}>
+                <CloseButton onPress={() => props.navigation.goBack()}>
+                    <CloseSvg fill={COLORS.white} />
+                </CloseButton>
+            </ImageBackground>
             <View style={styles.container}>
                 <View style={styles.card}>
-                     <Text style={styles.titleText}>{t('signUp')}</Text>
+                    <Text style={styles.titleText}>{t('signUp')}</Text>
                     <ScrollView showsVerticalScrollIndicator={false}
                         showsHorizontalScrollIndicator={false}
                         contentContainerStyle={{ flexGrow: 1 }}
@@ -148,8 +151,8 @@ const SignUpSecondScreen = (props) => {
                     </ScrollView>
                 </View>
             </View>
-            <Indicator isLoader animate={loading}/>
-        </ImageBackground>
+            <Indicator isLoader animate={loading} />
+        </>
     );
 };
 

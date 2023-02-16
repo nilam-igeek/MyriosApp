@@ -14,7 +14,7 @@ export const IMAGES = {
     shelter4: require('../assets/Shelter/shelter4.jpg'),
     shelter5: require('../assets/Shelter/shelter5.jpg'),
 
-     //Refugee
+    //Refugee
     refugee1: require('../assets/Refugee/refugee1.jpg'),
     refugee2: require('../assets/Refugee/refugee2.jpg'),
     refugee3: require('../assets/Refugee/refugee3.jpg'),
@@ -35,5 +35,11 @@ export const IMAGES = {
     screen4: require('../assets/Swiper/screen4.png'),
     screen5: require('../assets/Swiper/screen5.png'),
     screen6: require('../assets/Swiper/screen6.png'),
-    screen7: require('../assets/Swiper/screen7.png')
+    screen7: require('../assets/Swiper/screen7.png'),
+
+    //backgraound Images
+    myriosBg: require('../assets/myriosBg.jpg'),
+    languageBg: require('../assets/languageBg.jpg'),
+    welcomeBg: require('../assets/welcomeBg.jpg'),
+    wishlistBg: require('../assets/wishlistBg.jpg'),
 };

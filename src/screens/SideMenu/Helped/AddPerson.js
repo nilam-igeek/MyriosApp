@@ -32,10 +32,10 @@ const AddPerson = (props) => {
     const loginValidationSchema = yup.object().shape({
         firstName: yup
             .string(),
-            // .required(t('First Name is Required')),
+            // .required(t('nameRequired')),
         email: yup
             .string()
-            // .required(t('Email Address is Required')),
+            // .required(t('emailRequired')),
 
     })
 

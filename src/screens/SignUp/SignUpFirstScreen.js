@@ -17,13 +17,14 @@ import CountryPickerModal from '../../components/core/CountryPickerModal';
 import ImagePicker from 'react-native-image-crop-picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { signUpDataOfUser } from '../../redux/actions/ApiActionCreator';
+import { IMAGES } from '../../common/style/Images';
 const SignUpFirstScreen = (props) => {
     const dispatch = useDispatch();
 
     const isUserData = useSelector((state) => state.apiReducer.data);
     const { t } = useTranslation();
     const [profile, setProfile] = useState('');
-    const [country,setCountry] = useState('');
+    const [country, setCountry] = useState('');
     const [isSelected, setIsSelected] = useState('Girl');
     const [isRole, setIsRole] = useState('');
     const [isImages, setIsImages] = useState(isUserData.photo);
@@ -42,27 +43,27 @@ const SignUpFirstScreen = (props) => {
     const loginDonorValidationSchema = yup.object().shape({
         firstName: yup
             .string()
-            .required('Name is Required'),
+            .required(t('nameRequired')),
     })
     const loginShelterValidationSchema = yup.object().shape({
         firstName: yup
             .string()
-            .required('Name is Required'),
+            .required(t('nameRequired')),
         about: yup
             .string()
-        .required('About is required'),
-       
+            .required(t('aboutRequired')),
+
     })
-     const loginRefugeeValidationSchema = yup.object().shape({
+    const loginRefugeeValidationSchema = yup.object().shape({
         firstName: yup
             .string()
-            .required('Name is Required'),
+            .required(t('nameRequired')),
         age: yup
             .string()
-        .required('Age is required')
+            .required(t('ageRequired'))
     })
 
-    const onClickSubmit = (values,actions) => {
+    const onClickSubmit = (values, actions) => {
         const { firstName, about, age, } = values;
         var body = {
             firstName: firstName,
@@ -73,7 +74,7 @@ const SignUpFirstScreen = (props) => {
             isUserType: isSelected
         };
         dispatch(signUpDataOfUser(body));
-         actions.resetForm();
+        actions.resetForm();
         if (isImages) {
             if (isRefugee) {
                 props.navigation.navigate('Chat');
@@ -112,23 +113,25 @@ const SignUpFirstScreen = (props) => {
     }
 
     return (
-        <ImageBackground
-            resizeMode='cover'
-            style={{ flex: 1 }}
-            source={{ uri: 'https://images.statusfacebook.com/profile_pictures/kids-dp/kids-dp-101.jpg' }}>
-            <CloseButton onPress={() => props.navigation.goBack()}>
-                <CloseSvg fill={COLORS.white} />
-            </CloseButton>
+        <>
+            <ImageBackground
+                resizeMode='cover'
+                style={{ flex: 1 }}
+                source={IMAGES.languageBg}>
+                <CloseButton onPress={() => props.navigation.goBack()}>
+                    <CloseSvg fill={COLORS.white} />
+                </CloseButton>
+            </ImageBackground>
             <View style={styles.container}>
                 <View style={styles.card}>
-                     <Text style={styles.titleText}>{t('signUp')}</Text>
+                    <Text style={styles.titleText}>{t('signUp')}</Text>
                     <ScrollView showsVerticalScrollIndicator={false}
                         showsHorizontalScrollIndicator={false}
                         contentContainerStyle={{ flexGrow: 1 }}
                         bounces={false}>
                         <View style={styles.subContainer}>
                             <Formik
-                                validationSchema={isShelter? loginShelterValidationSchema: isDonor ? loginDonorValidationSchema : loginRefugeeValidationSchema}
+                                validationSchema={isShelter ? loginShelterValidationSchema : isDonor ? loginDonorValidationSchema : loginRefugeeValidationSchema}
                                 initialValues={{ firstName: '', about: '', age: '' }}
                                 onSubmit={onClickSubmit}>
                                 {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, }) => (
@@ -137,11 +140,11 @@ const SignUpFirstScreen = (props) => {
                                             <View style={styles.profileContainer}>
                                                 <Pressable onPress={() => { setModalVisible(!modalVisible) }} style={styles.profile}>
                                                     {isImages ?
-                                                          <Image
-                                                             resizeMode='cover'
-                                                             source={{ uri: isImages }}
-                                                             style={styles.profileStyle} /> :
-                                                     <ProfileSvg />}
+                                                        <Image
+                                                            resizeMode='cover'
+                                                            source={{ uri: isImages }}
+                                                            style={styles.profileStyle} /> :
+                                                        <ProfileSvg />}
                                                 </Pressable>
                                                 <Modal
                                                     animationType="slide"
@@ -277,7 +280,7 @@ const SignUpFirstScreen = (props) => {
                     </ScrollView>
                 </View>
             </View>
-        </ImageBackground>
+        </>
     );
 };
 
