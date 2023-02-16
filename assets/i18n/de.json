@@ -100,6 +100,12 @@
         "des4": "Dieser Bildschirm erscheint, sobald er angeklickt wurde… Klicken Sie auf jemanden zu „NUR ANZEIGEN“ einladen. Einmal angeklickt, sollte er so aussehen…“",
         "des5": "Klicken Sie auf „LINK KOPIEREN“. Sobald der Link kopiert ist, können Sie zu Myrios zurückkehren und den Link in den Abschnitt „Upload-Wunschliste“ eingeben! Danach können Sie mit dem Hinzufügen zu Ihrer Wunschliste beginnen!!",
         "des6": "Klicken Sie auf das gewünschte Produkt, klicken Sie unten links auf das „Herz-Symbol“.",
-        "des7": "Sie sehen dann, dass der Artikel erfolgreich hinzugefügt wurde. Sie können Ihre Liste verwalten, indem Sie zu Konto & Listen > Ihre Listen > Ihre Listen gehen"
+        "des7": "Sie sehen dann, dass der Artikel erfolgreich hinzugefügt wurde. Sie können Ihre Liste verwalten, indem Sie zu Konto & Listen > Ihre Listen > Ihre Listen gehen",
+        "emailRequired": "E-Mailadresse wird benötigt",
+        "passRequired": "Passwort wird benötigt",
+        "nameRequired": "Name ist erforderlich",
+        "msgRequired": "Nachricht ist erforderlich",
+        "aboutRequired": "Über ist erforderlich",
+        "ageRequired": "Alter ist erforderlich"
     }
 }

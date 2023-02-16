@@ -100,6 +100,12 @@
         "des4": "Acest ecran va apărea odată ce ați făcut clic... Faceți clic pe invitați pe cineva să „VEZI NUMAI” Odată ce ați dat clic, ar trebui să arate așa...”",
         "des5": "Faceți clic pe „COPIEAZĂ LINK” După ce linkul este copiat, puteți reveni la Myrios și introduceți linkul în secțiunea de încărcare a listei de dorințe! După aceea, puteți începe să adăugați la lista de dorințe!!",
         "des6": "Faceți clic pe produsul dorit, faceți clic pe „pictograma inimă” din stânga jos",
-        "des7": "Veți vedea apoi articolul adăugat cu succes. Puteți gestiona lista accesând Cont și liste > Listele dvs. > Listele dvs."
+        "des7": "Veți vedea apoi articolul adăugat cu succes. Puteți gestiona lista accesând Cont și liste > Listele dvs. > Listele dvs.",
+        "emailRequired": "Este necesară adresa de e-mail",
+        "passRequired": "Parola este necesara",
+        "nameRequired": "Numele este obligatoriu",
+        "msgRequired": "Mesajul este obligatoriu",
+        "aboutRequired": "Despre este necesar",
+        "ageRequired": "Se cere vârsta"
     }
 }

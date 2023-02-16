@@ -100,6 +100,12 @@
         "des4": "Tato obrazovka se objeví po kliknutí... Klikněte na pozvat někoho k „POUZE ZOBRAZIT“ Po kliknutí by to mělo vypadat takto...“",
         "des5": "Klikněte na „KOPÍROVAT ODKAZ“ Jakmile je odkaz zkopírován, můžete se vrátit do Myrios a zadat odkaz do sekce seznamu přání pro nahrávání! Poté můžete začít přidávat do svého seznamu přání!!",
         "des6": "Klikněte na požadovaný produkt a klikněte na „Ikona srdce“ vlevo dole",
-        "des7": "Poté uvidíte, že položka byla úspěšně přidána. Svůj seznam můžete spravovat v části Účet a seznamy > Vaše seznamy > Vaše seznamy"
+        "des7": "Poté uvidíte, že položka byla úspěšně přidána. Svůj seznam můžete spravovat v části Účet a seznamy > Vaše seznamy > Vaše seznamy",
+        "emailRequired": "E-mailová adresa je povinná",
+        "passRequired": "Je vyžadováno heslo",
+        "nameRequired": "Jméno je povinné",
+        "msgRequired": "Zpráva je povinná",
+        "aboutRequired": "Vyžaduje se položka About",
+        "ageRequired": "Věk je povinný"
     }
 }

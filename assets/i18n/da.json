@@ -100,6 +100,12 @@
         "des4": "Denne skærm vises, når der er klikket på... Klik på inviter en person til KUN VIS Når der er klikket, skulle det se sådan ud...",
         "des5": "Klik på COPY LINK Når linket er kopieret, kan du vende tilbage til Myrios og indtaste linket i upload-ønskelistesektionen! Derefter kan du begynde at tilføje til din ønskeliste!!",
         "des6": "Klik på det ønskede produkt, klik på Hjerteikon nederst til venstre",
-        "des7": "Du vil derefter se elementet tilføjet. Du kan administrere din liste ved at gå til Konto og lister > Dine lister > Dine lister"
+        "des7": "Du vil derefter se elementet tilføjet. Du kan administrere din liste ved at gå til Konto og lister > Dine lister > Dine lister",
+        "emailRequired": "E-mail-adresse er påkrævet",
+        "passRequired": "adgangskode er påkrævet",
+        "nameRequired": "Navn er påkrævet",
+        "msgRequired": "Besked er påkrævet",
+        "aboutRequired": "Om er påkrævet",
+        "ageRequired": "Alder er påkrævet"
     }
 }

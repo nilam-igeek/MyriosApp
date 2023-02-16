@@ -100,6 +100,12 @@
         "des4": "Cet écran apparaîtra une fois cliqué… Cliquez sur inviter quelqu'un à VISUALISER UNIQUEMENT Une fois cliqué, il devrait ressembler à ceci…",
         "des5": "Cliquez sur « COPIER LE LIEN» Une fois le lien copié, vous pouvez retourner sur Myrios et entrer le lien dans la section de la liste de souhaits de téléchargement! Après cela, vous pouvez commencer à ajouter à votre liste de souhaits !!",
         "des6": "Cliquez sur le produit souhaité, cliquez sur « icône du cœur » en bas à gauche",
-        "des7": "Vous verrez alors l'élément ajouté avec succès Vous pouvez gérer votre liste en allant sur Compte & Listes > Vos Listes > Vos Listes"
+        "des7": "Vous verrez alors l'élément ajouté avec succès Vous pouvez gérer votre liste en allant sur Compte & Listes > Vos Listes > Vos Listes",
+        "emailRequired": "Adresse e-mail est nécessaire",
+        "passRequired": "Mot de passe requis",
+        "nameRequired": "Le nom est requis",
+        "msgRequired": "Un message est requis",
+        "aboutRequired": "À propos est requis",
+        "ageRequired": "L'âge est requis"
     }
 }

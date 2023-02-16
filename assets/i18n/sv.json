@@ -100,6 +100,12 @@
         "des4": "Den här skärmen kommer att visas när du klickar... Klicka på bjud in någon till VISA ENDAST När du klickat på den ska det se ut så här...",
         "des5": "Klicka på KOPIERA LÄNK När länken har kopierats kan du återvända till Myrios och ange länken i avsnittet för uppladdningsönskelistan! Efter det kan du börja lägga till i din önskelista!!",
         "des6": "Klicka på önskad produkt, klicka på Hjärtaikon längst ner till vänster",
-        "des7": "Du kommer då att se att objektet har lagts till. Du kan hantera din lista genom att gå till Konto & listor > Dina listor > Dina listor"
+        "des7": "Du kommer då att se att objektet har lagts till. Du kan hantera din lista genom att gå till Konto & listor > Dina listor > Dina listor",
+        "emailRequired": "E-postadress krävs",
+        "passRequired": "lösenord krävs",
+        "nameRequired": "Namn krävs",
+        "msgRequired": "Meddelande krävs",
+        "aboutRequired": "Om krävs",
+        "ageRequired": "Ålder krävs"
     }
 }

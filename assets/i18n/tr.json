@@ -100,6 +100,12 @@
         "des4": "Bu ekran tıklandığında karşınıza çıkacaktır… Birini “SADECE GÖRÜNTÜLE”ye davet et seçeneğine tıklayın. Tıklandıktan sonra şöyle görünmelidir…”",
         "des5": "“BAĞLANTIYI KOPYALA”ya tıklayın Bağlantı kopyalandıktan sonra Myrios'a dönebilir ve yükleme istek listesi bölümüne bağlantıyı girebilirsiniz! Bundan sonra, dilek listenize eklemeye başlayabilirsiniz!!",
         "des6": "İstediğiniz ürüne tıklayın, Sol alttaki “Kalp simgesine” tıklayın",
-        "des7": "Ardından, öğenin başarıyla eklendiğini göreceksiniz. Listenizi Hesap ve Listeler > Listeleriniz > Listeleriniz'e giderek yönetebilirsiniz."
+        "des7": "Ardından, öğenin başarıyla eklendiğini göreceksiniz. Listenizi Hesap ve Listeler > Listeleriniz > Listeleriniz'e giderek yönetebilirsiniz.",
+        "emailRequired": "E-posta Adresi gerekli",
+        "passRequired": "Şifre gereklidir",
+        "nameRequired": "İsim gerekli",
+        "msgRequired": "Mesaj gerekli",
+        "aboutRequired": "Hakkında gerekli",
+        "ageRequired": "Yaş gereklidir"
     }
 }

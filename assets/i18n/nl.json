@@ -100,6 +100,12 @@
         "des4": "Dit scherm verschijnt zodra erop wordt geklikt... Klik op iemand uitnodigen om ALLEEN TE BEKIJKEN. Eenmaal aangeklikt, zou het er zo uit moeten zien...",
         "des5": "Klik op KOPIEER LINK. Zodra de link is gekopieerd, kunt u terugkeren naar Myrios en de link invoeren in het uploadverlanglijstgedeelte! Daarna kunt u beginnen met toevoegen aan uw verlanglijst !!",
         "des6": "Klik op het gewenste product, klik op Hartpictogram linksonder",
-        "des7": "U ziet dan dat het item succesvol is toegevoegd. U kunt uw lijst beheren door naar Account & Lijsten > Uw lijsten > Uw lijsten te gaan"
+        "des7": "U ziet dan dat het item succesvol is toegevoegd. U kunt uw lijst beheren door naar Account & Lijsten > Uw lijsten > Uw lijsten te gaan",
+        "emailRequired": "E-mailadres is vereist",
+        "passRequired": "Een wachtwoord is verplicht",
+        "nameRequired": "Naam is vereist",
+        "msgRequired": "Bericht is vereist",
+        "aboutRequired": "Over is verplicht",
+        "ageRequired": "Leeftijd is vereist"
     }
 }

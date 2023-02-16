@@ -25,7 +25,7 @@ const Language = (props) => {
         { label: t('Spanish'), value: 'es' },
         { label: t('French'), value: 'fr' },
         { label: t('Bengali'), value: 'bn' },
-        { label: t('Modern Standard Arabic'), value: 'msa' },
+        { label: t('MSArabic'), value: 'msa' },
         { label: t('Farsi'), value: 'fa' },
         { label: t('Russian'), value: 'ru' },
         { label: t('Portuguese'), value: 'pt' },

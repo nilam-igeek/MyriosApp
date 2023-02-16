@@ -100,6 +100,12 @@
         "des4": "Taispeánfar an scáileán seo nuair a chliceáiltear é… Cliceáil tabhair cuireadh do dhuine éigin “FÉACH AMHÁIN” Nuair a chliceáiltear é, ba cheart go mbeadh cuma air…”",
         "des5": "Cliceáil “CÓIP NASC” Nuair a bheidh an nasc cóipeáilte, is féidir leat filleadh ar Myrios agus an nasc a chur isteach sa rannóg uaslódála mianta! Ina dhiaidh sin, is féidir leat tosú ag cur le do liosta mianta!!",
         "des6": "Cliceáil ar an táirge atá ag teastáil, cliceáil Croí icon ar an taobh clé bun",
-        "des7": "Feicfidh tú ansin an mhír curtha leis go rathúil Is féidir leat do liosta a bhainistiú trí dul chuig Cuntais & Liostaí > Do Liostaí > Do Liostaí"
+        "des7": "Feicfidh tú ansin an mhír curtha leis go rathúil Is féidir leat do liosta a bhainistiú trí dul chuig Cuntais & Liostaí > Do Liostaí > Do Liostaí",
+        "emailRequired": "Tá Seoladh Ríomhphoist ag teastáil",
+        "passRequired": "Tá pasfhocal ag teastáil",
+        "nameRequired": "Tá ainm ag teastáil",
+        "msgRequired": "Tá teachtaireacht ag teastáil",
+        "aboutRequired": "Maidir ag teastáil",
+        "ageRequired": "Tá aois ag teastáil"
     }
 }

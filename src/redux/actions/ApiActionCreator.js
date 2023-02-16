@@ -34,7 +34,10 @@ import {
   addProfileError,
   contactUsData,
   contactUsSuccess,
-  contactUsError
+  contactUsError,
+  wishlistData,
+  wishlistSuccess,
+  wishlistError
 } from './ApiAction';
 import Toast from 'react-native-simple-toast';
 
@@ -277,4 +280,24 @@ export const contactUsApi = (data) => async (dispatch) => {
       return error
       });
   });
+};
+
+//======================== WISHLISTS ========================//
+export const wishListApi = (data) => async (dispatch) => {
+    console.log("data===>",data);
+  var isToken = await AsyncStorage.getItem('token');
+  dispatch(wishlistData());
+  return new Promise(() => {
+    axios
+        .get(`${url}wishlists?type&country&name=&age`, {
+          headers: {'Authorization': `Bearer ${isToken}`}
+      })
+      .then((response) => {
+         Toast.show(response.data.message);
+        dispatch(wishlistSuccess(response.data));
+      })
+      .catch((error) => {
+      dispatch(wishlistError(error));
+      });
+    });
 };

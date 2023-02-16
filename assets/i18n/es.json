@@ -100,6 +100,12 @@
         "des4": "Esta pantalla aparecerá una vez que haga clic... Haga clic en invitar a alguien a VER SOLO Una vez que haga clic, debería verse así...”",
         "des5": "Haga clic en COPIAR ENLACE Una vez que se haya copiado el enlace, puede volver a Myrios e ingresar el enlace en la sección de carga de la lista de deseos. ¡Después de eso, puede comenzar a agregar a su lista de deseos!",
         "des6": "Haga clic en el producto deseado, haga clic en Icono de corazón en la parte inferior izquierda",
-        "des7": "A continuación, verá que el elemento se agregó correctamente. Puede administrar su lista yendo a Cuenta y listas > Sus listas > Sus listas"
+        "des7": "A continuación, verá que el elemento se agregó correctamente. Puede administrar su lista yendo a Cuenta y listas > Sus listas > Sus listas",
+        "emailRequired": "Se requiere Dirección de correo electrónico",
+        "passRequired": "se requiere contraseña",
+        "nameRequired": "Se requiere el nombre",
+        "msgRequired": "El mensaje es obligatorio",
+        "aboutRequired": "Acerca de es obligatorio",
+        "ageRequired": "Se requiere edad"
     }
 }

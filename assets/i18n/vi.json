@@ -100,6 +100,12 @@
         "des4": "Màn hình này sẽ xuất hiện sau khi nhấp vào… Nhấp vào mời ai đó “CHỈ XEM” Sau khi nhấp vào, nó sẽ trông như thế này…”",
         "des5": "Nhấp vào “COPY LINK” Sau khi liên kết được sao chép, bạn có thể quay lại Myrios và nhập liên kết vào phần danh sách yêu thích tải lên! Sau đó, bạn có thể bắt đầu thêm vào danh sách yêu thích của mình!!",
         "des6": "Bấm vào sản phẩm mong muốn, bấm vào “Biểu tượng trái tim” ở dưới cùng bên trái",
-        "des7": "Sau đó, bạn sẽ thấy mục đã được thêm thành công. Bạn có thể quản lý danh sách của mình bằng cách vào Tài khoản & Danh sách > Danh sách của bạn > Danh sách của bạn"
+        "des7": "Sau đó, bạn sẽ thấy mục đã được thêm thành công. Bạn có thể quản lý danh sách của mình bằng cách vào Tài khoản & Danh sách > Danh sách của bạn > Danh sách của bạn",
+        "emailRequired": "Địa chỉ e-mail là bắt buộc",
+        "passRequired": "mật khẩu là bắt buộc",
+        "nameRequired": "Tên là bắt buộc",
+        "msgRequired": "tin nhắn là bắt buộc",
+        "aboutRequired": "Giới thiệu là bắt buộc",
+        "ageRequired": "tuổi là bắt buộc"
     }
 }

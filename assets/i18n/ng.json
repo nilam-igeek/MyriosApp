@@ -100,6 +100,12 @@
         "des4": "This screen will appear once clicked… Click invite someone to “VIEW ONLY” Once clicked, it should look like this…”",
         "des5": "Click “COPY LINK” Once the link is copied, you can return to Myrios and enter the link in the upload wishlist section! After that, you can begin adding to your  wishlist!!",
         "des6": "Click on the desired product, click “Heart icon” on the bottom Left",
-        "des7": "You will then see the item successfully added You can manage your list by going to Account & Lists > Your Lists > Your Lists"
+        "des7": "You will then see the item successfully added You can manage your list by going to Account & Lists > Your Lists > Your Lists",
+        "emailRequired": "Email Address is required",
+        "passRequired": "Password is required",
+        "nameRequired": "Name is required",
+        "msgRequired": "Message is required",
+        "aboutRequired": "About is required",
+        "ageRequired": "Age is required"
     }
 }

@@ -100,6 +100,12 @@
         "des4": "Ten ekran pojawi się po kliknięciu… Kliknij Zaproś kogoś do „TYLKO WYŚWIETL” Po kliknięciu powinien wyglądać tak…",
         "des5": "Kliknij „KOPIUJ LINK” Po skopiowaniu linku możesz wrócić do Myrios i wpisać link w sekcji listy życzeń przesyłania! Następnie możesz zacząć dodawać do swojej listy życzeń!",
         "des6": "Kliknij żądany produkt, kliknij „Ikona serca” w lewym dolnym rogu",
-        "des7": "Zobaczysz, że element został pomyślnie dodany Możesz zarządzać swoją listą przechodząc do Konta i listy > Twoje listy > Twoje listy"
+        "des7": "Zobaczysz, że element został pomyślnie dodany Możesz zarządzać swoją listą przechodząc do Konta i listy > Twoje listy > Twoje listy",
+        "emailRequired": "Adres e-mail jest wymagany",
+        "passRequired": "Wymagane jest hasło",
+        "nameRequired": "imie jest wymagane",
+        "msgRequired": "Wiadomość jest wymagana",
+        "aboutRequired": "Informacje są wymagane",
+        "ageRequired": "Wiek jest wymagany"
     }
 }

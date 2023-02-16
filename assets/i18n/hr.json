@@ -100,6 +100,12 @@
         "des4": "Ovaj zaslon će se pojaviti kada se klikne… Kliknite pozovite nekoga na “SAMO GLEDAJ” Nakon klika trebao bi izgledati ovako…”",
         "des5": "Kliknite KOPIRAJ LINK Nakon što je poveznica kopirana, možete se vratiti na Myrios i unijeti vezu u odjeljak popisa želja za prijenos! Nakon toga, možete početi dodavati na svoju listu želja!!",
         "des6": "Kliknite na željeni proizvod, kliknite na ikonu srca dolje lijevo",
-        "des7": "Tada ćete vidjeti da je stavka uspješno dodana. Svojim popisom možete upravljati tako da odete na Račun i popisi > Vaši popisi > Vaši popisi"
+        "des7": "Tada ćete vidjeti da je stavka uspješno dodana. Svojim popisom možete upravljati tako da odete na Račun i popisi > Vaši popisi > Vaši popisi",
+        "emailRequired": "E-mail adresa je obavezna",
+        "passRequired": "potrebna je lozinka",
+        "nameRequired": "Ime je potrebno",
+        "msgRequired": "Poruka je obavezna",
+        "aboutRequired": "O je potrebno",
+        "ageRequired": "Dob je obavezna"
     }
 }

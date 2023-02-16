@@ -100,6 +100,12 @@
         "des4": "E ʻike ʻia kēia pale i ke kaomi ʻana… Kaomi e kono i kekahi e “VIEW ONLY” Ke kaomi ʻia, e like me kēia…”",
         "des5": "E kaomi i ka COPY LINK Ke kope ʻia ka loulou, hiki iā ʻoe ke hoʻi i Myrios a hoʻokomo i ka loulou ma ka ʻaoʻao papa inoa makemake! Ma hope o kēlā, hiki iā ʻoe ke hoʻomaka e hoʻohui i kāu papa inoa makemake!!",
         "des6": "Kaomi ma ka huahana i makemake ʻia, kaomi i ka Heart icon ma ka hema hema",
-        "des7": "E ʻike ʻoe i ka mea i hoʻohui maikaʻi ʻia Hiki iā ʻoe ke hoʻokele i kāu papa inoa ma ka hele ʻana i Account & Lists > Your Lists > Your Lists"
+        "des7": "E ʻike ʻoe i ka mea i hoʻohui maikaʻi ʻia Hiki iā ʻoe ke hoʻokele i kāu papa inoa ma ka hele ʻana i Account & Lists > Your Lists > Your Lists",
+        "emailRequired": "Pono ka leka uila",
+        "passRequired": "Pono ʻia ka ʻōlelo huna",
+        "nameRequired": "Pono ka inoa",
+        "msgRequired": "Pono ka leka",
+        "aboutRequired": "Pono e pili ana",
+        "ageRequired": "Pono ka makahiki"
     }
 }

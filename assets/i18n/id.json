@@ -100,6 +100,12 @@
         "des4": "Layar ini akan muncul setelah diklik… Klik undang seseorang untuk “LIHAT SAJA” Setelah diklik, akan terlihat seperti ini…”",
         "des5": "Klik SALIN LINK Setelah tautan disalin, Anda dapat kembali ke Myrios dan memasukkan tautan di bagian daftar keinginan unggahan! Setelah itu, Anda dapat mulai menambahkan ke wishlist Anda!!",
         "des6": "Klik pada produk yang diinginkan, klik “Ikon Hati” di kiri bawah",
-        "des7": "Anda kemudian akan melihat item berhasil ditambahkan. Anda dapat mengelola daftar Anda dengan membuka Akun & Daftar > Daftar Anda > Daftar Anda"
+        "des7": "Anda kemudian akan melihat item berhasil ditambahkan. Anda dapat mengelola daftar Anda dengan membuka Akun & Daftar > Daftar Anda > Daftar Anda",
+        "emailRequired": "Alamat Email diperlukan",
+        "passRequired": "katakunci dibutuhkan",
+        "nameRequired": "Nama wajib diisi",
+        "msgRequired": "Pesan diperlukan",
+        "aboutRequired": "Tentang diperlukan",
+        "ageRequired": "Usia diperlukan"
     }
 }
