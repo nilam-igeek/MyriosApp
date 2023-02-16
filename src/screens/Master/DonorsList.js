@@ -9,14 +9,14 @@ import ProfileSvg from '../../common/svgs/ProfileSvg';
 import { donorsListApi } from '../../redux/actions/ApiActionCreator';
 import Indicator from '../../components/core/Indicator';
 import { useDispatch, useSelector } from 'react-redux';
+import _ from 'lodash';
 const DonorsList = (props) => {
 
 const { t } = useTranslation();
 const dispatch = useDispatch();
-    const dataOfDonors = useSelector((state) => state.apiReducer.data);
-    const isDonorData = dataOfDonors.data.data
-    const success = useSelector((state) => state.apiReducer.data.success);
     const loading = useSelector((state) => state.apiReducer.loading);
+  const dataOfDonors = useSelector((state) => !_.isEmpty(state.apiReducer.donorData) && state.apiReducer.donorData);
+    const isDonorData = (!_.isEmpty(dataOfDonors.data) && dataOfDonors.data)
 
 
     useEffect(() => {
@@ -33,8 +33,8 @@ const dispatch = useDispatch();
                     <FlatList
                         showsVerticalScrollIndicator={false}
                         showsHorizontalScrollIndicator={false}
-                        data={isDonorData}
-                        extraData={isDonorData}
+                        data={isDonorData.data}
+                        extraData={isDonorData.data}
                         keyExtractor={item => item.id}
                         renderItem={({ item }) =>
                             <Pressable style={[styles.itemCard, {}]} onPress={() => {props.navigation.navigate('ProfileOfRole')}}>

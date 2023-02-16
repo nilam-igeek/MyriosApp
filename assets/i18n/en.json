@@ -10,6 +10,8 @@
         "am": "I'm a ",
         "refugee": "Refugee",
         "shelter": "Shelter",
+        "master": "Master",
+        "admin":"Admin",
         "donor": "Donor",
         "signUp": "Sign Up",
         "signIn": "Sign In",

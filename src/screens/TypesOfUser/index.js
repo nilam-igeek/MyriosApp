@@ -16,16 +16,12 @@ const TypesOfUser = (props) => {
     const [isRole, setIsRole] = useState(ROLE.MASTER);
 
     const onClick = async (type) => {
-
-       
         await AsyncStorage.setItem('token', '')
         setIsRole(type);
-       
         try {
             await AsyncStorage.setItem('userType', type)
         } catch (e) {
         }
-        
     }
 
     useEffect(() => {
@@ -40,18 +36,18 @@ const TypesOfUser = (props) => {
 
     return (
         <>
-        <ImageBackground
-            resizeMode='cover'
-            style={{ flex: 1 }}
-            source={IMAGES.languageBg}>
-            <CloseButton onPress={() => props.navigation.goBack()}>
-                <CloseSvg fill={COLORS.white} />
+            <ImageBackground
+                resizeMode='cover'
+                style={{ flex: 1 }}
+                source={IMAGES.languageBg}>
+                <CloseButton onPress={() => props.navigation.goBack()}>
+                    <CloseSvg fill={COLORS.white} />
                 </CloseButton>
-                  </ImageBackground>
+            </ImageBackground>
             <View style={styles.container}>
                 <View style={styles.card}>
-                       <Text style={styles.titleText}>{`${t('am')}${isRole ? isRole : 'Master'}`}</Text>
-                     <ScrollView showsVerticalScrollIndicator={false}
+                    <Text style={styles.titleText}>{`${t('am')}${isRole ? isRole : t('master')}`}</Text>
+                    <ScrollView showsVerticalScrollIndicator={false}
                         showsHorizontalScrollIndicator={false}
                         contentContainerStyle={{ flexGrow: 1 }}
                         bounces={false}>
@@ -99,15 +95,15 @@ const TypesOfUser = (props) => {
                                 height={50}
                                 marginTop={35}
                                 width={'60%'}
-                                onPress={() => {props.navigation.navigate('Login')}}
+                                onPress={() => { props.navigation.navigate('Login') }}
                             />
                         </View>
                     </ScrollView>
                 </View>
 
             </View>
-          
-            </>
+
+        </>
     );
 };
 

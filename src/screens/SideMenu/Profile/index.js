@@ -22,7 +22,7 @@ const Profile = (props) => {
 
     const isdataProfile = useSelector((state) => state.apiReducer.dataProfile);
     const loading = useSelector((state) => state.apiReducer.loading);
-    const data= useSelector((state) => state.apiReducer.data);
+    // const data= useSelector((state) => state.apiReducer.data);
     console.log("isdata-isdataProfile-------->", isdataProfile);
     // console.log("isdata-isdataProfiledatadata-------->",data.data.name);
     const { t } = useTranslation();

@@ -8,9 +8,15 @@ import Header from '../../components/core/Header';
 import WishListCard from '../../components/core/WishListCard';
 import { IMAGES } from '../../common/style/Images';
 import HeartSvg from '../../common/svgs/HeartSvg';
+import { wishListApi } from '../../redux/actions/ApiActionCreator';
+import { useDispatch, useSelector } from 'react-redux';
 const WishLists = (props) => {
 
-const { t } = useTranslation();
+    const { t } = useTranslation();
+    const dispatch = useDispatch();
+    const success = useSelector((state) => state.apiReducer.wishListData);
+    console.log("successsuccesssuccesssuccess",success);
+    // const loading = useSelector((state) => state.apiReducer.loading);
 const wishListData = [
         { id: 1, image: IMAGES.wishList1, name: 'Kvitkas', gender: 'Girl', age: '6', country: 'Ukraine',selected:false },
         { id: 2, image: IMAGES.wishList2, name: 'Stefan', gender: 'Girl', age: '10', country: 'Ukraine',selected:false},
@@ -18,8 +24,18 @@ const wishListData = [
         { id: 4, image: IMAGES.wishList2, name: 'Marta', gender: 'Mom', age: '32', country: 'Ukraine',selected:false },
         { id: 5, image: IMAGES.wishList1, name: 'Zosia', gender: 'Girl', age: '2', country: 'Ukraine',selected:false },
         { id: 6, image: IMAGES.wishList2, name: 'Marta', gender: 'Mom', age: '32', country: 'Ukraine',selected:false }
-    ]
- 
+]
+    
+    useEffect(() => {
+        var body = {
+            type: 'Boy',
+            country: 'India',
+            name: 'Taksh',
+            age:'24'
+        }
+         dispatch(wishListApi(body));
+    })
+
 return (
         <>
             <View style={styles.container}>

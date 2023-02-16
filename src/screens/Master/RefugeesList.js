@@ -9,13 +9,13 @@ import ProfileSvg from '../../common/svgs/ProfileSvg';
 import { refugeesListApi } from '../../redux/actions/ApiActionCreator';
 import { useDispatch, useSelector } from 'react-redux';
 import Indicator from '../../components/core/Indicator';
+import _ from 'lodash';
 const RefugeesList = (props) => {
 
     const { t } = useTranslation();
     const dispatch = useDispatch();
-    const dataOfRefugees = useSelector((state) => state.apiReducer.data);
-    const isRefugeeData = dataOfRefugees.data.data
-    const success = useSelector((state) => state.apiReducer.data.success);
+    const dataOfRefugees = useSelector((state) => !_.isEmpty(state.apiReducer.refugeeData) && state.apiReducer.refugeeData);
+    const refugeesList = (!_.isEmpty(dataOfRefugees.data) && dataOfRefugees.data)
     const loading = useSelector((state) => state.apiReducer.loading);
 
     useEffect(() => {
@@ -32,8 +32,8 @@ const RefugeesList = (props) => {
                     <FlatList
                         showsVerticalScrollIndicator={false}
                         showsHorizontalScrollIndicator={false}
-                        data={isRefugeeData && isRefugeeData}
-                        extraData={isRefugeeData && isRefugeeData}
+                        data={refugeesList.data}
+                        extraData={refugeesList.data}
                         keyExtractor={item => item.id}
                         renderItem={({ item }) =>
                             <Pressable style={[styles.itemCard, {}]} onPress={() => { props.navigation.navigate('ProfileOfRole') }}>

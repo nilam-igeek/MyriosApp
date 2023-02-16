@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import {
   StatusBar,
   View,
-  SafeAreaView,
   Platform
 } from 'react-native';
 import { COLORS } from './common/style/Colors';
@@ -19,7 +18,6 @@ const App = () => {
     onProductView();
     DeviceInfo.getUniqueId().then((uniqueId) => {
       setId(uniqueId)
-      // console.log("uniqueId=====>",uniqueId);
     });
   }, [])
 
@@ -33,18 +31,14 @@ const App = () => {
 
 
   return (
-    <>
-      {/* <SafeAreaView style={{backgroundColor:COLORS.transparent,flex:1}}> */}
-      <Provider store={store}>
-        <StatusBar
-          barStyle={Platform.OS === 'ios' ? 'light-content' : 'dark-content'}
-          backgroundColor={COLORS.transparent} />
-        <View style={{ flex: 1 }}>
-          <Router />
-        </View>
-      </Provider>
-      {/* </SafeAreaView> */}
-    </>
+    <Provider store={store}>
+      <StatusBar
+        barStyle={Platform.OS === 'ios' ? 'light-content' : 'dark-content'}
+        backgroundColor={COLORS.transparent} />
+      <View style={{ flex: 1 }}>
+        <Router />
+      </View>
+    </Provider>
   );
 }
 export default App;

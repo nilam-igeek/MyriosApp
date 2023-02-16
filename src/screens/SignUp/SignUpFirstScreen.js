@@ -74,7 +74,7 @@ const SignUpFirstScreen = (props) => {
             isUserType: isSelected
         };
         dispatch(signUpDataOfUser(body));
-        actions.resetForm();
+        // actions.resetForm();
         if (isImages) {
             if (isRefugee) {
                 props.navigation.navigate('Chat');

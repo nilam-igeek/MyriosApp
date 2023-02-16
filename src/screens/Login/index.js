@@ -27,7 +27,7 @@ const Login = (props) => {
     // const passwordRef = useRef();
     const dispatch = useDispatch();
 
-    const success = useSelector((state) => state.apiReducer.data.success);
+    const success = useSelector((state) => state.apiReducer.loginData.success);
     const loading = useSelector((state) => state.apiReducer.loading);
     const { t } = useTranslation();
     const [isShow, setIsShow] = useState(false);
@@ -67,7 +67,7 @@ const Login = (props) => {
             email: email
         };
         dispatch(loginApi(body));
-        actions.resetForm();
+        // actions.resetForm();
 
     };
 

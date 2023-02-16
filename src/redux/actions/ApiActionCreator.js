@@ -42,18 +42,16 @@ import {
 import Toast from 'react-native-simple-toast';
 
 
-const url = "https://9ac9-2405-201-2014-3157-120-976f-9ffa-5a29.ngrok.io/api/"
+const url = "https://d852-2405-201-2014-3157-6cad-115d-8ab3-ec2e.ngrok.io/api/"
 
 //======================== LOGIN =======================//
 export const loginApi = (data) => async (dispatch) => {
   var role = await AsyncStorage.getItem('userType');
-   var isToken = await AsyncStorage.getItem('token');
   dispatch(loginData());
   return new Promise(() => {
   axios
       .post(`${url}${role}/login`, data, {
         headers: {
-          'Authorization': `Bearer ${isToken}`,
             Accept: 'application/json',
             'Content-Type': 'application/json',
           },
@@ -272,6 +270,7 @@ export const contactUsApi = (data) => async (dispatch) => {
           },
        })
     .then(async (response) => {
+      console.log("contactUsApi-------------->",response.data);
       Toast.show(response.data.message);
           dispatch(contactUsSuccess(response.data));
       })
@@ -284,15 +283,16 @@ export const contactUsApi = (data) => async (dispatch) => {
 
 //======================== WISHLISTS ========================//
 export const wishListApi = (data) => async (dispatch) => {
-    console.log("data===>",data);
+  console.log("data=======>",data);
   var isToken = await AsyncStorage.getItem('token');
   dispatch(wishlistData());
   return new Promise(() => {
     axios
-        .get(`${url}wishlists?type&country&name=&age`, {
+        .get(`${url}wishlists?${data.type}${data.country}${data.name}=${data.age}`, {
           headers: {'Authorization': `Bearer ${isToken}`}
       })
       .then((response) => {
+        console.log("wishlistSuccess====response======>", JSON.stringify(response.data));
          Toast.show(response.data.message);
         dispatch(wishlistSuccess(response.data));
       })

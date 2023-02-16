@@ -9,16 +9,14 @@ import ProfileSvg from '../../common/svgs/ProfileSvg';
 import { sheltersListApi } from '../../redux/actions/ApiActionCreator';
 import Indicator from '../../components/core/Indicator';
 import { useDispatch, useSelector } from 'react-redux';
+import _ from 'lodash';
 const SheltersList = (props) => {
-
 
     const { t } = useTranslation();
     const dispatch = useDispatch();
-    const dataOfShelters = useSelector((state) => state.apiReducer.data);
-    const isShelterData = dataOfShelters.data.data
-    const success = useSelector((state) => state.apiReducer.data.success);
     const loading = useSelector((state) => state.apiReducer.loading);
-
+    const dataOfShelters = useSelector((state) => !_.isEmpty(state.apiReducer.shelterData) && state.apiReducer.shelterData);
+    const isShelterData = (!_.isEmpty(dataOfShelters.data) && dataOfShelters.data)
 
     useEffect(() => {
         dispatch(sheltersListApi);
@@ -35,8 +33,8 @@ const SheltersList = (props) => {
                     <FlatList
                          showsVerticalScrollIndicator={false}
                         showsHorizontalScrollIndicator={false}
-                        data={isShelterData}
-                        extraData={isShelterData}
+                        data={isShelterData.data}
+                        extraData={isShelterData.data}
                         keyExtractor={item => item.id}
                         renderItem={({ item }) =>
                             <Pressable style={[styles.itemCard, {}]} onPress={() => {props.navigation.navigate('ProfileOfRole')}}>

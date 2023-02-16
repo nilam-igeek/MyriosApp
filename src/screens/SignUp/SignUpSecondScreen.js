@@ -23,7 +23,7 @@ import { IMAGES } from '../../common/style/Images';
 
 const SignUpSecondScreen = (props) => {
     const isdataProfile = useSelector((state) => state.apiReducer.dataProfile);
-    const isUserData = useSelector((state) => state.apiReducer.data);
+    const isUserData = useSelector((state) => state.apiReducer.registerData);
     const loading = useSelector((state) => state.apiReducer.loading);
     const dispatch = useDispatch();
     const { t } = useTranslation();
@@ -72,7 +72,7 @@ const SignUpSecondScreen = (props) => {
         }
         dispatch(signUpDataOfUser(body));
         dispatch(registerApi(isData));
-        actions.resetForm();
+        // actions.resetForm();
         if (isData) {
             props.navigation.navigate('Welcome');
         }

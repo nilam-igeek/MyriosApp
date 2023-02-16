@@ -9,14 +9,14 @@ import { requestsListApi } from '../../redux/actions/ApiActionCreator';
 import { useDispatch, useSelector } from 'react-redux';
 import ProfileSvg from '../../common/svgs/ProfileSvg';
 import Indicator from '../../components/core/Indicator';
+import _ from 'lodash';
 const ContactRequests = (props) => {
 
     const { t } = useTranslation();
     const dispatch = useDispatch();
-    const dataOfRequests = useSelector((state) => state.apiReducer.data);
-    const isRequestsData = dataOfRequests.data.data
-    // const success = useSelector((state) => state.apiReducer.data.success);
     const loading = useSelector((state) => state.apiReducer.loading);
+    const dataOfRequests = useSelector((state) => !_.isEmpty(state.apiReducer.requestContactData) && state.apiReducer.requestContactData);
+    const isRequestsData = (!_.isEmpty(dataOfRequests.data) && dataOfRequests.data)
 
 
     useEffect(() => {
@@ -33,8 +33,8 @@ const ContactRequests = (props) => {
                     <FlatList
                         showsVerticalScrollIndicator={false}
                         showsHorizontalScrollIndicator={false}
-                        data={isRequestsData}
-                        extraData={isRequestsData}
+                        data={isRequestsData.data}
+                        extraData={isRequestsData.data}
                         keyExtractor={item => item.id}
                         renderItem={({ item }) =>
                             <Pressable style={[styles.itemCard, {}]} onPress={() => { props.navigation.navigate('ProfileOfRole') }}>

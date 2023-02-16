@@ -120,20 +120,6 @@ export const requestsError = (error) => ({
 });
 
 
-export const meetingStatusData = () => ({
-  type: ACTION_TYPES.MEETING_STATUS_API_PENDING,
-});
-
-export const meetingStatusSuccess = (data) => ({
-  type: ACTION_TYPES.MEETING_STATUS_API_SUCCESS,
-  payload: data,
-});
-
-export const meetingStatusError = (error) => ({
-  type: ACTION_TYPES.MEETING_STATUS_API_ERROR,
-  payload: error,
-});
-
 //======================== ADD PEOPLE ========================//
 export const addProfileData = () => ({
   type: ACTION_TYPES.ADD_PEOPLE_API_PENDING,

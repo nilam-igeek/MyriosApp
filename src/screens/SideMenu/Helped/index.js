@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StatusBar, Image, FlatList } from 'react-native';
-
 import Button from '../../../components/core/Button';
 import styles from './styles';
 import '../../../../assets/i18n/i18n';
@@ -17,16 +16,15 @@ import _ from 'lodash';
 const Helped = (props) => {
 
     const { t } = useTranslation();
-
     const [isRole, setIsRole] = useState('');
     const isShelter = isRole === ROLE.SHELTER
     const isDonor = isRole === ROLE.DONOR
     const dispatch = useDispatch();
-    const dataOfHelped = useSelector((state) => state.apiReducer.data);
-    const isData = dataOfHelped.data.data
-    const success = useSelector((state) => state.apiReducer.data.success);
     const loading = useSelector((state) => state.apiReducer.loading);
-
+    const dataOfPeople = useSelector((state) => !_.isEmpty(state.apiReducer.peopleData) && state.apiReducer.peopleData);
+    const dataOfHelped = useSelector((state) => !_.isEmpty(state.apiReducer.helpedData) && state.apiReducer.helpedData);
+    const isDataPeople = (!_.isEmpty(dataOfPeople.data) && dataOfPeople.data);
+    const isDataHelped = (!_.isEmpty(dataOfHelped.data) && dataOfHelped.data);
 
     useEffect(() => {
         async function check() {
@@ -54,13 +52,13 @@ const Helped = (props) => {
             <View style={{ flex: 1, justifyContent: 'center', alignItems: "center" }}>
                 <Text style={styles.titleText}>{isShelter ? t('people') : t('helped')}</Text>
                 <Text style={styles.subText}>{isShelter ? t('peopleSubDes') : t('helpedSubDes')}</Text>
-                {!_.isEmpty(isData) ?
+                {!_.isEmpty(isDataPeople.data) || !_.isEmpty(isDataHelped.data) ?
                     (<View style={{ flex: 1 }}>
                         <FlatList
                             showsVerticalScrollIndicator={false}
                         showsHorizontalScrollIndicator={false}
-                        data={isData}
-                        extraData={isData}
+                        data={isShelter? isDataPeople.data : isDataHelped.data}
+                        extraData={isShelter? isDataPeople.data : isDataHelped.data}
                         keyExtractor={item => item.id}
                         renderItem={({ item }) =>
                             <View style={styles.itemCard}>
