@@ -9,6 +9,7 @@ import { IMAGES } from '../../common/style/Images';
 import CloseButton from '../../components/core/CloseButton';
 import CloseSvg from '../../common/svgs/CloseSvg';
 import { COLORS } from '../../common/style/Colors';
+import ArrowLeftSvg from '../../common/svgs/ArrowLeftSvg';
 const ShelterWishList = (props) => {
     const { t } = useTranslation();
     const [isRole, setIsRole] = useState('');
@@ -32,7 +33,7 @@ const ShelterWishList = (props) => {
           backgroundColor={COLORS.transparent} />
             <View style={styles.blurView}>
                   <CloseButton onPress={() => props.navigation.goBack()}>
-                <CloseSvg fill={COLORS.white} />
+                    <ArrowLeftSvg fill={COLORS.white}/>
                 </CloseButton>
                 {/* <Text style={styles.myriosTitleText}>{t('MYRIOS')}</Text> */}
                 <View style={styles.myriosContainer}>

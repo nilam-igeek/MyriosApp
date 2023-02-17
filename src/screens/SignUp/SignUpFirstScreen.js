@@ -18,6 +18,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { signUpDataOfUser } from '../../redux/actions/ApiActionCreator';
 import { IMAGES } from '../../common/style/Images';
+import ArrowLeftSvg from '../../common/svgs/ArrowLeftSvg';
 const SignUpFirstScreen = (props) => {
     const dispatch = useDispatch();
 
@@ -74,6 +75,7 @@ const SignUpFirstScreen = (props) => {
             isUserType: isSelected
         };
         dispatch(signUpDataOfUser(body));
+        console.log("isRole---->",isRole);
         // actions.resetForm();
         if (isImages) {
             if (isRefugee) {
@@ -119,7 +121,7 @@ const SignUpFirstScreen = (props) => {
                 style={{ flex: 1 }}
                 source={IMAGES.languageBg}>
                 <CloseButton onPress={() => props.navigation.goBack()}>
-                    <CloseSvg fill={COLORS.white} />
+                    <ArrowLeftSvg fill={COLORS.white}/>
                 </CloseButton>
             </ImageBackground>
             <View style={styles.container}>
@@ -191,6 +193,7 @@ const SignUpFirstScreen = (props) => {
                                                     width={(BaseStyle.WIDTH / 100) * 80}
                                                     inputWidth={(BaseStyle.WIDTH / 100) * 70}
                                                     placeholder={t('age')}
+                                                    maxLength={2}
                                                     mt={20}
                                                     isError={errors.age} />
                                                 <Text style={styles.chooseOneText}>{t('chooseOne')}</Text>

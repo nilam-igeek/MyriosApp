@@ -10,6 +10,7 @@ import CloseButton from '../../components/core/CloseButton';
 import { signUpDataOfUser } from '../../redux/actions/ApiActionCreator';
 import { useDispatch, useSelector } from 'react-redux';
 import { IMAGES } from '../../common/style/Images';
+import ArrowLeftSvg from '../../common/svgs/ArrowLeftSvg';
 const Chat = (props) => {
  const dispatch = useDispatch();
     const { t } = useTranslation();
@@ -37,7 +38,7 @@ const Chat = (props) => {
             style={{ flex: 1 }}
             source={IMAGES.languageBg}>
             <CloseButton onPress={() => props.navigation.goBack()}>
-                <CloseSvg fill={COLORS.white} />
+                        <ArrowLeftSvg fill={COLORS.white}/>
                 </CloseButton>
                 </ImageBackground>
             <View style={styles.container}>

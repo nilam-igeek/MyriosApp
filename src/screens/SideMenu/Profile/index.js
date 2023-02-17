@@ -29,7 +29,7 @@ const Profile = (props) => {
     const dispatch = useDispatch();
     const [isRole, setIsRole] = useState('');
     const [isSelected, setIsSelected] = useState('Girl');
-     const [country,setCountry] = useState('');
+    const [country, setCountry] = useState('');
     const [isImages, setIsImages] = useState(isdataProfile.photo);
     const [modalVisible, setModalVisible] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -57,29 +57,30 @@ const Profile = (props) => {
 
 
     const onClickSubmit = async values => {
-        const { firstName,about,age } = values;
+        const { firstName, about, age } = values;
         if (isModalVisible) {
             var body = {
-            image:isImages,
+                image: isImages,
                 email: isdataProfile.email,
                 name: '',
                 country: '',
                 description: '',
                 age: '',
-            type:''
-            // name: firstName,
-            // country:(isShelter || isRefugee) ? country : '',
-            // description:isShelter ? about : '',
-            // age:isRefugee ? age :'',
-            // type:isRefugee ? isSelected :'',
+                type: ''
+                // name: firstName,
+                // country:(isShelter || isRefugee) ? country : '',
+                // description:isShelter ? about : '',
+                // age:isRefugee ? age :'',
+                // type:isRefugee ? isSelected :'',
             };
             dispatch(updateProfileApi(body));
         } else {
-          await AsyncStorage.setItem('token', '').then(() => [
-            props.navigation.navigate('Login')
-        ])}
-};
-  
+            await AsyncStorage.setItem('token', '').then(() => [
+                props.navigation.navigate('Login')
+            ])
+        }
+    };
+
 
     const onClick = (type) => {
         setIsSelected(type)
@@ -172,8 +173,8 @@ const Profile = (props) => {
                                         (<>
                                             {(isShelter || isRefugee) &&
                                                 <CountryPickerModal
-                                                marginTop={30}
-                                                isOnSelect={(text) => { setCountry(text) }}
+                                                    marginTop={30}
+                                                    isOnSelect={(text) => { setCountry(text) }}
                                                     // isOnSelect={(text) => { console.log(text) }}
                                                     placeholder={t("country")} />}
                                         </>
@@ -200,6 +201,7 @@ const Profile = (props) => {
                                                 width={(BaseStyle.WIDTH / 100) * 80}
                                                 inputWidth={(BaseStyle.WIDTH / 100) * 70}
                                                 placeholder={t('age')}
+                                                maxLength={2}
                                                 placeholderColor={COLORS.black}
                                                 isError={errors.age}
                                             /> :
@@ -318,7 +320,7 @@ const Profile = (props) => {
                     </Formik>
                 </View>
             </ScrollView>
-             <Indicator isLoader animate={loading}/>
+            <Indicator isLoader animate={loading} />
         </View>
     );
 };

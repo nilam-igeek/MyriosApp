@@ -21,7 +21,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Indicator from '../../components/core/Indicator';
 import _ from 'lodash';
 import { IMAGES } from '../../common/style/Images';
-
+import Toast from 'react-native-simple-toast';
+import ArrowLeftSvg from '../../common/svgs/ArrowLeftSvg';
 const Login = (props) => {
     // const emailRef = useRef();
     // const passwordRef = useRef();
@@ -29,6 +30,7 @@ const Login = (props) => {
 
     const success = useSelector((state) => state.apiReducer.loginData.success);
     const loading = useSelector((state) => state.apiReducer.loading);
+    console.log("success--->",success);
     const { t } = useTranslation();
     const [isShow, setIsShow] = useState(false);
     const [isRole, setIsRole] = useState('');
@@ -68,7 +70,9 @@ const Login = (props) => {
         };
         dispatch(loginApi(body));
         // actions.resetForm();
-
+        if (!success) {
+     Toast.show('Unauthorized');
+}
     };
 
     useEffect(() => {
@@ -88,7 +92,7 @@ const Login = (props) => {
                 style={{ flex: 1 }}
                 source={IMAGES.languageBg}>
                 <CloseButton onPress={() => props.navigation.goBack()}>
-                    <CloseSvg fill={COLORS.white} />
+                    <ArrowLeftSvg fill={COLORS.white}/>
                 </CloseButton>
             </ImageBackground>
             <View style={styles.container}>
@@ -111,7 +115,7 @@ const Login = (props) => {
                                             title={t('email')}
                                             component={Input}
                                             isLeft
-                                            value={values.email}
+                                            value={values.email.toLocaleLowerCase()}
                                             onChangeText={handleChange('email')}
                                             onBlur={handleBlur('email')}
                                             width={(BaseStyle.WIDTH / 100) * 80}

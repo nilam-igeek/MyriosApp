@@ -70,6 +70,7 @@ const Input = ({
                     {...inputProps}
                     multiline={multiline}
                     numberOfLines={numberOfLines}
+                    maxLength={maxLength}
                     placeholderTextColor={placeholderColor? placeholderColor : placeholder && COLORS.grey}
                     placeholder={placeholder ? placeholder : ''}
                     returnKeyType={'next'}

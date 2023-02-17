@@ -93,7 +93,7 @@ function MyDrawer() {
             screen_name: currentRouteName,
             screen_class: currentRouteName,
           });
-          // console.log("currentRouteName---->", currentRouteName);
+          console.log("currentRouteName---->", currentRouteName);
         }
         routeNameRef.current = currentRouteName;
       }}

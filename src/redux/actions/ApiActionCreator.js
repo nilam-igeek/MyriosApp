@@ -42,7 +42,7 @@ import {
 import Toast from 'react-native-simple-toast';
 
 
-const url = "https://d852-2405-201-2014-3157-6cad-115d-8ab3-ec2e.ngrok.io/api/"
+const url = "http://18.233.84.195/api/"
 
 //======================== LOGIN =======================//
 export const loginApi = (data) => async (dispatch) => {
@@ -81,6 +81,7 @@ export const registerApi = (data) => async (dispatch) => {
           },
        })
     .then(async (response) => {
+      console.log("response.data====>",JSON.stringify(response));
        Toast.show(response.data.message);
           dispatch(registerSuccess(response.data));
       })

@@ -20,11 +20,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ROLE } from '../../constants/types';
 import Indicator from '../../components/core/Indicator';
 import { IMAGES } from '../../common/style/Images';
+import ArrowLeftSvg from '../../common/svgs/ArrowLeftSvg';
 
 const SignUpSecondScreen = (props) => {
     const isdataProfile = useSelector((state) => state.apiReducer.dataProfile);
-    const isUserData = useSelector((state) => state.apiReducer.registerData);
+    const isUserData = useSelector((state) => state.apiReducer.regiData);
     const loading = useSelector((state) => state.apiReducer.loading);
+    const success = useSelector((state) => state.apiReducer.regiData);
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const [isShow, setIsShow] = useState(false);
@@ -54,29 +56,66 @@ const SignUpSecondScreen = (props) => {
 
     const onClickSubmit = async (values, actions) => {
         const { email, password } = values;
-        var isData = {
+        // var isData = {
+        //     email: email,
+        //     password: password,
+        //     name: isdataProfile.firstName,
+        //     country: isdataProfile.country,
+        //     age: isRefugee ? isdataProfile.age : '',
+        //     type: isRefugee ? isdataProfile.isUserType : '',
+        //     shelter: isRefugee ? isdataProfile.shelterName : '',
+        //     description: isShelter ? isdataProfile.about : '',
+        //     photo: isdataProfile.photo,
+        // };
+
+        var donorData = {
             email: email,
             password: password,
             name: isdataProfile.firstName,
             country: isdataProfile.country,
-            age: isRefugee ? isdataProfile.age : '',
-            type: isRefugee ? isdataProfile.isUserType : '',
-            shelter: isRefugee ? isdataProfile.shelterName : '',
-            description: isShelter ? isdataProfile.about : '',
             photo: isdataProfile.photo,
-        };
+        }
+
+        var refugeeData = {
+            email: email,
+            password: password,
+            name: isdataProfile.firstName,
+            country: isdataProfile.country,
+            age: isdataProfile.age,
+            type: isdataProfile.isUserType,
+            shelter: isdataProfile.shelterName,
+            photo: isdataProfile.photo,
+        }
+        var shelterData = {
+            email: email,
+            password: password,
+            name: isdataProfile.firstName,
+            country: isdataProfile.country,
+            description: isdataProfile.about,
+            photo: isdataProfile.photo,
+        }
 
         var body = {
             ...isdataProfile,
             email: email,
         }
+
         dispatch(signUpDataOfUser(body));
-        dispatch(registerApi(isData));
+        dispatch(registerApi(isRefugee ? refugeeData : isDonor ? donorData : shelterData));
         // actions.resetForm();
-        if (isData) {
-            props.navigation.navigate('Welcome');
-        }
+        // if (isData) {
+        //     props.navigation.navigate('Welcome');
+        // }
     };
+
+        useEffect(() => {
+            if (success.success) {
+             props.navigation.navigate('Welcome');
+            } else {
+               Toast.show('The email has already been taken');  
+        }
+    })
+
     return (
         <>
             <ImageBackground
@@ -84,7 +123,7 @@ const SignUpSecondScreen = (props) => {
                 style={{ flex: 1 }}
                 source={IMAGES.languageBg}>
                 <CloseButton onPress={() => props.navigation.goBack()}>
-                    <CloseSvg fill={COLORS.white} />
+                   <ArrowLeftSvg fill={COLORS.white}/>
                 </CloseButton>
             </ImageBackground>
             <View style={styles.container}>
@@ -106,7 +145,7 @@ const SignUpSecondScreen = (props) => {
                                             title={t('email')}
                                             component={Input}
                                             isLeft
-                                            value={values.email}
+                                           value={values.email.toLocaleLowerCase()}
                                             onChangeText={handleChange('email')}
                                             onBlur={handleBlur('email')}
                                             width={(BaseStyle.WIDTH / 100) * 80}

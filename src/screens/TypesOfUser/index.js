@@ -10,6 +10,7 @@ import CloseButton from '../../components/core/CloseButton';
 import { ROLE } from '../../constants/types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { IMAGES } from '../../common/style/Images';
+import ArrowLeftSvg from '../../common/svgs/ArrowLeftSvg';
 const TypesOfUser = (props) => {
 
     const { t } = useTranslation();
@@ -24,6 +25,8 @@ const TypesOfUser = (props) => {
         }
     }
 
+
+    
     useEffect(() => {
         if (isRole !== (ROLE.DONOR || ROLE.SHELTER || ROLE.REFUGEE) && isRole === ROLE.MASTER) {
             async function check() {
@@ -41,7 +44,7 @@ const TypesOfUser = (props) => {
                 style={{ flex: 1 }}
                 source={IMAGES.languageBg}>
                 <CloseButton onPress={() => props.navigation.goBack()}>
-                    <CloseSvg fill={COLORS.white} />
+                                     <ArrowLeftSvg fill={COLORS.white}/>
                 </CloseButton>
             </ImageBackground>
             <View style={styles.container}>
@@ -95,7 +98,10 @@ const TypesOfUser = (props) => {
                                 height={50}
                                 marginTop={35}
                                 width={'60%'}
-                                onPress={() => { props.navigation.navigate('Login') }}
+                                onPress={() =>
+                                {
+                                   props.navigation.navigate('Login')}
+                                }
                             />
                         </View>
                     </ScrollView>

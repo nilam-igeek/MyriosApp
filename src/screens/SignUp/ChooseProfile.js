@@ -13,6 +13,7 @@ import { ROLE } from '../../constants/types';
 import CloseButton from '../../components/core/CloseButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { signUpDataOfUser } from '../../redux/actions/ApiActionCreator';
+import ArrowLeftSvg from '../../common/svgs/ArrowLeftSvg';
 const ChooseProfile = (props) => {
 
     const { t } = useTranslation();
@@ -40,7 +41,7 @@ const ChooseProfile = (props) => {
                 style={{ flex: 1 }}
                 source={IMAGES.languageBg}>
                 <CloseButton onPress={() => props.navigation.goBack()}>
-                    <CloseSvg fill={COLORS.white} />
+                    <ArrowLeftSvg fill={COLORS.white}/>
                 </CloseButton>
             </ImageBackground>
             <View style={styles.container}>

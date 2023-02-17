@@ -9,12 +9,16 @@ import { useTranslation } from 'react-i18next';
 import CloseButton from '../../components/core/CloseButton';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { IMAGES } from '../../common/style/Images';
+import ArrowRightSvg from '../../common/svgs/ArrowRightSvg';
+import ArrowLeftSvg from '../../common/svgs/ArrowLeftSvg';
+// import RNRestart from 'react-native-restart';
 const Language = (props) => {
 
     const { t, i18n } = useTranslation();
     const changeLanguage = (key) => {
         i18n.changeLanguage(key.value)
             .catch((e) => console.log(e))
+        //   RNRestart.restart();
     }
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
@@ -56,7 +60,6 @@ const Language = (props) => {
         { label: t('Punjabi'), value: 'pa' },
         { label: t('Telugu'), value: 'te' },
         { label: t('Marathi'), value: 'mr' },
-
     ]);
 
     return (
@@ -66,7 +69,7 @@ const Language = (props) => {
                 style={{ flex: 1 }}
                 source={IMAGES.languageBg}>
                 <CloseButton onPress={() => props.navigation.goBack()}>
-                    <CloseSvg fill={COLORS.white} />
+                    <ArrowLeftSvg fill={COLORS.white}/>
                 </CloseButton>
             </ImageBackground>
             <View style={styles.container}>

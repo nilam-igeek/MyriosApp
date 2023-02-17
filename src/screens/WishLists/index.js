@@ -27,13 +27,13 @@ const wishListData = [
 ]
     
     useEffect(() => {
-        var body = {
-            type: 'Boy',
-            country: 'India',
-            name: 'Taksh',
-            age:'24'
-        }
-         dispatch(wishListApi(body));
+        // var body = {
+        //     type: 'Boy',
+        //     country: 'India',
+        //     name: 'Taksh',
+        //     age:'24'
+        // }
+        //  dispatch(wishListApi(body));
     })
 
 return (

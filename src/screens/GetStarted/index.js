@@ -22,7 +22,15 @@ const GetStarted = (props) => {
                     </Pressable>
                 </View>
                 <View style={styles.btnView}>
-                    <Button title={t('getStarted')}
+                    <Pressable
+                        onPress={()=> {props.navigation.navigate('Language')}}
+                        style={{
+                        width: 130, alignItems: "center",
+                        backgroundColor: COLORS.transparent, borderWidth: 1, borderColor: COLORS.white, borderRadius: 20
+                    }}>
+                        <Text style={{padding:10,color:COLORS.white,fontSize:14}}>{t('getStarted')}</Text>
+                    </Pressable>
+                    {/* <Button title={t('getStarted')}
                         onPress={()=> {props.navigation.navigate('Language')}}
                         borderWidth={1}
                         borderColor={COLORS.white}
@@ -30,7 +38,7 @@ const GetStarted = (props) => {
                         color={COLORS.white}
                         width={130}
                         height={35}
-                        fontSize={15}/>
+                        fontSize={15}/> */}
                 </View>
             </View>
         </ImageBackground>

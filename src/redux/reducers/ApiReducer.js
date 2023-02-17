@@ -6,7 +6,7 @@ const initialState = {
   error: '',
 
   loginData: '',
-  registerData: '',
+  regiData: '',
   refugeeData: '',
   donorData: '',
   shelterData: '',
@@ -51,7 +51,7 @@ const apiReducer = (state = initialState, action) => {
     case ACTION_TYPES.REGISTER_API_SUCCESS:
       return {
         ...state,
-        registerData: action.payload,
+        regiData: action.payload,
         loading: false,
       };
     case ACTION_TYPES.REGISTER_API_ERROR:
