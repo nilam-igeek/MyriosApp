@@ -16,7 +16,7 @@ import { Formik, Field } from 'formik';
 import * as yup from 'yup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ROLE } from '../../constants/types';
-import { loginApi, signUpDataOfUser } from '../../redux/actions/ApiActionCreator';
+import { loginApi, signUpDataOfUser,imagesListOfRoleApi } from '../../redux/actions/ApiActionCreator';
 import { useDispatch, useSelector } from 'react-redux';
 import Indicator from '../../components/core/Indicator';
 import _ from 'lodash';
@@ -29,8 +29,6 @@ const Login = (props) => {
     const dispatch = useDispatch();
 
     const success = useSelector((state) => state.apiReducer.loginData.success);
-    const isData = useSelector((state) => state.apiReducer.loginData);
-    console.log("isDAta====>",isData);
     const loading = useSelector((state) => state.apiReducer.loading);
 //     const error = useSelector((state) => state.apiReducer.error);
 //    console.log("error--adadasd-->",error.data.success);
@@ -65,6 +63,7 @@ const Login = (props) => {
 
     })
 
+   
     const onClickSubmit = async (values, actions) => {
         const { email, password } = values;
         var body = {
@@ -72,6 +71,8 @@ const Login = (props) => {
             email: email
         };
         dispatch(loginApi(body));
+
+       
         // actions.resetForm();
 //         if (!success) {
 //      Toast.show('Unauthorized');

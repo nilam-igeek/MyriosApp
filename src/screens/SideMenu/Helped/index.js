@@ -76,7 +76,7 @@ const Helped = (props) => {
                     />
                 </View>) :
                     (<View style={{ flex: 1, justifyContent: "center", alignItems: 'center' }}>
-                        <Text style={styles.notFoundText}>{`No registered refugees at your shelter yet! Click  "Add a Person"  to add the refugees at your shelter!`}</Text>
+                        <Text style={styles.notFoundText}>{isShelter ? `No registered refugees at your shelter yet! Click  "Add a Person"  to add the refugees at your shelter!`:`Favorite Data is not found`}</Text>
                     </View>)}
                 <Button
                     borderRadius={10}

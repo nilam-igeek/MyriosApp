@@ -33,7 +33,7 @@ export const CustomeDrawer = (props) => {
     { id: 1, title: t('howTo') },
     { id: 2, title: isShelter ? t('wishList') : t('explore') },
     { id: 3, title: t('profile') },
-    { id: 4, title: isShelter ? t('people') : t('helped') },
+    { id: 4, title: isShelter ? t('people') : 'FAVORITE' },
     { id: 5, title: t('contact') },
   ]
 
@@ -71,7 +71,7 @@ export const CustomeDrawer = (props) => {
     else if (item.title === t('people')) {
       props.navigation.navigate('Helped')
     }
-    else if (item.title === t('helped')) {
+    else if (item.title === 'FAVORITE') {
       props.navigation.navigate('Helped')
     }
     else if (item.title === t('contact')) {

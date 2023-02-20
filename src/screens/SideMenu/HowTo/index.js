@@ -12,12 +12,15 @@ import { donorSwiper } from './ArrayOfSwiperData';
 import ArrowLeftSvg from '../../../common/svgs/ArrowLeftSvg';
 import ArrowRightSvg from '../../../common/svgs/ArrowRightSvg';
 import { IMAGES } from '../../../common/style/Images';
+import { imagesListOfRoleApi } from '../../../redux/actions/ApiActionCreator';
+import { useDispatch, useSelector } from 'react-redux';
 const HowTo = (props) => {
 
     const { t } = useTranslation();
     const [keyNumber, setKeyNumber] = useState(0);
     const [isRole, setIsRole] = useState('');
     const isDonor = isRole === ROLE.DONOR
+    const dispatch = useDispatch();
 
     useEffect(() => {
         async function check() {
@@ -26,6 +29,10 @@ const HowTo = (props) => {
         }
         check();
     }, []);
+
+     useEffect(() => {
+         dispatch(imagesListOfRoleApi());
+    })
 
 const dataSwiper = [
     {id: 1,image: IMAGES.screen1,title: t('title1'),subTitle: t('des1')},

@@ -306,3 +306,37 @@ export const wishListApi = (data) => async (dispatch) => {
       });
     });
 };
+
+//======================== LOGIN =======================//
+export const imagesListOfRoleApi = () => async (dispatch) => {
+  var role = await AsyncStorage.getItem('userType');
+  var isToken = await AsyncStorage.getItem('token');
+  // dispatch(loginData());
+  return new Promise(() => {
+  axios
+      .post(`http://18.233.84.195/api/images/Donor`,{
+        headers: {
+           'Authorization': `Bearer ${isToken}`,
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+       })
+    .then(async (response) => {
+        console.log("dfdsfsfd====>",response);
+      // if (response.data.success) {
+      
+      //    Toast.show(response.data.message);
+      //   // dispatch(loginSuccess(response.data));
+      //   await AsyncStorage.setItem('token', response.data.data.token)
+      // } 
+      })
+    .catch((error) => {
+      console.log("dfdsfsfd=error===>",error.response.data);
+      // dispatch(loginError(error.response));
+      // if (!error.response.data.success) {
+      //    Toast.show('Log in information not correct, please try again or sign up!');
+      // }
+      // return error
+      });
+  });
+};

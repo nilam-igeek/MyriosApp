@@ -20,18 +20,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import Indicator from '../../../components/core/Indicator';
 import ButtonWithIcon from '../../../components/core/ButtonWithIcon';
 const Profile = (props) => {
-
-    const isdataProfile = useSelector((state) => state.apiReducer.dataProfile);
     const loading = useSelector((state) => state.apiReducer.loading);
-    // const data= useSelector((state) => state.apiReducer.data);
-    console.log("isdata-isdataProfile-------->", isdataProfile);
-    // console.log("isdata-isdataProfiledatadata-------->",data.data.name);
+    const isData = useSelector((state) => state.apiReducer.loginData);
+    const userDetails = isData.data.user
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const [isRole, setIsRole] = useState('');
     const [isSelected, setIsSelected] = useState('Girl');
     const [country, setCountry] = useState('');
-    const [isImages, setIsImages] = useState(isdataProfile.photo);
+    const [isImages, setIsImages] = useState(userDetails.image);
     const [modalVisible, setModalVisible] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -69,7 +66,7 @@ const Profile = (props) => {
         if (isModalVisible) {
             var body = {
                 image: isImages,
-                email: isdataProfile.email,
+                email: userDetails.email,
                 name: '',
                 country: '',
                 description: '',
@@ -174,7 +171,7 @@ const Profile = (props) => {
                                         placeholder={isShelter ? ('shelterName') : t('fName')}
                                         isError={errors.firstName}
                                     /> :
-                                        <ButtonWithIcon title={isdataProfile.name} onPress={()=>{setName(true)}}/>
+                                        <ButtonWithIcon title={userDetails.name} onPress={()=>{setName(true)}}/>
                                     }
 
                                     {isCountry ?
@@ -189,7 +186,7 @@ const Profile = (props) => {
                                         ) : (
                                             <>
                                                 {(isShelter || isRefugee) &&
-                                                    <ButtonWithIcon title={isdataProfile.country} onPress={()=>{setIsCountry(true)}}/>}
+                                                    <ButtonWithIcon title={userDetails.country} onPress={()=>{setIsCountry(true)}}/>}
                                             </>
                                         )
                                     }
@@ -211,7 +208,7 @@ const Profile = (props) => {
                                                 placeholderColor={COLORS.black}
                                                 isError={errors.age}
                                         /> :
-                                            <ButtonWithIcon title={isdataProfile.age} onPress={()=>{setAge(true)}}/>
+                                            <ButtonWithIcon title={userDetails.age} onPress={()=>{setAge(true)}}/>
                                             }
 
 
@@ -266,7 +263,7 @@ const Profile = (props) => {
                                                     />
                                                 </View>
                                         </> :
-                                            <ButtonWithIcon title={isdataProfile.isUserType} onPress={()=>{setType(true)}}/>  
+                                            <ButtonWithIcon title={userDetails.type} onPress={()=>{setType(true)}}/>  
                                             }
                                         </>}
                                     {isShelter &&
@@ -288,7 +285,7 @@ const Profile = (props) => {
                                                 numberOfLines={3}
                                                 mt={30}
                                         /> :
-                                            <ButtonWithIcon title={isdataProfile.about} onPress={()=>{setAbout(true)}}/>  
+                                            <ButtonWithIcon title={userDetails.description} onPress={()=>{setAbout(true)}}/>  
                                             }
                                         </>
                                     }

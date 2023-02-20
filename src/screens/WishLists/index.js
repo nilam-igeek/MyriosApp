@@ -14,8 +14,8 @@ const WishLists = (props) => {
 
     const { t } = useTranslation();
     const dispatch = useDispatch();
-    const success = useSelector((state) => state.apiReducer.wishListData);
-    console.log("successsuccesssuccesssuccess",success);
+    // const success = useSelector((state) => state.apiReducer.wishListData);
+    // console.log("successsuccesssuccesssuccess",success);
     // const loading = useSelector((state) => state.apiReducer.loading);
 const wishListData = [
         { id: 1, image: IMAGES.wishList1, name: 'Kvitkas', gender: 'Girl', age: '6', country: 'Ukraine',selected:false },
