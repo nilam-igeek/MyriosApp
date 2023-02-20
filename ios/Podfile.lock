@@ -409,6 +409,8 @@ PODS:
   - react-native-simple-toast (1.1.4):
     - React-Core
     - Toast (~> 4.0.0)
+  - react-native-splash-screen (3.3.0):
+    - React-Core
   - React-perflogger (0.71.1)
   - React-RCTActionSheet (0.71.1):
     - React-Core/RCTActionSheetHeaders (= 0.71.1)
@@ -610,6 +612,7 @@ DEPENDENCIES:
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-sensitive-info (from `../node_modules/react-native-sensitive-info`)
   - react-native-simple-toast (from `../node_modules/react-native-simple-toast`)
+  - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -716,6 +719,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-sensitive-info"
   react-native-simple-toast:
     :path: "../node_modules/react-native-simple-toast"
+  react-native-splash-screen:
+    :path: "../node_modules/react-native-splash-screen"
   React-perflogger:
     :path: "../node_modules/react-native/ReactCommon/reactperflogger"
   React-RCTActionSheet:
@@ -815,6 +820,7 @@ SPEC CHECKSUMS:
   react-native-safe-area-context: 39c2d8be3328df5d437ac1700f4f3a4f75716acc
   react-native-sensitive-info: 400c6e3d27945e15c8cddb5b4b92233c85ee06f8
   react-native-simple-toast: 8ee5d23f0b92b935ab7434cdb65159ce12dfb4b7
+  react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
   React-perflogger: ec8eef2a8f03ecfa6361c2c5fb9197ef4a29cc85
   React-RCTActionSheet: a0c023b86cf4c862fa9c4eb0f6f91fbe878fb2de
   React-RCTAnimation: 168d53718c74153947c0109f55900faa64d79439

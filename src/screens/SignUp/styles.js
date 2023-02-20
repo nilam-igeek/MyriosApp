@@ -59,7 +59,8 @@ export default styles = StyleSheet.create({
     },
     card: {
         backgroundColor: COLORS.white,
-        height: (BaseStyle.HEIGHT / 100) * 60,
+        // height: (BaseStyle.HEIGHT / 100) * 60,
+         height:'120%',
         width: '100%',
         borderTopRightRadius: 40,
         borderTopLeftRadius: 40,
@@ -148,8 +149,8 @@ export default styles = StyleSheet.create({
         height: 85,
         margin: 5,
         backgroundColor: COLORS.white,
-        borderWidth: 0.5,
-        borderColor: COLORS.grey
+       
+
     },
     blurView: {
         flex: 1,

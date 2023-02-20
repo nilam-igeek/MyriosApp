@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { View, Text, ImageBackground, ScrollView, Pressable, TextInput } from 'react-native';
+import { View, Text, ImageBackground, ScrollView, Pressable, KeyboardAvoidingView } from 'react-native';
 import { COLORS } from '../../common/style/Colors';
 import Button from '../../components/core/Button';
 import styles from './styles';
@@ -29,8 +29,11 @@ const Login = (props) => {
     const dispatch = useDispatch();
 
     const success = useSelector((state) => state.apiReducer.loginData.success);
+    const isData = useSelector((state) => state.apiReducer.loginData);
+    console.log("isDAta====>",isData);
     const loading = useSelector((state) => state.apiReducer.loading);
-    console.log("success--->",success);
+//     const error = useSelector((state) => state.apiReducer.error);
+//    console.log("error--adadasd-->",error.data.success);
     const { t } = useTranslation();
     const [isShow, setIsShow] = useState(false);
     const [isRole, setIsRole] = useState('');
@@ -70,9 +73,9 @@ const Login = (props) => {
         };
         dispatch(loginApi(body));
         // actions.resetForm();
-        if (!success) {
-     Toast.show('Unauthorized');
-}
+//         if (!success) {
+//      Toast.show('Unauthorized');
+// }
     };
 
     useEffect(() => {
@@ -86,7 +89,7 @@ const Login = (props) => {
     }, [success])
 
     return (
-        <>
+          <>
             <ImageBackground
                 resizeMode='cover'
                 style={{ flex: 1 }}

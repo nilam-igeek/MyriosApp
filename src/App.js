@@ -11,24 +11,27 @@ import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import DeviceInfo from 'react-native-device-info';
 import analytics from '@react-native-firebase/analytics';
-
+import SplashScreen from "react-native-splash-screen";
 const App = () => {
   const [id, setId] = useState('');
   useEffect(() => {
-    onProductView();
+    // onProductView();
     DeviceInfo.getUniqueId().then((uniqueId) => {
       setId(uniqueId)
     });
   }, [])
 
-  async function onProductView() {
-    await analytics().logEvent('product_view', {
-      id: '123456789',
-      color: 'red',
-      via: 'ProductCatalog',
-    });
-  }
+  // async function onProductView() {
+  //   await analytics().logEvent('product_view', {
+  //     id: '123456789',
+  //     color: 'red',
+  //     via: 'ProductCatalog',
+  //   });
+  // }
 
+    useEffect(() => {
+    SplashScreen.hide(); //hides the splash screen on app load.
+  }, []);
 
   return (
     <Provider store={store}>

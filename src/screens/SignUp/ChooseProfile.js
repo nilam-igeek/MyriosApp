@@ -18,7 +18,13 @@ const ChooseProfile = (props) => {
 
     const { t } = useTranslation();
     const dispatch = useDispatch();
-    const onClickProfile = (item) => {
+    const [roleOfProfile,setRoleOfProfile] = useState('')
+    const onClickProfile = (item, index) => {
+        const data = isRefugee ? refugeeProfile : isShelter ? shelterProfile : donorProfile
+        
+        if (item.id === data[index].id) {
+            setRoleOfProfile(item.id)
+        }
         //  dispatch(signUpDataOfUser(item.profile));
         // console.log("item============>", item.profile);
     }
@@ -59,8 +65,12 @@ const ChooseProfile = (props) => {
                                     data={isRefugee ? refugeeProfile : isShelter ? shelterProfile : donorProfile}
                                     extraData={isRefugee ? refugeeProfile : isShelter ? shelterProfile : donorProfile}
                                     keyExtractor={item => item.id}
-                                    renderItem={({ item }) =>
-                                        <Pressable onPress={() => onClickProfile(item)} style={styles.GridViewBlockStyle}>
+                                    renderItem={({ item,index }) =>
+                                        <Pressable onPress={() => onClickProfile(item,index)}
+                                            style={[styles.GridViewBlockStyle, {
+                                                 borderWidth:roleOfProfile === index ? 1.5 : 0.5,
+                                                borderColor:roleOfProfile=== index ? COLORS.blue: COLORS.grey,
+                                            }]}>
                                             <Image resizeMode='contain' source={item.profile} style={styles.profilePic} />
                                         </Pressable>}
                                     numColumns={3} />
@@ -73,7 +83,10 @@ const ChooseProfile = (props) => {
                                 marginBottom={30}
                                 marginTop={20}
                                 width={'60%'}
-                                onPress={() => { props.navigation.navigate('SignUpSecondScreen'); }} />
+                                onPress={() => {
+                                    // props.navigation.navigate('SignUpSecondScreen');
+                                    props.navigation.goBack();
+                                }} />
                         </View>
                     </ScrollView>
                 </View>

@@ -25,7 +25,9 @@ const Welcome = (props) => {
                         bgColor={COLORS.white}
                         color={COLORS.black}
                         borderRadius={10}
-                        fontSize={16} />
+                        fontSize={16}
+                        onPress={() => {props.navigation.navigate('HowTo')}}
+                    />
                     <Button
                         width={'100%'}
                         title={t('skipNow')}
@@ -34,7 +36,7 @@ const Welcome = (props) => {
                         borderRadius={10}
                         marginTop={10}
                         fontSize={16}
-                        onPress={() => {props.navigation.navigate('HowTo')}}
+                        onPress={() => {props.navigation.navigate('WishLists')}}
                     />
                 </View>
             </View>

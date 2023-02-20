@@ -139,15 +139,15 @@ const SignUpFirstScreen = (props) => {
                                 {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, }) => (
                                     <>
                                         <View style={styles.profileNameContainer}>
-                                            <View style={styles.profileContainer}>
-                                                <Pressable onPress={() => { setModalVisible(!modalVisible) }} style={styles.profile}>
-                                                    {isImages ?
+                                            <View style={[styles.profileContainer,{width:isImages? '35%':0}]}>
+                                                {isImages &&
+                                                    <Pressable onPress={() => { setModalVisible(!modalVisible) }} style={styles.profile}>
                                                         <Image
                                                             resizeMode='cover'
                                                             source={{ uri: isImages }}
-                                                            style={styles.profileStyle} /> :
-                                                        <ProfileSvg />}
-                                                </Pressable>
+                                                            style={styles.profileStyle} />
+                                                        <ProfileSvg />
+                                                    </Pressable>}
                                                 <Modal
                                                     animationType="slide"
                                                     transparent={true}
@@ -163,15 +163,15 @@ const SignUpFirstScreen = (props) => {
                                                     </View>
                                                 </Modal>
                                             </View>
-                                            <View style={styles.nameInput}>
+                                            <View style={[styles.nameInput,{  width:isImages? '65%' :'100%'}]}>
                                                 <Field
                                                     name={'firstName'}
                                                     component={Input}
                                                     value={values.firstName}
                                                     onChangeText={handleChange('firstName')}
                                                     onBlur={handleBlur('firstName')}
-                                                    width={(BaseStyle.WIDTH / 100) * 50}
-                                                    inputWidth={(BaseStyle.WIDTH / 100) * 40}
+                                                    width={isImages ? (BaseStyle.WIDTH / 100) * 50 :(BaseStyle.WIDTH / 100) * 80}
+                                                    inputWidth={isImages ? (BaseStyle.WIDTH / 100) * 40 : (BaseStyle.WIDTH / 100) * 70}
                                                     placeholder={t('fName')}
                                                     isError={errors.firstName}
                                                 />
@@ -261,7 +261,7 @@ const SignUpFirstScreen = (props) => {
                                                 placeholderColor={COLORS.grey}
                                                 isError={errors.about}
                                                 multiline
-                                                height={100}
+                                                height={120}
                                                 borderRadius={20}
                                                 numberOfLines={3}
                                                 mt={20}

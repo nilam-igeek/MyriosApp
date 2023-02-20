@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -28,12 +28,25 @@ import SchedulingOfCalls from '../screens/Master/SchedulingOfCalls';
 import Analytics from '../screens/Master/Analytics';
 import AddPerson from '../screens/SideMenu/Helped/AddPerson';
 import analytics from '@react-native-firebase/analytics';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 const Router = () => {
  const routeNameRef = React.useRef();
   const navigationRef = React.useRef();
+
+
+//  const getAccessToken = async () => {
+//    const isToken = await AsyncStorage.getItem('token');
+//    console.log("isToken===>",isToken);
+// };
+
+  // useEffect(() => { 
+  //   getAccessToken();
+  // })
+
+
 function MyDrawer() {
     return (
       <Drawer.Navigator

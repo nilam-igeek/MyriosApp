@@ -50,12 +50,12 @@ const Helped = (props) => {
             <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.seashell} />
             <Header title={t('myrios')} onPress={() => { props.navigation.toggleDrawer() }} />
             <View style={{ flex: 1, justifyContent: 'center', alignItems: "center" }}>
-                <Text style={styles.titleText}>{isShelter ? t('people') : t('helped')}</Text>
-                <Text style={styles.subText}>{isShelter ? t('peopleSubDes') : t('helpedSubDes')}</Text>
+                <Text style={styles.titleText}>{isShelter ? t('people') : 'FAVORITE'}</Text>
+                <Text style={styles.subText}>{isShelter ? t('peopleSubDes') : ''}</Text>
                 {!_.isEmpty(isDataPeople.data) || !_.isEmpty(isDataHelped.data) ?
                     (<View style={{ flex: 1 }}>
                         <FlatList
-                            showsVerticalScrollIndicator={false}
+                        showsVerticalScrollIndicator={false}
                         showsHorizontalScrollIndicator={false}
                         data={isShelter? isDataPeople.data : isDataHelped.data}
                         extraData={isShelter? isDataPeople.data : isDataHelped.data}
@@ -76,7 +76,7 @@ const Helped = (props) => {
                     />
                 </View>) :
                     (<View style={{ flex: 1, justifyContent: "center", alignItems: 'center' }}>
-                        <Text style={{ fontSize: 20, color: COLORS.grey }}>{t('notFound')}</Text>
+                        <Text style={styles.notFoundText}>{`No registered refugees at your shelter yet! Click  "Add a Person"  to add the refugees at your shelter!`}</Text>
                     </View>)}
                 <Button
                     borderRadius={10}

@@ -41,7 +41,6 @@ import {
 } from './ApiAction';
 import Toast from 'react-native-simple-toast';
 
-
 const url = "http://18.233.84.195/api/"
 
 //======================== LOGIN =======================//
@@ -57,12 +56,17 @@ export const loginApi = (data) => async (dispatch) => {
           },
        })
     .then(async (response) => {
-      Toast.show(response.data.message);
-      dispatch(loginSuccess(response.data));
-      await AsyncStorage.setItem('token', response.data.data.token)
+      if (response.data.success) {
+         Toast.show(response.data.message);
+        dispatch(loginSuccess(response.data));
+        await AsyncStorage.setItem('token', response.data.data.token)
+      } 
       })
-    .catch((error) => { 
-      dispatch(loginError(error));
+    .catch((error) => {
+      dispatch(loginError(error.response));
+      if (!error.response.data.success) {
+         Toast.show('Log in information not correct, please try again or sign up!');
+      }
       return error
       });
   });

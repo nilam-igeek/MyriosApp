@@ -9,7 +9,8 @@ export default styles = StyleSheet.create({
     },
        card: {
         backgroundColor: COLORS.white,
-        height: (BaseStyle.HEIGHT / 100) * 60,
+        // height: (BaseStyle.HEIGHT / 100) * 60,
+            height:'120%',
         width: '100%',
         borderTopRightRadius: 40,
         borderTopLeftRadius: 40,

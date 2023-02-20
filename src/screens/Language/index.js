@@ -94,9 +94,25 @@ const Language = (props) => {
                                 setOpen={setOpen}
                                 setValue={setValue}
                                 setItems={setItems}
+                                modalAnimationType={'none'}
                                 // dropDownDirection={'BOTTOM'}
                                 dropDownContainerStyle={styles.dropDownContainerStyle}
-                                onSelectItem={(item) => { changeLanguage(item) }} />
+                                onSelectItem={(item) => { changeLanguage(item) }}
+                                modalContentContainerStyle={{
+                                    backgroundColor:COLORS.transparent,
+                            //   backgroundColor: 'rgba(240, 240, 240,0.6)',
+                                // marginVertical: 30,
+                                //     marginHorizontal: 30,
+                                //     height: 700,
+                                // width:300
+                                }}
+                                modalTitleStyle={{
+                                    fontWeight: 'normal',
+                                      backgroundColor:COLORS.transparent,
+                                    // backgroundColor:'red'
+                                }}
+                                modalTitle="Select an item"
+                            />
                         </View>
                         <View style={[styles.btnStyle,
                             // { zIndex: 0 }

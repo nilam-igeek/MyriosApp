@@ -18,6 +18,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import CountryPickerModal from '../../../components/core/CountryPickerModal';
 import { useDispatch, useSelector } from 'react-redux';
 import Indicator from '../../../components/core/Indicator';
+import ButtonWithIcon from '../../../components/core/ButtonWithIcon';
 const Profile = (props) => {
 
     const isdataProfile = useSelector((state) => state.apiReducer.dataProfile);
@@ -33,6 +34,13 @@ const Profile = (props) => {
     const [isImages, setIsImages] = useState(isdataProfile.photo);
     const [modalVisible, setModalVisible] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
+
+    const [isName, setName] = useState(false);
+    const [isAbout, setAbout] = useState(false);
+    const [isCountry, setIsCountry] = useState(false);
+    const [isAge, setAge] = useState(false);
+     const [isType,setType] = useState(false);
+    
     const isRefugee = isRole === ROLE.REFUGEE
     const isShelter = isRole === ROLE.SHELTER
     const isDonor = isRole === ROLE.DONOR
@@ -76,7 +84,7 @@ const Profile = (props) => {
             dispatch(updateProfileApi(body));
         } else {
             await AsyncStorage.setItem('token', '').then(() => [
-                props.navigation.navigate('Login')
+                props.navigation.navigate('GetStarted')
             ])
         }
     };
@@ -108,9 +116,10 @@ const Profile = (props) => {
         });
     }
 
-    const onClickEdit = () => {
-        setIsModalVisible(true)
-    }
+    // const onClickEdit = () => {
+    //     setIsModalVisible(true)
+    // }
+
     return (
         <View style={styles.container}>
             <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.seashell} />
@@ -126,14 +135,14 @@ const Profile = (props) => {
                         {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, }) => (
                             <>
                                 <View style={styles.profileNameContainer}>
-                                    <Pressable onPress={() => { setModalVisible(!modalVisible) }} style={styles.profile}>
+                                    <View style={styles.profile}>
                                         {isImages ?
                                             <Image
                                                 resizeMode='cover'
                                                 source={{ uri: isImages }}
                                                 style={styles.profileStyle} /> :
                                             <ProfileSvg />}
-                                    </Pressable>
+                                    </View>
                                     <Modal
                                         animationType="slide"
                                         transparent={true}
@@ -151,7 +160,8 @@ const Profile = (props) => {
                                         </View>
                                     </Modal>
 
-                                    {isModalVisible ? <Field
+                                    {isName ?
+                                        <Field
                                         name={'firstName'}
                                         placeholderColor={COLORS.black}
                                         component={Input}
@@ -164,12 +174,10 @@ const Profile = (props) => {
                                         placeholder={isShelter ? ('shelterName') : t('fName')}
                                         isError={errors.firstName}
                                     /> :
-                                        <View style={styles.countryView}>
-                                            <Text style={styles.countryText}>{isdataProfile.name}</Text>
-                                        </View>
+                                        <ButtonWithIcon title={isdataProfile.name} onPress={()=>{setName(true)}}/>
                                     }
 
-                                    {isModalVisible ?
+                                    {isCountry ?
                                         (<>
                                             {(isShelter || isRefugee) &&
                                                 <CountryPickerModal
@@ -181,9 +189,7 @@ const Profile = (props) => {
                                         ) : (
                                             <>
                                                 {(isShelter || isRefugee) &&
-                                                    <View style={styles.countryView}>
-                                                        <Text style={styles.countryText}>{isdataProfile.country}</Text>
-                                                    </View>}
+                                                    <ButtonWithIcon title={isdataProfile.country} onPress={()=>{setIsCountry(true)}}/>}
                                             </>
                                         )
                                     }
@@ -191,7 +197,7 @@ const Profile = (props) => {
 
                                     {isRefugee &&
                                         <>
-                                            {isModalVisible ? <Field
+                                            {isAge ? <Field
                                                 name={'age'}
                                                 component={Input}
                                                 mt={30}
@@ -204,14 +210,12 @@ const Profile = (props) => {
                                                 maxLength={2}
                                                 placeholderColor={COLORS.black}
                                                 isError={errors.age}
-                                            /> :
-                                                <View style={styles.countryView}>
-                                                    <Text style={styles.countryText}>{isdataProfile.age}</Text>
-                                                </View>
+                                        /> :
+                                            <ButtonWithIcon title={isdataProfile.age} onPress={()=>{setAge(true)}}/>
                                             }
 
 
-                                            {isModalVisible ? <>
+                                            {isType ? <>
                                                 <Text style={styles.chooseOneText}>{t('chooseOne')}</Text>
                                                 <View style={styles.chooseOneCard}>
                                                     <Button
@@ -261,14 +265,13 @@ const Profile = (props) => {
                                                         onPress={() => { onClick('Woman') }}
                                                     />
                                                 </View>
-                                            </> :
-                                                <View style={styles.countryView}>
-                                                    <Text style={styles.countryText}>{isdataProfile.isUserType}</Text>
-                                                </View>}
+                                        </> :
+                                            <ButtonWithIcon title={isdataProfile.isUserType} onPress={()=>{setType(true)}}/>  
+                                            }
                                         </>}
                                     {isShelter &&
                                         <>
-                                            {isModalVisible ? <Field
+                                            {isAbout ? <Field
                                                 name={'about'}
                                                 component={Input}
                                                 value={values.about}
@@ -281,33 +284,20 @@ const Profile = (props) => {
                                                 isError={errors.about}
                                                 multiline
                                                 borderRadius={20}
-                                                height={100}
+                                                height={120}
                                                 numberOfLines={3}
                                                 mt={30}
-                                            /> :
-                                                <View style={styles.countryView}>
-                                                    <Text numberOfLines={1} style={styles.countryText}>{isdataProfile.about}</Text>
-                                                </View>
+                                        /> :
+                                            <ButtonWithIcon title={isdataProfile.about} onPress={()=>{setAbout(true)}}/>  
                                             }
                                         </>
                                     }
-                                    <Button
-                                        bgColor={COLORS.lemonchiffon}
-                                        width={(BaseStyle.WIDTH / 100) * 80}
-                                        title={t('editProfile')}
-                                        fontSize={14}
-                                        color={COLORS.black}
-                                        height={45}
-                                        marginTop={30}
-                                        onPress={onClickEdit}
-                                        isRight
-                                    >
-                                        <EditSvg />
-                                    </Button>
+                                    <ButtonWithIcon title={t('editProfile')} onPress={() => { setModalVisible(!modalVisible) }}/>
                                 </View>
                                 <Button
                                     marginBottom={30}
-                                    title={isModalVisible ? t('updateProfile') : t('signOut')}
+                                     title={t('signOut')}
+                                    // title={isModalVisible ? t('updateProfile') : t('signOut')}
                                     fontSize={18}
                                     color={COLORS.white}
                                     height={50}

@@ -21,12 +21,14 @@ import { ROLE } from '../../constants/types';
 import Indicator from '../../components/core/Indicator';
 import { IMAGES } from '../../common/style/Images';
 import ArrowLeftSvg from '../../common/svgs/ArrowLeftSvg';
+import Toast from 'react-native-simple-toast';
 
 const SignUpSecondScreen = (props) => {
     const isdataProfile = useSelector((state) => state.apiReducer.dataProfile);
     const isUserData = useSelector((state) => state.apiReducer.regiData);
     const loading = useSelector((state) => state.apiReducer.loading);
     const success = useSelector((state) => state.apiReducer.regiData);
+     console.log("success--->",success);
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const [isShow, setIsShow] = useState(false);
@@ -111,8 +113,9 @@ const SignUpSecondScreen = (props) => {
         useEffect(() => {
             if (success.success) {
              props.navigation.navigate('Welcome');
-            } else {
-               Toast.show('The email has already been taken');  
+            }
+            else if(!success.success){
+               Toast.show('Unauthorized');  
         }
     })
 

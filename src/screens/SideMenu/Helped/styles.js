@@ -4,27 +4,27 @@ import { FONTS } from '../../../common/style/Fonts';
 import BaseStyle from '../../../common/style/BaseStyle';
 export default styles = StyleSheet.create({
 
-container: {
+    container: {
         flex: 1,
         backgroundColor: COLORS.seashell
     },
     titleText: {
-        marginTop:30,
+        marginTop: 30,
         fontSize: 24,
         fontFamily: FONTS.Poppins_SemiBold,
-        color:COLORS.black,
+        color: COLORS.black,
     },
-    subText:{
-        textAlign:'center',
+    subText: {
+        textAlign: 'center',
         fontSize: 12,
         fontFamily: FONTS.Poppins_Regular,
         color: COLORS.black,
         width: (BaseStyle.WIDTH / 100) * 60,
         alignSelf: 'center',
-         marginBottom:30
+        marginBottom: 30
     },
     itemCard: {
-        flexDirection:"row",
+        flexDirection: "row",
         width: (BaseStyle.WIDTH / 100) * 80,
         alignSelf: 'center',
         // backgroundColor: "pink",
@@ -32,23 +32,23 @@ container: {
         borderBottomWidth: 1,
         alignItems: 'center',
         paddingBottom: 8,
-        paddingTop:20
+        paddingTop: 20
     },
-      profileStyle: {
+    profileStyle: {
         width: 60,
         height: 60,
-        borderRadius:60/2,
+        borderRadius: 60 / 2,
         justifyContent: 'center',
         borderWidth: 0.5,
-       borderColor:'gray'
+        borderColor: 'gray'
     },
     userName: {
         color: COLORS.black,
         marginLeft: 20,
         fontFamily: FONTS.Poppins_SemiBold,
-        fontSize:12
+        fontSize: 12
     },
-     profile: {
+    profile: {
         width: 60,
         height: 60,
         borderRadius: 60 / 2,
@@ -56,5 +56,12 @@ container: {
         justifyContent: 'center',
         alignItems: "center",
     },
-
+    notFoundText: {
+        fontSize: 14,
+        color: COLORS.grey,
+        width: (BaseStyle.WIDTH / 100) * 70,
+        alignSelf: 'center',
+        fontFamily: FONTS.Poppins_Regular,
+        textAlign:'center'
+    }
 });
