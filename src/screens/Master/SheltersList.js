@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StatusBar, Image, FlatList, Pressable } from 'react-native';
 import styles from './styles';
 import '../../../assets/i18n/i18n';
@@ -31,27 +31,27 @@ const SheltersList = (props) => {
                 <Text style={styles.titleText}>{`${t('masterTitle')}\n${t('shelterType')}`}</Text>
                 <View style={{ flex: 1 }}>
                     <FlatList
-                         showsVerticalScrollIndicator={false}
+                        showsVerticalScrollIndicator={false}
                         showsHorizontalScrollIndicator={false}
                         data={isShelterData.data}
                         extraData={isShelterData.data}
                         keyExtractor={item => item.id}
                         renderItem={({ item }) =>
-                            <Pressable style={[styles.itemCard, {}]} onPress={() => {props.navigation.navigate('ProfileOfRole')}}>
-                                  <View style={styles.profile}>
-                                        {item.image ? <Image
-                                            resizeMode='cover'
-                                            source={item.image}
-                                            style={styles.profileStyle} />
+                            <Pressable style={[styles.itemCard, {}]} onPress={() => { props.navigation.navigate('ProfileOfRole') }}>
+                                <View style={styles.profile}>
+                                    {item.image ? <Image
+                                        resizeMode='cover'
+                                        source={item.image}
+                                        style={styles.profileStyle} />
                                         : <ProfileSvg height={30} width={30} />}
-                                    </View>
+                                </View>
                                 <Text style={{ marginLeft: 20 }} >
                                     <Text style={styles.userName}>{item.name}</Text>
                                 </Text>
                             </Pressable>} />
                 </View>
             </View>
-            <Indicator isLoader animate={loading}/>
+            <Indicator isLoader animate={loading} />
         </View>
     );
 };

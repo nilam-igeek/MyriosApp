@@ -45,6 +45,20 @@ export const wishlistError = (error) => ({
   payload: error,
 });
 
+export const wishlistFilterData = () => ({
+  type: ACTION_TYPES.WISHLISTS_FILTER_API_PENDING,
+});
+
+export const wishlistFilterSuccess = (data) => ({
+  type: ACTION_TYPES.WISHLISTS_FILTER_API_SUCCESS,
+  payload: data,
+});
+
+export const wishlistFilterError = (error) => ({
+  type: ACTION_TYPES.WISHLISTS_FILTER_API_ERROR,
+  payload: error,
+});
+
 export const wishlistAddData = () => ({
   type: ACTION_TYPES.WISHLISTS_ADD_API_PENDING,
 });

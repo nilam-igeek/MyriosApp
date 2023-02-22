@@ -9,7 +9,7 @@ import Header from '../../../components/core/Header';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ROLE } from '../../../constants/types';
 import ProfileSvg from '../../../common/svgs/ProfileSvg';
-import { peopleApi, helpedApi } from '../../../redux/actions/ApiActionCreator';
+import { peopleApi, helpedApi, wishListApi } from '../../../redux/actions/ApiActionCreator';
 import { useDispatch, useSelector } from 'react-redux';
 import Indicator from '../../../components/core/Indicator';
 import _ from 'lodash';
@@ -22,9 +22,12 @@ const Helped = (props) => {
     const dispatch = useDispatch();
     const loading = useSelector((state) => state.apiReducer.loading);
     const dataOfPeople = useSelector((state) => !_.isEmpty(state.apiReducer.peopleData) && state.apiReducer.peopleData);
-    const dataOfHelped = useSelector((state) => !_.isEmpty(state.apiReducer.helpedData) && state.apiReducer.helpedData);
+    // const dataOfHelped = useSelector((state) => !_.isEmpty(state.apiReducer.helpedData) && state.apiReducer.helpedData);
     const isDataPeople = (!_.isEmpty(dataOfPeople.data) && dataOfPeople.data);
-    const isDataHelped = (!_.isEmpty(dataOfHelped.data) && dataOfHelped.data);
+    // const isDataHelped = (!_.isEmpty(dataOfHelped.data) && dataOfHelped.data);
+
+    const dataOfwishListData = useSelector((state) => !_.isEmpty(state.apiReducer.wishListData) && state.apiReducer.wishListData);
+    const dataOfwishListDataList = (!_.isEmpty(dataOfwishListData.data) && dataOfwishListData.data)
 
     useEffect(() => {
         async function check() {
@@ -47,6 +50,10 @@ const Helped = (props) => {
         { isDonor && dispatch(helpedApi) }
     }, [peopleApi, helpedApi])
 
+    useEffect(() => {
+        dispatch(wishListApi());
+    }, [wishListApi])
+
     return (
         <View style={styles.container}>
             <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.seashell} />
@@ -54,13 +61,13 @@ const Helped = (props) => {
             <View style={{ flex: 1, justifyContent: 'center', alignItems: "center" }}>
                 <Text style={styles.titleText}>{isShelter ? t('people') : 'FAVORITE'}</Text>
                 <Text style={styles.subText}>{isShelter ? t('peopleSubDes') : ''}</Text>
-                {!_.isEmpty(isDataPeople.data) || !_.isEmpty(isDataHelped.data) ?
+                {!_.isEmpty(isDataPeople.data) || !_.isEmpty(dataOfwishListDataList.data) ?
                     (<View style={{ flex: 1 }}>
                         <FlatList
                             showsVerticalScrollIndicator={false}
                             showsHorizontalScrollIndicator={false}
-                            data={isShelter ? isDataPeople.data : isDataHelped.data}
-                            extraData={isShelter ? isDataPeople.data : isDataHelped.data}
+                            data={isShelter ? isDataPeople.data : dataOfwishListDataList.data}
+                            extraData={isShelter ? isDataPeople.data : dataOfwishListDataList.data}
                             keyExtractor={item => item.id}
                             renderItem={({ item }) =>
                                 <View style={styles.itemCard}>

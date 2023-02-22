@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { signUpDataOfUser } from '../../redux/actions/ApiActionCreator';
 import { IMAGES } from '../../common/style/Images';
 import ArrowLeftSvg from '../../common/svgs/ArrowLeftSvg';
+import _ from 'lodash';
 const SignUpFirstScreen = (props) => {
     const dispatch = useDispatch();
 
@@ -35,6 +36,7 @@ const SignUpFirstScreen = (props) => {
     const isRefugee = isRole === ROLE.REFUGEE
     const isShelter = isRole === ROLE.SHELTER
     const isDonor = isRole === ROLE.DONOR
+
     useEffect(() => {
         async function check() {
             var item = await AsyncStorage.getItem('userType');
@@ -47,6 +49,12 @@ const SignUpFirstScreen = (props) => {
         firstName: yup
             .string()
             .required(t('nameRequired')),
+        watchlistLink: yup
+            .string()
+            .required('The watchlist link field is required.'),
+        watchlistDescription: yup
+            .string()
+            .required('The watchlist description field is required.'),
     })
     const loginShelterValidationSchema = yup.object().shape({
         firstName: yup
@@ -55,6 +63,12 @@ const SignUpFirstScreen = (props) => {
         about: yup
             .string()
             .required(t('aboutRequired')),
+        watchlistLink: yup
+            .string()
+            .required('The watchlist link field is required.'),
+        watchlistDescription: yup
+            .string()
+            .required('The watchlist description field is required.'),
 
     })
     const loginRefugeeValidationSchema = yup.object().shape({
@@ -63,27 +77,34 @@ const SignUpFirstScreen = (props) => {
             .required(t('nameRequired')),
         age: yup
             .string()
-            .required(t('ageRequired'))
+            .required(t('ageRequired')),
+        watchlistLink: yup
+            .string()
+            .required('The watchlist link field is required.'),
+        watchlistDescription: yup
+            .string()
+            .required('The watchlist description field is required.'),
     })
 
     const onClickSubmit = (values, actions) => {
-        const { firstName, about, age, } = values;
+        const { firstName, about, age, watchlistLink, watchlistDescription } = values;
         var body = {
             firstName: firstName,
             country: country,
             about: about,
             age: age,
             photo: isImages,
-            isUserType: isSelected
+            isUserType: isSelected,
+            watchlist_link: watchlistLink,
+            watchlist_description: watchlistDescription
         };
         dispatch(signUpDataOfUser(body));
-        // actions.resetForm();
-        if (isImages) {
-            if (isRefugee) {
-                props.navigation.navigate('Chat');
-            } else if (isShelter || isDonor) {
-                props.navigation.navigate('SignUpSecondScreen');
-            }
+        if (isRefugee && !_.isEmpty(isProfile.profile)) {
+            props.navigation.navigate('Chat');
+        } else if (isDonor && !_.isEmpty(isProfile.profile)) {
+            props.navigation.navigate('SignUpSecondScreen');
+        } else if (isShelter && !_.isEmpty(isProfile.profile)) {
+            props.navigation.navigate('SignUpSecondScreen');
         } else {
             props.navigation.navigate('ChooseProfile');
         }
@@ -135,17 +156,17 @@ const SignUpFirstScreen = (props) => {
                         <View style={styles.subContainer}>
                             <Formik
                                 validationSchema={isShelter ? loginShelterValidationSchema : isDonor ? loginDonorValidationSchema : loginRefugeeValidationSchema}
-                                initialValues={{ firstName: '', about: '', age: '' }}
+                                initialValues={{ firstName: '', about: '', age: '', watchlistLink: '', watchlistDescription: '' }}
                                 onSubmit={onClickSubmit}>
                                 {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, }) => (
                                     <>
                                         <View style={styles.profileNameContainer}>
-                                            <View style={[styles.profileContainer, { width: isImages ? '35%' : 0 }]}>
-                                                {isImages &&
+                                            <View style={[styles.profileContainer, { width: !_.isEmpty(isProfile.profile) ? '35%' : 0 }]}>
+                                                {!_.isEmpty(isProfile.profile) &&
                                                     <Pressable onPress={() => { setModalVisible(!modalVisible) }} style={styles.profile}>
                                                         <Image
                                                             resizeMode='contain'
-                                                            source={IMAGES.donor1}
+                                                            source={{ uri: isProfile.profile }}
                                                             style={styles.profileStyle} />
                                                     </Pressable>
                                                 }
@@ -164,15 +185,15 @@ const SignUpFirstScreen = (props) => {
                                                     </View>
                                                 </Modal>
                                             </View>
-                                            <View style={[styles.nameInput, { width: isImages ? '65%' : '100%' }]}>
+                                            <View style={[styles.nameInput, { width: !_.isEmpty(isProfile.profile) ? '65%' : '100%' }]}>
                                                 <Field
                                                     name={'firstName'}
                                                     component={Input}
                                                     value={values.firstName}
                                                     onChangeText={handleChange('firstName')}
                                                     onBlur={handleBlur('firstName')}
-                                                    width={isImages ? (BaseStyle.WIDTH / 100) * 50 : (BaseStyle.WIDTH / 100) * 80}
-                                                    inputWidth={isImages ? (BaseStyle.WIDTH / 100) * 40 : (BaseStyle.WIDTH / 100) * 70}
+                                                    width={!_.isEmpty(isProfile.profile) ? (BaseStyle.WIDTH / 100) * 50 : (BaseStyle.WIDTH / 100) * 80}
+                                                    inputWidth={!_.isEmpty(isProfile.profile) ? (BaseStyle.WIDTH / 100) * 40 : (BaseStyle.WIDTH / 100) * 70}
                                                     placeholder={t('fName')}
                                                     isError={errors.firstName}
                                                 />
@@ -267,6 +288,33 @@ const SignUpFirstScreen = (props) => {
                                                 numberOfLines={3}
                                                 mt={20}
                                             />}
+
+                                        <Field
+                                            mt={20}
+                                            name={'watchlistLink'}
+                                            component={Input}
+                                            value={values.watchlistLink}
+                                            onChangeText={handleChange('watchlistLink')}
+                                            onBlur={handleBlur('watchlistLink')}
+                                            width={(BaseStyle.WIDTH / 100) * 80}
+                                            inputWidth={(BaseStyle.WIDTH / 100) * 70}
+                                            placeholder={'Watchlist Link'}
+                                            isError={errors.watchlistLink}
+                                        // inputColor={COLORS.blue}
+                                        />
+                                        <Field
+                                            mt={20}
+                                            name={'watchlistDescription'}
+                                            component={Input}
+                                            value={values.watchlistDescription}
+                                            onChangeText={handleChange('watchlistDescription')}
+                                            onBlur={handleBlur('watchlistDescription')}
+                                            width={(BaseStyle.WIDTH / 100) * 80}
+                                            inputWidth={(BaseStyle.WIDTH / 100) * 70}
+                                            placeholder={'WatchlistDescription'}
+                                            isError={errors.watchlistDescription}
+                                        // inputColor={COLORS.blue}
+                                        />
                                         <Button
                                             marginBottom={35}
                                             title={t('next')}

@@ -45,7 +45,7 @@ export default styles = StyleSheet.create({
         marginTop: 20,
     },
     sortByText: {
-        fontSize: 12,
+        fontSize: 14,
         fontFamily: FONTS.Poppins_SemiBold,
         color: COLORS.black
     },
@@ -143,5 +143,58 @@ export default styles = StyleSheet.create({
         width: 100,
         height: 100,
         borderRadius: 100 / 2
-    }
+    },
+    chooseOneText: {
+        width: '100%',
+        alignSelf: "center",
+        marginBottom: 5,
+        marginTop: 20,
+        fontSize: 16,
+        color: COLORS.black,
+        fontFamily: FONTS.Poppins_SemiBold
+    },
+    chooseOneCard: {
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    range: {
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        flexDirection: 'row',
+        width: '100%',
+        alignSelf: 'center',
+        marginLeft: 15
+    },
+    rangeText: {
+        fontFamily: FONTS.Poppins_Regular,
+        fontSize: 14,
+        color: COLORS.black,
+        marginRight: 10
+    },
+    blurViewShelter: {
+        flex: 1,
+        width: "50%",
+        height: "100%",
+        backgroundColor: "rgba(0, 0, 0, 0.6)"
+    },
+    titleText: {
+        width: '100%',
+        fontSize: 20,
+        marginVertical: 20,
+        color: COLORS.black,
+        textAlign: "center",
+        fontFamily: FONTS.Poppins_SemiBold,
+    },
+    inputView: {
+        color: COLORS.black,
+        flexDirection: 'row',
+        height: 45,
+        justifyContent: 'center',
+        alignItems: "center",
+        width: (BaseStyle.WIDTH / 100) * 75,
+        backgroundColor: COLORS.skyBlue,
+        borderRadius: 50,
+        paddingLeft: 30
+    },
 });

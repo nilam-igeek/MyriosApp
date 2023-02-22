@@ -1,9 +1,10 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { View, Text, StatusBar } from 'react-native';
+import { View, Text, StatusBar, Modal, Pressable } from 'react-native';
 
 import Button from '../../../components/core/Button';
 import styles from './styles';
 import '../../../../assets/i18n/i18n';
+import CloseSvg from '../../../common/svgs/CloseSvg';
 import { useTranslation } from 'react-i18next';
 import { COLORS } from '../../../common/style/Colors';
 import Header from '../../../components/core/Header';
@@ -19,6 +20,8 @@ const ContactUs = (props) => {
     const loading = useSelector((state) => state.apiReducer.loading);
     const { t } = useTranslation();
     const [isRole, setIsRole] = useState('');
+    const [showModal, setShowModal] = useState(false);
+
     const isShelter = isRole === ROLE.SHELTER
     const dispatch = useDispatch();
 
@@ -51,6 +54,7 @@ const ContactUs = (props) => {
             email: email,
         };
         dispatch(contactUsApi(body));
+        setShowModal(true)
         actions.resetForm();
     };
 
@@ -128,6 +132,34 @@ const ContactUs = (props) => {
                     )}
                 </Formik>
             </View>
+            <Modal
+                visible={showModal}
+                animationType="fade"
+                transparent={true}
+                onRequestClose={() => { setShowModal(false) }}>
+                <View style={styles.blurView}>
+                    <View style={styles.blurSubView}>
+                        <Pressable onPress={() => setShowModal(false)} style={styles.closeBtn}>
+                            <CloseSvg fill={COLORS.white} width={10} height={10} />
+                        </Pressable>
+                        <View style={{ justifyContent: 'center', alignItems: "center" }}>
+                            <Text style={styles.modalSubText}>{'Submitted! We are eager to here what you have to say, and will be in contact with you shortly.'}</Text>
+                            <Button
+                                onPress={() => { setShowModal(false), props.navigation.navigate('WishLists') }}
+                                borderRadius={50}
+                                fontSize={16}
+                                color={COLORS.white}
+                                height={40}
+                                marginTop={35}
+                                width={'60%'}
+                                title={`Wishlist`}
+                            />
+
+                        </View>
+
+                    </View>
+                </View>
+            </Modal>
             <Indicator isLoader animate={loading} />
         </View>
     );

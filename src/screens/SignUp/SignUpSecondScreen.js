@@ -28,7 +28,7 @@ const SignUpSecondScreen = (props) => {
     const isUserData = useSelector((state) => state.apiReducer.regiData);
     const loading = useSelector((state) => state.apiReducer.loading);
     const success = useSelector((state) => state.apiReducer.regiData);
-     console.log("success--->",success);
+    console.log("isdataProfile1111111--->", isdataProfile);
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const [isShow, setIsShow] = useState(false);
@@ -76,6 +76,8 @@ const SignUpSecondScreen = (props) => {
             name: isdataProfile.firstName,
             country: isdataProfile.country,
             photo: isdataProfile.photo,
+            watchlist_link: isdataProfile.watchlist_link,
+            watchlist_description: isdataProfile.watchlist_description
         }
 
         var refugeeData = {
@@ -87,6 +89,8 @@ const SignUpSecondScreen = (props) => {
             type: isdataProfile.isUserType,
             shelter: isdataProfile.shelterName,
             photo: isdataProfile.photo,
+            watchlist_link: isdataProfile.watchlist_link,
+            watchlist_description: isdataProfile.watchlist_description
         }
         var shelterData = {
             email: email,
@@ -95,6 +99,8 @@ const SignUpSecondScreen = (props) => {
             country: isdataProfile.country,
             description: isdataProfile.about,
             photo: isdataProfile.photo,
+            watchlist_link: isdataProfile.watchlist_link,
+            watchlist_description: isdataProfile.watchlist_description
         }
 
         var body = {
@@ -110,12 +116,12 @@ const SignUpSecondScreen = (props) => {
         // }
     };
 
-        useEffect(() => {
-            if (success.success) {
-             props.navigation.navigate('Welcome');
-            }
-            else if(!success.success){
-               Toast.show('Unauthorized');  
+    useEffect(() => {
+        if (success.success) {
+            props.navigation.navigate('Welcome');
+        }
+        else if (!success.success) {
+            //    Toast.show('Unauthorized');  
         }
     })
 
@@ -126,7 +132,7 @@ const SignUpSecondScreen = (props) => {
                 style={{ flex: 1 }}
                 source={IMAGES.languageBg}>
                 <CloseButton onPress={() => props.navigation.goBack()}>
-                   <ArrowLeftSvg fill={COLORS.white}/>
+                    <ArrowLeftSvg fill={COLORS.white} />
                 </CloseButton>
             </ImageBackground>
             <View style={styles.container}>
@@ -148,7 +154,7 @@ const SignUpSecondScreen = (props) => {
                                             title={t('email')}
                                             component={Input}
                                             isLeft
-                                           value={values.email.toLocaleLowerCase()}
+                                            value={values.email.toLocaleLowerCase()}
                                             onChangeText={handleChange('email')}
                                             onBlur={handleBlur('email')}
                                             width={(BaseStyle.WIDTH / 100) * 80}

@@ -17,8 +17,9 @@ const initialState = {
   contactUSData: '',
   helpedData: '',
   peopleData: '',
-  imagesListOfRoleData: ''
-
+  imagesListOfRoleData: '',
+  wishListFilterData: '',
+  wishlistAddData: ''
 };
 
 const apiReducer = (state = initialState, action) => {
@@ -81,6 +82,25 @@ const apiReducer = (state = initialState, action) => {
         loading: false,
       };
 
+    case ACTION_TYPES.WISHLISTS_FILTER_API_PENDING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ACTION_TYPES.WISHLISTS_FILTER_API_SUCCESS:
+      return {
+        ...state,
+        wishListFilterData: action.payload,
+        loading: false,
+      };
+    case ACTION_TYPES.WISHLISTS_FILTER_API_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+
+
     case ACTION_TYPES.WISHLISTS_ADD_API_PENDING:
       return {
         ...state,
@@ -89,7 +109,7 @@ const apiReducer = (state = initialState, action) => {
     case ACTION_TYPES.WISHLISTS_ADD_API_SUCCESS:
       return {
         ...state,
-        data: action.payload,
+        wishlistAddData: action.payload,
         loading: false,
       };
     case ACTION_TYPES.WISHLISTS_ADD_API_ERROR:

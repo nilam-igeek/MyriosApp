@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { COLORS } from '../common/style/Colors';
 import { CustomeDrawer } from '../screens/Drawer/CustomeDrawer';
 import GetStarted from '../screens/GetStarted';
+import Welcome from '../screens/Welcome/index';
 import Language from '../screens/Language/index';
 import TypesOfUser from '../screens/TypesOfUser/index';
 import Login from '../screens/Login/index';
 import SignUpFirstScreen from '../screens/SignUp/SignUpFirstScreen';
 import SignUpSecondScreen from '../screens/SignUp/SignUpSecondScreen';
 import ChooseProfile from '../screens/SignUp/ChooseProfile';
-import Welcome from '../screens/Welcome/index';
 import WishLists from '../screens/WishLists/index';
 import ShelterWishList from '../screens/WishLists/ShelterWishList';
 import ContactUs from '../screens/SideMenu/ContactUs/index';
@@ -32,20 +32,24 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
-const Router = () => {
+const Router = (props) => {
   const routeNameRef = React.useRef();
   const navigationRef = React.useRef();
+  const [isToken, setIsToken] = useState('');
+  const initialRouteName = isToken !== '' ? 'Welcome' : 'GetStarted'
 
+  const getAccessToken = async () => {
+    const isToken = await AsyncStorage.getItem('token');
+    setIsToken(isToken)
 
-  //  const getAccessToken = async () => {
-  //    const isToken = await AsyncStorage.getItem('token');
-  //    console.log("isToken===>",isToken);
-  // };
+  };
 
-  // useEffect(() => { 
-  //   getAccessToken();
-  // })
+  useEffect(() => {
+    getAccessToken();
+  }, [getAccessToken])
 
+  console.log("isToken---dssdfddf--->", isToken);
+  console.log("props.initialRoute---->", props.initialRoute);
 
   function MyDrawer() {
     return (
@@ -92,54 +96,65 @@ const Router = () => {
   }
 
   return (
-    <NavigationContainer
-    // ref={navigationRef}
-    //   onReady={() => {
-    //     routeNameRef.current = navigationRef.current.getCurrentRoute().name;
-    //   }}
-    //   onStateChange={async () => {
-    //     const previousRouteName = routeNameRef.current;
-    //     const currentRouteName = navigationRef.current.getCurrentRoute().name;
+    <>
+      {props.initialRoute === 'GetStarted'
+        ?
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{ headerShown: false }}
+            transparentCard={true}
+            initialRouteName={'GetStarted'}>
+            <Stack.Screen options={{ gestureEnabled: false }} name="GetStarted" component={GetStarted} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="Language" component={Language} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="TypesOfUser" component={TypesOfUser} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="Login" component={Login} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="SignUpFirstScreen" component={SignUpFirstScreen} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="SignUpSecondScreen" component={SignUpSecondScreen} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="ChooseProfile" component={ChooseProfile} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="Welcome" component={Welcome} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="HowTo" component={MyDrawer} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="WishLists" component={WishLists} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="ContactUs" component={ContactUs} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="Profile" component={Profile} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="Helped" component={Helped} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="ShelterWishList" component={ShelterWishList} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="RefugeesList" component={MyMasterDrawer} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="DonorsList" component={DonorsList} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="ContactRequests" component={ContactRequests} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="SheltersList" component={SheltersList} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="ProfileOfRole" component={ProfileOfRole} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="Chat" component={Chat} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="SchedulingOfCalls" component={SchedulingOfCalls} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="Analytics" component={Analytics} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="AddPerson" component={AddPerson} />
+          </Stack.Navigator>
+        </NavigationContainer> :
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{ headerShown: false }}
+            transparentCard={true}
+            initialRouteName={'Welcome'}>
+            <Stack.Screen options={{ gestureEnabled: false }} name="Welcome" component={Welcome} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="HowTo" component={MyDrawer} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="WishLists" component={WishLists} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="ContactUs" component={ContactUs} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="Profile" component={Profile} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="Helped" component={Helped} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="ShelterWishList" component={ShelterWishList} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="RefugeesList" component={MyMasterDrawer} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="DonorsList" component={DonorsList} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="ContactRequests" component={ContactRequests} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="SheltersList" component={SheltersList} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="ProfileOfRole" component={ProfileOfRole} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="Chat" component={Chat} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="SchedulingOfCalls" component={SchedulingOfCalls} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="Analytics" component={Analytics} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="AddPerson" component={AddPerson} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      }
+    </>
 
-    //     if (previousRouteName !== currentRouteName) {
-    //       await analytics().logScreenView({
-    //         screen_name: currentRouteName,
-    //         screen_class: currentRouteName,
-    //       });
-    //       console.log("currentRouteName---->", currentRouteName);
-    //     }
-    //     routeNameRef.current = currentRouteName;
-    //   }}
-    >
-      <Stack.Navigator
-        screenOptions={{ headerShown: false }}
-        transparentCard={true}
-        initialRouteName={'GetStarted'}>
-        <Stack.Screen options={{ gestureEnabled: false }} name="GetStarted" component={GetStarted} />
-        <Stack.Screen options={{ gestureEnabled: false }} name="Language" component={Language} />
-        <Stack.Screen options={{ gestureEnabled: false }} name="TypesOfUser" component={TypesOfUser} />
-        <Stack.Screen options={{ gestureEnabled: false }} name="Login" component={Login} />
-        <Stack.Screen options={{ gestureEnabled: false }} name="SignUpFirstScreen" component={SignUpFirstScreen} />
-        <Stack.Screen options={{ gestureEnabled: false }} name="SignUpSecondScreen" component={SignUpSecondScreen} />
-        <Stack.Screen options={{ gestureEnabled: false }} name="ChooseProfile" component={ChooseProfile} />
-        <Stack.Screen options={{ gestureEnabled: false }} name="Welcome" component={Welcome} />
-        <Stack.Screen options={{ gestureEnabled: false }} name="HowTo" component={MyDrawer} />
-        <Stack.Screen options={{ gestureEnabled: false }} name="WishLists" component={WishLists} />
-        <Stack.Screen options={{ gestureEnabled: false }} name="ContactUs" component={ContactUs} />
-        <Stack.Screen options={{ gestureEnabled: false }} name="Profile" component={Profile} />
-        <Stack.Screen options={{ gestureEnabled: false }} name="Helped" component={Helped} />
-        <Stack.Screen options={{ gestureEnabled: false }} name="ShelterWishList" component={ShelterWishList} />
-        <Stack.Screen options={{ gestureEnabled: false }} name="RefugeesList" component={MyMasterDrawer} />
-        <Stack.Screen options={{ gestureEnabled: false }} name="DonorsList" component={DonorsList} />
-        <Stack.Screen options={{ gestureEnabled: false }} name="ContactRequests" component={ContactRequests} />
-        <Stack.Screen options={{ gestureEnabled: false }} name="SheltersList" component={SheltersList} />
-        <Stack.Screen options={{ gestureEnabled: false }} name="ProfileOfRole" component={ProfileOfRole} />
-        <Stack.Screen options={{ gestureEnabled: false }} name="Chat" component={Chat} />
-        <Stack.Screen options={{ gestureEnabled: false }} name="SchedulingOfCalls" component={SchedulingOfCalls} />
-        <Stack.Screen options={{ gestureEnabled: false }} name="Analytics" component={Analytics} />
-        <Stack.Screen options={{ gestureEnabled: false }} name="AddPerson" component={AddPerson} />
-      </Stack.Navigator>
-    </NavigationContainer>
   );
 };
 

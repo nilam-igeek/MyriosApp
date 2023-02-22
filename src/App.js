@@ -7,13 +7,20 @@ import {
 } from 'react-native';
 import { COLORS } from './common/style/Colors';
 import Router from './navigation/appNavigator';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import { store } from './redux/store';
 import DeviceInfo from 'react-native-device-info';
 import analytics from '@react-native-firebase/analytics';
 import SplashScreen from "react-native-splash-screen";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { loginApi } from './redux/actions/ApiActionCreator';
 const App = () => {
+
   const [id, setId] = useState('');
+  const [isToken, setIsToken] = useState('');
+  const dispatch = useDispatch();
+  const [initialRouteName, setInitialRouteName] = useState('GetStarted');
+
   useEffect(() => {
     // onProductView();
     DeviceInfo.getUniqueId().then((uniqueId) => {
@@ -33,15 +40,45 @@ const App = () => {
     SplashScreen.hide(); //hides the splash screen on app load.
   }, []);
 
+
+  const getAccessToken = async () => {
+    const token = await AsyncStorage.getItem('token');
+    const isPassword = await AsyncStorage.getItem('userPassword');
+    const isEmail = await AsyncStorage.getItem('userEmail');
+    console.log("isPassword", isPassword);
+    console.log("isEmail", isEmail);
+    setIsToken(token)
+    if (token) {
+      setInitialRouteName('Welcome')
+      var body = {
+        password: isPassword,
+        email: isEmail
+      };
+      dispatch(loginApi(body));
+    } else {
+      setInitialRouteName('GetStarted')
+    }
+    await AsyncStorage.setItem('token', token)
+  };
+
+  useEffect(() => {
+    getAccessToken();
+  }, [getAccessToken])
+
+
+
   return (
-    <Provider store={store}>
+    // <Provider store={store}>
+    <>
       <StatusBar
         barStyle={Platform.OS === 'ios' ? 'light-content' : 'dark-content'}
         backgroundColor={COLORS.transparent} />
       <View style={{ flex: 1 }}>
-        <Router />
+        <Router initialRoute={initialRouteName} />
       </View>
-    </Provider>
+    </>
+
+    // </Provider>
   );
 }
 export default App;

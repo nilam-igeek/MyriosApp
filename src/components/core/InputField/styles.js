@@ -20,7 +20,7 @@ export default styles = StyleSheet.create({
         // shadowRadius: 2.84,
         // elevation: 3,
     },
-     inputCard: {
+    inputCard: {
         flexDirection: 'row',
         width: (BaseStyle.WIDTH / 100) * 85,
         height: 45,
@@ -29,9 +29,9 @@ export default styles = StyleSheet.create({
     },
     titleText: {
         fontSize: 14,
-        fontFamily:FONTS.Poppins_Regular,
+        fontFamily: FONTS.Poppins_Regular,
         alignSelf: 'center',
-        marginTop:5,
+        marginTop: 5,
     }
 
 });

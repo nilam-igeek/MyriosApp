@@ -16,11 +16,16 @@ import { addPeopleApi } from '../../../redux/actions/ApiActionCreator';
 import { useDispatch, useSelector } from 'react-redux';
 import Indicator from '../../../components/core/Indicator';
 const AddPerson = (props) => {
- const loading = useSelector((state) => state.apiReducer.loading);
+    const loading = useSelector((state) => state.apiReducer.loading);
     const { t } = useTranslation();
     const [isRole, setIsRole] = useState('');
     const isShelter = isRole === ROLE.SHELTER
- const dispatch = useDispatch();
+
+    // const isData = useSelector((state) => state.apiReducer.loginData);
+    // const userDetails = isData.data.user
+    // console.log("userDetails=====>", userDetails);
+
+    const dispatch = useDispatch();
     useEffect(() => {
         async function check() {
             var item = await AsyncStorage.getItem('userType');
@@ -32,14 +37,14 @@ const AddPerson = (props) => {
     const loginValidationSchema = yup.object().shape({
         firstName: yup
             .string(),
-            // .required(t('nameRequired')),
+        // .required(t('nameRequired')),
         email: yup
             .string()
-            // .required(t('emailRequired')),
+        // .required(t('emailRequired')),
 
     })
 
-    const onClickSubmit = async (values,actions) => {
+    const onClickSubmit = async (values, actions) => {
         const { firstName, email } = values;
         var body = {
             email: email,
@@ -49,7 +54,7 @@ const AddPerson = (props) => {
             age: '24',
             type: 'Boy',
             shelter: '2',
-            photo:'eiW3vs8iQ/2df8941f-92d7-4c2e-8358-a6a66b6ca637.jpg',
+            photo: 'eiW3vs8iQ/2df8941f-92d7-4c2e-8358-a6a66b6ca637.jpg',
             firstName: firstName,
         };
         dispatch(addPeopleApi(body));
@@ -104,12 +109,11 @@ const AddPerson = (props) => {
                                 isError={errors.email}
                                 placeholderColor={COLORS.black} />
 
-
                             <CountryPickerModal
                                 marginTop={30}
                                 isPerson
                                 isOnSelect={(text) => { console.log(text) }}
-                                placeholder={t('countryResidence')}/>
+                                placeholder={t('countryResidence')} />
 
                             <Button
                                 borderRadius={10}
@@ -126,7 +130,7 @@ const AddPerson = (props) => {
                     )}
                 </Formik>
             </View>
-            <Indicator isLoader animate={loading}/>
+            <Indicator isLoader animate={loading} />
         </View>
     );
 };

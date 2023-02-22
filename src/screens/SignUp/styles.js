@@ -10,7 +10,7 @@ export default styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'space-between',
         alignItems: "center",
-        marginBottom: 30
+        marginBottom: 20
     },
     profileContainer: {
         width: '35%',
@@ -35,9 +35,9 @@ export default styles = StyleSheet.create({
         justifyContent: 'center'
     },
     profileStyle: {
-        width: 80,
-        height: 80,
-        borderRadius: 80 / 2,
+        width: 88,
+        height: 88,
+        borderRadius: 88 / 2,
     },
     chooseOneText: {
         width: '100%',

@@ -12,7 +12,9 @@ export default styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: COLORS.grey,
         borderRadius: 15,
-        padding: 10
+        padding: 10,
+        marginHorizontal: 5
+        // marginLeft: 10,
     },
     GridViewBlockStyle: {
         justifyContent: 'center',

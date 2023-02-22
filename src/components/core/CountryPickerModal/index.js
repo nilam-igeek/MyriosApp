@@ -4,8 +4,8 @@ import { Text, TouchableOpacity } from 'react-native';
 import styles from './styles';
 import CountryPicker from 'react-native-country-picker-modal';
 import { COLORS } from '../../../common/style/Colors';
-const CountryPickerModal = ({ isOnSelect, theme, placeholder,marginTop,isPerson }) => {
-    
+const CountryPickerModal = ({ isOnSelect, theme, placeholder, marginTop, isPerson, width }) => {
+
     const [countryCode, setCountryCode] = useState('FR');
     const [translation, setTranslation] = useState('common');
     const [withCountryNameButton, setWithCountryNameButton] = useState(false);
@@ -46,7 +46,7 @@ const CountryPickerModal = ({ isOnSelect, theme, placeholder,marginTop,isPerson 
     const countryName = country ? country?.name : placeholder
     return (
         <TouchableOpacity onPress={() => onSelect(country)}
-            style={[isPerson? styles.pickerView :styles.pickerContainer,{marginTop:marginTop? marginTop:0}]}>
+            style={[isPerson ? styles.pickerView : styles.pickerContainer, { width: width ? width : (BaseStyle.WIDTH / 100) * 80, marginTop: marginTop ? marginTop : 0 }]}>
             <CountryPicker
                 {...{
                     theme,
@@ -61,8 +61,8 @@ const CountryPickerModal = ({ isOnSelect, theme, placeholder,marginTop,isPerson 
                     withFlagButton,
                     onSelect,
                 }}
-                visible={isVisible}/>
-            <Text style={isPerson? styles.textPerson: styles.text}>{countryName}</Text>
+                visible={isVisible} />
+            <Text style={isPerson ? styles.textPerson : styles.text}>{countryName}</Text>
         </TouchableOpacity>
     );
 };

@@ -22,6 +22,7 @@ import ButtonWithIcon from '../../../components/core/ButtonWithIcon';
 const Profile = (props) => {
     const loading = useSelector((state) => state.apiReducer.loading);
     const isData = useSelector((state) => state.apiReducer.loginData);
+    console.log("isData=====>", isData);
     const userDetails = isData.data.user
     const { t } = useTranslation();
     const dispatch = useDispatch();
@@ -36,8 +37,8 @@ const Profile = (props) => {
     const [isAbout, setAbout] = useState(false);
     const [isCountry, setIsCountry] = useState(false);
     const [isAge, setAge] = useState(false);
-     const [isType,setType] = useState(false);
-    
+    const [isType, setType] = useState(false);
+
     const isRefugee = isRole === ROLE.REFUGEE
     const isShelter = isRole === ROLE.SHELTER
     const isDonor = isRole === ROLE.DONOR
@@ -80,9 +81,7 @@ const Profile = (props) => {
             };
             dispatch(updateProfileApi(body));
         } else {
-            await AsyncStorage.setItem('token', '').then(() => [
-                props.navigation.navigate('GetStarted')
-            ])
+            await AsyncStorage.removeItem('token');
         }
     };
 
@@ -159,19 +158,19 @@ const Profile = (props) => {
 
                                     {isName ?
                                         <Field
-                                        name={'firstName'}
-                                        placeholderColor={COLORS.black}
-                                        component={Input}
-                                        mt={10}
-                                        value={values.firstName}
-                                        onChangeText={handleChange('firstName')}
-                                        onBlur={handleBlur('firstName')}
-                                        width={(BaseStyle.WIDTH / 100) * 80}
-                                        inputWidth={(BaseStyle.WIDTH / 100) * 70}
-                                        placeholder={isShelter ? ('shelterName') : t('fName')}
-                                        isError={errors.firstName}
-                                    /> :
-                                        <ButtonWithIcon title={userDetails.name} onPress={()=>{setName(true)}}/>
+                                            name={'firstName'}
+                                            placeholderColor={COLORS.black}
+                                            component={Input}
+                                            mt={10}
+                                            value={values.firstName}
+                                            onChangeText={handleChange('firstName')}
+                                            onBlur={handleBlur('firstName')}
+                                            width={(BaseStyle.WIDTH / 100) * 80}
+                                            inputWidth={(BaseStyle.WIDTH / 100) * 70}
+                                            placeholder={isShelter ? ('shelterName') : t('fName')}
+                                            isError={errors.firstName}
+                                        /> :
+                                        <ButtonWithIcon title={userDetails.name} onPress={() => { setName(true) }} />
                                     }
 
                                     {isCountry ?
@@ -186,7 +185,7 @@ const Profile = (props) => {
                                         ) : (
                                             <>
                                                 {(isShelter || isRefugee) &&
-                                                    <ButtonWithIcon title={userDetails.country} onPress={()=>{setIsCountry(true)}}/>}
+                                                    <ButtonWithIcon title={userDetails.country} onPress={() => { setIsCountry(true) }} />}
                                             </>
                                         )
                                     }
@@ -207,8 +206,8 @@ const Profile = (props) => {
                                                 maxLength={2}
                                                 placeholderColor={COLORS.black}
                                                 isError={errors.age}
-                                        /> :
-                                            <ButtonWithIcon title={userDetails.age} onPress={()=>{setAge(true)}}/>
+                                            /> :
+                                                <ButtonWithIcon title={userDetails.age} onPress={() => { setAge(true) }} />
                                             }
 
 
@@ -262,8 +261,8 @@ const Profile = (props) => {
                                                         onPress={() => { onClick('Woman') }}
                                                     />
                                                 </View>
-                                        </> :
-                                            <ButtonWithIcon title={userDetails.type} onPress={()=>{setType(true)}}/>  
+                                            </> :
+                                                <ButtonWithIcon title={userDetails.type} onPress={() => { setType(true) }} />
                                             }
                                         </>}
                                     {isShelter &&
@@ -284,16 +283,16 @@ const Profile = (props) => {
                                                 height={120}
                                                 numberOfLines={3}
                                                 mt={30}
-                                        /> :
-                                            <ButtonWithIcon title={userDetails.description} onPress={()=>{setAbout(true)}}/>  
+                                            /> :
+                                                <ButtonWithIcon title={userDetails.description} onPress={() => { setAbout(true) }} />
                                             }
                                         </>
                                     }
-                                    <ButtonWithIcon title={t('editProfile')} onPress={() => { setModalVisible(!modalVisible) }}/>
+                                    <ButtonWithIcon title={t('editProfile')} onPress={() => { setModalVisible(!modalVisible) }} />
                                 </View>
                                 <Button
                                     marginBottom={30}
-                                     title={t('signOut')}
+                                    title={t('signOut')}
                                     // title={isModalVisible ? t('updateProfile') : t('signOut')}
                                     fontSize={18}
                                     color={COLORS.white}

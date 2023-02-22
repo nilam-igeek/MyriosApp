@@ -14,8 +14,6 @@ import { useTranslation } from 'react-i18next';
 
 export const CustomeDrawer = (props) => {
   const dispatch = useDispatch();
-  const loginData = useSelector((state) => state.apiReducer.loginData);
-  const userDetails = loginData.data.user
   const [menu, setMenu] = useState(0);
   const [isRole, setIsRole] = useState('');
   const isRefugee = isRole === ROLE.REFUGEE
@@ -32,15 +30,6 @@ export const CustomeDrawer = (props) => {
   }, []);
 
 
-  // const wishList = () => {
-  //   var body = {
-  //     type: userDetails.type,
-  //     country: userDetails.country,
-  //     name: userDetails.name,
-  //     age: userDetails.age
-  //   }
-  //   dispatch(wishListApi(body));
-  // }
 
   const Donor_Shelter = [
     { id: 1, title: t('howTo') },

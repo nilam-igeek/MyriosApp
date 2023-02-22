@@ -40,7 +40,13 @@ import {
   wishlistError,
   imagesListData,
   imagesListSuccess,
-  imagesListError
+  imagesListError,
+  wishlistFilterData,
+  wishlistFilterSuccess,
+  wishlistFilterError,
+  wishlistAddData,
+  wishlistAddSuccess,
+  wishlistAddError
 } from './ApiAction';
 import Toast from 'react-native-simple-toast';
 
@@ -60,6 +66,7 @@ export const loginApi = (data) => async (dispatch) => {
       })
       .then(async (response) => {
         if (response.data.success) {
+          console.log("response.data====>", response.data);
           Toast.show(response.data.message);
           dispatch(loginSuccess(response.data));
           await AsyncStorage.setItem('token', response.data.data.token)
@@ -88,11 +95,16 @@ export const registerApi = (data) => async (dispatch) => {
         },
       })
       .then(async (response) => {
-        Toast.show(response.data.message);
-        dispatch(registerSuccess(response.data));
+        if (response.data.success) {
+          Toast.show(response.data.message);
+          dispatch(registerSuccess(response.data));
+        }
       })
       .catch((error) => {
         dispatch(registerError(error));
+        if (!error.response.data.success) {
+          Toast.show('please try again or sign up!');
+        }
         return error
       });
   });
@@ -293,13 +305,13 @@ export const contactUsApi = (data) => async (dispatch) => {
   });
 };
 
-//======================== WISHLISTS ========================//
-export const wishListApi = (data) => async (dispatch) => {
+// //======================== WISHLISTS ========================//
+export const wishListFilterApi = (data) => async (dispatch) => {
   var isToken = await AsyncStorage.getItem('token');
   dispatch(wishlistData());
   return new Promise(() => {
     axios
-      .get(`${url}wishlists?${data.type}${data.country}${data.name}=${data.age}`, {
+      .get(`${url}wishlists?${data.type}${data.country}${data.age}`, {
         headers: { 'Authorization': `Bearer ${isToken}` }
       })
       .then((response) => {
@@ -318,20 +330,78 @@ export const wishListApi = (data) => async (dispatch) => {
   });
 };
 
+//======================== WISHLISTS ========================//
+export const wishListApi = (data) => async (dispatch) => {
+  var isToken = await AsyncStorage.getItem('token');
+  dispatch(wishlistData());
+  return new Promise(() => {
+    axios
+      .get(`http://18.233.84.195/api/wishlists`, {
+        headers: { 'Authorization': `Bearer ${isToken}` }
+      })
+      .then((response) => {
+        if (response.data.success) {
+          console.log("dsff=========>", response.data);
+          Toast.show(response.data.message);
+          dispatch(wishlistSuccess(response.data));
+        }
+      })
+      .catch((error) => {
+        dispatch(wishlistError(error.response));
+        if (!error.response.data.success) {
+          Toast.show('please try again');
+        }
+        return error
+      });
+  });
+};
+
+//======================== WISHLISTS ========================//
+export const wishlistAddApi = (data) => async (dispatch) => {
+  const id = data.toString()
+  var isToken = await AsyncStorage.getItem('token');
+  dispatch(wishlistAddData());
+  return new Promise(() => {
+    axios
+      .post(`http://18.233.84.195/api/add-wishlist/${id}`, {
+        'Authorization': `Bearer ${isToken}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      })
+      .then((response) => {
+        console.log("wishlistAddApi111111=========>", JSON.stringify(response.data));
+        if (response.data.success) {
+          Toast.show(response.data.message);
+          dispatch(wishlistAddSuccess(response.data));
+        }
+      })
+      .catch((error) => {
+        console.log("error.response---->", error.response);
+        dispatch(wishlistAddError(error.response));
+        if (!error.response.data.success) {
+          Toast.show('please try again');
+        }
+        return error
+      });
+  });
+};
+
+
 //======================== IMAGES_LIST =======================//
-export const imagesListOfRoleApi = (data) => async (dispatch) => {
-  // var role = await AsyncStorage.getItem('userType');
+export const imagesListOfRoleApi = () => async (dispatch) => {
+  // console.log("data=====>", data);
+  var role = await AsyncStorage.getItem('userType');
   dispatch(imagesListData());
   return new Promise(() => {
     axios
-      .get(`${url}images/${data}`, {
+      .get(`${url}images/${role}`, {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
       })
       .then(async (response) => {
-        console.log("responseasdasd-------->", JSON.stringify(response));
+        console.log("responseasdasd-d11111------->", JSON.stringify(response.data));
         dispatch(imagesListSuccess(response.data));
       })
       .catch((error) => {
