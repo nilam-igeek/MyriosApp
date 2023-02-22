@@ -23,12 +23,14 @@ const SignUpFirstScreen = (props) => {
     const dispatch = useDispatch();
 
     const isUserData = useSelector((state) => state.apiReducer.data);
+    const isProfile = useSelector((state) => state.apiReducer.dataProfile)
+    console.log("isProfile------->", isProfile.profile);
     const { t } = useTranslation();
     const [profile, setProfile] = useState('');
     const [country, setCountry] = useState('');
     const [isSelected, setIsSelected] = useState('Girl');
     const [isRole, setIsRole] = useState('');
-    const [isImages, setIsImages] = useState(isUserData.photo);
+    const [isImages, setIsImages] = useState(isProfile.profile);
     const [modalVisible, setModalVisible] = useState(false);
     const isRefugee = isRole === ROLE.REFUGEE
     const isShelter = isRole === ROLE.SHELTER
@@ -75,7 +77,6 @@ const SignUpFirstScreen = (props) => {
             isUserType: isSelected
         };
         dispatch(signUpDataOfUser(body));
-        console.log("isRole---->",isRole);
         // actions.resetForm();
         if (isImages) {
             if (isRefugee) {
@@ -121,7 +122,7 @@ const SignUpFirstScreen = (props) => {
                 style={{ flex: 1 }}
                 source={IMAGES.languageBg}>
                 <CloseButton onPress={() => props.navigation.goBack()}>
-                    <ArrowLeftSvg fill={COLORS.white}/>
+                    <ArrowLeftSvg fill={COLORS.white} />
                 </CloseButton>
             </ImageBackground>
             <View style={styles.container}>
@@ -139,15 +140,15 @@ const SignUpFirstScreen = (props) => {
                                 {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, }) => (
                                     <>
                                         <View style={styles.profileNameContainer}>
-                                            <View style={[styles.profileContainer,{width:isImages? '35%':0}]}>
+                                            <View style={[styles.profileContainer, { width: isImages ? '35%' : 0 }]}>
                                                 {isImages &&
                                                     <Pressable onPress={() => { setModalVisible(!modalVisible) }} style={styles.profile}>
                                                         <Image
-                                                            resizeMode='cover'
-                                                            source={{ uri: isImages }}
+                                                            resizeMode='contain'
+                                                            source={IMAGES.donor1}
                                                             style={styles.profileStyle} />
-                                                        <ProfileSvg />
-                                                    </Pressable>}
+                                                    </Pressable>
+                                                }
                                                 <Modal
                                                     animationType="slide"
                                                     transparent={true}
@@ -163,14 +164,14 @@ const SignUpFirstScreen = (props) => {
                                                     </View>
                                                 </Modal>
                                             </View>
-                                            <View style={[styles.nameInput,{  width:isImages? '65%' :'100%'}]}>
+                                            <View style={[styles.nameInput, { width: isImages ? '65%' : '100%' }]}>
                                                 <Field
                                                     name={'firstName'}
                                                     component={Input}
                                                     value={values.firstName}
                                                     onChangeText={handleChange('firstName')}
                                                     onBlur={handleBlur('firstName')}
-                                                    width={isImages ? (BaseStyle.WIDTH / 100) * 50 :(BaseStyle.WIDTH / 100) * 80}
+                                                    width={isImages ? (BaseStyle.WIDTH / 100) * 50 : (BaseStyle.WIDTH / 100) * 80}
                                                     inputWidth={isImages ? (BaseStyle.WIDTH / 100) * 40 : (BaseStyle.WIDTH / 100) * 70}
                                                     placeholder={t('fName')}
                                                     isError={errors.firstName}

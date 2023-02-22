@@ -8,7 +8,11 @@ export default styles = StyleSheet.create({
     container: {
         flexDirection: "column",
         flex: 1,
-        marginBottom: 20
+        marginBottom: 20,
+        borderWidth: 1,
+        borderColor: COLORS.grey,
+        borderRadius: 15,
+        padding: 10
     },
     GridViewBlockStyle: {
         justifyContent: 'center',
@@ -17,7 +21,6 @@ export default styles = StyleSheet.create({
         height: (BaseStyle.HEIGHT / 100) * 25,
         margin: 6,
         backgroundColor: COLORS.white,
-        borderRadius: 15,
     },
     profilePic: {
         width: '100%',
@@ -43,7 +46,7 @@ export default styles = StyleSheet.create({
         alignItems: "flex-end",
         position: 'absolute',
         bottom: 10,
-        right:15,
+        right: 15,
     },
     textContainer: {
         flex: 1,

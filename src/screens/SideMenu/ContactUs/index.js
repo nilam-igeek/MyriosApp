@@ -1,4 +1,4 @@
-import React, { useState,useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { View, Text, StatusBar } from 'react-native';
 
 import Button from '../../../components/core/Button';
@@ -43,8 +43,8 @@ const ContactUs = (props) => {
 
     })
 
-    const onClickSubmit = async (values,actions) => {
-        const { firstName, message, email,  } = values;
+    const onClickSubmit = async (values, actions) => {
+        const { firstName, message, email, } = values;
         var body = {
             name: firstName,
             message: message,
@@ -54,7 +54,7 @@ const ContactUs = (props) => {
         actions.resetForm();
     };
 
-return (
+    return (
         <View style={styles.container}>
             <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.seashell} />
             <Header title={t('myrios')} onPress={() => { props.navigation.toggleDrawer() }} />

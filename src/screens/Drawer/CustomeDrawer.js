@@ -7,19 +7,22 @@ import styles from './styles';
 import BaseStyle from '../../common/style/BaseStyle';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ROLE } from '../../constants/types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import '../../../assets/i18n/i18n';
 import { useTranslation } from 'react-i18next';
+// import { wishListApi } from '../../redux/actions/ApiActionCreator';
 
 export const CustomeDrawer = (props) => {
   const dispatch = useDispatch();
+  const loginData = useSelector((state) => state.apiReducer.loginData);
+  const userDetails = loginData.data.user
   const [menu, setMenu] = useState(0);
   const [isRole, setIsRole] = useState('');
   const isRefugee = isRole === ROLE.REFUGEE
   const isDonor = isRole === ROLE.DONOR
   const isShelter = isRole === ROLE.SHELTER
   const { t } = useTranslation();
-  
+
   useEffect(() => {
     async function check() {
       var item = await AsyncStorage.getItem('userType');
@@ -28,6 +31,16 @@ export const CustomeDrawer = (props) => {
     check();
   }, []);
 
+
+  // const wishList = () => {
+  //   var body = {
+  //     type: userDetails.type,
+  //     country: userDetails.country,
+  //     name: userDetails.name,
+  //     age: userDetails.age
+  //   }
+  //   dispatch(wishListApi(body));
+  // }
 
   const Donor_Shelter = [
     { id: 1, title: t('howTo') },
@@ -97,6 +110,8 @@ export const CustomeDrawer = (props) => {
 
     }
   }
+
+
 
   return (
     <DrawerContentScrollView {...props}>

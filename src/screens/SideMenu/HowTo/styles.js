@@ -14,24 +14,24 @@ export default styles = StyleSheet.create({
     slide1: {
         alignItems: 'center',
         height: (BaseStyle.HEIGHT / 100) * 70,
-      
+
     },
     imgStyle: {
         height: (BaseStyle.HEIGHT / 100) * 60,
     },
     dot: {
-        backgroundColor: COLORS.skyBlue,
-        width: 12,
-        height: 12,
-        borderRadius: 12 / 2,
+        backgroundColor: '#EEEEEE',
+        width: 10,
+        height: 10,
+        borderRadius: 10 / 2,
         marginLeft: 10,
         marginBottom: Platform.OS === 'ios' ? 33 : 12,
     },
     activeDot: {
-        backgroundColor: COLORS.cornflowerblue,
-        width: 12,
-        height: 12,
-        borderRadius: 12 / 2,
+        backgroundColor: '#FFC49B',
+        width: 10,
+        height: 10,
+        borderRadius: 10 / 2,
         marginLeft: 10,
         marginBottom: Platform.OS === 'ios' ? 33 : 12,
     },
@@ -90,6 +90,6 @@ export default styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'flex-end'
     },
-   
+
 
 });

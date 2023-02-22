@@ -12,20 +12,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IMAGES } from '../../common/style/Images';
 import ArrowLeftSvg from '../../common/svgs/ArrowLeftSvg';
 const Chat = (props) => {
- const dispatch = useDispatch();
+    const dispatch = useDispatch();
     const { t } = useTranslation();
     const [isShelterUser, setShelterUser] = useState('isDefault');
     const [name, setName] = useState('');
     const isdataProfile = useSelector((state) => state.apiReducer.dataProfile);
-    
-        const onClick = (type) => {
+
+    const onClick = (type) => {
         setShelterUser(type)
-        }
-    
+    }
+
     const onSubmit = () => {
         var body = {
             ...isdataProfile,
-             shelterName: name
+            shelterName: name
         }
         dispatch(signUpDataOfUser(body));
         props.navigation.navigate('SignUpSecondScreen');
@@ -33,18 +33,18 @@ const Chat = (props) => {
 
     return (
         <>
-        <ImageBackground
-            resizeMode='cover'
-            style={{ flex: 1 }}
-            source={IMAGES.languageBg}>
-            <CloseButton onPress={() => props.navigation.goBack()}>
-                        <ArrowLeftSvg fill={COLORS.white}/>
+            <ImageBackground
+                resizeMode='cover'
+                style={{ flex: 1 }}
+                source={IMAGES.languageBg}>
+                <CloseButton onPress={() => props.navigation.goBack()}>
+                    <ArrowLeftSvg fill={COLORS.white} />
                 </CloseButton>
-                </ImageBackground>
+            </ImageBackground>
             <View style={styles.container}>
                 <View style={styles.card}>
                     <ScrollView contentContainerStyle={{ flexGrow: 1, }} bounces={false}>
-                        
+
                         {isShelterUser === 'NO' && <View style={styles.subContainer}>
                             <Text style={styles.titleText}>{t('chat')}</Text>
                             <Text style={styles.subText}>{t('chatSubDes')}</Text>
@@ -93,8 +93,8 @@ const Chat = (props) => {
                     </ScrollView>
                 </View>
             </View>
-          
-            </>
+
+        </>
     );
 };
 

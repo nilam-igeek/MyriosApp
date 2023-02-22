@@ -3,14 +3,14 @@ import { COLORS } from '../../common/style/Colors';
 import { FONTS } from '../../common/style/Fonts';
 import BaseStyle from '../../common/style/BaseStyle';
 export default styles = StyleSheet.create({
- // first screen styles
+    // first screen styles
     profileNameContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         width: '100%',
         justifyContent: 'space-between',
         alignItems: "center",
-        marginBottom:30
+        marginBottom: 30
     },
     profileContainer: {
         width: '35%',
@@ -20,7 +20,9 @@ export default styles = StyleSheet.create({
         width: 90,
         height: 90,
         borderRadius: 90 / 2,
-        backgroundColor: COLORS.black,
+        borderWidth: 1,
+        borderColor: COLORS.grey,
+        // backgroundColor: COLORS.black,
         justifyContent: 'center',
         alignItems: "center",
 
@@ -33,13 +35,13 @@ export default styles = StyleSheet.create({
         justifyContent: 'center'
     },
     profileStyle: {
-        width: 89,
-        height: 89,
-        borderRadius: 89 / 2,
+        width: 80,
+        height: 80,
+        borderRadius: 80 / 2,
     },
     chooseOneText: {
         width: '100%',
-        alignSelf:"center",
+        alignSelf: "center",
         marginBottom: 5,
         marginTop: 20,
         fontSize: 18,
@@ -49,8 +51,8 @@ export default styles = StyleSheet.create({
     chooseOneCard: {
         width: '100%',
         flexDirection: 'row',
-        justifyContent: 'space-between' 
-},
+        justifyContent: 'space-between'
+    },
     // second screen styles
 
     container: {
@@ -60,12 +62,12 @@ export default styles = StyleSheet.create({
     card: {
         backgroundColor: COLORS.white,
         // height: (BaseStyle.HEIGHT / 100) * 60,
-         height:'120%',
+        height: '120%',
         width: '100%',
         borderTopRightRadius: 40,
         borderTopLeftRadius: 40,
         alignSelf: 'center',
-        alignItems:'center'
+        alignItems: 'center'
     },
     subContainer: {
         alignSelf: 'center',
@@ -73,13 +75,13 @@ export default styles = StyleSheet.create({
         alignItems: 'center',
         width: (BaseStyle.WIDTH / 100) * 80,
     },
-        titleText: {
+    titleText: {
         width: (BaseStyle.WIDTH / 100) * 80,
         alignItems: 'center',
         fontSize: 26,
         marginVertical: 25,
         color: COLORS.black,
-        fontFamily:FONTS.Poppins_SemiBold
+        fontFamily: FONTS.Poppins_SemiBold
     },
     signUpText: {
         color: COLORS.cornflowerblue,
@@ -89,8 +91,8 @@ export default styles = StyleSheet.create({
 
     // Choose profile screen 
     profileText: {
-       width: (BaseStyle.WIDTH / 100) * 80,
-       alignItems: 'center',
+        width: (BaseStyle.WIDTH / 100) * 80,
+        alignItems: 'center',
         fontSize: 26,
         marginTop: 25,
         color: COLORS.black,
@@ -149,7 +151,7 @@ export default styles = StyleSheet.create({
         height: 85,
         margin: 5,
         backgroundColor: COLORS.white,
-       
+
 
     },
     blurView: {
@@ -183,6 +185,6 @@ export default styles = StyleSheet.create({
         fontSize: 18,
         color: COLORS.black,
         fontFamily: FONTS.Poppins_SemiBold,
-        textAlign:'left'
+        textAlign: 'left'
     }
 });

@@ -1,4 +1,4 @@
-import React, {useEffect,useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { ImageBackground, View, Text, } from 'react-native';
 import '../../../assets/i18n/i18n';
 import { useTranslation } from 'react-i18next';
@@ -11,13 +11,13 @@ import { ROLE } from '../../constants/types';
 const Welcome = (props) => {
 
     const { t } = useTranslation();
-      useEffect(() => {
-    async function check() {
-      var item = await AsyncStorage.getItem('userType');
-      setIsRole(item)
-    }
-    check();
-  }, []);
+    useEffect(() => {
+        async function check() {
+            var item = await AsyncStorage.getItem('userType');
+            setIsRole(item)
+        }
+        check();
+    }, []);
     const [isRole, setIsRole] = useState('');
     const isShelter = isRole === ROLE.SHELTER
 
@@ -37,7 +37,7 @@ const Welcome = (props) => {
                         color={COLORS.black}
                         borderRadius={10}
                         fontSize={16}
-                        onPress={() => {props.navigation.navigate('HowTo')}}
+                        onPress={() => { props.navigation.navigate('HowTo') }}
                     />
                     <Button
                         width={'100%'}
@@ -48,9 +48,9 @@ const Welcome = (props) => {
                         marginTop={10}
                         fontSize={16}
                         onPress={() => {
-                            isShelter ?
-                             props.navigation.navigate('ShelterWishList'):
-                             props.navigation.navigate('WishLists')
+                            // isShelter ?
+                            //  props.navigation.navigate('ShelterWishList'):
+                            //  props.navigation.navigate('WishLists')
                         }}
                     />
                 </View>

@@ -24,6 +24,6 @@ export const refugeeProfile = [
         { id: 3, profile: IMAGES.refugee4 },
         { id: 4, profile: IMAGES.refugee5 },
         { id: 5, profile: IMAGES.refugee6 },
-        { id: 6, profile: IMAGES.refugee7},
+        { id: 6, profile: IMAGES.refugee7 },
         { id: 7, profile: IMAGES.refugee8 },
 ]

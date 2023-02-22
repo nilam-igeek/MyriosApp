@@ -18,15 +18,15 @@ const ChooseProfile = (props) => {
 
     const { t } = useTranslation();
     const dispatch = useDispatch();
-    const [roleOfProfile,setRoleOfProfile] = useState('')
+    const [roleOfProfile, setRoleOfProfile] = useState('');
+
     const onClickProfile = (item, index) => {
         const data = isRefugee ? refugeeProfile : isShelter ? shelterProfile : donorProfile
-        
+
         if (item.id === data[index].id) {
             setRoleOfProfile(item.id)
+            dispatch(signUpDataOfUser({ profile: IMAGES.donor1 }));
         }
-        //  dispatch(signUpDataOfUser(item.profile));
-        // console.log("item============>", item.profile);
     }
 
     const [isRole, setIsRole] = useState('');
@@ -47,7 +47,7 @@ const ChooseProfile = (props) => {
                 style={{ flex: 1 }}
                 source={IMAGES.languageBg}>
                 <CloseButton onPress={() => props.navigation.goBack()}>
-                    <ArrowLeftSvg fill={COLORS.white}/>
+                    <ArrowLeftSvg fill={COLORS.white} />
                 </CloseButton>
             </ImageBackground>
             <View style={styles.container}>
@@ -65,11 +65,11 @@ const ChooseProfile = (props) => {
                                     data={isRefugee ? refugeeProfile : isShelter ? shelterProfile : donorProfile}
                                     extraData={isRefugee ? refugeeProfile : isShelter ? shelterProfile : donorProfile}
                                     keyExtractor={item => item.id}
-                                    renderItem={({ item,index }) =>
-                                        <Pressable onPress={() => onClickProfile(item,index)}
+                                    renderItem={({ item, index }) =>
+                                        <Pressable onPress={() => onClickProfile(item, index)}
                                             style={[styles.GridViewBlockStyle, {
-                                                 borderWidth:roleOfProfile === index ? 1.5 : 0.5,
-                                                borderColor:roleOfProfile=== index ? COLORS.blue: COLORS.grey,
+                                                borderWidth: roleOfProfile === index ? 1.5 : 0.5,
+                                                borderColor: roleOfProfile === index ? COLORS.blue : COLORS.grey,
                                             }]}>
                                             <Image resizeMode='contain' source={item.profile} style={styles.profilePic} />
                                         </Pressable>}
@@ -84,7 +84,7 @@ const ChooseProfile = (props) => {
                                 marginTop={20}
                                 width={'60%'}
                                 onPress={() => {
-                                    // props.navigation.navigate('SignUpSecondScreen');
+                                    // props.navigation.navigate('SignUpFirstScreen');
                                     props.navigation.goBack();
                                 }} />
                         </View>

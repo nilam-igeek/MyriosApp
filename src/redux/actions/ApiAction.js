@@ -196,6 +196,18 @@ export const peopleError = (error) => ({
   payload: error,
 });
 
+//======================== IMAGES_LIST =======================//
+export const imagesListData = () => ({
+  type: ACTION_TYPES.IMAGES_LIST_API_PENDING,
+});
 
+export const imagesListSuccess = (data) => ({
+  type: ACTION_TYPES.IMAGES_LIST_API_SUCCESS,
+  payload: data,
+});
 
+export const imagesListError = (error) => ({
+  type: ACTION_TYPES.IMAGES_LIST_API_ERROR,
+  payload: error,
+});
 

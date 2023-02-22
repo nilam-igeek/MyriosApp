@@ -29,7 +29,7 @@ const App = () => {
   //   });
   // }
 
-    useEffect(() => {
+  useEffect(() => {
     SplashScreen.hide(); //hides the splash screen on app load.
   }, []);
 

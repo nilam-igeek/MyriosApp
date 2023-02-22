@@ -37,6 +37,8 @@ const Helped = (props) => {
     const onClick = () => {
         if (isShelter) {
             props.navigation.navigate('AddPerson')
+        } else {
+            props.navigation.navigate('WishLists')
         }
     }
 
@@ -55,28 +57,28 @@ const Helped = (props) => {
                 {!_.isEmpty(isDataPeople.data) || !_.isEmpty(isDataHelped.data) ?
                     (<View style={{ flex: 1 }}>
                         <FlatList
-                        showsVerticalScrollIndicator={false}
-                        showsHorizontalScrollIndicator={false}
-                        data={isShelter? isDataPeople.data : isDataHelped.data}
-                        extraData={isShelter? isDataPeople.data : isDataHelped.data}
-                        keyExtractor={item => item.id}
-                        renderItem={({ item }) =>
-                            <View style={styles.itemCard}>
-                                <View style={styles.profile}>
-                                    {item.image ?
-                                        <Image
-                                            resizeMode='cover'
-                                            source={item.image}
-                                            style={styles.profileStyle} />
-                                        : <ProfileSvg height={30} width={30} />}
-                                </View>
-                                {isShelter ? <Text style={styles.userName}>{item.name}, {item.gender}, {item.age} {t('year')}</Text> :
-                                    <Text style={styles.userName}>{item.name}</Text>}
-                            </View>}
-                    />
-                </View>) :
+                            showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}
+                            data={isShelter ? isDataPeople.data : isDataHelped.data}
+                            extraData={isShelter ? isDataPeople.data : isDataHelped.data}
+                            keyExtractor={item => item.id}
+                            renderItem={({ item }) =>
+                                <View style={styles.itemCard}>
+                                    <View style={styles.profile}>
+                                        {item.image ?
+                                            <Image
+                                                resizeMode='cover'
+                                                source={item.image}
+                                                style={styles.profileStyle} />
+                                            : <ProfileSvg height={30} width={30} />}
+                                    </View>
+                                    {isShelter ? <Text style={styles.userName}>{item.name}, {item.gender}, {item.age} {t('year')}</Text> :
+                                        <Text style={styles.userName}>{item.name}</Text>}
+                                </View>}
+                        />
+                    </View>) :
                     (<View style={{ flex: 1, justifyContent: "center", alignItems: 'center' }}>
-                        <Text style={styles.notFoundText}>{isShelter ? `No registered refugees at your shelter yet! Click  "Add a Person"  to add the refugees at your shelter!`:`Favorite Data is not found`}</Text>
+                        <Text style={styles.notFoundText}>{isShelter ? `No registered refugees at your shelter yet! Click  "Add a Person"  to add the refugees at your shelter!` : `Favorite Data is not found`}</Text>
                     </View>)}
                 <Button
                     borderRadius={10}

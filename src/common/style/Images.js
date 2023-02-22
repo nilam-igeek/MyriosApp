@@ -37,6 +37,15 @@ export const IMAGES = {
     screen6: require('../assets/Swiper/screen6.png'),
     screen7: require('../assets/Swiper/screen7.png'),
 
+    //donor swiper
+    donorScreen1: require('../assets/DonorSwiper/screen1.png'),
+    donorScreen2: require('../assets/DonorSwiper/screen2.png'),
+    donorScreen3: require('../assets/DonorSwiper/screen3.png'),
+    donorScreen4: require('../assets/DonorSwiper/screen4.png'),
+    donorScreen5: require('../assets/DonorSwiper/screen5.png'),
+    donorScreen6: require('../assets/DonorSwiper/screen1.png'),
+
+
     //backgraound Images
     myriosBg: require('../assets/myriosBg.jpg'),
     languageBg: require('../assets/languageBg.jpg'),

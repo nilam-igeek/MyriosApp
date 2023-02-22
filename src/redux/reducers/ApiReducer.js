@@ -17,6 +17,7 @@ const initialState = {
   contactUSData: '',
   helpedData: '',
   peopleData: '',
+  imagesListOfRoleData: ''
 
 };
 
@@ -247,6 +248,24 @@ const apiReducer = (state = initialState, action) => {
         error: action.payload,
         loading: false,
       };
+    //======================== IMAGES_LIST =======================//
+    case ACTION_TYPES.IMAGES_LIST_API_PENDING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ACTION_TYPES.IMAGES_LIST_API_SUCCESS:
+      return {
+        ...state,
+        imagesListOfRoleData: action.payload,
+        loading: false,
+      };
+    case ACTION_TYPES.IMAGES_LIST_API_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
 
     //======================== SET_PROFILE ========================//
     case ACTION_TYPES.PROFILE_SET_DATA:
@@ -257,6 +276,9 @@ const apiReducer = (state = initialState, action) => {
     default:
       return state;
   }
+
+
+
 };
 
 export default apiReducer;

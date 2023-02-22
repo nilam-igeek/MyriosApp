@@ -63,5 +63,9 @@ const ACTION_TYPES = {
   //======================== SET_PROFILE ========================//
   PROFILE_SET_DATA: 'PROFILE_SET_DATA',
 
+  //======================== IMAGES_LIST =======================//
+  IMAGES_LIST_API_PENDING: 'IMAGES_LIST_API_PENDING',
+  IMAGES_LIST_API_SUCCESS: 'IMAGES_LIST_API_SUCCESS',
+  IMAGES_LIST_API_ERROR: 'IMAGES_LIST_API_ERROR',
 };
 export default ACTION_TYPES;
