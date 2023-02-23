@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { View, Text, ImageBackground, ScrollView, Pressable, KeyboardAvoidingView } from 'react-native';
+import { View, Text, ImageBackground, Platform, ScrollView, Pressable, KeyboardAvoidingView } from 'react-native';
 import { COLORS } from '../../common/style/Colors';
 import Button from '../../components/core/Button';
 import styles from './styles';
@@ -101,71 +101,76 @@ const Login = (props) => {
                     <ArrowLeftSvg fill={COLORS.white} />
                 </CloseButton>
             </ImageBackground>
-            <View style={styles.container}>
-                <View style={styles.card}>
-                    <Text style={styles.titleText}>{t('logIn')}</Text>
-                    <ScrollView
-                        showsVerticalScrollIndicator={false}
-                        showsHorizontalScrollIndicator={false}
-                        contentContainerStyle={{ flexGrow: 1 }}
-                        bounces={false}>
-                        <View style={styles.subContainer}>
-                            <Formik
-                                validationSchema={loginValidationSchema}
-                                initialValues={{ email: '', password: '' }}
-                                onSubmit={onClickSubmit}>
-                                {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, }) => (
-                                    <>
-                                        <Field
-                                            name={'email'}
-                                            title={t('email')}
-                                            component={Input}
-                                            isLeft
-                                            value={values.email.toLocaleLowerCase()}
-                                            onChangeText={handleChange('email')}
-                                            onBlur={handleBlur('email')}
-                                            width={(BaseStyle.WIDTH / 100) * 80}
-                                            inputWidth={(BaseStyle.WIDTH / 100) * 60}
-                                            placeholder={t('enterEmail')}
-                                            keyboardType="email-address"
-                                            isError={errors.email}>
-                                            <EmailSvg marginRight={10} />
-                                        </Field>
-                                        <Field
-                                            name={'password'}
-                                            title={t('password')}
-                                            component={Input}
-                                            isLeft
-                                            value={values.password}
-                                            marginTop={20}
-                                            secureTextEntry={isShow ? false : true}
-                                            onChangeText={handleChange('password')}
-                                            onBlur={handleBlur('password')}
-                                            width={(BaseStyle.WIDTH / 100) * 80}
-                                            inputWidth={(BaseStyle.WIDTH / 100) * 60}
-                                            placeholder={t('enterPassword')}
-                                            isError={errors.password}>
-                                            <Pressable onPress={() => { setIsShow(!isShow) }}>
-                                                {isShow ? <LockOpenSvg marginRight={10} /> : <LockSvg marginRight={10} />}
-                                            </Pressable>
-                                        </Field>
-                                        <Button
-                                            title={t('next')}
-                                            fontSize={18}
-                                            color={COLORS.white}
-                                            height={50}
-                                            marginTop={40}
-                                            width={'60%'}
-                                            onPress={handleSubmit}
-                                        />
-                                        {!isMaster && <Text onPress={() => { props.navigation.navigate('SignUpFirstScreen') }} style={styles.signUpText}>{t('signUp')}</Text>}
-                                    </>
-                                )}
-                            </Formik>
-                        </View>
-                    </ScrollView>
+            <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                style={{ flex: 1 }}>
+                <View style={styles.container}>
+                    <View style={styles.card}>
+                        <Text style={styles.titleText}>{t('logIn')}</Text>
+                        <ScrollView
+                            showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}
+                            contentContainerStyle={{ flexGrow: 1 }}
+                            bounces={false}
+                        >
+                            <View style={styles.subContainer}>
+                                <Formik
+                                    validationSchema={loginValidationSchema}
+                                    initialValues={{ email: '', password: '' }}
+                                    onSubmit={onClickSubmit}>
+                                    {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, }) => (
+                                        <>
+                                            <Field
+                                                name={'email'}
+                                                title={t('email')}
+                                                component={Input}
+                                                isLeft
+                                                value={values.email.toLocaleLowerCase()}
+                                                onChangeText={handleChange('email')}
+                                                onBlur={handleBlur('email')}
+                                                width={(BaseStyle.WIDTH / 100) * 80}
+                                                inputWidth={(BaseStyle.WIDTH / 100) * 60}
+                                                placeholder={t('enterEmail')}
+                                                keyboardType="email-address"
+                                                isError={errors.email}>
+                                                <EmailSvg marginRight={10} />
+                                            </Field>
+                                            <Field
+                                                name={'password'}
+                                                title={t('password')}
+                                                component={Input}
+                                                isLeft
+                                                value={values.password}
+                                                marginTop={20}
+                                                secureTextEntry={isShow ? false : true}
+                                                onChangeText={handleChange('password')}
+                                                onBlur={handleBlur('password')}
+                                                width={(BaseStyle.WIDTH / 100) * 80}
+                                                inputWidth={(BaseStyle.WIDTH / 100) * 60}
+                                                placeholder={t('enterPassword')}
+                                                isError={errors.password}>
+                                                <Pressable onPress={() => { setIsShow(!isShow) }}>
+                                                    {isShow ? <LockOpenSvg marginRight={10} /> : <LockSvg marginRight={10} />}
+                                                </Pressable>
+                                            </Field>
+                                            <Button
+                                                title={t('next')}
+                                                fontSize={18}
+                                                color={COLORS.white}
+                                                height={50}
+                                                marginTop={40}
+                                                width={'60%'}
+                                                onPress={handleSubmit}
+                                            />
+                                            {!isMaster && <Text onPress={() => { props.navigation.navigate('SignUpFirstScreen') }} style={styles.signUpText}>{t('signUp')}</Text>}
+                                        </>
+                                    )}
+                                </Formik>
+                            </View>
+                        </ScrollView>
+                    </View>
                 </View>
-            </View>
+            </KeyboardAvoidingView>
             <Indicator isLoader animate={loading} />
 
         </>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ImageBackground, ScrollView, Pressable, Image, Alert, Modal } from 'react-native';
+import { View, Text, ImageBackground, ScrollView, Pressable, Image, Alert, Modal, KeyboardAvoidingView, Platform } from 'react-native';
 import { COLORS } from '../../common/style/Colors';
 import Button from '../../components/core/Button';
 import styles from './styles';
@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { signUpDataOfUser } from '../../redux/actions/ApiActionCreator';
 import { IMAGES } from '../../common/style/Images';
 import ArrowLeftSvg from '../../common/svgs/ArrowLeftSvg';
+// import DatePicker from 'react-native-date-picker'
 import _ from 'lodash';
 const SignUpFirstScreen = (props) => {
     const dispatch = useDispatch();
@@ -33,6 +34,8 @@ const SignUpFirstScreen = (props) => {
     const [isRole, setIsRole] = useState('');
     const [isImages, setIsImages] = useState(isProfile.profile);
     const [modalVisible, setModalVisible] = useState(false);
+    const [date, setDate] = useState(new Date())
+    const [open, setOpen] = useState(false)
     const isRefugee = isRole === ROLE.REFUGEE
     const isShelter = isRole === ROLE.SHELTER
     const isDonor = isRole === ROLE.DONOR
@@ -49,12 +52,6 @@ const SignUpFirstScreen = (props) => {
         firstName: yup
             .string()
             .required(t('nameRequired')),
-        watchlistLink: yup
-            .string()
-            .required('The watchlist link field is required.'),
-        watchlistDescription: yup
-            .string()
-            .required('The watchlist description field is required.'),
     })
     const loginShelterValidationSchema = yup.object().shape({
         firstName: yup
@@ -64,11 +61,9 @@ const SignUpFirstScreen = (props) => {
             .string()
             .required(t('aboutRequired')),
         watchlistLink: yup
-            .string()
-            .required('The watchlist link field is required.'),
+            .string(),
         watchlistDescription: yup
             .string()
-            .required('The watchlist description field is required.'),
 
     })
     const loginRefugeeValidationSchema = yup.object().shape({
@@ -79,11 +74,9 @@ const SignUpFirstScreen = (props) => {
             .string()
             .required(t('ageRequired')),
         watchlistLink: yup
-            .string()
-            .required('The watchlist link field is required.'),
+            .string(),
         watchlistDescription: yup
             .string()
-            .required('The watchlist description field is required.'),
     })
 
     const onClickSubmit = (values, actions) => {
@@ -146,192 +139,218 @@ const SignUpFirstScreen = (props) => {
                     <ArrowLeftSvg fill={COLORS.white} />
                 </CloseButton>
             </ImageBackground>
-            <View style={styles.container}>
-                <View style={styles.card}>
-                    <Text style={styles.titleText}>{t('signUp')}</Text>
-                    <ScrollView showsVerticalScrollIndicator={false}
-                        showsHorizontalScrollIndicator={false}
-                        contentContainerStyle={{ flexGrow: 1 }}
-                        bounces={false}>
-                        <View style={styles.subContainer}>
-                            <Formik
-                                validationSchema={isShelter ? loginShelterValidationSchema : isDonor ? loginDonorValidationSchema : loginRefugeeValidationSchema}
-                                initialValues={{ firstName: '', about: '', age: '', watchlistLink: '', watchlistDescription: '' }}
-                                onSubmit={onClickSubmit}>
-                                {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, }) => (
-                                    <>
-                                        <View style={styles.profileNameContainer}>
-                                            <View style={[styles.profileContainer, { width: !_.isEmpty(isProfile.profile) ? '35%' : 0 }]}>
-                                                {!_.isEmpty(isProfile.profile) &&
-                                                    <Pressable onPress={() => { setModalVisible(!modalVisible) }} style={styles.profile}>
-                                                        <Image
-                                                            resizeMode='contain'
-                                                            source={{ uri: isProfile.profile }}
-                                                            style={styles.profileStyle} />
-                                                    </Pressable>
-                                                }
-                                                <Modal
-                                                    animationType="slide"
-                                                    transparent={true}
-                                                    visible={modalVisible}
-                                                    onRequestClose={() => { setModalVisible(!modalVisible) }}>
-                                                    <View style={styles.blurView}>
-                                                        <View style={styles.blurSubView}>
-                                                            <Text style={styles.titleOfPicker}>{t('selectImage')}</Text>
-                                                            <Text onPress={openCamera} style={styles.takePhotoText}>{t('takePhoto')}</Text>
-                                                            <Text onPress={openLibrary} style={styles.takePhotoText}>{t('chooseLibrary')}</Text>
-                                                            <Text onPress={() => setModalVisible(false)} style={styles.cancelText}>{t('cancel')}</Text>
+            <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                style={{ flex: 1 }}>
+                <View style={styles.container}>
+                    <View style={styles.card}>
+                        <Text style={styles.titleText}>{t('signUp')}</Text>
+                        <ScrollView showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}
+                            contentContainerStyle={{ flexGrow: 1 }}
+                            bounces={false}>
+                            <View style={styles.subContainer}>
+                                <Formik
+                                    validationSchema={isShelter ? loginShelterValidationSchema : isDonor ? loginDonorValidationSchema : loginRefugeeValidationSchema}
+                                    initialValues={{ firstName: '', about: '', age: '', watchlistLink: '', watchlistDescription: '' }}
+                                    onSubmit={onClickSubmit}>
+                                    {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, }) => (
+                                        <>
+                                            <View style={styles.profileNameContainer}>
+                                                <View style={[styles.profileContainer, { width: !_.isEmpty(isProfile.profile) ? '35%' : 0 }]}>
+                                                    {!_.isEmpty(isProfile.profile) &&
+                                                        <Pressable onPress={() => { setModalVisible(!modalVisible) }} style={styles.profile}>
+                                                            <Image
+                                                                resizeMode='contain'
+                                                                source={{ uri: isProfile.profile }}
+                                                                style={styles.profileStyle} />
+                                                        </Pressable>
+                                                    }
+                                                    <Modal
+                                                        animationType="slide"
+                                                        transparent={true}
+                                                        visible={modalVisible}
+                                                        onRequestClose={() => { setModalVisible(!modalVisible) }}>
+                                                        <View style={styles.blurView}>
+                                                            <View style={styles.blurSubView}>
+                                                                <Text style={styles.titleOfPicker}>{t('selectImage')}</Text>
+                                                                <Text onPress={openCamera} style={styles.takePhotoText}>{t('takePhoto')}</Text>
+                                                                <Text onPress={openLibrary} style={styles.takePhotoText}>{t('chooseLibrary')}</Text>
+                                                                <Text onPress={() => setModalVisible(false)} style={styles.cancelText}>{t('cancel')}</Text>
+                                                            </View>
                                                         </View>
+                                                    </Modal>
+                                                </View>
+                                                <View style={[styles.nameInput, { width: !_.isEmpty(isProfile.profile) ? '65%' : '100%' }]}>
+                                                    <Field
+                                                        name={'firstName'}
+                                                        component={Input}
+                                                        value={values.firstName}
+                                                        onChangeText={handleChange('firstName')}
+                                                        onBlur={handleBlur('firstName')}
+                                                        width={!_.isEmpty(isProfile.profile) ? (BaseStyle.WIDTH / 100) * 50 : (BaseStyle.WIDTH / 100) * 80}
+                                                        inputWidth={!_.isEmpty(isProfile.profile) ? (BaseStyle.WIDTH / 100) * 40 : (BaseStyle.WIDTH / 100) * 70}
+                                                        placeholder={isShelter ? ('shelterName') : t('fName')}
+                                                        isError={errors.firstName}
+                                                    />
+                                                </View>
+                                            </View>
+
+                                            <CountryPickerModal
+                                                isOnSelect={(text) => { setCountry(text) }}
+                                                placeholder={t('countryResidence')} />
+
+                                            {isRefugee &&
+                                                <>
+                                                    <Field
+                                                        name={'age'}
+                                                        component={Input}
+                                                        value={values.age}
+                                                        onChangeText={handleChange('age')}
+                                                        onBlur={handleBlur('age')}
+                                                        width={(BaseStyle.WIDTH / 100) * 80}
+                                                        inputWidth={(BaseStyle.WIDTH / 100) * 70}
+                                                        placeholder={t('age')}
+                                                        maxLength={2}
+                                                        mt={20}
+                                                        isError={errors.age} />
+                                                    {/* <Button title="Open" onPress={() => setOpen(true)} />
+                                                    <DatePicker
+                                                        modal
+                                                        open={open}
+                                                        date={date}
+                                                        onConfirm={(date) => {
+                                                            setOpen(false)
+                                                            setDate(date)
+                                                        }}
+                                                        onCancel={() => {
+                                                            setOpen(false)
+                                                        }}
+                                                    /> */}
+                                                    <Text style={styles.chooseOneText}>{t('chooseOne')}</Text>
+                                                    <View style={styles.chooseOneCard}>
+                                                        <Button
+                                                            borderColor={isSelected === 'Girl' ? COLORS.cornflowerblue : COLORS.transparent}
+                                                            borderWidth={1}
+                                                            bgColor={COLORS.lemonchiffon}
+                                                            title={t('girl')}
+                                                            fontSize={14}
+                                                            color={COLORS.black}
+                                                            height={45}
+                                                            width={'48%'}
+                                                            onPress={() => { onClick('Girl') }}
+                                                        />
+                                                        <Button
+                                                            borderColor={isSelected === 'Boy' ? COLORS.cornflowerblue : COLORS.transparent}
+                                                            borderWidth={1}
+                                                            bgColor={COLORS.lemonchiffon}
+                                                            title={t('boy')}
+                                                            fontSize={14}
+                                                            color={COLORS.black}
+                                                            height={45}
+                                                            width={'48%'}
+                                                            onPress={() => { onClick('Boy') }}
+                                                        />
                                                     </View>
-                                                </Modal>
-                                            </View>
-                                            <View style={[styles.nameInput, { width: !_.isEmpty(isProfile.profile) ? '65%' : '100%' }]}>
+                                                    <View style={[styles.chooseOneCard, { marginTop: 10 }]}>
+                                                        <Button
+                                                            borderColor={isSelected === 'Mom' ? COLORS.cornflowerblue : COLORS.transparent}
+                                                            borderWidth={1}
+                                                            bgColor={COLORS.lemonchiffon}
+                                                            title={t('mom')}
+                                                            fontSize={14}
+                                                            color={COLORS.black}
+                                                            height={45}
+                                                            width={'48%'}
+                                                            onPress={() => { onClick('Mom') }}
+                                                        />
+                                                        <Button
+                                                            borderColor={isSelected === 'Woman' ? COLORS.cornflowerblue : COLORS.transparent}
+                                                            borderWidth={1}
+                                                            bgColor={COLORS.lemonchiffon}
+                                                            title={t('woman')}
+                                                            fontSize={14}
+                                                            color={COLORS.black}
+                                                            height={45}
+                                                            width={'48%'}
+                                                            onPress={() => { onClick('Woman') }}
+                                                        />
+                                                    </View>
+                                                </>
+                                            }
+                                            {isShelter &&
                                                 <Field
-                                                    name={'firstName'}
+                                                    name={'about'}
                                                     component={Input}
-                                                    value={values.firstName}
-                                                    onChangeText={handleChange('firstName')}
-                                                    onBlur={handleBlur('firstName')}
-                                                    width={!_.isEmpty(isProfile.profile) ? (BaseStyle.WIDTH / 100) * 50 : (BaseStyle.WIDTH / 100) * 80}
-                                                    inputWidth={!_.isEmpty(isProfile.profile) ? (BaseStyle.WIDTH / 100) * 40 : (BaseStyle.WIDTH / 100) * 70}
-                                                    placeholder={t('fName')}
-                                                    isError={errors.firstName}
-                                                />
-                                            </View>
-                                        </View>
-
-                                        <CountryPickerModal
-                                            isOnSelect={(text) => { setCountry(text) }}
-                                            placeholder={t('countryResidence')} />
-
-                                        {isRefugee &&
-                                            <>
-                                                <Field
-                                                    name={'age'}
-                                                    component={Input}
-                                                    value={values.age}
-                                                    onChangeText={handleChange('age')}
-                                                    onBlur={handleBlur('age')}
+                                                    marginTop={30}
+                                                    value={values.about}
+                                                    onChangeText={handleChange('about')}
+                                                    onBlur={handleBlur('about')}
                                                     width={(BaseStyle.WIDTH / 100) * 80}
                                                     inputWidth={(BaseStyle.WIDTH / 100) * 70}
-                                                    placeholder={t('age')}
-                                                    maxLength={2}
+                                                    placeholder={t('about')}
+                                                    placeholderColor={COLORS.grey}
+                                                    isError={errors.about}
+                                                    multiline
+                                                    height={120}
+                                                    borderRadius={20}
+                                                    numberOfLines={3}
                                                     mt={20}
-                                                    isError={errors.age} />
-                                                <Text style={styles.chooseOneText}>{t('chooseOne')}</Text>
-                                                <View style={styles.chooseOneCard}>
-                                                    <Button
-                                                        borderColor={isSelected === 'Girl' ? COLORS.cornflowerblue : COLORS.transparent}
-                                                        borderWidth={1}
-                                                        bgColor={COLORS.lemonchiffon}
-                                                        title={t('girl')}
-                                                        fontSize={14}
-                                                        color={COLORS.black}
-                                                        height={45}
-                                                        width={'48%'}
-                                                        onPress={() => { onClick('Girl') }}
-                                                    />
-                                                    <Button
-                                                        borderColor={isSelected === 'Boy' ? COLORS.cornflowerblue : COLORS.transparent}
-                                                        borderWidth={1}
-                                                        bgColor={COLORS.lemonchiffon}
-                                                        title={t('boy')}
-                                                        fontSize={14}
-                                                        color={COLORS.black}
-                                                        height={45}
-                                                        width={'48%'}
-                                                        onPress={() => { onClick('Boy') }}
-                                                    />
-                                                </View>
-                                                <View style={[styles.chooseOneCard, { marginTop: 10 }]}>
-                                                    <Button
-                                                        borderColor={isSelected === 'Mom' ? COLORS.cornflowerblue : COLORS.transparent}
-                                                        borderWidth={1}
-                                                        bgColor={COLORS.lemonchiffon}
-                                                        title={t('mom')}
-                                                        fontSize={14}
-                                                        color={COLORS.black}
-                                                        height={45}
-                                                        width={'48%'}
-                                                        onPress={() => { onClick('Mom') }}
-                                                    />
-                                                    <Button
-                                                        borderColor={isSelected === 'Woman' ? COLORS.cornflowerblue : COLORS.transparent}
-                                                        borderWidth={1}
-                                                        bgColor={COLORS.lemonchiffon}
-                                                        title={t('woman')}
-                                                        fontSize={14}
-                                                        color={COLORS.black}
-                                                        height={45}
-                                                        width={'48%'}
-                                                        onPress={() => { onClick('Woman') }}
-                                                    />
-                                                </View>
-                                            </>
-                                        }
-                                        {isShelter &&
-                                            <Field
-                                                name={'about'}
-                                                component={Input}
-                                                marginTop={30}
-                                                value={values.about}
-                                                onChangeText={handleChange('about')}
-                                                onBlur={handleBlur('about')}
-                                                width={(BaseStyle.WIDTH / 100) * 80}
-                                                inputWidth={(BaseStyle.WIDTH / 100) * 70}
-                                                placeholder={t('about')}
-                                                placeholderColor={COLORS.grey}
-                                                isError={errors.about}
-                                                multiline
-                                                height={120}
-                                                borderRadius={20}
-                                                numberOfLines={3}
-                                                mt={20}
-                                            />}
+                                                />}
 
-                                        <Field
-                                            mt={20}
-                                            name={'watchlistLink'}
-                                            component={Input}
-                                            value={values.watchlistLink}
-                                            onChangeText={handleChange('watchlistLink')}
-                                            onBlur={handleBlur('watchlistLink')}
-                                            width={(BaseStyle.WIDTH / 100) * 80}
-                                            inputWidth={(BaseStyle.WIDTH / 100) * 70}
-                                            placeholder={'Watchlist Link'}
-                                            isError={errors.watchlistLink}
-                                        // inputColor={COLORS.blue}
-                                        />
-                                        <Field
-                                            mt={20}
-                                            name={'watchlistDescription'}
-                                            component={Input}
-                                            value={values.watchlistDescription}
-                                            onChangeText={handleChange('watchlistDescription')}
-                                            onBlur={handleBlur('watchlistDescription')}
-                                            width={(BaseStyle.WIDTH / 100) * 80}
-                                            inputWidth={(BaseStyle.WIDTH / 100) * 70}
-                                            placeholder={'WatchlistDescription'}
-                                            isError={errors.watchlistDescription}
-                                        // inputColor={COLORS.blue}
-                                        />
-                                        <Button
-                                            marginBottom={35}
-                                            title={t('next')}
-                                            fontSize={18}
-                                            color={COLORS.white}
-                                            height={50}
-                                            marginTop={40}
-                                            width={'60%'}
-                                            onPress={handleSubmit}
-                                        />
-                                    </>
-                                )}
-                            </Formik>
-                        </View>
-                    </ScrollView>
+                                            {isShelter || isRefugee &&
+                                                <>
+                                                    <View style={{ marginTop: 20 }}>
+                                                        <Text style={{ marginBottom: 10, width: (BaseStyle.WIDTH / 100) * 80 }}>{'Tell us a little about why you need the items on your wishlist..'}</Text>
+                                                        <Field
+                                                            // title={'Tell us a little about why you need the items on your wishlist..'}
+                                                            // mt={20}
+                                                            name={'watchlistLink'}
+                                                            component={Input}
+                                                            value={values.watchlistLink}
+                                                            onChangeText={handleChange('watchlistLink')}
+                                                            onBlur={handleBlur('watchlistLink')}
+                                                            width={(BaseStyle.WIDTH / 100) * 80}
+                                                            inputWidth={(BaseStyle.WIDTH / 100) * 70}
+                                                            placeholder={'Watchlist Link'}
+                                                            isError={errors.watchlistLink}
+                                                        // inputColor={COLORS.blue}
+                                                        />
+                                                    </View>
+
+                                                    <Field
+
+                                                        mt={20}
+                                                        name={'watchlistDescription'}
+                                                        component={Input}
+                                                        value={values.watchlistDescription}
+                                                        onChangeText={handleChange('watchlistDescription')}
+                                                        onBlur={handleBlur('watchlistDescription')}
+                                                        width={(BaseStyle.WIDTH / 100) * 80}
+                                                        inputWidth={(BaseStyle.WIDTH / 100) * 70}
+                                                        placeholder={'WatchlistDescription'}
+                                                        isError={errors.watchlistDescription}
+                                                    // inputColor={COLORS.blue}
+                                                    />
+                                                </>}
+                                            <Button
+                                                marginBottom={35}
+                                                title={t('next')}
+                                                fontSize={18}
+                                                color={COLORS.white}
+                                                height={50}
+                                                marginTop={40}
+                                                width={'60%'}
+                                                onPress={handleSubmit}
+                                            />
+                                        </>
+                                    )}
+                                </Formik>
+                            </View>
+                        </ScrollView>
+                    </View>
                 </View>
-            </View>
+            </KeyboardAvoidingView>
         </>
     );
 };

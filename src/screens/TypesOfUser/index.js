@@ -17,7 +17,7 @@ const TypesOfUser = (props) => {
     const [isRole, setIsRole] = useState(ROLE.MASTER);
 
     const onClick = async (type) => {
-        await AsyncStorage.setItem('token', '')
+        await AsyncStorage.removeItem('token');
         setIsRole(type);
         try {
             await AsyncStorage.setItem('userType', type)
@@ -26,7 +26,7 @@ const TypesOfUser = (props) => {
     }
 
 
-    
+
     useEffect(() => {
         if (isRole !== (ROLE.DONOR || ROLE.SHELTER || ROLE.REFUGEE) && isRole === ROLE.MASTER) {
             async function check() {
@@ -44,7 +44,7 @@ const TypesOfUser = (props) => {
                 style={{ flex: 1 }}
                 source={IMAGES.languageBg}>
                 <CloseButton onPress={() => props.navigation.goBack()}>
-                                     <ArrowLeftSvg fill={COLORS.white}/>
+                    <ArrowLeftSvg fill={COLORS.white} />
                 </CloseButton>
             </ImageBackground>
             <View style={styles.container}>
@@ -98,9 +98,9 @@ const TypesOfUser = (props) => {
                                 height={50}
                                 marginTop={35}
                                 width={'60%'}
-                                onPress={() =>
-                                {
-                                   props.navigation.navigate('Login')}
+                                onPress={() => {
+                                    props.navigation.navigate('Login')
+                                }
                                 }
                             />
                         </View>

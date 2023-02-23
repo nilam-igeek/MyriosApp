@@ -6495,6 +6495,13 @@ react-native-customize-selected-date@^1.0.1:
   resolved "https://registry.npmjs.org/react-native-customize-selected-date/-/react-native-customize-selected-date-1.0.1.tgz"
   integrity sha512-zGPuRwV0B26sjKSgNIiYoNwGLelHgbehJvGH2HH+awgawDz11y6f+oyOWlQtQ6DFKBHohiDvJK0nbE79+caCEA==
 
+react-native-date-picker@^4.2.9:
+  version "4.2.9"
+  resolved "https://registry.yarnpkg.com/react-native-date-picker/-/react-native-date-picker-4.2.9.tgz#c916231025dac1fd8f90783d06b092e74ec12948"
+  integrity sha512-msx877/ULxaoceqOV3GKx/A93ninYmOp46w5DOCh3pQGPbgL4ZmbglvXJ3mOp2h/j5scuYf9+NetCRLqj1pODA==
+  dependencies:
+    prop-types "^15.8.1"
+
 react-native-device-info@^10.3.0:
   version "10.3.0"
   resolved "https://registry.npmjs.org/react-native-device-info/-/react-native-device-info-10.3.0.tgz"

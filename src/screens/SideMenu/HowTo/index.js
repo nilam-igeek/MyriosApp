@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StatusBar, Image } from 'react-native';
+import { View, Text, StatusBar, Image, Pressable } from 'react-native';
 import styles from './styles';
 import '../../../../assets/i18n/i18n';
 import { useTranslation } from 'react-i18next';
@@ -82,16 +82,33 @@ const HowTo = (props) => {
                 showsButtons={true}
                 dot={<View style={styles.dot} />}
                 activeDot={<View style={styles.activeDot} />}
-                nextButton={<View style={{ justifyContent: 'center', alignItems: 'center', }}><Text style={[styles.doneText, { width: 50, textAlign: 'center', padding: 3, backgroundColor: '#FFDE59' }]}>{keyNumber === 5 ? 'Explore Wishlists!' : keyNumber === 6 ? 'Done' : 'Go!'}</Text></View>}
+                nextButton={<View style={{ justifyContent: 'center', alignItems: 'center', borderRadius: 20, backgroundColor: '#FFDE59' }}><Text style={[styles.doneText, { width: 60, textAlign: 'center', padding: 10, }]}>{'Go!'}</Text></View>}
                 prevButton={<View style={{ justifyContent: 'center', alignItems: 'center', }}></View>}
                 buttonWrapperStyle={styles.buttonWrapperStyle}
                 onIndexChanged={handleIndexChange}>
-                {dataList.map((item) => {
+                {dataList.map((item, index) => {
+                    console.log("index----->", index == 5);
                     return (
-                        <View style={styles.slide1}>
+                        <View style={[styles.slide1, {}]}>
                             {item.image && <Image resizeMode='contain' source={item.image} style={{ height: '80%', width: '100%' }} />}
                             {item.title && <Text style={styles.titleText}>{item.title}</Text>}
                             <Text style={styles.subText}>{item.subTitle}</Text>
+                            {
+                                (isDonor && index == 5 || DonorSwiper && index == 5) &&
+                                <Pressable onPress={() => {
+                                    if (isDonor) {
+                                        props.navigation.navigate('WishLists')
+                                    } else {
+                                        props.navigation.navigate('ShelterWishList')
+                                    }
+                                }}
+                                    style={{ backgroundColor: '#FFDE59', borderRadius: 20, marginTop: 25, marginLeft: 170 }}>
+                                    <Text style={[styles.doneText, { width: 150, textAlign: 'center', padding: 10, }]}>{isDonor ? 'Explore Wishlists!' : 'Done'}</Text>
+                                </Pressable>
+
+
+
+                            }
                         </View>)
                 })}
             </Swiper>

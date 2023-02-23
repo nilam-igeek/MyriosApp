@@ -48,9 +48,6 @@ const Router = (props) => {
     getAccessToken();
   }, [getAccessToken])
 
-  console.log("isToken---dssdfddf--->", isToken);
-  console.log("props.initialRoute---->", props.initialRoute);
-
   function MyDrawer() {
     return (
       <Drawer.Navigator
@@ -63,7 +60,28 @@ const Router = (props) => {
         }}
         drawerContent={(props) => <CustomeDrawer {...props} />}>
         <Drawer.Screen name="HowToo" component={HowTo} />
+        <Drawer.Screen name="WishList" component={MyNewDrawer} />
+        <Drawer.Screen name="ContactUs" component={ContactUs} />
+        <Drawer.Screen name="Profile" component={Profile} />
+        <Drawer.Screen name="Helped" component={Helped} />
+        <Drawer.Screen name="ShelterWishList" component={ShelterWishList} />
+        <Drawer.Screen name="AddPerson" component={AddPerson} />
+      </Drawer.Navigator>
+    );
+  }
+  function MyNewDrawer() {
+    return (
+      <Drawer.Navigator
+        screenOptions={{
+          drawerStyle: {
+            backgroundColor: COLORS.seashell,
+            width: '100%',
+          },
+          headerShown: false,
+        }}
+        drawerContent={(props) => <CustomeDrawer {...props} />}>
         <Drawer.Screen name="WishLists" component={WishLists} />
+        <Drawer.Screen name="HowToo" component={HowTo} />
         <Drawer.Screen name="ContactUs" component={ContactUs} />
         <Drawer.Screen name="Profile" component={Profile} />
         <Drawer.Screen name="Helped" component={Helped} />
@@ -113,7 +131,7 @@ const Router = (props) => {
             <Stack.Screen options={{ gestureEnabled: false }} name="ChooseProfile" component={ChooseProfile} />
             <Stack.Screen options={{ gestureEnabled: false }} name="Welcome" component={Welcome} />
             <Stack.Screen options={{ gestureEnabled: false }} name="HowTo" component={MyDrawer} />
-            <Stack.Screen options={{ gestureEnabled: false }} name="WishLists" component={WishLists} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="WishLists" component={MyNewDrawer} />
             <Stack.Screen options={{ gestureEnabled: false }} name="ContactUs" component={ContactUs} />
             <Stack.Screen options={{ gestureEnabled: false }} name="Profile" component={Profile} />
             <Stack.Screen options={{ gestureEnabled: false }} name="Helped" component={Helped} />
@@ -136,7 +154,7 @@ const Router = (props) => {
             initialRouteName={'Welcome'}>
             <Stack.Screen options={{ gestureEnabled: false }} name="Welcome" component={Welcome} />
             <Stack.Screen options={{ gestureEnabled: false }} name="HowTo" component={MyDrawer} />
-            <Stack.Screen options={{ gestureEnabled: false }} name="WishLists" component={WishLists} />
+            <Stack.Screen options={{ gestureEnabled: false }} name="WishLists" component={MyNewDrawer} />
             <Stack.Screen options={{ gestureEnabled: false }} name="ContactUs" component={ContactUs} />
             <Stack.Screen options={{ gestureEnabled: false }} name="Profile" component={Profile} />
             <Stack.Screen options={{ gestureEnabled: false }} name="Helped" component={Helped} />

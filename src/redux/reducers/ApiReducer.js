@@ -19,7 +19,8 @@ const initialState = {
   peopleData: '',
   imagesListOfRoleData: '',
   wishListFilterData: '',
-  wishlistAddData: ''
+  wishlistAddData: '',
+  wishlistRemoveData: ''
 };
 
 const apiReducer = (state = initialState, action) => {
@@ -119,6 +120,24 @@ const apiReducer = (state = initialState, action) => {
         loading: false,
       };
 
+
+    case ACTION_TYPES.WISHLISTS_REMOVED_API_PENDING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ACTION_TYPES.WISHLISTS_REMOVED_API_SUCCESS:
+      return {
+        ...state,
+        wishlistRemoveData: action.payload,
+        loading: false,
+      };
+    case ACTION_TYPES.WISHLISTS_REMOVED_API_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
     //======================== MASTERS ========================//
     case ACTION_TYPES.REFUGEES_API_PENDING:
       return {

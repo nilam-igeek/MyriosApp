@@ -38,22 +38,25 @@ const RefugeesList = (props) => {
                         renderItem={({ item }) =>
                             <Pressable style={[styles.itemCard, {}]} onPress={() => { props.navigation.navigate('ProfileOfRole') }}>
                                 <View style={styles.profile}>
-                                        {item.image ? <Image
-                                            resizeMode='cover'
-                                            source={item.image}
-                                            style={styles.profileStyle} />
+                                    {item.image ? <Image
+                                        resizeMode='cover'
+                                        source={item.image}
+                                        style={styles.profileStyle} />
                                         : <ProfileSvg height={30} width={30} />}
-                                    </View>
+                                </View>
                                 <Text style={{ marginLeft: 20 }} >
                                     <Text style={styles.userName}>{item.name}</Text>
                                     {item.country && <Text style={styles.userName}>{', '}{item.country}</Text>}
                                     {item.type && <Text style={styles.userName}>{', '}{item.type}</Text>}
                                     {item.age && <Text style={styles.userName}>{', '}{item.age}</Text>}
                                 </Text>
+                                <View style={{ marginLeft: 30, backgroundColor: COLORS.blue, width: 100, borderRadius: 20 }}>
+                                    <Text style={{ color: COLORS.white, padding: 5, textAlign: 'center' }}>Active</Text>
+                                </View>
                             </Pressable>} />
                 </View>
             </View>
-            <Indicator isLoader animate={loading}/>
+            <Indicator isLoader animate={loading} />
         </View>
     );
 };

@@ -46,7 +46,10 @@ import {
   wishlistFilterError,
   wishlistAddData,
   wishlistAddSuccess,
-  wishlistAddError
+  wishlistAddError,
+  wishlistRemoveData,
+  wishlistRemoveSuccess,
+  wishlistRemoveError,
 } from './ApiAction';
 import Toast from 'react-native-simple-toast';
 
@@ -66,10 +69,12 @@ export const loginApi = (data) => async (dispatch) => {
       })
       .then(async (response) => {
         if (response.data.success) {
-          console.log("response.data====>", response.data);
-          Toast.show(response.data.message);
+          //  Toast.show(response.data.message);
           dispatch(loginSuccess(response.data));
-          await AsyncStorage.setItem('token', response.data.data.token)
+          if (response && response.data && response.data.data.token) {
+            await AsyncStorage.setItem('token', response.data.data.token)
+          }
+
         }
       })
       .catch((error) => {
@@ -96,14 +101,14 @@ export const registerApi = (data) => async (dispatch) => {
       })
       .then(async (response) => {
         if (response.data.success) {
-          Toast.show(response.data.message);
+          // Toast.show(response.data.message);
           dispatch(registerSuccess(response.data));
         }
       })
       .catch((error) => {
         dispatch(registerError(error));
         if (!error.response.data.success) {
-          Toast.show('please try again or sign up!');
+          Toast.show(`Thanks for signing up! In order to finalize your account, you need to your shelter to register you as a Myrios verified refugee on their 'People' page, and if your shelter does not user Myrios, register your account with 'not currently staying at shelter', so you can schedule a 5-minute call with a Myrios representative to get verified!`)
         }
         return error
       });
@@ -122,7 +127,7 @@ export const refugeesListApi = async (dispatch) => {
       })
       .then((response) => {
         if (response.data.success) {
-          Toast.show(response.data.message);
+          // Toast.show(response.data.message);
           dispatch(refugeesSuccess(response.data));
         }
       })
@@ -145,7 +150,7 @@ export const donorsListApi = async (dispatch) => {
         headers: { 'Authorization': `Bearer ${isToken}` }
       })
       .then((response) => {
-        Toast.show(response.data.message);
+        // Toast.show(response.data.message);
         dispatch(donorSuccess(response.data));
       })
       .catch((error) => {
@@ -163,7 +168,7 @@ export const sheltersListApi = async (dispatch) => {
         headers: { 'Authorization': `Bearer ${isToken}` }
       })
       .then((response) => {
-        Toast.show(response.data.message);
+        // Toast.show(response.data.message);
         dispatch(sheltersSuccess(response.data));
       })
       .catch((error) => {
@@ -181,7 +186,7 @@ export const requestsListApi = async (dispatch) => {
         headers: { 'Authorization': `Bearer ${isToken}` }
       })
       .then((response) => {
-        Toast.show(response.data.message);
+        // Toast.show(response.data.message);
         dispatch(requestsSuccess(response.data));
       })
       .catch((error) => {
@@ -200,7 +205,7 @@ export const helpedApi = async (dispatch) => {
         headers: { 'Authorization': `Bearer ${isToken}` }
       })
       .then((response) => {
-        Toast.show(response.data.message);
+        // Toast.show(response.data.message);
         dispatch(helpedSuccess(response.data));
       })
       .catch((error) => {
@@ -219,7 +224,7 @@ export const peopleApi = async (dispatch) => {
         headers: { 'Authorization': `Bearer ${isToken}` }
       })
       .then((response) => {
-        Toast.show(response.data.message);
+        // Toast.show(response.data.message);
         dispatch(peopleSuccess(response.data));
       })
       .catch((error) => {
@@ -271,7 +276,7 @@ export const addPeopleApi = (data) => async (dispatch) => {
         },
       })
       .then(async (response) => {
-        Toast.show(response.data.message);
+        // Toast.show(response.data.message);
         dispatch(addProfileSuccess(response.data));
       })
       .catch((error) => {
@@ -295,7 +300,7 @@ export const contactUsApi = (data) => async (dispatch) => {
         },
       })
       .then(async (response) => {
-        Toast.show(response.data.message);
+        // Toast.show(response.data.message);
         dispatch(contactUsSuccess(response.data));
       })
       .catch((error) => {
@@ -316,7 +321,7 @@ export const wishListFilterApi = (data) => async (dispatch) => {
       })
       .then((response) => {
         if (response.data.success) {
-          Toast.show(response.data.message);
+          // Toast.show(response.data.message);
           dispatch(wishlistSuccess(response.data));
         }
       })
@@ -341,8 +346,8 @@ export const wishListApi = (data) => async (dispatch) => {
       })
       .then((response) => {
         if (response.data.success) {
-          console.log("dsff=========>", response.data);
-          Toast.show(response.data.message);
+          // console.log("dsff=========>", response.data);
+          // Toast.show(response.data.message);
           dispatch(wishlistSuccess(response.data));
         }
       })
@@ -356,36 +361,63 @@ export const wishListApi = (data) => async (dispatch) => {
   });
 };
 
-//======================== WISHLISTS ========================//
+//======================== WISHLISTS ADD ========================//
 export const wishlistAddApi = (data) => async (dispatch) => {
-  const id = data.toString()
   var isToken = await AsyncStorage.getItem('token');
+  console.log("isToken--->", isToken);
   dispatch(wishlistAddData());
   return new Promise(() => {
     axios
-      .post(`http://18.233.84.195/api/add-wishlist/${id}`, {
-        'Authorization': `Bearer ${isToken}`,
+      .post(`http://18.233.84.195/api/add-wishlist/13`, {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       })
       .then((response) => {
-        console.log("wishlistAddApi111111=========>", JSON.stringify(response.data));
+        console.log("wishlistAddApi of response=========>", JSON.stringify(response.data));
         if (response.data.success) {
-          Toast.show(response.data.message);
+          // Toast.show(response.data.message);
           dispatch(wishlistAddSuccess(response.data));
         }
       })
       .catch((error) => {
-        console.log("error.response---->", error.response);
+        console.log("wishlistAddError----->", error.response.data);
         dispatch(wishlistAddError(error.response));
         if (!error.response.data.success) {
-          Toast.show('please try again');
+          // Toast.show('please try again');
         }
         return error
       });
   });
 };
 
+//======================== WISHLISTS DELETE========================//
+export const wishlistRemoveApi = (data) => async (dispatch) => {
+  console.log("data--sdsdssdf->", data);
+  var isToken = await AsyncStorage.getItem('token');
+  dispatch(wishlistRemoveData());
+  return new Promise(() => {
+    axios
+      .delete(`http://18.233.84.195/api/add-wishlist/13`, {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      })
+      .then((response) => {
+        console.log("wishlistRemoveApi of response=========>", JSON.stringify(response));
+        if (response.data.success) {
+          // Toast.show(response.data.message);
+          // dispatch(wishlistRemoveSuccess(response.data));
+        }
+      })
+      .catch((error) => {
+        console.log("error.response---------->", JSON.stringify(error.response));
+        // dispatch(wishlistRemoveError(error.response));
+        if (!error.response.data.success) {
+          // Toast.show('please try again');
+        }
+        return error
+      });
+  });
+};
 
 //======================== IMAGES_LIST =======================//
 export const imagesListOfRoleApi = () => async (dispatch) => {
@@ -406,6 +438,34 @@ export const imagesListOfRoleApi = () => async (dispatch) => {
       })
       .catch((error) => {
         dispatch(imagesListError(error.response));
+      });
+  });
+};
+
+//======================== user  ========================//
+export const userStatusApi = (data) => async (dispatch) => {
+  var role = await AsyncStorage.getItem('userType');
+  dispatch(registerData());
+  return new Promise(() => {
+    axios
+      .post(`${url}user/change-status/${data}`, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(async (response) => {
+        if (response.data.success) {
+          // Toast.show(response.data.message);
+          dispatch(registerSuccess(response.data));
+        }
+      })
+      .catch((error) => {
+        dispatch(registerError(error));
+        if (!error.response.data.success) {
+          Toast.show(`Thanks for signing up! In order to finalize your account, you need to your shelter to register you as a Myrios verified refugee on their 'People' page, and if your shelter does not user Myrios, register your account with 'not currently staying at shelter', so you can schedule a 5-minute call with a Myrios representative to get verified!`)
+        }
+        return error
       });
   });
 };

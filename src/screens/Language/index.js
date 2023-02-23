@@ -36,9 +36,7 @@ const Language = (props) => {
         { label: t('Indonesian'), value: 'id' },
         { label: t('German'), value: 'de' },
         { label: t('Japanese'), value: 'ja' },
-        { label: t('Nigerian'), value: 'ng' },
         { label: t('Turkish'), value: 'tr' },
-        { label: t('Cantonese'), value: 'yue' },
         { label: t('Vietnamese'), value: 'vi' },
         { label: t('Korean'), value: 'ko' },
         { label: t('Belarusian'), value: 'be' },
@@ -69,7 +67,7 @@ const Language = (props) => {
                 style={{ flex: 1 }}
                 source={IMAGES.languageBg}>
                 <CloseButton onPress={() => props.navigation.goBack()}>
-                    <ArrowLeftSvg fill={COLORS.white}/>
+                    <ArrowLeftSvg fill={COLORS.white} />
                 </CloseButton>
             </ImageBackground>
             <View style={styles.container}>
@@ -95,20 +93,21 @@ const Language = (props) => {
                                 setValue={setValue}
                                 setItems={setItems}
                                 modalAnimationType={'none'}
+                                maxHeight={100}
                                 // dropDownDirection={'BOTTOM'}
                                 dropDownContainerStyle={styles.dropDownContainerStyle}
                                 onSelectItem={(item) => { changeLanguage(item) }}
                                 modalContentContainerStyle={{
-                                    backgroundColor:COLORS.transparent,
-                            //   backgroundColor: 'rgba(240, 240, 240,0.6)',
-                                // marginVertical: 30,
-                                //     marginHorizontal: 30,
-                                //     height: 700,
-                                // width:300
+                                    backgroundColor: COLORS.transparent,
+                                    //   backgroundColor: 'rgba(240, 240, 240,0.6)',
+                                    // marginVertical: 30,
+                                    //     marginHorizontal: 30,
+                                    //     height: 700,
+                                    // width:300
                                 }}
                                 modalTitleStyle={{
                                     fontWeight: 'normal',
-                                      backgroundColor:COLORS.transparent,
+                                    backgroundColor: COLORS.transparent,
                                     // backgroundColor:'red'
                                 }}
                                 modalTitle="Select an item"

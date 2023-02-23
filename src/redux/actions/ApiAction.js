@@ -73,6 +73,20 @@ export const wishlistAddError = (error) => ({
   payload: error,
 });
 
+export const wishlistRemoveData = () => ({
+  type: ACTION_TYPES.WISHLISTS_REMOVED_API_PENDING,
+});
+
+export const wishlistRemoveSuccess = (data) => ({
+  type: ACTION_TYPES.WISHLISTS_REMOVED_API_SUCCESS,
+  payload: data,
+});
+
+export const wishlistRemoveError = (error) => ({
+  type: ACTION_TYPES.WISHLISTS_REMOVED_API_ERROR,
+  payload: error,
+});
+
 //======================== MASTERS ========================//
 export const refugeesData = () => ({
   type: ACTION_TYPES.REFUGEES_API_PENDING,

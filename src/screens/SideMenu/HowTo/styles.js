@@ -13,7 +13,7 @@ export default styles = StyleSheet.create({
     },
     slide1: {
         alignItems: 'center',
-        height: (BaseStyle.HEIGHT / 100) * 70,
+        height: (BaseStyle.HEIGHT / 100) * 75,
 
     },
     imgStyle: {
@@ -48,9 +48,9 @@ export default styles = StyleSheet.create({
         width: (BaseStyle.WIDTH / 100) * 90,
         alignSelf: 'center',
         color: COLORS.black,
-        fontSize: 16,
+        fontSize: 18,
         textAlign: 'center',
-        fontFamily: FONTS.Poppins_SemiBold
+        fontFamily: FONTS.Poppins_SemiBold,
     },
     subText: {
         marginTop: 20,
@@ -58,8 +58,8 @@ export default styles = StyleSheet.create({
         alignSelf: 'center',
         textAlign: 'center',
         color: COLORS.black,
-        fontSize: 12,
-        fontFamily: FONTS.Poppins_Regular
+        fontSize: 14,
+        fontFamily: FONTS.Poppins_SemiBold
     },
     skipText: {
         color: COLORS.black,

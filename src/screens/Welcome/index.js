@@ -20,6 +20,7 @@ const Welcome = (props) => {
     }, []);
     const [isRole, setIsRole] = useState('');
     const isShelter = isRole === ROLE.SHELTER
+    const isDonor = isRole === ROLE.DONOR
 
     return (
         <ImageBackground
@@ -48,9 +49,11 @@ const Welcome = (props) => {
                         marginTop={10}
                         fontSize={16}
                         onPress={() => {
-                            // isShelter ?
-                            //  props.navigation.navigate('ShelterWishList'):
-                            //  props.navigation.navigate('WishLists')
+                            if (isDonor) {
+                                props.navigation.navigate('WishLists')
+                            } else {
+                                props.navigation.navigate('ShelterWishList')
+                            }
                         }}
                     />
                 </View>

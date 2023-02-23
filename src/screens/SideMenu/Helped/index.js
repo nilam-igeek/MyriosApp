@@ -69,8 +69,9 @@ const Helped = (props) => {
                             data={isShelter ? isDataPeople.data : dataOfwishListDataList.data}
                             extraData={isShelter ? isDataPeople.data : dataOfwishListDataList.data}
                             keyExtractor={item => item.id}
-                            renderItem={({ item }) =>
-                                <View style={styles.itemCard}>
+                            renderItem={({ item }) => {
+                                console.log("item-111----->", item.is_wishlist);
+                                return (<View style={styles.itemCard}>
                                     <View style={styles.profile}>
                                         {item.image ?
                                             <Image
@@ -81,7 +82,9 @@ const Helped = (props) => {
                                     </View>
                                     {isShelter ? <Text style={styles.userName}>{item.name}, {item.gender}, {item.age} {t('year')}</Text> :
                                         <Text style={styles.userName}>{item.name}</Text>}
-                                </View>}
+                                </View>)
+                            }
+                            }
                         />
                     </View>) :
                     (<View style={{ flex: 1, justifyContent: "center", alignItems: 'center' }}>

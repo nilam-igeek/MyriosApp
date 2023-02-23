@@ -48,6 +48,9 @@ const SheltersList = (props) => {
                                 <Text style={{ marginLeft: 20 }} >
                                     <Text style={styles.userName}>{item.name}</Text>
                                 </Text>
+                                <View style={{ marginLeft: 30, backgroundColor: COLORS.blue, width: 100, borderRadius: 20 }}>
+                                    <Text style={{ color: COLORS.white, padding: 5, textAlign: 'center' }}>Active</Text>
+                                </View>
                             </Pressable>} />
                 </View>
             </View>

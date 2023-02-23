@@ -37,8 +37,14 @@ const App = () => {
   // }
 
   useEffect(() => {
-    SplashScreen.hide(); //hides the splash screen on app load.
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 3000)
+
   }, []);
+
+
+
 
 
   const getAccessToken = async () => {
@@ -59,6 +65,7 @@ const App = () => {
       setInitialRouteName('GetStarted')
     }
     await AsyncStorage.setItem('token', token)
+    console.log("isToken--111->", isToken);
   };
 
   useEffect(() => {

@@ -23,6 +23,7 @@ const ContactUs = (props) => {
     const [showModal, setShowModal] = useState(false);
 
     const isShelter = isRole === ROLE.SHELTER
+    const isDonor = isRole === ROLE.DONOR
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -57,6 +58,15 @@ const ContactUs = (props) => {
         setShowModal(true)
         actions.resetForm();
     };
+
+    const onClick = () => {
+        setShowModal(false);
+        if (isDonor) {
+            props.navigation.navigate('WishLists')
+        } else {
+            props.navigation.navigate('ShelterWishList')
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -145,7 +155,7 @@ const ContactUs = (props) => {
                         <View style={{ justifyContent: 'center', alignItems: "center" }}>
                             <Text style={styles.modalSubText}>{'Submitted! We are eager to here what you have to say, and will be in contact with you shortly.'}</Text>
                             <Button
-                                onPress={() => { setShowModal(false), props.navigation.navigate('WishLists') }}
+                                onPress={onClick}
                                 borderRadius={50}
                                 fontSize={16}
                                 color={COLORS.white}

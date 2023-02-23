@@ -8,7 +8,7 @@ import Header from '../../components/core/Header';
 import WishListCard from '../../components/core/WishListCard';
 import { IMAGES } from '../../common/style/Images';
 import HeartSvg from '../../common/svgs/HeartSvg';
-import { wishlistAddApi, wishListApi, wishListFilterApi } from '../../redux/actions/ApiActionCreator';
+import { wishlistAddApi, wishlistRemoveApi, wishListApi, wishListFilterApi } from '../../redux/actions/ApiActionCreator';
 import { useDispatch, useSelector } from 'react-redux';
 import Indicator from '../../components/core/Indicator';
 import CloseSvg from '../../common/svgs/CloseSvg';
@@ -18,8 +18,9 @@ import BaseStyle from '../../common/style/BaseStyle';
 import CountryPickerModal from '../../components/core/CountryPickerModal';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import _ from 'lodash';
+import HeartFillSvg from '../../common/svgs/HeartFillSvg';
 const WishLists = (props) => {
-
+    console.log("props.navigation----->", props.navigation);
 
     // const defaultValues = [
     //     getDefaultStartValue(rentRangeFilter),
@@ -30,6 +31,8 @@ const WishLists = (props) => {
     const [isItems, setItems] = useState(false);
     const [country, setCountry] = useState('');
     const [showModal, setShowModal] = useState(false);
+    const [showModalFav, setShowModalFav] = useState(false);
+
     const [isFavItem, setIsFavItem] = useState();
     const [isItemsData, setItemsData] = useState([]);
     const [isSelected, setIsSelected] = useState('Girl');
@@ -57,11 +60,18 @@ const WishLists = (props) => {
     }
 
     const onClickFev = (item, index) => {
-        console.log("item---------->", item.id);
-        console.log("item---------->", typeof item.id);
         setIsFavItem(index)
-        dispatch(wishlistAddApi(item.id))
+
+        console.log("item.is_wishlist--------------->", item.is_wishlist);
+        if (item.is_wishlist) {
+            setShowModalFav(true);
+            dispatch(wishlistRemoveApi(item.id))
+        } else {
+            dispatch(wishlistAddApi(item.id))
+        }
+
     }
+
 
     const onClickShowModal = () => {
         setShowModal(!showModal)
@@ -89,7 +99,9 @@ const WishLists = (props) => {
         <>
             <View style={styles.container}>
                 <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.seashell} />
-                <Header title={t('myrios')} onPress={() => { props.navigation.toggleDrawer() }} />
+                <Header title={t('myrios')} onPress={() => {
+                    props.navigation.toggleDrawer()
+                }} />
                 <Text style={styles.wishListText}>{t('wishList')}</Text>
                 <View style={styles.sortByContainer}>
                     <Text onPress={() => onClickShowModal()} style={styles.sortByText}>{t('sortBy')}</Text>
@@ -195,7 +207,6 @@ const WishLists = (props) => {
                         extraData={dataOfwishListDataList.data}
                         keyExtractor={item => item.id}
                         renderItem={({ item, index }) => {
-                            // console.log("item=====fsdfd===>", item);
                             return (<WishListCard
                                 onClick={() => { onClickFev(item, index) }}
                                 name={item.name}
@@ -204,9 +215,8 @@ const WishLists = (props) => {
                                 // country={item.country}
                                 onPress={() => { selectedItem(item) }}
                                 source={item.image}>
-                                <HeartSvg HeartSvg
-                                    stroke={isFavItem === index ? COLORS.white : COLORS.black}
-                                    fill={isFavItem === index ? COLORS.black : COLORS.white} />
+                                {item.is_wishlist ? <HeartFillSvg /> : <HeartSvg />}
+                                {/* {(item.is_wishlist || (isFavItem === index)) ? <HeartFillSvg /> : <HeartSvg />} */}
                             </WishListCard>)
                         }}
                         numColumns={2} />
@@ -252,7 +262,38 @@ const WishLists = (props) => {
                     </View>
                 </View>
             </Modal>
-            {/* <Indicator isLoader animate={loading} /> */}
+            {/* {
+                <Modal
+                    visible={showModalFav}
+                    animationType="fade"
+                    transparent={true}
+                    onRequestClose={() => { setShowModalFav(false) }}>
+                    <View style={styles.blurView}>
+                        <View style={styles.blurSubView}>
+                            <Pressable onPress={() => setShowModalFav(false)} style={styles.closeBtn}>
+                                <CloseSvg fill={COLORS.white} width={10} height={10} />
+                            </Pressable>
+                            <View style={{ justifyContent: 'center', alignItems: "center" }}>
+
+                                <><Text style={styles.modalSubText}>Are you sure remove the list ? </Text>
+                                    <Button
+                                        onPress={() => { }}
+                                        borderRadius={50}
+                                        fontSize={16}
+                                        color={COLORS.white}
+                                        height={40}
+                                        marginTop={35}
+                                        width={'60%'}
+                                        title={`YES`}
+                                    />
+                                </>
+                            </View>
+
+                        </View>
+                    </View>
+                </Modal>
+            } */}
+            <Indicator isLoader animate={loading} />
         </>
     );
 };

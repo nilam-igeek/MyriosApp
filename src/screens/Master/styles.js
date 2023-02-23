@@ -27,7 +27,7 @@ export default styles = StyleSheet.create({
     },
     roleOfProfile: {
         borderWidth: 1,
-        borderColor:COLORS.grey,
+        borderColor: COLORS.grey,
         marginVertical: 30,
         width: 150,
         height: 150,
@@ -90,7 +90,8 @@ export default styles = StyleSheet.create({
         borderBottomWidth: 1,
         alignItems: 'center',
         paddingBottom: 8,
-        paddingTop: 20
+        paddingTop: 20,
+        justifyContent: 'space-between'
     },
     profileStyle: {
         width: 60,
@@ -314,7 +315,7 @@ export default styles = StyleSheet.create({
         fontFamily: FONTS.Poppins_SemiBold
     },
     itemText2: {
-        marginVertical:10,
+        marginVertical: 10,
         color: COLORS.black,
         fontSize: 18,
         fontFamily: FONTS.Poppins_SemiBold
@@ -345,7 +346,7 @@ export default styles = StyleSheet.create({
     },
     pieCard: {
         flexDirection: 'row',
-        alignItems: 'center' 
+        alignItems: 'center'
     },
     pieBox: {
         width: 25,
@@ -360,16 +361,16 @@ export default styles = StyleSheet.create({
         fontFamily: FONTS.Poppins_Regular
     },
     mostPopularText: {
-        marginBottom:15,
-        textAlign:'left',
-          fontSize: 20,
+        marginBottom: 15,
+        textAlign: 'left',
+        fontSize: 20,
         color: COLORS.black,
         fontFamily: FONTS.Poppins_SemiBold
     },
-     pieContainer: {
-         justifyContent: 'center', 
+    pieContainer: {
+        justifyContent: 'center',
         alignItems: "center",
-        marginTop: 20 
+        marginTop: 20
     },
     pieSubContainer: {
         marginVertical: 38,
@@ -383,7 +384,7 @@ export default styles = StyleSheet.create({
         width: 320,
         height: 570,
         alignSelf: 'center',
-        marginBottom:10
+        marginBottom: 10
     },
     popularScreenImg: {
         width: '100%',
