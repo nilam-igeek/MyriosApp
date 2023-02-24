@@ -186,5 +186,17 @@ export default styles = StyleSheet.create({
         color: COLORS.black,
         fontFamily: FONTS.Poppins_SemiBold,
         textAlign: 'left'
-    }
+    },
+    closeBtn: {
+        position: "absolute",
+        right: -7,
+        justifyContent: 'center',
+        top: -7,
+        alignItems: 'center',
+        width: 22,
+        height: 22,
+        borderRadius: 100,
+        justifyContent: 'center',
+        backgroundColor: COLORS.black
+    },
 });

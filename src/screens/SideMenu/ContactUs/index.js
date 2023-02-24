@@ -162,7 +162,7 @@ const ContactUs = (props) => {
                                 height={40}
                                 marginTop={35}
                                 width={'60%'}
-                                title={`Wishlist`}
+                                title={`Explore whislist`}
                             />
 
                         </View>

@@ -91,7 +91,7 @@ export default styles = StyleSheet.create({
         alignItems: 'center',
         paddingBottom: 8,
         paddingTop: 20,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     profileStyle: {
         width: 60,

@@ -224,6 +224,21 @@ export const peopleError = (error) => ({
   payload: error,
 });
 
+//======================== USER STATUS ========================//
+export const userStatusData = () => ({
+  type: ACTION_TYPES.USER_STATUS_API_PENDING,
+});
+
+export const userStatusSuccess = (data) => ({
+  type: ACTION_TYPES.USER_STATUS_API_SUCCESS,
+  payload: data,
+});
+
+export const userStatusError = (error) => ({
+  type: ACTION_TYPES.USER_STATUS_API_ERROR,
+  payload: error,
+});
+
 //======================== IMAGES_LIST =======================//
 export const imagesListData = () => ({
   type: ACTION_TYPES.IMAGES_LIST_API_PENDING,

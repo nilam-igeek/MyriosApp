@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ImageBackground, ScrollView, Pressable, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, ImageBackground, ScrollView, Pressable, KeyboardAvoidingView, Platform, Modal } from 'react-native';
 import { COLORS } from '../../common/style/Colors';
 import Button from '../../components/core/Button';
 import styles from './styles';
@@ -26,12 +26,15 @@ import Toast from 'react-native-simple-toast';
 const SignUpSecondScreen = (props) => {
     const isdataProfile = useSelector((state) => state.apiReducer.dataProfile);
     const isUserData = useSelector((state) => state.apiReducer.regiData);
+    const isStatus = useSelector((state) => state.apiReducer.error);
+    console.log("error===11==>", isStatus);
     const loading = useSelector((state) => state.apiReducer.loading);
     const success = useSelector((state) => state.apiReducer.regiData);
     console.log("isdataProfile1111111--->", isdataProfile);
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const [isShow, setIsShow] = useState(false);
+
     const [isRole, setIsRole] = useState('');
     const isRefugee = isRole === ROLE.REFUGEE
     const isShelter = isRole === ROLE.SHELTER
@@ -202,6 +205,23 @@ const SignUpSecondScreen = (props) => {
                         </ScrollView>
                     </View>
                 </View>
+
+                {/* {isModalShow && <Modal
+                    visible={isModalShow}
+                    animationType="fade"
+                    transparent={true}
+                    onRequestClose={() => { setIsModalShow(false) }}>
+                    <View style={styles.blurView}>
+                        <View style={styles.blurSubView}>
+                            <Pressable onPress={() => setIsModalShow(false)} style={styles.closeBtn}>
+                                <CloseSvg fill={COLORS.white} width={10} height={10} />
+                            </Pressable>
+                            <View style={{ justifyContent: 'center', alignItems: "center" }}>
+                                <Text style={styles.modalSubText}>{`Thanks for signing up! In order to finalize your account, you need to your shelter to register you as a Myrios verified refugee on their 'People' page, and if your shelter does not user Myrios, register your account with 'not currently staying at shelter', so you can schedule a 5-minute call with a Myrios representative to get verified!`}</Text>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>} */}
             </KeyboardAvoidingView>
             <Indicator isLoader animate={loading} />
         </>

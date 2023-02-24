@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import { View, Text, StatusBar, Image, TextInput, ScrollView } from 'react-native';
 import styles from './styles';
 import '../../../assets/i18n/i18n';
@@ -12,7 +12,7 @@ const ProfileOfRole = (props) => {
     const [response, setResponse] = useState('')
     const [userEmail, setuserEmail] = useState(`nilam.igeek@gmail.com`)
 
- handleEmail = () => {
+    handleEmail = () => {
         // const to = ['nilam.igeek@gmail.com', 'foo@bar.com'] // string or array of email addresses
         email(userEmail, {
             // Optional additional arguments
@@ -28,27 +28,27 @@ const ProfileOfRole = (props) => {
     return (
         <View style={styles.container}>
             <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.seashell} />
-            <Header title={t('myrios')} onPress={() => { props.navigation.toggleDrawer() }} />
+            <Header title={t('myrios')} onPress={() => { props.navigation.goBack() }} />
             <View style={styles.subProContainer}>
-                <ScrollView contentContainerStyle={{flexGrow:1}}>
-                <Image resizeMode='contain' style={styles.roleOfProfile} source={IMAGES.donor1} />
-                <Text style={styles.userTitleText}>{`John, France`}</Text>
-                <Text style={[styles.commonText, { marginTop: 20 }]}>{t('descAbout')}</Text>
-                <Text style={styles.commonText}>{`Time of request submitted`}</Text>
-                <Text style={styles.commonText}>{`Date of request submitted`}</Text>
-                <Text style={styles.commonText}>{`${t('isEmail')} ${userEmail}`}</Text>
-                <Text style={styles.commonText}>{t('request')}</Text>
-                <View style={styles.responseView}>
-                    <Text style={styles.responseText}>{t('response')}</Text>
-                    <TextInput
-                        style={styles.inputView}
-                        multiline={true}
-                        numberOfLines={4}
-                        onChangeText={(text) => setResponse(text)}
-                        value={response} />
-                </View>
+                <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                    <Image resizeMode='contain' style={styles.roleOfProfile} source={IMAGES.donor1} />
+                    <Text style={styles.userTitleText}>{`John, France`}</Text>
+                    <Text style={[styles.commonText, { marginTop: 20 }]}>{t('descAbout')}</Text>
+                    <Text style={styles.commonText}>{`Time of request submitted`}</Text>
+                    <Text style={styles.commonText}>{`Date of request submitted`}</Text>
+                    <Text style={styles.commonText}>{`${t('isEmail')} ${userEmail}`}</Text>
+                    <Text style={styles.commonText}>{t('request')}</Text>
+                    <View style={styles.responseView}>
+                        <Text style={styles.responseText}>{t('response')}</Text>
+                        <TextInput
+                            style={styles.inputView}
+                            multiline={true}
+                            numberOfLines={4}
+                            onChangeText={(text) => setResponse(text)}
+                            value={response} />
+                    </View>
                     <Text onPress={handleEmail} style={styles.sendText}>{t('send')}</Text>
-                    </ScrollView>
+                </ScrollView>
             </View>
         </View>
     );

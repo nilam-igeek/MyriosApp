@@ -14,7 +14,7 @@ import EditSvg from '../../../common/svgs/EditSvg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ROLE } from '../../../constants/types';
 import { updateProfileApi } from '../../../redux/actions/ApiActionCreator';
-import ImagePicker from 'react-native-image-crop-picker';
+// import ImagePicker from 'react-native-image-crop-picker';
 import CountryPickerModal from '../../../components/core/CountryPickerModal';
 import { useDispatch, useSelector } from 'react-redux';
 import Indicator from '../../../components/core/Indicator';
@@ -104,27 +104,27 @@ const Profile = (props) => {
         setIsSelected(type)
     }
 
-    const openLibrary = () => {
-        ImagePicker.openPicker({
-            width: 300,
-            height: 400,
-            cropping: true
-        }).then(image => {
-            setIsImages(image.path)
-            setModalVisible(false)
-        });
-    }
+    // const openLibrary = () => {
+    //     ImagePicker.openPicker({
+    //         width: 300,
+    //         height: 400,
+    //         cropping: true
+    //     }).then(image => {
+    //         setIsImages(image.path)
+    //         setModalVisible(false)
+    //     });
+    // }
 
-    const openCamera = () => {
-        ImagePicker.openCamera({
-            width: 300,
-            height: 400,
-            cropping: true,
-        }).then(image => {
-            setIsImages(image.path)
-            setModalVisible(false)
-        });
-    }
+    // const openCamera = () => {
+    //     ImagePicker.openCamera({
+    //         width: 300,
+    //         height: 400,
+    //         cropping: true,
+    //     }).then(image => {
+    //         setIsImages(image.path)
+    //         setModalVisible(false)
+    //     });
+    // }
 
     // const onClickEdit = () => {
     //     setIsModalVisible(true)
@@ -161,7 +161,7 @@ const Profile = (props) => {
                                                     style={styles.profileStyle} /> :
                                                 <ProfileSvg />}
                                         </View> */}
-                                        <Modal
+                                        {/* <Modal
                                             animationType="slide"
                                             transparent={true}
                                             visible={modalVisible}
@@ -176,7 +176,7 @@ const Profile = (props) => {
                                                     <Text onPress={() => setModalVisible(false)} style={styles.cancelText}>{t('cancel')}</Text>
                                                 </View>
                                             </View>
-                                        </Modal>
+                                        </Modal> */}
 
                                         {isName ?
                                             <Field
@@ -300,17 +300,20 @@ const Profile = (props) => {
                                                     placeholder={t('about')}
                                                     placeholderColor={COLORS.black}
                                                     isError={errors.about}
-                                                    multiline
+                                                    // multiline
                                                     borderRadius={20}
-                                                    height={120}
-                                                    numberOfLines={3}
+                                                    height={82}
+                                                    // numberOfLines={3}
                                                     mt={30}
                                                 /> :
                                                     <ButtonWithIcon title={userDetails.description ? userDetails.description : 'description'} onPress={() => { setAbout(true) }} />
                                                 }
                                             </>
                                         }
-                                        <ButtonWithIcon title={t('editProfile')} onPress={() => { setModalVisible(!modalVisible) }} />
+                                        <ButtonWithIcon title={t('editProfile')}
+                                            onPress={() => {
+                                                // setModalVisible(!modalVisible) 
+                                            }} />
                                     </View>
                                     <Button
                                         marginBottom={30}

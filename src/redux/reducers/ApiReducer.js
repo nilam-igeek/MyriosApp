@@ -20,7 +20,8 @@ const initialState = {
   imagesListOfRoleData: '',
   wishListFilterData: '',
   wishlistAddData: '',
-  wishlistRemoveData: ''
+  wishlistRemoveData: '',
+  userStatusData: ''
 };
 
 const apiReducer = (state = initialState, action) => {
@@ -305,7 +306,24 @@ const apiReducer = (state = initialState, action) => {
         error: action.payload,
         loading: false,
       };
-
+    //======================== USER STATUS ========================//
+    case ACTION_TYPES.USER_STATUS_API_PENDING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ACTION_TYPES.USER_STATUS_API_SUCCESS:
+      return {
+        ...state,
+        userStatusData: action.payload,
+        loading: false,
+      };
+    case ACTION_TYPES.USER_STATUS_API_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
     //======================== SET_PROFILE ========================//
     case ACTION_TYPES.PROFILE_SET_DATA:
       return {

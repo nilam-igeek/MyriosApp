@@ -8,43 +8,48 @@ export default styles = StyleSheet.create({
         flex: 1,
         justifyContent: "flex-end",
         alignItems: 'center',
-        marginTop: 30,
+        marginTop: 10,
         marginBottom: Platform.OS === 'ios' ? 65 : 30
     },
-   
+
     container: {
         flex: 1,
         justifyContent: 'flex-end'
     },
-     card: {
+    card: {
         backgroundColor: COLORS.white,
         // height: (BaseStyle.HEIGHT / 100) * 60,
-          height:'120%',
+        height: '120%',
         width: '100%',
         borderTopRightRadius: 40,
         borderTopLeftRadius: 40,
         alignSelf: 'center',
-        alignItems:'center'
+        alignItems: 'center'
     },
     subContainer: {
+        marginTop: 20,
+        // backgroundColor: 'pink',
         alignSelf: 'center',
-        justifyContent: 'center',
+        // justifyContent: 'center',
         alignItems: 'center',
         width: (BaseStyle.WIDTH / 100) * 80,
+        // backgroundColor: 'red',
+        // height: (BaseStyle.HEIGHT / 100) * 10,
+        flex: 1
     },
-        titleText: {
+    titleText: {
         width: (BaseStyle.WIDTH / 100) * 80,
         alignItems: 'center',
         fontSize: 26,
-        marginVertical: 25,
+        marginTop: 25,
         color: COLORS.black,
-        fontFamily:FONTS.Poppins_SemiBold
+        fontFamily: FONTS.Poppins_SemiBold
     },
     lanText: {
         fontSize: 16,
         fontFamily: FONTS.Poppins_SemiBold,
         alignSelf: 'center',
-        marginTop: 10,
+        // marginTop: 10,
         marginBottom: 10,
         width: '100%',
         color: COLORS.black,

@@ -14,13 +14,15 @@ import analytics from '@react-native-firebase/analytics';
 import SplashScreen from "react-native-splash-screen";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { loginApi } from './redux/actions/ApiActionCreator';
+import { ROLE } from './constants/types';
 const App = () => {
 
   const [id, setId] = useState('');
   const [isToken, setIsToken] = useState('');
   const dispatch = useDispatch();
   const [initialRouteName, setInitialRouteName] = useState('GetStarted');
-
+  const [isRole, setIsRole] = useState('');
+  const isMaster = isRole === ROLE.MASTER
   useEffect(() => {
     // onProductView();
     DeviceInfo.getUniqueId().then((uniqueId) => {
@@ -43,7 +45,13 @@ const App = () => {
 
   }, []);
 
-
+  useEffect(() => {
+    async function check() {
+      var item = await AsyncStorage.getItem('userType');
+      setIsRole(item)
+    }
+    check();
+  }, []);
 
 
 
@@ -55,12 +63,17 @@ const App = () => {
     console.log("isEmail", isEmail);
     setIsToken(token)
     if (token) {
-      setInitialRouteName('Welcome')
-      var body = {
-        password: isPassword,
-        email: isEmail
-      };
-      dispatch(loginApi(body));
+
+      if (isMaster) {
+        setInitialRouteName('RefugeesList')
+      } else {
+        setInitialRouteName('Welcome')
+        var body = {
+          password: isPassword,
+          email: isEmail
+        };
+        dispatch(loginApi(body));
+      }
     } else {
       setInitialRouteName('GetStarted')
     }

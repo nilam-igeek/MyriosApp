@@ -14,19 +14,18 @@ import * as yup from 'yup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ROLE } from '../../constants/types';
 import CountryPickerModal from '../../components/core/CountryPickerModal';
-import ImagePicker from 'react-native-image-crop-picker';
+// import ImagePicker from 'react-native-image-crop-picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { signUpDataOfUser } from '../../redux/actions/ApiActionCreator';
 import { IMAGES } from '../../common/style/Images';
 import ArrowLeftSvg from '../../common/svgs/ArrowLeftSvg';
-// import DatePicker from 'react-native-date-picker'
+import DatePicker from 'react-native-date-picker'
 import _ from 'lodash';
 const SignUpFirstScreen = (props) => {
     const dispatch = useDispatch();
 
     const isUserData = useSelector((state) => state.apiReducer.data);
     const isProfile = useSelector((state) => state.apiReducer.dataProfile)
-    console.log("isProfile------->", isProfile.profile);
     const { t } = useTranslation();
     const [profile, setProfile] = useState('');
     const [country, setCountry] = useState('');
@@ -34,11 +33,13 @@ const SignUpFirstScreen = (props) => {
     const [isRole, setIsRole] = useState('');
     const [isImages, setIsImages] = useState(isProfile.profile);
     const [modalVisible, setModalVisible] = useState(false);
-    const [date, setDate] = useState(new Date())
+    const [date, setDate] = useState(new Date(34555646456))
+    const [isAge, setIsAge] = useState(0)
     const [open, setOpen] = useState(false)
     const isRefugee = isRole === ROLE.REFUGEE
     const isShelter = isRole === ROLE.SHELTER
     const isDonor = isRole === ROLE.DONOR
+
 
     useEffect(() => {
         async function check() {
@@ -70,9 +71,9 @@ const SignUpFirstScreen = (props) => {
         firstName: yup
             .string()
             .required(t('nameRequired')),
-        age: yup
-            .string()
-            .required(t('ageRequired')),
+        // age: yup
+        //     .string()
+        //     .required(t('ageRequired')),
         watchlistLink: yup
             .string(),
         watchlistDescription: yup
@@ -107,26 +108,39 @@ const SignUpFirstScreen = (props) => {
         setIsSelected(type)
     }
 
-    const openLibrary = () => {
-        ImagePicker.openPicker({
-            width: 300,
-            height: 400,
-            cropping: true
-        }).then(image => {
-            setIsImages(image.path)
-            setModalVisible(false)
-        });
-    }
+    // const openLibrary = () => {
+    //     ImagePicker.openPicker({
+    //         width: 300,
+    //         height: 400,
+    //         cropping: true
+    //     }).then(image => {
+    //         setIsImages(image.path)
+    //         setModalVisible(false)
+    //     });
+    // }
 
-    const openCamera = () => {
-        ImagePicker.openCamera({
-            width: 300,
-            height: 400,
-            cropping: true,
-        }).then(image => {
-            setIsImages(image.path)
-            setModalVisible(false)
-        });
+    // const openCamera = () => {
+    //     ImagePicker.openCamera({
+    //         width: 300,
+    //         height: 400,
+    //         cropping: true,
+    //     }).then(image => {
+    //         setIsImages(image.path)
+    //         setModalVisible(false)
+    //     });
+    // }
+
+
+    calculate_age = () => {
+        var today = new Date();
+        var birthDate = new Date(date);
+        var age_now = today.getFullYear() - birthDate.getFullYear();
+        var m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age_now--;
+        }
+        setIsAge(age_now);
+        return age_now;
     }
 
     return (
@@ -152,7 +166,7 @@ const SignUpFirstScreen = (props) => {
                             <View style={styles.subContainer}>
                                 <Formik
                                     validationSchema={isShelter ? loginShelterValidationSchema : isDonor ? loginDonorValidationSchema : loginRefugeeValidationSchema}
-                                    initialValues={{ firstName: '', about: '', age: '', watchlistLink: '', watchlistDescription: '' }}
+                                    initialValues={{ firstName: '', about: '', watchlistLink: '', watchlistDescription: '' }}
                                     onSubmit={onClickSubmit}>
                                     {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, }) => (
                                         <>
@@ -166,7 +180,7 @@ const SignUpFirstScreen = (props) => {
                                                                 style={styles.profileStyle} />
                                                         </Pressable>
                                                     }
-                                                    <Modal
+                                                    {/* <Modal
                                                         animationType="slide"
                                                         transparent={true}
                                                         visible={modalVisible}
@@ -179,9 +193,9 @@ const SignUpFirstScreen = (props) => {
                                                                 <Text onPress={() => setModalVisible(false)} style={styles.cancelText}>{t('cancel')}</Text>
                                                             </View>
                                                         </View>
-                                                    </Modal>
+                                                    </Modal> */}
                                                 </View>
-                                                <View style={[styles.nameInput, { width: !_.isEmpty(isProfile.profile) ? '65%' : '100%' }]}>
+                                                <View style={[styles.nameInput, { marginBottom: 10, width: !_.isEmpty(isProfile.profile) ? '65%' : '100%' }]}>
                                                     <Field
                                                         name={'firstName'}
                                                         component={Input}
@@ -190,7 +204,7 @@ const SignUpFirstScreen = (props) => {
                                                         onBlur={handleBlur('firstName')}
                                                         width={!_.isEmpty(isProfile.profile) ? (BaseStyle.WIDTH / 100) * 50 : (BaseStyle.WIDTH / 100) * 80}
                                                         inputWidth={!_.isEmpty(isProfile.profile) ? (BaseStyle.WIDTH / 100) * 40 : (BaseStyle.WIDTH / 100) * 70}
-                                                        placeholder={isShelter ? ('shelterName') : t('fName')}
+                                                        placeholder={isShelter ? 'Shelter Name' : 'First Name'}
                                                         isError={errors.firstName}
                                                     />
                                                 </View>
@@ -202,7 +216,7 @@ const SignUpFirstScreen = (props) => {
 
                                             {isRefugee &&
                                                 <>
-                                                    <Field
+                                                    {/* <Field
                                                         name={'age'}
                                                         component={Input}
                                                         value={values.age}
@@ -213,20 +227,37 @@ const SignUpFirstScreen = (props) => {
                                                         placeholder={t('age')}
                                                         maxLength={2}
                                                         mt={20}
-                                                        isError={errors.age} />
-                                                    {/* <Button title="Open" onPress={() => setOpen(true)} />
+                                                        isError={errors.age} /> */}
+
+                                                    <Button
+                                                        bgColor={COLORS.lemonchiffon}
+                                                        width={(BaseStyle.WIDTH / 100) * 80}
+                                                        title={isAge > 0 ? isAge : 'Age'}
+                                                        fontSize={14}
+                                                        color={isAge > 0 ? COLORS.black : COLORS.grey}
+                                                        height={45}
+                                                        marginTop={30}
+                                                        isRight
+                                                        onPress={() => setOpen(true)}
+                                                    />
+
                                                     <DatePicker
                                                         modal
+                                                        mode='date'
                                                         open={open}
                                                         date={date}
                                                         onConfirm={(date) => {
+                                                            calculate_age();
                                                             setOpen(false)
                                                             setDate(date)
                                                         }}
                                                         onCancel={() => {
                                                             setOpen(false)
                                                         }}
-                                                    /> */}
+                                                    />
+
+
+
                                                     <Text style={styles.chooseOneText}>{t('chooseOne')}</Text>
                                                     <View style={styles.chooseOneCard}>
                                                         <Button

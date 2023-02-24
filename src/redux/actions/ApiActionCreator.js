@@ -41,15 +41,15 @@ import {
   imagesListData,
   imagesListSuccess,
   imagesListError,
-  wishlistFilterData,
-  wishlistFilterSuccess,
-  wishlistFilterError,
   wishlistAddData,
   wishlistAddSuccess,
   wishlistAddError,
   wishlistRemoveData,
   wishlistRemoveSuccess,
   wishlistRemoveError,
+  userStatusData,
+  userStatusSuccess,
+  userStatusError
 } from './ApiAction';
 import Toast from 'react-native-simple-toast';
 
@@ -100,13 +100,18 @@ export const registerApi = (data) => async (dispatch) => {
         },
       })
       .then(async (response) => {
+        console.log("rroor1111====>", response);
         if (response.data.success) {
-          // Toast.show(response.data.message);
+          Toast.show(response.data.message);
           dispatch(registerSuccess(response.data));
         }
       })
       .catch((error) => {
-        dispatch(registerError(error));
+        // console.log("rroor222211=111ddada1==qeqw=>", JSON.stringify(error.response.data.data.email[0]));
+        dispatch(registerError(error.response));
+        // if (error.response.data.data.email) {
+        //   Toast.show(JSON.stringify(error.response.data.data.email[0]), );
+        // }
         if (!error.response.data.success) {
           Toast.show(`Thanks for signing up! In order to finalize your account, you need to your shelter to register you as a Myrios verified refugee on their 'People' page, and if your shelter does not user Myrios, register your account with 'not currently staying at shelter', so you can schedule a 5-minute call with a Myrios representative to get verified!`)
         }
@@ -405,12 +410,12 @@ export const wishlistRemoveApi = (data) => async (dispatch) => {
         console.log("wishlistRemoveApi of response=========>", JSON.stringify(response));
         if (response.data.success) {
           // Toast.show(response.data.message);
-          // dispatch(wishlistRemoveSuccess(response.data));
+          dispatch(wishlistRemoveSuccess(response.data));
         }
       })
       .catch((error) => {
         console.log("error.response---------->", JSON.stringify(error.response));
-        // dispatch(wishlistRemoveError(error.response));
+        dispatch(wishlistRemoveError(error.response));
         if (!error.response.data.success) {
           // Toast.show('please try again');
         }
@@ -442,29 +447,34 @@ export const imagesListOfRoleApi = () => async (dispatch) => {
   });
 };
 
-//======================== user  ========================//
-export const userStatusApi = (data) => async (dispatch) => {
+//======================== USER STATUS ========================//
+export const userStatusApi = (id) => async (dispatch) => {
+  console.log("id------>", id);
   var role = await AsyncStorage.getItem('userType');
-  dispatch(registerData());
+  var isToken = await AsyncStorage.getItem('token');
+  dispatch(userStatusData());
   return new Promise(() => {
     axios
-      .post(`${url}user/change-status/${data}`, {
+      .post(`${url}user/change-status/${id}`, null, {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${isToken}`
         },
       })
       .then(async (response) => {
+        // console.log("error.response.data.11111----->", response.data.message);
+        dispatch(userStatusSuccess(response.data));
         if (response.data.success) {
-          // Toast.show(response.data.message);
-          dispatch(registerSuccess(response.data));
+          Toast.show(response.data.message);
         }
       })
       .catch((error) => {
-        dispatch(registerError(error));
-        if (!error.response.data.success) {
-          Toast.show(`Thanks for signing up! In order to finalize your account, you need to your shelter to register you as a Myrios verified refugee on their 'People' page, and if your shelter does not user Myrios, register your account with 'not currently staying at shelter', so you can schedule a 5-minute call with a Myrios representative to get verified!`)
-        }
+        dispatch(userStatusError(error));
+        // console.log("error.response.data.222222dssfsdf----->", error.response.data);
+        // if (!error.response.data.success) {
+        //   Toast.show(`Thanks for signing up! In order to finalize your account, you need to your shelter to register you as a Myrios verified refugee on their 'People' page, and if your shelter does not user Myrios, register your account with 'not currently staying at shelter', so you can schedule a 5-minute call with a Myrios representative to get verified!`)
+        // }
         return error
       });
   });
