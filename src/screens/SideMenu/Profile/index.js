@@ -20,17 +20,25 @@ import { useDispatch, useSelector } from 'react-redux';
 import Indicator from '../../../components/core/Indicator';
 import ButtonWithIcon from '../../../components/core/ButtonWithIcon';
 import RNRestart from 'react-native-restart';
+import _ from 'lodash';
 const Profile = (props) => {
     const loading = useSelector((state) => state.apiReducer.loading);
     const isData = useSelector((state) => state.apiReducer.loginData);
-    console.log("isData=====>", isData);
-    const userDetails = isData.data.user
+    const isNewData = useSelector((state) => state.apiReducer.regiData);
+
+    const data = isNewData ? isNewData : isData;
+    console.log("const isUserData 111111==========-->", data);
+    // const isData = (!_.isEmpty(isData.data.user) && isData.data.user)
+
+
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const [isRole, setIsRole] = useState('');
-    const [isSelected, setIsSelected] = useState('Girl');
+    const [isSelected, setIsSelected] = useState('');
     const [country, setCountry] = useState('');
-    const [isImages, setIsImages] = useState(userDetails.image);
+    // const [isImages, setIsImages] = useState(isData.image);
+    const [isImages, setIsImages] = useState('');
+
     const [modalVisible, setModalVisible] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -63,27 +71,28 @@ const Profile = (props) => {
     })
 
 
-    const onClickSubmit = async values => {
-        const { firstName, about, age } = values;
-        if (isModalVisible) {
-            var body = {
-                image: isImages,
-                email: userDetails.email,
-                name: '',
-                country: '',
-                description: '',
-                age: '',
-                type: ''
-                // name: firstName,
-                // country:(isShelter || isRefugee) ? country : '',
-                // description:isShelter ? about : '',
-                // age:isRefugee ? age :'',
-                // type:isRefugee ? isSelected :'',
-            };
-            dispatch(updateProfileApi(body));
-        } else {
-            logout();
-        }
+    const onClickSubmit = () => {
+        // const { firstName, about, age } = values;
+        // // if (isModalVisible) {
+        // if (isName) {
+
+        //     var body = {
+        //         image: '/Users/dreamworld/Downloads/16_16.png',
+        //         email: '',
+        //         name: firstName,
+        //         country: '',
+        //         description: '',
+        //         age: '',
+        //         type: ''
+        //     };
+        //     console.log("body=====>", body);
+        //     dispatch(updateProfileApi(body));
+        // }
+        // // }
+        // // else {
+        // //     // logout();
+        // // }
+        logout();
     };
 
 
@@ -97,7 +106,6 @@ const Profile = (props) => {
         catch (exception) {
             return false;
         }
-
     }
 
     const onClick = (type) => {
@@ -148,11 +156,14 @@ const Profile = (props) => {
                             {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, }) => (
                                 <>
                                     <View style={styles.profileNameContainer}>
-                                        {userDetails.image &&
+
+                                        {data.image &&
                                             <Image
                                                 resizeMode='cover'
-                                                source={{ uri: userDetails.image }}
+                                                source={{ uri: data.image }}
                                                 style={styles.profileStyle} />}
+
+
                                         {/* <View style={styles.profile}>
                                             {isImages ?
                                                 <Image
@@ -192,7 +203,7 @@ const Profile = (props) => {
                                                 placeholder={isShelter ? ('shelterName') : t('fName')}
                                                 isError={errors.firstName}
                                             /> :
-                                            <ButtonWithIcon title={userDetails.name} onPress={() => { setName(true) }} />
+                                            <ButtonWithIcon title={data.name} onPress={() => { setName(true) }} />
                                         }
 
                                         {isCountry ?
@@ -207,7 +218,7 @@ const Profile = (props) => {
                                             ) : (
                                                 <>
                                                     {(isShelter || isRefugee) &&
-                                                        <ButtonWithIcon title={userDetails.country} onPress={() => { setIsCountry(true) }} />}
+                                                        <ButtonWithIcon title={data.country} onPress={() => { setIsCountry(true) }} />}
                                                 </>
                                             )
                                         }
@@ -229,7 +240,7 @@ const Profile = (props) => {
                                                     placeholderColor={COLORS.black}
                                                     isError={errors.age}
                                                 /> :
-                                                    <ButtonWithIcon title={userDetails.age} onPress={() => { setAge(true) }} />
+                                                    <ButtonWithIcon title={data.age} onPress={() => { setAge(true) }} />
                                                 }
 
 
@@ -284,7 +295,7 @@ const Profile = (props) => {
                                                         />
                                                     </View>
                                                 </> :
-                                                    <ButtonWithIcon title={userDetails.type} onPress={() => { setType(true) }} />
+                                                    <ButtonWithIcon title={data.type} onPress={() => { setType(true) }} />
                                                 }
                                             </>}
                                         {isShelter &&
@@ -306,19 +317,20 @@ const Profile = (props) => {
                                                     // numberOfLines={3}
                                                     mt={30}
                                                 /> :
-                                                    <ButtonWithIcon title={userDetails.description ? userDetails.description : 'description'} onPress={() => { setAbout(true) }} />
+                                                    <ButtonWithIcon title={data.description ? data.description : 'description'} onPress={() => { setAbout(true) }} />
                                                 }
                                             </>
                                         }
                                         <ButtonWithIcon title={t('editProfile')}
                                             onPress={() => {
+                                                props.navigation.navigate('ChooseProfile');
                                                 // setModalVisible(!modalVisible) 
                                             }} />
                                     </View>
                                     <Button
                                         marginBottom={30}
-                                        title={t('signOut')}
-                                        // title={isModalVisible ? t('updateProfile') : t('signOut')}
+                                        // title={t('signOut')}
+                                        title={isName ? t('updateProfile') : t('signOut')}
                                         fontSize={18}
                                         color={COLORS.white}
                                         height={50}

@@ -35,7 +35,7 @@ const WishLists = (props) => {
 
     const [isFavItem, setIsFavItem] = useState();
     const [isItemsData, setItemsData] = useState([]);
-    const [isSelected, setIsSelected] = useState('Girl');
+    const [isSelected, setIsSelected] = useState('');
     const [isValue, setIsValue] = useState(false);
     const [start, setStart] = useState([0]);
     const [end, setEnd] = useState([1]);

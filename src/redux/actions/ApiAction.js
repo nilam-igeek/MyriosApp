@@ -163,6 +163,21 @@ export const addProfileError = (error) => ({
   payload: error,
 });
 
+//======================== EDIT PEOPLE ========================//
+export const editProfileData = () => ({
+  type: ACTION_TYPES.EDIT_PEOPLE_API_PENDING,
+});
+
+export const editProfileSuccess = (data) => ({
+  type: ACTION_TYPES.EDIT_PEOPLE_API_SUCCESS,
+  payload: data,
+});
+
+export const editProfileError = (error) => ({
+  type: ACTION_TYPES.EDIT_PEOPLE_API_ERROR,
+  payload: error,
+});
+
 //======================== PROFILE ========================//
 export const profileData = () => ({
   type: ACTION_TYPES.PROFILE_API_PENDING,

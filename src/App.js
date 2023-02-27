@@ -15,6 +15,7 @@ import SplashScreen from "react-native-splash-screen";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { loginApi } from './redux/actions/ApiActionCreator';
 import { ROLE } from './constants/types';
+import { isDate } from 'lodash';
 const App = () => {
 
   const [id, setId] = useState('');
@@ -23,6 +24,7 @@ const App = () => {
   const [initialRouteName, setInitialRouteName] = useState('GetStarted');
   const [isRole, setIsRole] = useState('');
   const isMaster = isRole === ROLE.MASTER
+  const isDonor = isRole === ROLE.DONOR
   useEffect(() => {
     // onProductView();
     DeviceInfo.getUniqueId().then((uniqueId) => {
@@ -63,10 +65,12 @@ const App = () => {
     console.log("isEmail", isEmail);
     setIsToken(token)
     if (token) {
-
+      console.log("dsf11");
+      await AsyncStorage.setItem('token', token)
       if (isMaster) {
         setInitialRouteName('RefugeesList')
-      } else {
+      }
+      else {
         setInitialRouteName('Welcome')
         var body = {
           password: isPassword,
@@ -75,10 +79,11 @@ const App = () => {
         dispatch(loginApi(body));
       }
     } else {
+      console.log("dsf222");
       setInitialRouteName('GetStarted')
     }
-    await AsyncStorage.setItem('token', token)
-    console.log("isToken--111->", isToken);
+    // await AsyncStorage.setItem('token', token)
+    // console.log("isToken--111->", isToken);
   };
 
   useEffect(() => {

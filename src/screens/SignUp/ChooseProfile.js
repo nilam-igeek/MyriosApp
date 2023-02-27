@@ -48,6 +48,7 @@ const ChooseProfile = (props) => {
             ...isdataProfile,
             profile: item
         }
+        // console.log("dataOfProfile---->", dataOfProfile.profile);
         dispatch(signUpDataOfUser(dataOfProfile));
     }
 
@@ -115,8 +116,7 @@ const ChooseProfile = (props) => {
                                 marginTop={20}
                                 width={'60%'}
                                 onPress={() => {
-                                    props.navigation.navigate('SignUpFirstScreen', {});
-                                    // props.navigation.goBack();
+                                    props.navigation.navigate('SignUpFirstScreen');
                                 }} />
                         </View>
                     </ScrollView>

@@ -49,7 +49,10 @@ import {
   wishlistRemoveError,
   userStatusData,
   userStatusSuccess,
-  userStatusError
+  userStatusError,
+  editProfileData,
+  editProfileSuccess,
+  editProfileError
 } from './ApiAction';
 import Toast from 'react-native-simple-toast';
 
@@ -69,9 +72,12 @@ export const loginApi = (data) => async (dispatch) => {
       })
       .then(async (response) => {
         if (response.data.success) {
+          console.log("response.data.data.user---->", response.data.data.user);
           //  Toast.show(response.data.message);
-          dispatch(loginSuccess(response.data));
+          // dispatch(loginSuccess(response.data));
+          dispatch(loginSuccess(response.data.data.user));
           if (response && response.data && response.data.data.token) {
+            console.log("token");
             await AsyncStorage.setItem('token', response.data.data.token)
           }
 
@@ -89,6 +95,7 @@ export const loginApi = (data) => async (dispatch) => {
 
 //======================== REGISTER ========================//
 export const registerApi = (data) => async (dispatch) => {
+  console.log("registerApi111====>", data);
   var role = await AsyncStorage.getItem('userType');
   dispatch(registerData());
   return new Promise(() => {
@@ -100,21 +107,22 @@ export const registerApi = (data) => async (dispatch) => {
         },
       })
       .then(async (response) => {
-        console.log("rroor1111====>", response);
+        console.log("registerApi=response=====>", response.data.data.user);
         if (response.data.success) {
           Toast.show(response.data.message);
-          dispatch(registerSuccess(response.data));
+          dispatch(registerSuccess(response.data.data.user));
         }
       })
       .catch((error) => {
-        // console.log("rroor222211=111ddada1==qeqw=>", JSON.stringify(error.response.data.data.email[0]));
+        // console.log("rroor222211=111ddada1==qeqw111=>", JSON.stringify(error.response.data.data.email[0]));
+        console.log("rroor222211=111ddada1==qeqw221111=>", JSON.stringify(error.response));
         dispatch(registerError(error.response));
         // if (error.response.data.data.email) {
         //   Toast.show(JSON.stringify(error.response.data.data.email[0]), );
         // }
-        if (!error.response.data.success) {
-          Toast.show(`Thanks for signing up! In order to finalize your account, you need to your shelter to register you as a Myrios verified refugee on their 'People' page, and if your shelter does not user Myrios, register your account with 'not currently staying at shelter', so you can schedule a 5-minute call with a Myrios representative to get verified!`)
-        }
+        // if (!error.response.data.success) {
+        //   Toast.show(`Thanks for signing up! In order to finalize your account, you need to your shelter to register you as a Myrios verified refugee on their 'People' page, and if your shelter does not user Myrios, register your account with 'not currently staying at shelter', so you can schedule a 5-minute call with a Myrios representative to get verified!`)
+        // }
         return error
       });
   });
@@ -248,20 +256,25 @@ export const signUpDataOfUser = (data) => {
 
 //======================== PROFILE ========================//
 export const updateProfileApi = (data) => async (dispatch) => {
-  dispatch(profileData());
+  // console.log("data-------->", data);
+  var isToken = await AsyncStorage.getItem('token');
+  // dispatch(profileData());
   return new Promise(() => {
     axios
       .post(`${url}update-profile`, data, {
         headers: {
+          'Authorization': `Bearer ${isToken}`,
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
       })
       .then(async (response) => {
-        dispatch(profileSuccess(response.data));
+        console.log("res1111---11--->", response.data);
+        // dispatch(profileSuccess(response.data));
       })
       .catch((error) => {
-        dispatch(profileError(error));
+        console.log("res1111=====11---->", response.data.success);
+        // dispatch(profileError(error));
         return error
       });
   });
@@ -286,6 +299,30 @@ export const addPeopleApi = (data) => async (dispatch) => {
       })
       .catch((error) => {
         dispatch(addProfileError(error));
+        return error
+      });
+  });
+};
+
+//======================== Edit PEOPLE ========================//
+export const editPeopleApi = (data) => async (dispatch) => {
+  var isToken = await AsyncStorage.getItem('token');
+  dispatch(editProfileData());
+  return new Promise(() => {
+    axios
+      .post(`${url}Refugee/add-people`, data, {
+        headers: {
+          'Authorization': `Bearer ${isToken}`,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(async (response) => {
+        // Toast.show(response.data.message);
+        dispatch(editProfileSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(editProfileError(error));
         return error
       });
   });
@@ -373,7 +410,7 @@ export const wishlistAddApi = (data) => async (dispatch) => {
   dispatch(wishlistAddData());
   return new Promise(() => {
     axios
-      .post(`http://18.233.84.195/api/add-wishlist/13`, {
+      .post(`http://18.233.84.195/api/add-wishlist/${data}`, null, {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       })
@@ -402,7 +439,7 @@ export const wishlistRemoveApi = (data) => async (dispatch) => {
   dispatch(wishlistRemoveData());
   return new Promise(() => {
     axios
-      .delete(`http://18.233.84.195/api/add-wishlist/13`, {
+      .delete(`http://18.233.84.195/api/add-wishlist/${data}`, null, {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       })

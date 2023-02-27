@@ -17,19 +17,12 @@ const DonorsList = (props) => {
     const [refreshing, setRefreshing] = React.useState(false);
     const loading = useSelector((state) => state.apiReducer.loading);
     const dada = useSelector((state) => state.apiReducer.userStatusData);
-    console.log("data--->",);
     const dataOfDonors = useSelector((state) => !_.isEmpty(state.apiReducer.donorData) && state.apiReducer.donorData);
     const isDonorData = (!_.isEmpty(dataOfDonors.data) && dataOfDonors.data)
-
-
 
     useEffect(() => {
         dispatch(donorsListApi);
     }, [donorsListApi]);
-
-    const onClickUserStatus = (id) => {
-        dispatch(userStatusApi(id));
-    }
 
 
     return (
@@ -66,14 +59,6 @@ const DonorsList = (props) => {
                                             <Text style={styles.userName}>{item.name}</Text>
                                             {item.country && <Text style={styles.userName}>{', '}{item.country}</Text>}
                                         </Text>
-                                    </Pressable>
-                                    <Pressable
-                                        onPress={() => onClickUserStatus(item.id)}
-                                        style={{
-                                            width: (BaseStyle.WIDTH / 100) * 25,
-                                            alignSelf: 'center', backgroundColor: COLORS.blue, width: 100, borderRadius: 20
-                                        }}>
-                                        <Text style={{ color: COLORS.white, padding: 5, textAlign: 'center' }}>{(item.is_active === 0) ? 'Deactivate' : 'Active'}</Text>
                                     </Pressable>
                                 </View>)
                         }} />

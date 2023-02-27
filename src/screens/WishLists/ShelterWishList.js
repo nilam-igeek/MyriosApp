@@ -21,7 +21,7 @@ const ShelterWishList = (props) => {
     const isShelter = isRole === ROLE.SHELTER
     const isData = useSelector((state) => state.apiReducer.loginData);
     console.log("isData=====>", isData);
-    const userDetails = isData.data.user
+    // const isData = isData.data.user
 
     useEffect(() => {
         async function check() {
@@ -53,8 +53,8 @@ const ShelterWishList = (props) => {
                     <ArrowLeftSvg fill={COLORS.white} />
                 </CloseButton>
                 <View style={styles.myriosContainer}>
-                    <Text style={styles.myriosText}>{`${t('hi')} ${userDetails.name}`}</Text>
-                    <Text onPress={() => Linking.openURL(userDetails.watchlist_link)} style={styles.myriosSubText}>{t('seeWishList')}</Text>
+                    <Text style={styles.myriosText}>{`${t('hi')} ${isData.name}`}</Text>
+                    <Text onPress={() => Linking.openURL(isData.watchlist_link)} style={styles.myriosSubText}>{t('seeWishList')}</Text>
                     <Text onPress={() => setShowModal(true)} style={[styles.myriosSubText, { marginVertical: 10 }]}>{t('uploadWishList')}</Text>
                     <Text onPress={() => { props.navigation.navigate('HowToo') }} style={styles.myriosSubText}>{t('createWishList')}</Text>
                 </View>

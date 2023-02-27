@@ -27,6 +27,7 @@ import RefugeesList from '../screens/Master/RefugeesList';
 import SchedulingOfCalls from '../screens/Master/SchedulingOfCalls';
 import Analytics from '../screens/Master/Analytics';
 import AddPerson from '../screens/SideMenu/Helped/AddPerson';
+import ScheduleNow from '../screens/SignUp/ScheduleNow';
 import analytics from '@react-native-firebase/analytics';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -121,20 +122,6 @@ const Router = (props) => {
             screenOptions={{ headerShown: false }}
             transparentCard={true}
             initialRouteName={'RefugeesList'}>
-            {/* <Stack.Screen options={{ gestureEnabled: false }} name="GetStarted" component={GetStarted} /> */}
-            {/* <Stack.Screen options={{ gestureEnabled: false }} name="Language" component={Language} />
-            <Stack.Screen options={{ gestureEnabled: false }} name="TypesOfUser" component={TypesOfUser} />
-            <Stack.Screen options={{ gestureEnabled: false }} name="Login" component={Login} />
-            <Stack.Screen options={{ gestureEnabled: false }} name="SignUpFirstScreen" component={SignUpFirstScreen} />
-            <Stack.Screen options={{ gestureEnabled: false }} name="SignUpSecondScreen" component={SignUpSecondScreen} />
-            <Stack.Screen options={{ gestureEnabled: false }} name="ChooseProfile" component={ChooseProfile} />
-            <Stack.Screen options={{ gestureEnabled: false }} name="Welcome" component={Welcome} />
-            <Stack.Screen options={{ gestureEnabled: false }} name="HowTo" component={MyDrawer} />
-            <Stack.Screen options={{ gestureEnabled: false }} name="WishLists" component={MyNewDrawer} />
-            <Stack.Screen options={{ gestureEnabled: false }} name="ContactUs" component={ContactUs} />
-            <Stack.Screen options={{ gestureEnabled: false }} name="Profile" component={Profile} />
-            <Stack.Screen options={{ gestureEnabled: false }} name="Helped" component={Helped} /> */}
-            {/* <Stack.Screen options={{ gestureEnabled: false }} name="ShelterWishList" component={ShelterWishList} /> */}
             <Stack.Screen options={{ gestureEnabled: false }} name="RefugeesList" component={MyMasterDrawer} />
             <Stack.Screen options={{ gestureEnabled: false }} name="DonorsList" component={DonorsList} />
             <Stack.Screen options={{ gestureEnabled: false }} name="ContactRequests" component={ContactRequests} />
@@ -147,7 +134,6 @@ const Router = (props) => {
           </Stack.Navigator>
         </NavigationContainer>
         :
-
 
         props.initialRoute === 'GetStarted'
           ?
@@ -163,6 +149,7 @@ const Router = (props) => {
               <Stack.Screen options={{ gestureEnabled: false }} name="SignUpFirstScreen" component={SignUpFirstScreen} />
               <Stack.Screen options={{ gestureEnabled: false }} name="SignUpSecondScreen" component={SignUpSecondScreen} />
               <Stack.Screen options={{ gestureEnabled: false }} name="ChooseProfile" component={ChooseProfile} />
+              <Stack.Screen options={{ gestureEnabled: false }} name="ScheduleNow" component={ScheduleNow} />
               <Stack.Screen options={{ gestureEnabled: false }} name="Welcome" component={Welcome} />
               <Stack.Screen options={{ gestureEnabled: false }} name="HowTo" component={MyDrawer} />
               <Stack.Screen options={{ gestureEnabled: false }} name="WishLists" component={MyNewDrawer} />

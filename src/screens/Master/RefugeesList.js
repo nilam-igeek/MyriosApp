@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StatusBar, Image, FlatList, Pressable } from 'react-native';
+import { View, Text, StatusBar, Image, FlatList, Pressable, Switch } from 'react-native';
 import styles from './styles';
 import '../../../assets/i18n/i18n';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +10,7 @@ import { refugeesListApi, userStatusApi } from '../../redux/actions/ApiActionCre
 import { useDispatch, useSelector } from 'react-redux';
 import Indicator from '../../components/core/Indicator';
 import _ from 'lodash';
+import ACTION_TYPES from '../../redux/actions/ActionTypes';
 const RefugeesList = (props) => {
 
     const { t } = useTranslation();
@@ -17,6 +18,8 @@ const RefugeesList = (props) => {
     const dataOfRefugees = useSelector((state) => !_.isEmpty(state.apiReducer.refugeeData) && state.apiReducer.refugeeData);
     const refugeesList = (!_.isEmpty(dataOfRefugees.data) && dataOfRefugees.data)
     const loading = useSelector((state) => state.apiReducer.loading);
+    const [dataOfList, setDataOfList] = useState(refugeesList.data);
+
 
     useEffect(() => {
         dispatch(refugeesListApi);
@@ -24,10 +27,15 @@ const RefugeesList = (props) => {
 
     const onClickUserStatus = (id) => {
         dispatch(userStatusApi(id));
-
+        let data = [...refugeesList.data];
+        let newData = data.map(item => {
+            if (item.id === id) {
+                item.is_active = !item.is_active;
+            }
+            return item
+        })
+        setDataOfList(newData);
     }
-
-
 
     return (
         <View style={styles.container}>
@@ -42,8 +50,8 @@ const RefugeesList = (props) => {
                         data={refugeesList.data}
                         extraData={refugeesList.data}
                         keyExtractor={item => item.id}
-                        renderItem={({ item }) =>
-                            <View style={styles.itemCard}>
+                        renderItem={({ item }) => {
+                            return (<View style={styles.itemCard}>
                                 <Pressable
                                     onPress={() => { props.navigation.navigate('ProfileOfRole') }}
                                     style={{
@@ -65,35 +73,20 @@ const RefugeesList = (props) => {
                                         {item.age && <Text style={styles.userName}>{', '}{item.age}</Text>}
                                     </Text>
                                 </Pressable>
-                                <Pressable
+                                {/* <Pressable
                                     onPress={() => onClickUserStatus(item.id)}
                                     style={{
                                         width: (BaseStyle.WIDTH / 100) * 25,
                                         alignSelf: 'center', backgroundColor: COLORS.blue, width: 100, borderRadius: 20
                                     }}>
-                                    <Text style={{ color: COLORS.white, padding: 5, textAlign: 'center' }}>{item.is_active === 0 ? 'Deactivate' : 'Active'}</Text>
-                                </Pressable>
-                            </View>
-                            // <Pressable style={[styles.itemCard, {}]} onPress={() => { props.navigation.navigate('ProfileOfRole') }}>
-                            //     <View style={styles.profile}>
-                            //         {item.image ? <Image
-                            //             resizeMode='cover'
-                            //             source={item.image}
-                            //             style={styles.profileStyle} />
-                            //             : <ProfileSvg height={30} width={30} />}
-                            //     </View>
-                            //     <Text style={{ marginLeft: 20 }} >
-                            //         <Text style={styles.userName}>{item.name}</Text>
-                            //         {item.country && <Text style={styles.userName}>{', '}{item.country}</Text>}
-                            //         {item.type && <Text style={styles.userName}>{', '}{item.type}</Text>}
-                            //         {item.age && <Text style={styles.userName}>{', '}{item.age}</Text>}
-                            //     </Text>
-                            //     <View style={{ marginLeft: 30, backgroundColor: COLORS.blue, width: 100, borderRadius: 20 }}>
-                            //         <Text style={{ color: COLORS.white, padding: 5, textAlign: 'center' }}>Active</Text>
-                            //     </View>
-                            // </Pressable>
-
-
+                                    <Text style={{ color: COLORS.white, padding: 5, textAlign: 'center' }}>{item.is_active ? 'Active' : 'Deactivate'}</Text>
+                                </Pressable> */}
+                                <Switch
+                                    value={item.is_active}
+                                    style={{ transform: [{ scaleX: .7 }, { scaleY: .7 }] }}
+                                    onValueChange={() => onClickUserStatus(item.id)} />
+                            </View>)
+                        }
                         } />
                 </View>
             </View>

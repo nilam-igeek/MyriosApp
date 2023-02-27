@@ -21,7 +21,9 @@ const initialState = {
   wishListFilterData: '',
   wishlistAddData: '',
   wishlistRemoveData: '',
-  userStatusData: ''
+  userStatusData: '',
+  addPeopleData: '',
+  eidtPeopleData: ''
 };
 
 const apiReducer = (state = initialState, action) => {
@@ -288,6 +290,46 @@ const apiReducer = (state = initialState, action) => {
         error: action.payload,
         loading: false,
       };
+
+    //======================== ADD PEOPLE ========================//
+    case ACTION_TYPES.ADD_PEOPLE_API_PENDING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ACTION_TYPES.ADD_PEOPLE_API_SUCCESS:
+      return {
+        ...state,
+        addPeopleData: action.payload,
+        loading: false,
+      };
+    case ACTION_TYPES.ADD_PEOPLE_API_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+
+
+    //======================== EDIT PEOPLE ========================//
+    case ACTION_TYPES.EDIT_PEOPLE_API_PENDING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ACTION_TYPES.EDIT_PEOPLE_API_SUCCESS:
+      return {
+        ...state,
+        eidtPeopleData: action.payload,
+        loading: false,
+      };
+    case ACTION_TYPES.EDIT_PEOPLE_API_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+
     //======================== IMAGES_LIST =======================//
     case ACTION_TYPES.IMAGES_LIST_API_PENDING:
       return {

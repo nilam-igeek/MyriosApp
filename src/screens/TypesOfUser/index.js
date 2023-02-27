@@ -49,7 +49,7 @@ const TypesOfUser = (props) => {
             </ImageBackground>
             <View style={styles.container}>
                 <View style={styles.card}>
-                    <Text style={styles.titleText}>{`${t('am')}${isRole ? isRole : t('master')}`}</Text>
+                    <Text style={styles.titleText}>{`${t('am')} ${isRole ? isRole : '...'}`}</Text>
                     <ScrollView showsVerticalScrollIndicator={false}
                         showsHorizontalScrollIndicator={false}
                         contentContainerStyle={{ flexGrow: 1 }}

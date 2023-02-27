@@ -90,6 +90,25 @@ export default styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'flex-end'
     },
-
-
+    buttonCircle: {
+        width: 40,
+        height: 40,
+        backgroundColor: 'rgba(0, 0, 0, .2)', borderRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    btn: {
+        borderRadius: 20,
+        backgroundColor: COLORS.yellow,
+        position: 'absolute',
+        bottom: -8,
+        right: 10
+    },
+    btnText: {
+        fontSize: 14,
+        fontFamily: FONTS.Poppins_SemiBold,
+        color: COLORS.black,
+        paddingHorizontal: 12,
+        paddingVertical: 6
+    }
 });

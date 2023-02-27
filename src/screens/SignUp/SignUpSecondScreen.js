@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ImageBackground, ScrollView, Pressable, KeyboardAvoidingView, Platform, Modal } from 'react-native';
+import { View, Text, Alert, ImageBackground, ScrollView, Pressable, KeyboardAvoidingView, Platform, Modal } from 'react-native';
 import { COLORS } from '../../common/style/Colors';
 import Button from '../../components/core/Button';
 import styles from './styles';
@@ -22,15 +22,15 @@ import Indicator from '../../components/core/Indicator';
 import { IMAGES } from '../../common/style/Images';
 import ArrowLeftSvg from '../../common/svgs/ArrowLeftSvg';
 import Toast from 'react-native-simple-toast';
-
+import _ from 'lodash';
 const SignUpSecondScreen = (props) => {
     const isdataProfile = useSelector((state) => state.apiReducer.dataProfile);
-    const isUserData = useSelector((state) => state.apiReducer.regiData);
-    const isStatus = useSelector((state) => state.apiReducer.error);
-    console.log("error===11==>", isStatus);
+    console.log("isdataProfile1111111----->", isdataProfile.photo);
+    // const isUserData = useSelector((state) => state.apiReducer.regiData);
+    // const isStatus = useSelector((state) => state.apiReducer.error);
     const loading = useSelector((state) => state.apiReducer.loading);
-    const success = useSelector((state) => state.apiReducer.regiData);
-    console.log("isdataProfile1111111--->", isdataProfile);
+    const userData = useSelector((state) => state.apiReducer.regiData);
+
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const [isShow, setIsShow] = useState(false);
@@ -61,17 +61,6 @@ const SignUpSecondScreen = (props) => {
 
     const onClickSubmit = async (values, actions) => {
         const { email, password } = values;
-        // var isData = {
-        //     email: email,
-        //     password: password,
-        //     name: isdataProfile.firstName,
-        //     country: isdataProfile.country,
-        //     age: isRefugee ? isdataProfile.age : '',
-        //     type: isRefugee ? isdataProfile.isUserType : '',
-        //     shelter: isRefugee ? isdataProfile.shelterName : '',
-        //     description: isShelter ? isdataProfile.about : '',
-        //     photo: isdataProfile.photo,
-        // };
 
         var donorData = {
             email: email,
@@ -88,7 +77,7 @@ const SignUpSecondScreen = (props) => {
             password: password,
             name: isdataProfile.firstName,
             country: isdataProfile.country,
-            age: isdataProfile.age,
+            dob: isdataProfile.age,
             type: isdataProfile.isUserType,
             shelter: isdataProfile.shelterName,
             photo: isdataProfile.photo,
@@ -110,7 +99,7 @@ const SignUpSecondScreen = (props) => {
             ...isdataProfile,
             email: email,
         }
-
+        console.log("donorData===11111=>", donorData);
         dispatch(signUpDataOfUser(body));
         dispatch(registerApi(isRefugee ? refugeeData : isDonor ? donorData : shelterData));
         // actions.resetForm();
@@ -120,13 +109,34 @@ const SignUpSecondScreen = (props) => {
     };
 
     useEffect(() => {
-        if (success.success) {
-            props.navigation.navigate('Welcome');
-        }
-        else if (!success.success) {
-            //    Toast.show('Unauthorized');  
+        if (!_.isEmpty(userData)) {
+            if (isDonor) {
+                props.navigation.navigate('Welcome');
+            } else if (isShelter) {
+                if (userData.is_active === true) {
+                    props.navigation.navigate('Welcome');
+                } else if (userData.is_active === false) {
+                    Alert.alert(
+                        "Thanks for signing up!",
+                        `Thanks for signing up! In order to finalize your account, you need to your shelter to register you as a Myrios verified refugee on their 'People' page, and if your shelter does not user Myrios, register your account with 'not currently staying at shelter', so you can schedule a 5-minute call with a Myrios representative to get verified!`,
+                        [
+                            { text: "OK", onPress: () => { props.navigation.navigate('ScheduleNow') } }
+                        ],
+                        { cancelable: false }
+                    );
+                }
+            }
+            else if (isRefugee) {
+                if (userData.is_active === true) {
+                    props.navigation.navigate('Welcome');
+                } else if (userData.is_active === false) {
+                    Alert.alert(`Thanks for signing up! In order to finalize your account, you need to your shelter to register you as a Myrios verified refugee on their 'People' page, and if your shelter does not user Myrios, register your account with 'not currently staying at shelter', so you can schedule a 5-minute call with a Myrios representative to get verified!`)
+                }
+            }
         }
     })
+
+
 
     return (
         <>
@@ -205,23 +215,6 @@ const SignUpSecondScreen = (props) => {
                         </ScrollView>
                     </View>
                 </View>
-
-                {/* {isModalShow && <Modal
-                    visible={isModalShow}
-                    animationType="fade"
-                    transparent={true}
-                    onRequestClose={() => { setIsModalShow(false) }}>
-                    <View style={styles.blurView}>
-                        <View style={styles.blurSubView}>
-                            <Pressable onPress={() => setIsModalShow(false)} style={styles.closeBtn}>
-                                <CloseSvg fill={COLORS.white} width={10} height={10} />
-                            </Pressable>
-                            <View style={{ justifyContent: 'center', alignItems: "center" }}>
-                                <Text style={styles.modalSubText}>{`Thanks for signing up! In order to finalize your account, you need to your shelter to register you as a Myrios verified refugee on their 'People' page, and if your shelter does not user Myrios, register your account with 'not currently staying at shelter', so you can schedule a 5-minute call with a Myrios representative to get verified!`}</Text>
-                            </View>
-                        </View>
-                    </View>
-                </Modal>} */}
             </KeyboardAvoidingView>
             <Indicator isLoader animate={loading} />
         </>

@@ -21,25 +21,28 @@ import { IMAGES } from '../../common/style/Images';
 import ArrowLeftSvg from '../../common/svgs/ArrowLeftSvg';
 import DatePicker from 'react-native-date-picker'
 import _ from 'lodash';
+import moment from 'moment';
 const SignUpFirstScreen = (props) => {
     const dispatch = useDispatch();
 
     const isUserData = useSelector((state) => state.apiReducer.data);
-    const isProfile = useSelector((state) => state.apiReducer.dataProfile)
+    const isProfile = useSelector((state) => state.apiReducer.dataProfile);
+    console.log("isProfile---adaddad=----->", isProfile.profile);
     const { t } = useTranslation();
     const [profile, setProfile] = useState('');
     const [country, setCountry] = useState('');
-    const [isSelected, setIsSelected] = useState('Girl');
+    const [isSelected, setIsSelected] = useState('');
     const [isRole, setIsRole] = useState('');
     const [isImages, setIsImages] = useState(isProfile.profile);
     const [modalVisible, setModalVisible] = useState(false);
     const [date, setDate] = useState(new Date(34555646456))
-    const [isAge, setIsAge] = useState(0)
+    const [age, setAge] = useState(0);
     const [open, setOpen] = useState(false)
     const isRefugee = isRole === ROLE.REFUGEE
     const isShelter = isRole === ROLE.SHELTER
     const isDonor = isRole === ROLE.DONOR
-
+    const d = new Date();
+    let year = d.getFullYear();
 
     useEffect(() => {
         async function check() {
@@ -61,9 +64,9 @@ const SignUpFirstScreen = (props) => {
         about: yup
             .string()
             .required(t('aboutRequired')),
-        watchlistLink: yup
+        wishListLink: yup
             .string(),
-        watchlistDescription: yup
+        wishListDescription: yup
             .string()
 
     })
@@ -71,30 +74,34 @@ const SignUpFirstScreen = (props) => {
         firstName: yup
             .string()
             .required(t('nameRequired')),
-        // age: yup
-        //     .string()
-        //     .required(t('ageRequired')),
-        watchlistLink: yup
+        wishListLink: yup
             .string(),
-        watchlistDescription: yup
+        wishListDescription: yup
             .string()
     })
 
     const onClickSubmit = (values, actions) => {
-        const { firstName, about, age, watchlistLink, watchlistDescription } = values;
+
+        const { firstName, about, wishListLink, wishListDescription } = values;
         var body = {
             firstName: firstName,
             country: country,
             about: about,
-            age: age,
-            photo: isImages,
+            age: moment(date).format('YYYY-MM-DD'),
+            photo: isProfile.profile,
             isUserType: isSelected,
-            watchlist_link: watchlistLink,
-            watchlist_description: watchlistDescription
+            watchlist_link: wishListLink,
+            watchlist_description: wishListDescription
         };
+
         dispatch(signUpDataOfUser(body));
-        if (isRefugee && !_.isEmpty(isProfile.profile)) {
-            props.navigation.navigate('Chat');
+        if (isRefugee) {
+            if (!_.isEmpty(isProfile.profile)) {
+                props.navigation.navigate('SignUpSecondScreen');
+            }
+            else {
+                props.navigation.navigate('Chat');
+            }
         } else if (isDonor && !_.isEmpty(isProfile.profile)) {
             props.navigation.navigate('SignUpSecondScreen');
         } else if (isShelter && !_.isEmpty(isProfile.profile)) {
@@ -102,45 +109,24 @@ const SignUpFirstScreen = (props) => {
         } else {
             props.navigation.navigate('ChooseProfile');
         }
+        // if (isRefugee && !_.isEmpty(isProfile.profile)) {
+        //     props.navigation.navigate('Chat');
+        // } else if (isDonor && !_.isEmpty(isProfile.profile)) {
+        //     props.navigation.navigate('SignUpSecondScreen');
+        // } else if (isShelter && !_.isEmpty(isProfile.profile)) {
+        //     props.navigation.navigate('SignUpSecondScreen');
+        // } else {
+        //     props.navigation.navigate('ChooseProfile');
+        // }
     };
 
     const onClick = (type) => {
         setIsSelected(type)
     }
 
-    // const openLibrary = () => {
-    //     ImagePicker.openPicker({
-    //         width: 300,
-    //         height: 400,
-    //         cropping: true
-    //     }).then(image => {
-    //         setIsImages(image.path)
-    //         setModalVisible(false)
-    //     });
-    // }
-
-    // const openCamera = () => {
-    //     ImagePicker.openCamera({
-    //         width: 300,
-    //         height: 400,
-    //         cropping: true,
-    //     }).then(image => {
-    //         setIsImages(image.path)
-    //         setModalVisible(false)
-    //     });
-    // }
-
-
-    calculate_age = () => {
-        var today = new Date();
-        var birthDate = new Date(date);
-        var age_now = today.getFullYear() - birthDate.getFullYear();
-        var m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-            age_now--;
-        }
-        setIsAge(age_now);
-        return age_now;
+    function inputChangeHandler(e) {
+        var theAge = year - e;
+        setAge(theAge);
     }
 
     return (
@@ -166,7 +152,7 @@ const SignUpFirstScreen = (props) => {
                             <View style={styles.subContainer}>
                                 <Formik
                                     validationSchema={isShelter ? loginShelterValidationSchema : isDonor ? loginDonorValidationSchema : loginRefugeeValidationSchema}
-                                    initialValues={{ firstName: '', about: '', watchlistLink: '', watchlistDescription: '' }}
+                                    initialValues={{ firstName: '', about: '', wishListLink: '', wishListDescription: '' }}
                                     onSubmit={onClickSubmit}>
                                     {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, }) => (
                                         <>
@@ -180,20 +166,6 @@ const SignUpFirstScreen = (props) => {
                                                                 style={styles.profileStyle} />
                                                         </Pressable>
                                                     }
-                                                    {/* <Modal
-                                                        animationType="slide"
-                                                        transparent={true}
-                                                        visible={modalVisible}
-                                                        onRequestClose={() => { setModalVisible(!modalVisible) }}>
-                                                        <View style={styles.blurView}>
-                                                            <View style={styles.blurSubView}>
-                                                                <Text style={styles.titleOfPicker}>{t('selectImage')}</Text>
-                                                                <Text onPress={openCamera} style={styles.takePhotoText}>{t('takePhoto')}</Text>
-                                                                <Text onPress={openLibrary} style={styles.takePhotoText}>{t('chooseLibrary')}</Text>
-                                                                <Text onPress={() => setModalVisible(false)} style={styles.cancelText}>{t('cancel')}</Text>
-                                                            </View>
-                                                        </View>
-                                                    </Modal> */}
                                                 </View>
                                                 <View style={[styles.nameInput, { marginBottom: 10, width: !_.isEmpty(isProfile.profile) ? '65%' : '100%' }]}>
                                                     <Field
@@ -232,9 +204,9 @@ const SignUpFirstScreen = (props) => {
                                                     <Button
                                                         bgColor={COLORS.lemonchiffon}
                                                         width={(BaseStyle.WIDTH / 100) * 80}
-                                                        title={isAge > 0 ? isAge : 'Age'}
+                                                        title={age > 0 ? age : 'Age'}
                                                         fontSize={14}
-                                                        color={isAge > 0 ? COLORS.black : COLORS.grey}
+                                                        color={age > 0 ? COLORS.black : COLORS.grey}
                                                         height={45}
                                                         marginTop={30}
                                                         isRight
@@ -247,7 +219,7 @@ const SignUpFirstScreen = (props) => {
                                                         open={open}
                                                         date={date}
                                                         onConfirm={(date) => {
-                                                            calculate_age();
+                                                            inputChangeHandler(date.getFullYear());
                                                             setOpen(false)
                                                             setDate(date)
                                                         }}
@@ -322,45 +294,43 @@ const SignUpFirstScreen = (props) => {
                                                     placeholder={t('about')}
                                                     placeholderColor={COLORS.grey}
                                                     isError={errors.about}
-                                                    multiline
                                                     height={120}
                                                     borderRadius={20}
                                                     numberOfLines={3}
                                                     mt={20}
                                                 />}
 
-                                            {isShelter || isRefugee &&
+                                            {!isDonor &&
                                                 <>
                                                     <View style={{ marginTop: 20 }}>
                                                         <Text style={{ marginBottom: 10, width: (BaseStyle.WIDTH / 100) * 80 }}>{'Tell us a little about why you need the items on your wishlist..'}</Text>
                                                         <Field
                                                             // title={'Tell us a little about why you need the items on your wishlist..'}
                                                             // mt={20}
-                                                            name={'watchlistLink'}
+                                                            name={'wishListLink'}
                                                             component={Input}
-                                                            value={values.watchlistLink}
-                                                            onChangeText={handleChange('watchlistLink')}
-                                                            onBlur={handleBlur('watchlistLink')}
+                                                            value={values.wishListLink}
+                                                            onChangeText={handleChange('wishListLink')}
+                                                            onBlur={handleBlur('wishListLink')}
                                                             width={(BaseStyle.WIDTH / 100) * 80}
                                                             inputWidth={(BaseStyle.WIDTH / 100) * 70}
-                                                            placeholder={'Watchlist Link'}
-                                                            isError={errors.watchlistLink}
+                                                            placeholder={'WishList Link'}
+                                                            isError={errors.wishListLink}
                                                         // inputColor={COLORS.blue}
                                                         />
                                                     </View>
 
                                                     <Field
-
                                                         mt={20}
-                                                        name={'watchlistDescription'}
+                                                        name={'wishListDescription'}
                                                         component={Input}
-                                                        value={values.watchlistDescription}
-                                                        onChangeText={handleChange('watchlistDescription')}
-                                                        onBlur={handleBlur('watchlistDescription')}
+                                                        value={values.wishListDescription}
+                                                        onChangeText={handleChange('wishListDescription')}
+                                                        onBlur={handleBlur('wishListDescription')}
                                                         width={(BaseStyle.WIDTH / 100) * 80}
                                                         inputWidth={(BaseStyle.WIDTH / 100) * 70}
-                                                        placeholder={'WatchlistDescription'}
-                                                        isError={errors.watchlistDescription}
+                                                        placeholder={'WishList Description'}
+                                                        isError={errors.wishListDescription}
                                                     // inputColor={COLORS.blue}
                                                     />
                                                 </>}

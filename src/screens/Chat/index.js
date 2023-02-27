@@ -28,7 +28,8 @@ const Chat = (props) => {
             shelterName: name
         }
         dispatch(signUpDataOfUser(body));
-        props.navigation.navigate('SignUpSecondScreen');
+        // props.navigation.navigate('SignUpSecondScreen');
+        props.navigation.navigate('ChooseProfile');
     }
 
     return (
@@ -50,8 +51,8 @@ const Chat = (props) => {
                             <Text style={styles.subText}>{t('chatSubDes')}</Text>
                             <Button borderRadius={50} title={t('scheduleNow')} fontSize={18} color={COLORS.white} height={50} marginTop={35} width={'70%'}
                                 onPress={() => {
-                                    Linking.openURL('https://calendly.com/vatsal-igeek');
-                                    // props.navigation.navigate('ChooseProfile');
+                                    props.navigation.navigate('ChooseProfile');
+                                    // Linking.openURL('https://calendly.com/vatsal-igeek');
                                 }}
                             />
                         </View>}

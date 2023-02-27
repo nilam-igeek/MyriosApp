@@ -3,7 +3,6 @@ import { View, Text, StatusBar, Image, Pressable } from 'react-native';
 import styles from './styles';
 import '../../../../assets/i18n/i18n';
 import { useTranslation } from 'react-i18next';
-import Swiper from 'react-native-swiper';
 import { COLORS } from '../../../common/style/Colors';
 import Header from '../../../components/core/Header';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -12,6 +11,7 @@ import { donorSwiper } from './ArrayOfSwiperData';
 import ArrowLeftSvg from '../../../common/svgs/ArrowLeftSvg';
 import ArrowRightSvg from '../../../common/svgs/ArrowRightSvg';
 import { IMAGES } from '../../../common/style/Images';
+import AppIntroSlider from 'react-native-app-intro-slider';
 
 import { useDispatch, useSelector } from 'react-redux';
 const HowTo = (props) => {
@@ -30,88 +30,133 @@ const HowTo = (props) => {
         check();
     }, []);
 
-    const dataSwiper = [
-        { id: 1, image: IMAGES.screen1, title: t('title1'), subTitle: t('des1') },
-        { id: 2, image: IMAGES.screen2, title: t('title2'), subTitle: t('des2') },
-        { id: 3, image: IMAGES.screen3, title: t('title3'), subTitle: t('des3') },
-        { id: 4, image: IMAGES.screen4, title: t('title4_5'), subTitle: t('des4') },
-        { id: 5, image: IMAGES.screen5, title: t('title4_5'), subTitle: t('des5') },
-        { id: 6, image: IMAGES.screen6, title: t('title6'), subTitle: t('des6') },
-        { id: 7, image: IMAGES.screen7, title: t('title7'), subTitle: t('des7') }]
+    const slidesData = [
+        {
+            key: 1,
+            title: t('title1'),
+            text: t('des1'),
+            image: IMAGES.screen1,
+            backgroundColor: COLORS.white,
+        },
+        {
+            key: 2,
+            title: t('title2'),
+            text: t('des2'),
+            image: IMAGES.screen2,
+            backgroundColor: COLORS.white,
+        },
+        {
+            key: 3,
+            title: t('title3'),
+            text: t('des3'),
+            image: IMAGES.screen3,
+            backgroundColor: COLORS.white,
+        },
+        {
+            key: 4,
+            title: t('title4_5'),
+            text: t('des4'),
+            image: IMAGES.screen4,
+            backgroundColor: COLORS.white,
+        },
+        {
+            key: 5,
+            title: t('title4_5'),
+            text: t('des5'),
+            image: IMAGES.screen5,
+            backgroundColor: COLORS.white,
+        },
+        {
+            key: 6,
+            title: t('title6'),
+            text: t('des6'),
+            image: IMAGES.screen6,
+            backgroundColor: COLORS.white,
+        },
+        {
+            key: 7,
+            title: t('title7'),
+            text: t('des7'),
+            image: IMAGES.screen7,
+            backgroundColor: COLORS.white,
+        },
+    ];
 
-    const DonorSwiper = [
-        { id: 1, image: IMAGES.donorScreen1, subTitle: 'Welcome to Myrios! We are so glad you are here!This page is to walk you through a step-by-step process on how to find refugees or shelters wishlists and fufill them!' },
-        { id: 2, image: IMAGES.donorScreen2, subTitle: 'First, head over to your explore page where you can see descriptors of the Refugee or shelter you would be donating to.' },
-        { id: 3, image: IMAGES.donorScreen3, subTitle: 'Once you find someone you would like to help, you can click on their wishlist and add to cart something you would like to purchase for them!' },
-        { id: 4, image: IMAGES.donorScreen4, subTitle: 'Add the item you would like to donate, and  make sure "this is a gift" is clicked' },
-        { id: 5, image: IMAGES.donorScreen5, subTitle: 'After, click the address that states,"Gift Registry Address" \n This address will send the donation to the refugee or shelter without disclosing its address for privacy purposes.' },
-        { id: 6, image: IMAGES.donorScreen6, subTitle: 'After that, you can go ahead and purchase! Thank you for your help changing lives!' },
-    ]
+    const slidesDonorData = [
+        {
+            key: 1,
+            text: 'Welcome to Myrios! We are so glad you are here!This page is to walk you through a step-by-step process on how to find refugees or shelters wishlists and fufill them!',
+            image: IMAGES.donorScreen1,
+            backgroundColor: COLORS.white,
+        },
+        {
+            key: 2,
+            text: 'First, head over to your explore page where you can see descriptors of the Refugee or shelter you would be donating to.',
+            image: IMAGES.donorScreen2,
+            backgroundColor: COLORS.white,
+        },
+        {
+            key: 3,
+            text: 'Once you find someone you would like to help, you can click on their wishlist and add to cart something you would like to purchase for them!',
+            image: IMAGES.donorScreen3,
+            backgroundColor: COLORS.white,
+        },
+        {
+            key: 4,
+            text: 'Add the item you would like to donate, and  make sure "this is a gift" is clicked',
+            image: IMAGES.donorScreen4,
+            backgroundColor: COLORS.white,
+        },
+        {
+            key: 5,
+            text: 'After, click the address that states,"Gift Registry Address" \n This address will send the donation to the refugee or shelter without disclosing its address for privacy purposes.',
+            image: IMAGES.donorScreen5,
+            backgroundColor: COLORS.white,
+        },
+        {
+            key: 6,
+            text: 'After that, you can go ahead and purchase! Thank you for your help changing lives!',
+            image: IMAGES.donorScreen6,
+            backgroundColor: COLORS.white,
+        },
+    ];
 
-    const dataList = isDonor ? DonorSwiper : dataSwiper
-
-    const handleIndexChange = (index) => {
-        console.log("index==>", index);
-        setKeyNumber(index);
-    };
-
-    const renderButton = () => {
+    const dataList = isDonor ? slidesData : slidesDonorData
+    const _renderItem = ({ item }) => {
         return (
-            <View style={styles.nextBtn}>{(keyNumber === 6) ? <Text onPress={() => { props.navigation.toggleDrawer() }} style={styles.doneText}>{isDonor ? 'Explore Wishlists' : t('done')}</Text> : <ArrowRightSvg />}</View>
-            // prevButton={<View style={styles.nextBtn}>{keyNumber === 0 ? <></> : <ArrowLeftSvg />}</View>}
-
+            <>
+                {item.image && <Image resizeMode='contain' source={item.image} style={{ height: '65%', width: '100%' }} />}
+                {item.title && <Text style={styles.titleText}>{item.title}</Text>}
+                <Text style={styles.subText}>{item.text}</Text>
+            </>
         )
     }
 
-    const renderIsButton = () => {
-        return (
-            <ArrowRightSvg />
-            // <View style={[styles.nextBtn, { backgroundColor: 'red' }]}>{(keyNumber === 5) ? <Text onPress={() => { props.navigation.toggleDrawer() }} style={styles.doneText}>{'Explore Wishlists!'}</Text> : <ArrowRightSvg />}</View>
-        )
+    const onDone = () => {
+        if (isDonor) {
+            props.navigation.navigate('WishLists')
+        } else {
+            props.navigation.navigate('ShelterWishList')
+        }
     }
+
     return (
         <View style={styles.container}>
             <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.seashell} />
             <Header title={t('myrios')} onPress={() => { props.navigation.toggleDrawer() }} />
-            <Swiper
-                index={1}
-                removeClippedSubviews={false}
-                scrollEnabled={true}
-                loop={false}
-                style={styles.wrapper}
-                showsButtons={true}
-                dot={<View style={styles.dot} />}
-                activeDot={<View style={styles.activeDot} />}
-                nextButton={<View style={{ justifyContent: 'center', alignItems: 'center', borderRadius: 20, backgroundColor: '#FFDE59' }}><Text style={[styles.doneText, { width: 60, textAlign: 'center', padding: 10, }]}>{'Go!'}</Text></View>}
-                prevButton={<View style={{ justifyContent: 'center', alignItems: 'center', }}></View>}
-                buttonWrapperStyle={styles.buttonWrapperStyle}
-                onIndexChanged={handleIndexChange}>
-                {dataList.map((item, index) => {
-                    console.log("index----->", index == 5);
+            <View style={{ flex: 1 }}>
+                <AppIntroSlider renderNextButton={() => {
                     return (
-                        <View style={[styles.slide1, {}]}>
-                            {item.image && <Image resizeMode='contain' source={item.image} style={{ height: '80%', width: '100%' }} />}
-                            {item.title && <Text style={styles.titleText}>{item.title}</Text>}
-                            <Text style={styles.subText}>{item.subTitle}</Text>
-                            {
-                                (isDonor && index == 5 || DonorSwiper && index == 5) &&
-                                <Pressable onPress={() => {
-                                    if (isDonor) {
-                                        props.navigation.navigate('WishLists')
-                                    } else {
-                                        props.navigation.navigate('ShelterWishList')
-                                    }
-                                }}
-                                    style={{ backgroundColor: '#FFDE59', borderRadius: 20, marginTop: 25, marginLeft: 170 }}>
-                                    <Text style={[styles.doneText, { width: 150, textAlign: 'center', padding: 10, }]}>{isDonor ? 'Explore Wishlists!' : 'Done'}</Text>
-                                </Pressable>
-
-
-
-                            }
-                        </View>)
-                })}
-            </Swiper>
+                        <View style={styles.btn}><Text style={styles.btnText}>Go!</Text></View>)
+                }}
+                    renderDoneButton={() => {
+                        return (
+                            <View style={styles.btn}><Text style={styles.btnText}>{isDonor ? 'Explore Wishlists!' : 'Done'}</Text></View>)
+                    }}
+                    dotStyle={{ backgroundColor: 'black' }} activeDotStyle={{ backgroundColor: 'grey' }} renderItem={_renderItem}
+                    data={dataList}
+                    onDone={onDone} />
+            </View>
         </View>
     );
 };

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { DrawerContentScrollView } from '@react-navigation/drawer';
 import { COLORS } from '../../common/style/Colors';
 import CloseSvg from '../../common/svgs/CloseSvg';
-import { Pressable, Text } from 'react-native';
+import { LogBox, Pressable, Text } from 'react-native';
 import styles from './styles';
 import BaseStyle from '../../common/style/BaseStyle';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -10,6 +10,7 @@ import { ROLE } from '../../constants/types';
 import { useDispatch, useSelector } from 'react-redux';
 import '../../../assets/i18n/i18n';
 import { useTranslation } from 'react-i18next';
+import RNRestart from 'react-native-restart';
 // import { wishListApi } from '../../redux/actions/ApiActionCreator';
 
 export const CustomeDrawer = (props) => {
@@ -53,10 +54,22 @@ export const CustomeDrawer = (props) => {
     { id: 5, title: t('contactType') },
     { id: 6, title: t('analytics') },
     { id: 7, title: t('schedulingCalls') },
+    { id: 8, title: 'SIGN OUT' },
   ]
 
+  const logout = async () => {
+    try {
+      await AsyncStorage.removeItem('token');
+      RNRestart.restart();
+      return true;
+    }
+    catch (exception) {
+      return false;
+    }
+  }
+
   const Data = (isShelter || isDonor) ? Donor_Shelter : isRefugee ? Refugee : Master
-  const onClickMenu = (item, i) => {
+  const onClickMenu = async (item, i) => {
 
     if (item.title === t('howTo')) {
       props.navigation.navigate('HowToo')
@@ -96,7 +109,6 @@ export const CustomeDrawer = (props) => {
     }
     else if (item.title === t('schedulingCalls')) {
       props.navigation.navigate('SchedulingOfCalls')
-
     }
   }
 
@@ -111,7 +123,13 @@ export const CustomeDrawer = (props) => {
       {Data.map((item, i) => {
         return (
           <Pressable
-            onPress={() => { setMenu(i), onClickMenu(item) }}
+            onPress={() => {
+              if (item.title === 'SIGN OUT') {
+                logout();
+              }
+              setMenu(i),
+                onClickMenu(item)
+            }}
             style={{
               backgroundColor: menu === i ? COLORS.black : COLORS.transparent,
               width: (BaseStyle.WIDTH / 100) * 100,

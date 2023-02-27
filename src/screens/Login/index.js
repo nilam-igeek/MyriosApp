@@ -28,10 +28,9 @@ const Login = (props) => {
     // const passwordRef = useRef();
     const dispatch = useDispatch();
 
-    const success = useSelector((state) => state.apiReducer.loginData.success);
+    const isUserData = useSelector((state) => state.apiReducer.loginData);
     const loading = useSelector((state) => state.apiReducer.loading);
-    //     const error = useSelector((state) => state.apiReducer.error);
-    //    console.log("error--adadasd-->",error.data.success);
+
     const { t } = useTranslation();
     const [isShow, setIsShow] = useState(false);
     const [isRole, setIsRole] = useState('');
@@ -73,23 +72,25 @@ const Login = (props) => {
         await AsyncStorage.setItem('userPassword', password);
         await AsyncStorage.setItem('userEmail', email);
         dispatch(loginApi(body));
-
-
-        // actions.resetForm();
-        //         if (!success) {
-        //      Toast.show('Unauthorized');
-        // }
     };
 
     useEffect(() => {
-        if (success) {
-            if (isDonor || isRefugee || isShelter) {
+        if (!_.isEmpty(isUserData)) {
+            if (isDonor) {
                 props.navigation.navigate('Welcome');
-            } else if (isMaster) {
+            }
+            else if (isRefugee || isShelter) {
+                if (isUserData.is_active === 0) {
+                    props.navigation.navigate('ScheduleNow');
+                } else if (isUserData.is_active === 1) {
+                    props.navigation.navigate('Welcome');
+                }
+            }
+            else if (isMaster) {
                 props.navigation.navigate('RefugeesList');
             }
         }
-    }, [success])
+    }, [isUserData])
 
     return (
         <>
