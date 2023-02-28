@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "5787D935-D50F-4CF2-8E88-D357CDA486D4.png",
+      "filename" : "logoSplash.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "5787D935-D50F-4CF2-8E88-D357CDA486D4@2x.png",
+      "filename" : "logoSplash@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "5787D935-D50F-4CF2-8E88-D357CDA486D4@3x.png",
+      "filename" : "logoSplash@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -17,22 +17,25 @@ const SheltersList = (props) => {
     const loading = useSelector((state) => state.apiReducer.loading);
     const dataOfShelters = useSelector((state) => !_.isEmpty(state.apiReducer.shelterData) && state.apiReducer.shelterData);
     const isShelterData = (!_.isEmpty(dataOfShelters.data) && dataOfShelters.data);
-    const [dataOfList, setDataOfList] = useState(isShelterData.data);
+
 
     useEffect(() => {
-        dispatch(sheltersListApi);
+        function fetchProduct() {
+            dispatch(sheltersListApi);
+        }
+        fetchProduct();
     }, [sheltersListApi]);
 
     const onClickUserStatus = (id) => {
         dispatch(userStatusApi(id));
-        let data = [...isShelterData.data];
-        let newData = data.map(item => {
-            if (item.id === id) {
-                item.is_active = !item.is_active;
-            }
-            return item
-        })
-        setDataOfList(newData);
+        // let data = [...isShelterData.data];
+        // let newData = data.map(item => {
+        //     if (item.id === id) {
+        //         item.is_active = !item.is_active;
+        //     }
+        //     return item
+        // })
+        // setDataOfList(newData);
     }
 
 
@@ -49,31 +52,35 @@ const SheltersList = (props) => {
                         data={isShelterData.data}
                         extraData={isShelterData.data}
                         keyExtractor={item => item.id}
-                        renderItem={({ item }) =>
-                            <View style={styles.itemCard}>
-                                <Pressable
-                                    onPress={() => { props.navigation.navigate('ProfileOfRole') }}
-                                    style={{
-                                        flexDirection: 'row', alignItems: 'center',
-                                        width: (BaseStyle.WIDTH / 100) * 52,
-                                        alignSelf: 'center',
-                                    }}>
-                                    <View style={styles.profile}>
-                                        {item.image ? <Image
-                                            resizeMode='cover'
-                                            source={item.image}
-                                            style={styles.profileStyle} />
-                                            : <ProfileSvg height={30} width={30} />}
-                                    </View>
-                                    <Text style={{ marginLeft: 20 }} >
-                                        <Text style={styles.userName}>{item.name}</Text>
-                                    </Text>
-                                </Pressable>
-                                <Switch
-                                    value={item.is_active}
-                                    style={{ transform: [{ scaleX: .7 }, { scaleY: .7 }] }}
-                                    onValueChange={() => onClickUserStatus(item.id)} />
-                            </View>
+                        renderItem={({ item }) => {
+                            console.log("item.is_active===>", item);
+                            return (
+                                <View style={styles.itemCard}>
+                                    <Pressable
+                                        onPress={() => { props.navigation.navigate('ProfileOfRole', {}) }}
+                                        style={{
+                                            flexDirection: 'row', alignItems: 'center',
+                                            width: (BaseStyle.WIDTH / 100) * 52,
+                                            alignSelf: 'center',
+                                        }}>
+                                        <View style={styles.profile}>
+                                            {item.image ? <Image
+                                                resizeMode='cover'
+                                                source={item.image}
+                                                style={styles.profileStyle} />
+                                                : <ProfileSvg height={30} width={30} />}
+                                        </View>
+                                        <Text style={{ marginLeft: 20 }} >
+                                            <Text style={styles.userName}>{item.name}</Text>
+                                        </Text>
+                                    </Pressable>
+
+                                    <Switch
+                                        value={item.is_active ? true : false}
+                                        style={{ transform: [{ scaleX: .7 }, { scaleY: .7 }] }}
+                                        onValueChange={() => onClickUserStatus(item.id)} />
+                                </View>)
+                        }
 
                         } />
                 </View>

@@ -62,11 +62,13 @@ const WishLists = (props) => {
     const onClickFev = (item, index) => {
         setIsFavItem(index)
 
-        console.log("item.is_wishlist--------------->", item.is_wishlist);
+        console.log("item.is_wishlist111--------------->", item.is_wishlist);
         if (item.is_wishlist) {
+            console.log("item.is_wishlist2222--------------->");
             setShowModalFav(true);
             dispatch(wishlistRemoveApi(item.id))
         } else {
+            console.log("item.is_wishlist33333--------------->");
             dispatch(wishlistAddApi(item.id))
         }
 
@@ -95,6 +97,8 @@ const WishLists = (props) => {
         dispatch(wishListFilterApi(body))
     }
 
+
+    console.log("dataOfwishListDataList.data---->", dataOfwishListDataList.data);
     return (
         <>
             <View style={styles.container}>
@@ -119,7 +123,7 @@ const WishLists = (props) => {
                             </Pressable>
                             <View style={{ justifyContent: 'center', alignItems: "center", }}>
                                 <View style={{ width: (BaseStyle.WIDTH / 100) * 75, alignSelf: 'center', alignItems: 'center' }}>
-                                    <Text style={styles.chooseOneText}>{'User type'}</Text>
+                                    <Text style={styles.chooseOneText}>{'Choose Their User type'}</Text>
                                     <View style={styles.chooseOneCard}>
                                         <Button
                                             borderColor={isSelected === 'Girl' ? COLORS.cornflowerblue : COLORS.transparent}
@@ -235,14 +239,15 @@ const WishLists = (props) => {
                         <View style={{ justifyContent: 'center', alignItems: "center" }}>
                             {
                                 [isItemsData].map((item) => {
+                                    console.log("item===>", item);
                                     return (
                                         <>
                                             <Image source={item.image} style={styles.modalProfile} />
                                             <Text style={styles.modalTitleText}>{item.name}</Text>
-                                            <Text style={styles.modalSubText}>Type: {item.gender}</Text>
-                                            <Text style={styles.modalSubText}>Age: {`${item.age} ${'years'}`}</Text>
-                                            <Text style={styles.modalSubText}>Country: {item.country}</Text>
-                                            <Text style={styles.modalSubText}>Description: {''}</Text>
+                                            {item.gender && <Text style={styles.modalSubText}>User Type: {item.gender}</Text>}
+                                            {item.age && <Text style={styles.modalSubText}>Age: {`${item.age} ${'years'}`}</Text>}
+                                            {item.country && <Text style={styles.modalSubText}>Country: {item.country}</Text>}
+                                            {item.watchlist_description && <Text style={styles.modalSubText}>{`${'Why'} ${item.name} ${'needs'} ${'it:'}${item.watchlist_description}`}</Text>}
                                             <Button
                                                 onPress={() => { Linking.openURL('https://www.amazon.in/hz/wishlist/ls/9JG1X38OVUYE?ref_=wl_share') }}
                                                 borderRadius={50}

@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Indicator from '../../components/core/Indicator';
 import _ from 'lodash';
 import ACTION_TYPES from '../../redux/actions/ActionTypes';
+import { useFocusEffect } from '@react-navigation/native';
+import { refugeesSuccess } from '../../redux/actions/ApiAction';
 const RefugeesList = (props) => {
 
     const { t } = useTranslation();
@@ -18,23 +20,18 @@ const RefugeesList = (props) => {
     const dataOfRefugees = useSelector((state) => !_.isEmpty(state.apiReducer.refugeeData) && state.apiReducer.refugeeData);
     const refugeesList = (!_.isEmpty(dataOfRefugees.data) && dataOfRefugees.data)
     const loading = useSelector((state) => state.apiReducer.loading);
-    const [dataOfList, setDataOfList] = useState(refugeesList.data);
 
 
     useEffect(() => {
-        dispatch(refugeesListApi);
+        function fetchProduct() {
+            dispatch(refugeesListApi);
+        }
+        fetchProduct();
     }, [refugeesListApi]);
+
 
     const onClickUserStatus = (id) => {
         dispatch(userStatusApi(id));
-        let data = [...refugeesList.data];
-        let newData = data.map(item => {
-            if (item.id === id) {
-                item.is_active = !item.is_active;
-            }
-            return item
-        })
-        setDataOfList(newData);
     }
 
     return (
@@ -82,7 +79,7 @@ const RefugeesList = (props) => {
                                     <Text style={{ color: COLORS.white, padding: 5, textAlign: 'center' }}>{item.is_active ? 'Active' : 'Deactivate'}</Text>
                                 </Pressable> */}
                                 <Switch
-                                    value={item.is_active}
+                                    value={item.is_active ? true : false}
                                     style={{ transform: [{ scaleX: .7 }, { scaleY: .7 }] }}
                                     onValueChange={() => onClickUserStatus(item.id)} />
                             </View>)

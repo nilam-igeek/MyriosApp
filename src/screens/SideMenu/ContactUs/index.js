@@ -15,6 +15,7 @@ import { Formik, Field } from 'formik';
 import * as yup from 'yup';
 import { contactUsApi } from '../../../redux/actions/ApiActionCreator';
 import { useDispatch, useSelector } from 'react-redux';
+import { PASSWORD_PATTERN, EMAIL_PATTERN } from '../../../constants/BaseValidation';
 import Indicator from '../../../components/core/Indicator';
 const ContactUs = (props) => {
     const loading = useSelector((state) => state.apiReducer.loading);
@@ -43,11 +44,13 @@ const ContactUs = (props) => {
             .required(t('msgRequired')),
         email: yup
             .string()
-            .required(t('emailRequired')),
+            .required(t('emailRequired'))
+            .matches(EMAIL_PATTERN, 'Please enter valid email')
+            .email("Please enter valid email"),
 
     })
 
-    const onClickSubmit = async (values, actions) => {
+    const onClickSubmit = async (values) => {
         const { firstName, message, email, } = values;
         var body = {
             name: firstName,
@@ -56,7 +59,7 @@ const ContactUs = (props) => {
         };
         dispatch(contactUsApi(body));
         setShowModal(true)
-        actions.resetForm();
+        // actions.resetForm();
     };
 
     const onClick = () => {
@@ -122,7 +125,7 @@ const ContactUs = (props) => {
                                 onBlur={handleBlur('email')}
                                 width={(BaseStyle.WIDTH / 100) * 80}
                                 inputWidth={(BaseStyle.WIDTH / 100) * 80}
-                                placeholder={t('emailAdd')}
+                                placeholder={'Create you email'}
                                 keyboardType="email-address"
                                 isError={errors.email}
                                 placeholderColor={COLORS.black} />
@@ -161,8 +164,8 @@ const ContactUs = (props) => {
                                 color={COLORS.white}
                                 height={40}
                                 marginTop={35}
-                                width={'60%'}
-                                title={`Explore whislist`}
+                                width={'90%'}
+                                title={`Take me Back to Wishlists!`}
                             />
 
                         </View>

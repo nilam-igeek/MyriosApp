@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, ImageBackground, ScrollView, Pressable, Image, Alert, Modal, KeyboardAvoidingView, Platform } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Dimensions, Text, ImageBackground, ScrollView, Pressable, Image, Alert, Modal, KeyboardAvoidingView, Platform } from 'react-native';
 import { COLORS } from '../../common/style/Colors';
 import Button from '../../components/core/Button';
 import styles from './styles';
@@ -19,9 +19,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { signUpDataOfUser } from '../../redux/actions/ApiActionCreator';
 import { IMAGES } from '../../common/style/Images';
 import ArrowLeftSvg from '../../common/svgs/ArrowLeftSvg';
-import DatePicker from 'react-native-date-picker'
+import DatePicker from 'react-native-date-picker';
+import { useScrollToTop } from '@react-navigation/native';
 import _ from 'lodash';
 import moment from 'moment';
+const x = Dimensions.get('window').width;
+const y = Dimensions.get('window').height;
 const SignUpFirstScreen = (props) => {
     const dispatch = useDispatch();
 
@@ -64,25 +67,25 @@ const SignUpFirstScreen = (props) => {
         about: yup
             .string()
             .required(t('aboutRequired')),
-        wishListLink: yup
-            .string(),
-        wishListDescription: yup
-            .string()
+        // wishListLink: yup
+        //     .string(),
+        // wishListDescription: yup
+        //     .string()
 
     })
     const loginRefugeeValidationSchema = yup.object().shape({
         firstName: yup
             .string()
             .required(t('nameRequired')),
-        wishListLink: yup
-            .string(),
-        wishListDescription: yup
-            .string()
+        // wishListLink: yup
+        //     .string(),
+        // wishListDescription: yup
+        //     .string()
     })
 
     const onClickSubmit = (values, actions) => {
 
-        const { firstName, about, wishListLink, wishListDescription } = values;
+        const { firstName, about } = values;
         var body = {
             firstName: firstName,
             country: country,
@@ -90,8 +93,8 @@ const SignUpFirstScreen = (props) => {
             age: moment(date).format('YYYY-MM-DD'),
             photo: isProfile.profile,
             isUserType: isSelected,
-            watchlist_link: wishListLink,
-            watchlist_description: wishListDescription
+            watchlist_link: '',
+            watchlist_description: ''
         };
 
         dispatch(signUpDataOfUser(body));
@@ -145,14 +148,16 @@ const SignUpFirstScreen = (props) => {
                 <View style={styles.container}>
                     <View style={styles.card}>
                         <Text style={styles.titleText}>{t('signUp')}</Text>
-                        <ScrollView showsVerticalScrollIndicator={false}
+                        <ScrollView
+                            // ref={scrollRef}
+                            showsVerticalScrollIndicator={false}
                             showsHorizontalScrollIndicator={false}
                             contentContainerStyle={{ flexGrow: 1 }}
                             bounces={false}>
                             <View style={styles.subContainer}>
                                 <Formik
                                     validationSchema={isShelter ? loginShelterValidationSchema : isDonor ? loginDonorValidationSchema : loginRefugeeValidationSchema}
-                                    initialValues={{ firstName: '', about: '', wishListLink: '', wishListDescription: '' }}
+                                    initialValues={{ firstName: '', about: '' }}
                                     onSubmit={onClickSubmit}>
                                     {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, }) => (
                                         <>
@@ -294,13 +299,14 @@ const SignUpFirstScreen = (props) => {
                                                     placeholder={t('about')}
                                                     placeholderColor={COLORS.grey}
                                                     isError={errors.about}
-                                                    height={120}
+                                                    height={110}
+                                                    multiline
                                                     borderRadius={20}
                                                     numberOfLines={3}
                                                     mt={20}
                                                 />}
 
-                                            {!isDonor &&
+                                            {/* {!isDonor &&
                                                 <>
                                                     <View style={{ marginTop: 20 }}>
                                                         <Text style={{ marginBottom: 10, width: (BaseStyle.WIDTH / 100) * 80 }}>{'Tell us a little about why you need the items on your wishlist..'}</Text>
@@ -333,7 +339,7 @@ const SignUpFirstScreen = (props) => {
                                                         isError={errors.wishListDescription}
                                                     // inputColor={COLORS.blue}
                                                     />
-                                                </>}
+                                                </>} */}
                                             <Button
                                                 marginBottom={35}
                                                 title={t('next')}

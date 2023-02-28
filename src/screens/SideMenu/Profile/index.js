@@ -99,6 +99,7 @@ const Profile = (props) => {
     const logout = async () => {
         try {
             await AsyncStorage.removeItem('token');
+            await AsyncStorage.removeItem('userType');
             RNRestart.restart();
             // props.navigation.navigate('GetStartedd')
             return true;
@@ -311,10 +312,10 @@ const Profile = (props) => {
                                                     placeholder={t('about')}
                                                     placeholderColor={COLORS.black}
                                                     isError={errors.about}
-                                                    // multiline
+                                                    multiline
+                                                    height={110}
                                                     borderRadius={20}
-                                                    height={82}
-                                                    // numberOfLines={3}
+                                                    numberOfLines={3}
                                                     mt={30}
                                                 /> :
                                                     <ButtonWithIcon title={data.description ? data.description : 'description'} onPress={() => { setAbout(true) }} />

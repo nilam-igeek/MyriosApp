@@ -21,7 +21,6 @@ import { ROLE } from '../../constants/types';
 import Indicator from '../../components/core/Indicator';
 import { IMAGES } from '../../common/style/Images';
 import ArrowLeftSvg from '../../common/svgs/ArrowLeftSvg';
-import Toast from 'react-native-simple-toast';
 import _ from 'lodash';
 const SignUpSecondScreen = (props) => {
     const isdataProfile = useSelector((state) => state.apiReducer.dataProfile);
@@ -51,8 +50,9 @@ const SignUpSecondScreen = (props) => {
     const loginValidationSchema = yup.object().shape({
         email: yup
             .string()
-            // .matches(EMAIL_PATTERN, 'Please enter valid email')
-            .required(t('emailRequired')),
+            .required(t('emailRequired'))
+            .matches(EMAIL_PATTERN, 'Please enter valid email')
+            .email("Please enter valid email"),
         password: yup
             .string()
             .required(t('passRequired'))
@@ -61,15 +61,14 @@ const SignUpSecondScreen = (props) => {
 
     const onClickSubmit = async (values, actions) => {
         const { email, password } = values;
-
         var donorData = {
             email: email,
             password: password,
             name: isdataProfile.firstName,
             country: isdataProfile.country,
             photo: isdataProfile.photo,
-            watchlist_link: isdataProfile.watchlist_link,
-            watchlist_description: isdataProfile.watchlist_description
+            watchlist_link: '',
+            watchlist_description: ''
         }
 
         var refugeeData = {
@@ -81,8 +80,8 @@ const SignUpSecondScreen = (props) => {
             type: isdataProfile.isUserType,
             shelter: isdataProfile.shelterName,
             photo: isdataProfile.photo,
-            watchlist_link: isdataProfile.watchlist_link,
-            watchlist_description: isdataProfile.watchlist_description
+            watchlist_link: '',
+            watchlist_description: ''
         }
         var shelterData = {
             email: email,
@@ -91,8 +90,8 @@ const SignUpSecondScreen = (props) => {
             country: isdataProfile.country,
             description: isdataProfile.about,
             photo: isdataProfile.photo,
-            watchlist_link: isdataProfile.watchlist_link,
-            watchlist_description: isdataProfile.watchlist_description
+            watchlist_link: '',
+            watchlist_description: ''
         }
 
         var body = {
@@ -116,21 +115,30 @@ const SignUpSecondScreen = (props) => {
                 if (userData.is_active === true) {
                     props.navigation.navigate('Welcome');
                 } else if (userData.is_active === false) {
-                    Alert.alert(
-                        "Thanks for signing up!",
-                        `Thanks for signing up! In order to finalize your account, you need to your shelter to register you as a Myrios verified refugee on their 'People' page, and if your shelter does not user Myrios, register your account with 'not currently staying at shelter', so you can schedule a 5-minute call with a Myrios representative to get verified!`,
-                        [
-                            { text: "OK", onPress: () => { props.navigation.navigate('ScheduleNow') } }
-                        ],
-                        { cancelable: false }
-                    );
+                    props.navigation.navigate('ScheduleNow');
+                    // Alert.alert(
+                    //     "Thanks for signing up!",
+                    //     `Thanks for signing up! In order to finalize your account, you need to your shelter to register you as a Myrios verified refugee on their 'People' page, and if your shelter does not user Myrios, register your account with 'not currently staying at shelter', so you can schedule a 5-minute call with a Myrios representative to get verified!`,
+                    //     [
+                    //         { text: "OK", onPress: () => { props.navigation.navigate('ScheduleNow') } }
+                    //     ],
+                    //     { cancelable: false }
+                    // );
                 }
             }
             else if (isRefugee) {
                 if (userData.is_active === true) {
                     props.navigation.navigate('Welcome');
                 } else if (userData.is_active === false) {
-                    Alert.alert(`Thanks for signing up! In order to finalize your account, you need to your shelter to register you as a Myrios verified refugee on their 'People' page, and if your shelter does not user Myrios, register your account with 'not currently staying at shelter', so you can schedule a 5-minute call with a Myrios representative to get verified!`)
+                    props.navigation.navigate('ScheduleNow');
+                    // Alert.alert(
+                    //     "Thanks for signing up!",
+                    //     `Thanks for signing up! In order to finalize your account, you need to your shelter to register you as a Myrios verified refugee on their 'People' page, and if your shelter does not user Myrios, register your account with 'not currently staying at shelter', so you can schedule a 5-minute call with a Myrios representative to get verified!`,
+                    //     [
+                    //         { text: "OK", onPress: () => { props.navigation.navigate('ScheduleNow') } }
+                    //     ],
+                    //     { cancelable: false }
+                    // );
                 }
             }
         }
@@ -175,7 +183,7 @@ const SignUpSecondScreen = (props) => {
                                                 onBlur={handleBlur('email')}
                                                 width={(BaseStyle.WIDTH / 100) * 80}
                                                 inputWidth={(BaseStyle.WIDTH / 100) * 60}
-                                                placeholder={t('enterEmail')}
+                                                placeholder={'Create you email'}
                                                 keyboardType="email-address"
                                                 isError={errors.email}>
                                                 <EmailSvg marginRight={10} />
@@ -192,7 +200,7 @@ const SignUpSecondScreen = (props) => {
                                                 onBlur={handleBlur('password')}
                                                 width={(BaseStyle.WIDTH / 100) * 80}
                                                 inputWidth={(BaseStyle.WIDTH / 100) * 60}
-                                                placeholder={t('enterPassword')}
+                                                placeholder={'Create your password'}
                                                 isError={errors.password}>
                                                 <Pressable onPress={() => { setIsShow(!isShow) }}>
                                                     {isShow ? <LockOpenSvg marginRight={10} /> : <LockSvg marginRight={10} />}

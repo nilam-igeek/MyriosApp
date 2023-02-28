@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Image" translatesAutoresizingMaskIntoConstraints="NO" id="1p3-m7-g1b">
-                                <rect key="frame" x="83" y="344" width="224" height="166"/>
+                                <rect key="frame" x="83" y="344" width="224" height="266"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="200" id="YSb-rZ-k7l"/>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="500" id="ZXI-pa-Dra"/>
@@ -34,8 +34,10 @@
                             <constraint firstItem="1p3-m7-g1b" firstAttribute="leading" secondItem="FzU-Fm-lmG" secondAttribute="leading" constant="83" id="DPw-9G-KtM"/>
                             <constraint firstItem="1p3-m7-g1b" firstAttribute="top" secondItem="FzU-Fm-lmG" secondAttribute="top" constant="413" id="DS0-I5-D5v"/>
                             <constraint firstItem="FzU-Fm-lmG" firstAttribute="bottom" secondItem="1p3-m7-g1b" secondAttribute="bottom" constant="300" id="HNW-vH-mrG"/>
+                            <constraint firstItem="1p3-m7-g1b" firstAttribute="top" secondItem="FzU-Fm-lmG" secondAttribute="top" constant="200" id="UWw-Tf-5ym"/>
                             <constraint firstItem="1p3-m7-g1b" firstAttribute="top" secondItem="FzU-Fm-lmG" secondAttribute="top" constant="300" id="Wsy-HD-GoK"/>
                             <constraint firstItem="FzU-Fm-lmG" firstAttribute="trailing" secondItem="1p3-m7-g1b" secondAttribute="trailing" constant="83" id="YqK-dH-MLR"/>
+                            <constraint firstItem="FzU-Fm-lmG" firstAttribute="bottom" secondItem="1p3-m7-g1b" secondAttribute="bottom" constant="200" id="a8M-p0-Pi0"/>
                             <constraint firstItem="1p3-m7-g1b" firstAttribute="top" secondItem="FzU-Fm-lmG" secondAttribute="top" constant="500" id="e73-5A-EF7"/>
                             <constraint firstItem="1p3-m7-g1b" firstAttribute="top" secondItem="FzU-Fm-lmG" secondAttribute="top" constant="300" id="iqC-I1-ZRo"/>
                             <constraint firstAttribute="bottom" secondItem="1p3-m7-g1b" secondAttribute="bottom" constant="300" id="u8N-iH-iaw"/>
@@ -48,6 +50,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Image" width="125" height="125"/>
+        <image name="Image" width="264" height="264"/>
     </resources>
 </document>

@@ -121,7 +121,7 @@ const HowTo = (props) => {
         },
     ];
 
-    const dataList = isDonor ? slidesData : slidesDonorData
+    const dataList = isDonor ? slidesDonorData : slidesData
     const _renderItem = ({ item }) => {
         return (
             <>
@@ -145,13 +145,16 @@ const HowTo = (props) => {
             <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.seashell} />
             <Header title={t('myrios')} onPress={() => { props.navigation.toggleDrawer() }} />
             <View style={{ flex: 1 }}>
-                <AppIntroSlider renderNextButton={() => {
-                    return (
-                        <View style={styles.btn}><Text style={styles.btnText}>Go!</Text></View>)
-                }}
+                <AppIntroSlider
+                    key={'list'}
+                    index={1}
+                    renderNextButton={() => {
+                        return (
+                            <View style={styles.btn}><Text style={styles.btnText}>Go!</Text></View>)
+                    }}
                     renderDoneButton={() => {
                         return (
-                            <View style={styles.btn}><Text style={styles.btnText}>{isDonor ? 'Explore Wishlists!' : 'Done'}</Text></View>)
+                            <View style={styles.btn}><Text style={styles.btnText}>{isDonor ? 'See my Wishlist!!' : 'Done'}</Text></View>)
                     }}
                     dotStyle={{ backgroundColor: 'black' }} activeDotStyle={{ backgroundColor: 'grey' }} renderItem={_renderItem}
                     data={dataList}

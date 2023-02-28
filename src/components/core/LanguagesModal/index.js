@@ -74,7 +74,7 @@ const LanguagesModal = () => {
     return (
         <>
             <Pressable onPress={() => setShowList(!showList)} style={styles.mainContainer}>
-                <Text style={styles.titleText}>{isLanguage ? isLanguage : 'Selected Country'}</Text>
+                <Text style={styles.titleText}>{isLanguage ? isLanguage : 'Selecte Language'}</Text>
             </Pressable>
             <Modal
                 animationType='fade'
@@ -86,7 +86,7 @@ const LanguagesModal = () => {
                         <Pressable onPress={() => { setShowList(false) }} style={styles.closeBtn}>
                             <CloseSvg fill={COLORS.white} width={10} height={10} />
                         </Pressable>
-                        <Text style={styles.countryText}>{'Selected Country'}</Text>
+                        <Text style={styles.countryText}>{'Selecte Language'}</Text>
                         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                             {items.map((item, i) => {
                                 return (

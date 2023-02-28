@@ -11,7 +11,7 @@ export default styles = StyleSheet.create({
     card: {
         backgroundColor: COLORS.white,
         // height: (BaseStyle.HEIGHT / 100) * 60,
-         height:'120%',
+        height: '120%',
         width: '100%',
         borderTopRightRadius: 40,
         borderTopLeftRadius: 40
@@ -54,6 +54,12 @@ export default styles = StyleSheet.create({
         alignSelf: 'center',
         flexDirection: "row",
         justifyContent: "space-between"
-    }
+    },
+    desText: {
+        fontSize: 14,
+        marginTop: 20,
+        textAlign: 'center',
+        fontFamily: FONTS.Poppins_Regular,
+    },
 
 });

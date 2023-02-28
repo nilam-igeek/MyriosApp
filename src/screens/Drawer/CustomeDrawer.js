@@ -11,15 +11,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import '../../../assets/i18n/i18n';
 import { useTranslation } from 'react-i18next';
 import RNRestart from 'react-native-restart';
+import { refugeesListApi } from '../../redux/actions/ApiActionCreator';
 // import { wishListApi } from '../../redux/actions/ApiActionCreator';
 
 export const CustomeDrawer = (props) => {
+  // console.log("props-CustomeDrawer-11->", props.routes);
   const dispatch = useDispatch();
   const [menu, setMenu] = useState(0);
   const [isRole, setIsRole] = useState('');
-  const isRefugee = isRole === ROLE.REFUGEE
-  const isDonor = isRole === ROLE.DONOR
-  const isShelter = isRole === ROLE.SHELTER
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -32,11 +31,19 @@ export const CustomeDrawer = (props) => {
 
 
 
-  const Donor_Shelter = [
+
+  const Donor = [
     { id: 1, title: t('howTo') },
-    { id: 2, title: isShelter ? t('wishList') : t('explore') },
+    { id: 2, title: t('explore') },
     { id: 3, title: t('profile') },
-    { id: 4, title: isShelter ? t('people') : 'FAVORITE' },
+    { id: 4, title: 'FAVORITE' },
+    { id: 5, title: t('contact') },
+  ]
+  const Shelter = [
+    { id: 1, title: t('howTo') },
+    { id: 2, title: t('wishList') },
+    { id: 3, title: t('profile') },
+    { id: 4, title: t('people') },
     { id: 5, title: t('contact') },
   ]
 
@@ -60,6 +67,7 @@ export const CustomeDrawer = (props) => {
   const logout = async () => {
     try {
       await AsyncStorage.removeItem('token');
+      await AsyncStorage.removeItem('userType');
       RNRestart.restart();
       return true;
     }
@@ -68,11 +76,19 @@ export const CustomeDrawer = (props) => {
     }
   }
 
-  const Data = (isShelter || isDonor) ? Donor_Shelter : isRefugee ? Refugee : Master
+  // const onClickRefugee = () => {
+  //   console.log("fdfgdfg");
+  //   // dispatch(refugeesListApi());
+  // };
+
+  // const Data = (isShelter || isDonor) ? Donor_Shelter : isRefugee ? Refugee : Master
+
   const onClickMenu = async (item, i) => {
 
+    console.log("item----->", item);
+
     if (item.title === t('howTo')) {
-      props.navigation.navigate('HowToo')
+      props.navigation.navigate('HowTo')
     }
     else if (item.title === t('wishList')) {
       props.navigation.navigate('ShelterWishList')
@@ -93,7 +109,7 @@ export const CustomeDrawer = (props) => {
       props.navigation.navigate('ContactUs')
     }
     else if (item.title === t('refugeeType')) {
-      props.navigation.navigate('RefugeesListt')
+      props.navigation.navigate('RefugeesList')
     }
     else if (item.title === t('shelterType')) {
       props.navigation.navigate('SheltersList')
@@ -110,8 +126,14 @@ export const CustomeDrawer = (props) => {
     else if (item.title === t('schedulingCalls')) {
       props.navigation.navigate('SchedulingOfCalls')
     }
+    else if (item.title === 'SIGN OUT') {
+      logout();
+    }
+    else if (item.title === t('refugeeType')) {
+      onClickRefugee();
+    }
   }
-
+  console.log("isRole---->", isRole);
 
 
   return (
@@ -120,25 +142,76 @@ export const CustomeDrawer = (props) => {
         style={styles.closeIcon}>
         <CloseSvg fill={COLORS.black} />
       </Pressable>
-      {Data.map((item, i) => {
-        return (
-          <Pressable
-            onPress={() => {
-              if (item.title === 'SIGN OUT') {
-                logout();
-              }
-              setMenu(i),
-                onClickMenu(item)
-            }}
-            style={{
-              backgroundColor: menu === i ? COLORS.black : COLORS.transparent,
-              width: (BaseStyle.WIDTH / 100) * 100,
-              alignSelf: 'center',
-            }}>
-            <Text key={i} style={[styles.menuText, { color: menu === i ? COLORS.white : COLORS.black, }]}>{item.title}</Text>
-          </Pressable>
-        )
-      })}
+
+      {
+        isRole === 'Refugee' ?
+          <>
+            {Refugee.map((item, i) => {
+              return (
+                <Pressable
+                  onPress={() => { setMenu(i), onClickMenu(item) }}
+                  style={{
+                    backgroundColor: menu === i ? COLORS.black : COLORS.transparent,
+                    width: (BaseStyle.WIDTH / 100) * 100,
+                    alignSelf: 'center',
+                  }}>
+                  <Text key={i} style={[styles.menuText, { color: menu === i ? COLORS.white : COLORS.black, }]}>{item.title}</Text>
+                </Pressable>
+              )
+            })}
+          </> :
+
+          isRole === 'Shelter' ?
+            <>
+              {Shelter.map((item, i) => {
+                return (
+                  <Pressable
+                    onPress={() => { setMenu(i), onClickMenu(item) }}
+                    style={{
+                      backgroundColor: menu === i ? COLORS.black : COLORS.transparent,
+                      width: (BaseStyle.WIDTH / 100) * 100,
+                      alignSelf: 'center',
+                    }}>
+                    <Text key={i} style={[styles.menuText, { color: menu === i ? COLORS.white : COLORS.black, }]}>{item.title}</Text>
+                  </Pressable>
+                )
+              })}
+            </> :
+
+            isRole === 'Donor' ?
+              <>
+                {Donor.map((item, i) => {
+                  return (
+                    <Pressable
+                      onPress={() => { setMenu(i), onClickMenu(item) }}
+                      style={{
+                        backgroundColor: menu === i ? COLORS.black : COLORS.transparent,
+                        width: (BaseStyle.WIDTH / 100) * 100,
+                        alignSelf: 'center',
+                      }}>
+                      <Text key={i} style={[styles.menuText, { color: menu === i ? COLORS.white : COLORS.black, }]}>{item.title}</Text>
+                    </Pressable>
+                  )
+                })}
+              </> :
+              <>
+                {Master.map((item, i) => {
+                  return (
+                    <Pressable
+                      onPress={() => { setMenu(i), onClickMenu(item) }}
+                      style={{
+                        backgroundColor: menu === i ? COLORS.black : COLORS.transparent,
+                        width: (BaseStyle.WIDTH / 100) * 100,
+                        alignSelf: 'center',
+                      }}>
+                      <Text key={i} style={[styles.menuText, { color: menu === i ? COLORS.white : COLORS.black, }]}>{item.title}</Text>
+                    </Pressable>
+                  )
+                })}
+              </>
+      }
+
+
     </DrawerContentScrollView>
   );
 }

@@ -11,7 +11,7 @@ import { signUpDataOfUser } from '../../redux/actions/ApiActionCreator';
 import { useDispatch, useSelector } from 'react-redux';
 import { IMAGES } from '../../common/style/Images';
 import ArrowLeftSvg from '../../common/svgs/ArrowLeftSvg';
-const ScheduleNow = (props) => {
+const ShelterOrNot = (props) => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const [isShelterUser, setShelterUser] = useState('isDefault');
@@ -44,16 +44,26 @@ const ScheduleNow = (props) => {
             <View style={styles.container}>
                 <View style={styles.card}>
                     <ScrollView contentContainerStyle={{ flexGrow: 1, }} bounces={false}>
-                        <View style={styles.subContainer}>
-                            <Text style={styles.titleNameText}>{t('chat')}</Text>
-                            <Text style={styles.subText}>{t('chatSubDes')}</Text>
-                            <Button borderRadius={50} title={t('scheduleNow')} fontSize={18} color={COLORS.white} height={50} marginTop={35} width={'70%'}
-                                onPress={() => {
-                                    Linking.openURL('https://calendly.com/vatsal-igeek');
-                                    // props.navigation.navigate('ChooseProfile');
-                                }}
-                            />
-                            <Text style={styles.desText}>{`Thanks for signing up! In order to verify your account, schedule a call with myrios representative.`}</Text>
+                        <View style={styles.subIsContainer}>
+                            <Text style={[styles.titleNameText, { textAlign: "left" }]}>{t('currentlyShelter')}</Text>
+                            <View style={styles.subIsView}>
+                                <Button
+                                    title={t('yes')}
+                                    fontSize={14}
+                                    color={COLORS.white}
+                                    height={45}
+                                    width={'45%'}
+                                    onPress={() => { onClick('YES') }}
+                                />
+                                <Button
+                                    title={t('no')}
+                                    fontSize={14}
+                                    color={COLORS.white}
+                                    height={45}
+                                    width={'45%'}
+                                    onPress={() => { onClick('NO') }}
+                                />
+                            </View>
                         </View>
                     </ScrollView>
                 </View>
@@ -62,4 +72,4 @@ const ScheduleNow = (props) => {
     );
 };
 
-export default ScheduleNow;
+export default ShelterOrNot;

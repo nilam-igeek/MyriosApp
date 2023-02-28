@@ -3,7 +3,6 @@ import { View, Text, ImageBackground, ScrollView } from 'react-native';
 import { COLORS } from '../../common/style/Colors';
 import Button from '../../components/core/Button';
 import styles from './styles';
-import CloseSvg from '../../common/svgs/CloseSvg';
 import '../../../assets/i18n/i18n';
 import { useTranslation } from 'react-i18next';
 import CloseButton from '../../components/core/CloseButton';
@@ -15,7 +14,6 @@ const TypesOfUser = (props) => {
 
     const { t } = useTranslation();
     const [isRole, setIsRole] = useState(ROLE.MASTER);
-
     const onClick = async (type) => {
         await AsyncStorage.removeItem('token');
         setIsRole(type);
@@ -25,10 +23,11 @@ const TypesOfUser = (props) => {
         }
     }
 
-
-
     useEffect(() => {
-        if (isRole !== (ROLE.DONOR || ROLE.SHELTER || ROLE.REFUGEE) && isRole === ROLE.MASTER) {
+        if (isRole === ROLE.MASTER && (
+            isRole !== ROLE.DONOR ||
+            isRole !== ROLE.SHELTER ||
+            isRole !== ROLE.REFUGEE)) {
             async function check() {
                 var item = await AsyncStorage.setItem('userType', ROLE.MASTER);
                 setIsRole(item)
@@ -106,9 +105,7 @@ const TypesOfUser = (props) => {
                         </View>
                     </ScrollView>
                 </View>
-
             </View>
-
         </>
     );
 };

@@ -180,11 +180,23 @@ export default styles = StyleSheet.create({
     },
     titleText: {
         width: '100%',
+        fontSize: 14,
+        marginVertical: 10,
+        color: COLORS.black,
+        textAlign: "left",
+        fontFamily: FONTS.Poppins_Regular,
+        width: (BaseStyle.WIDTH / 100) * 75,
+        alignSelf: 'center'
+    },
+    titleMainText: {
+        width: '100%',
         fontSize: 20,
         marginVertical: 20,
         color: COLORS.black,
         textAlign: "center",
         fontFamily: FONTS.Poppins_SemiBold,
+        width: (BaseStyle.WIDTH / 100) * 80,
+        alignSelf: 'center'
     },
     inputView: {
         color: COLORS.black,
@@ -192,6 +204,7 @@ export default styles = StyleSheet.create({
         height: 45,
         justifyContent: 'center',
         alignItems: "center",
+        alignSelf: 'center',
         width: (BaseStyle.WIDTH / 100) * 75,
         backgroundColor: COLORS.skyBlue,
         borderRadius: 50,

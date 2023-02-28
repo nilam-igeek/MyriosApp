@@ -62,7 +62,10 @@ const Input = ({
                     style={{
                         color: inputColor ? inputColor : COLORS.black,
                         height: height ? height : 45,
-                        width: inputWidth ? inputWidth : (BaseStyle.WIDTH / 100) * 100
+                        width: inputWidth ? inputWidth : (BaseStyle.WIDTH / 100) * 100,
+                        paddingTop: (Platform.OS === 'ios' && multiline) ? 20 : 0,
+                        // paddingBottom: 0,
+                        // textAlignVertical: "top",
                     }}
                     secureTextEntry={secureTextEntry}
                     value={value}
@@ -73,6 +76,7 @@ const Input = ({
                     }}
                     {...inputProps}
                     multiline={multiline}
+
                     numberOfLines={numberOfLines}
                     maxLength={maxLength}
                     placeholderTextColor={placeholderColor ? placeholderColor : placeholder && COLORS.grey}

@@ -28,16 +28,18 @@ import SchedulingOfCalls from '../screens/Master/SchedulingOfCalls';
 import Analytics from '../screens/Master/Analytics';
 import AddPerson from '../screens/SideMenu/Helped/AddPerson';
 import ScheduleNow from '../screens/SignUp/ScheduleNow';
+import EnterShelterName from '../screens/SignUp/EnterShelterName';
+import ShelterOrNot from '../screens/SignUp/ShelterOrNot';
 import analytics from '@react-native-firebase/analytics';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
-const Drawer = createDrawerNavigator();
+const DrawerStack = createDrawerNavigator();
 const Router = (props) => {
   const routeNameRef = React.useRef();
   const navigationRef = React.useRef();
   const [isToken, setIsToken] = useState('');
-  const initialRouteName = isToken !== '' ? 'Welcome' : 'GetStarted'
+  // const initialRouteName = isToken !== '' ? 'Welcome' : 'GetStarted'
 
   const getAccessToken = async () => {
     const isToken = await AsyncStorage.getItem('token');
@@ -49,151 +51,62 @@ const Router = (props) => {
     getAccessToken();
   }, [getAccessToken])
 
+
   function MyDrawer() {
     return (
-      <Drawer.Navigator
+      <DrawerStack.Navigator
+        initialRouteName={props.initialRoute}
         screenOptions={{
           drawerStyle: {
             backgroundColor: COLORS.seashell,
             width: '100%',
           },
+          // swipeEnabled: false,
           headerShown: false,
         }}
         drawerContent={(props) => <CustomeDrawer {...props} />}>
-        <Drawer.Screen name="HowToo" component={HowTo} />
-        <Drawer.Screen name="WishList" component={MyNewDrawer} />
-        <Drawer.Screen name="ContactUs" component={ContactUs} />
-        <Drawer.Screen name="Profile" component={Profile} />
-        <Drawer.Screen name="Helped" component={Helped} />
-        <Drawer.Screen name="ShelterWishList" component={ShelterWishList} />
-        <Drawer.Screen name="AddPerson" component={AddPerson} />
-      </Drawer.Navigator>
-    );
-  }
-  function MyNewDrawer() {
-    return (
-      <Drawer.Navigator
-        screenOptions={{
-          drawerStyle: {
-            backgroundColor: COLORS.seashell,
-            width: '100%',
-          },
-          headerShown: false,
-        }}
-        drawerContent={(props) => <CustomeDrawer {...props} />}>
-        <Drawer.Screen name="WishLists" component={WishLists} />
-        <Drawer.Screen name="HowToo" component={HowTo} />
-        <Drawer.Screen name="ContactUs" component={ContactUs} />
-        <Drawer.Screen name="Profile" component={Profile} />
-        <Drawer.Screen name="Helped" component={Helped} />
-        <Drawer.Screen name="ShelterWishList" component={ShelterWishList} />
-        <Drawer.Screen name="AddPerson" component={AddPerson} />
-      </Drawer.Navigator>
+        <Stack.Screen options={{ swipeEnabled: false }} name={'GetStarted'} component={GetStarted} />
+        <DrawerStack.Screen options={{ swipeEnabled: false }} name="Language" component={Language} />
+        <DrawerStack.Screen options={{ swipeEnabled: false }} name={'TypesOfUser'} component={TypesOfUser} />
+        <DrawerStack.Screen options={{ swipeEnabled: false }} name="Login" component={Login} />
+        <DrawerStack.Screen options={{ swipeEnabled: false }} name="SignUpFirstScreen" component={SignUpFirstScreen} />
+        <DrawerStack.Screen options={{ swipeEnabled: false }} name="SignUpSecondScreen" component={SignUpSecondScreen} />
+        <DrawerStack.Screen options={{ swipeEnabled: false }} name="ChooseProfile" component={ChooseProfile} />
+        <DrawerStack.Screen options={{ swipeEnabled: false }} name="ScheduleNow" component={ScheduleNow} />
+        <DrawerStack.Screen options={{ swipeEnabled: false }} name="EnterShelterName" component={EnterShelterName} />
+        <DrawerStack.Screen options={{ swipeEnabled: false }} name="ShelterOrNot" component={ShelterOrNot} />
+        <DrawerStack.Screen options={{ swipeEnabled: false }} name="Welcome" component={Welcome} />
+        <DrawerStack.Screen options={{ swipeEnabled: false }} name="HowTo" component={HowTo} />
+        <DrawerStack.Screen options={{ swipeEnabled: false }} name="WishLists" component={WishLists} />
+        <DrawerStack.Screen options={{ swipeEnabled: false }} name="ContactUs" component={ContactUs} />
+        <DrawerStack.Screen options={{ swipeEnabled: false }} name="Profile" component={Profile} />
+        <DrawerStack.Screen options={{ swipeEnabled: false }} name="Helped" component={Helped} />
+        <DrawerStack.Screen options={{ swipeEnabled: false }} name="ShelterWishList" component={ShelterWishList} />
+        <DrawerStack.Screen options={{ swipeEnabled: false }} name="RefugeesList" component={RefugeesList} />
+        <DrawerStack.Screen options={{ swipeEnabled: false }} name="DonorsList" component={DonorsList} />
+        <DrawerStack.Screen options={{ swipeEnabled: false }} name="ContactRequests" component={ContactRequests} />
+        <DrawerStack.Screen options={{ swipeEnabled: false }} name="SheltersList" component={SheltersList} />
+        <DrawerStack.Screen options={{ swipeEnabled: false }} name="ProfileOfRole" component={ProfileOfRole} />
+        <DrawerStack.Screen options={{ swipeEnabled: false }} name="Chat" component={Chat} />
+        <DrawerStack.Screen options={{ swipeEnabled: false }} name="SchedulingOfCalls" component={SchedulingOfCalls} />
+        <DrawerStack.Screen options={{ swipeEnabled: false }} name="Analytics" component={Analytics} />
+        <DrawerStack.Screen options={{ swipeEnabled: false }} name="AddPerson" component={AddPerson} />
+      </DrawerStack.Navigator>
     );
   }
 
-  function MyMasterDrawer() {
-    return (
-      <Drawer.Navigator
-        screenOptions={{
-          drawerStyle: {
-            backgroundColor: COLORS.seashell,
-            width: '100%',
-          },
-          headerShown: false,
-        }}
-        drawerContent={(props) => <CustomeDrawer {...props} />}>
-        <Drawer.Screen name="RefugeesListt" component={RefugeesList} />
-        <Drawer.Screen name="DonorsList" component={DonorsList} />
-        <Drawer.Screen name="ContactRequests" component={ContactRequests} />
-        <Drawer.Screen name="SheltersList" component={SheltersList} />
-        <Drawer.Screen name="ProfileOfRole" component={ProfileOfRole} />
-        <Drawer.Screen name="SchedulingOfCalls" component={SchedulingOfCalls} />
-        <Drawer.Screen name="Analytics" component={Analytics} />
-      </Drawer.Navigator>
-    );
-  }
 
   return (
     <>
-      {props.initialRoute === 'RefugeesList' ?
-        <NavigationContainer>
-          <Stack.Navigator
-            screenOptions={{ headerShown: false }}
-            transparentCard={true}
-            initialRouteName={'RefugeesList'}>
-            <Stack.Screen options={{ gestureEnabled: false }} name="RefugeesList" component={MyMasterDrawer} />
-            <Stack.Screen options={{ gestureEnabled: false }} name="DonorsList" component={DonorsList} />
-            <Stack.Screen options={{ gestureEnabled: false }} name="ContactRequests" component={ContactRequests} />
-            <Stack.Screen options={{ gestureEnabled: false }} name="SheltersList" component={SheltersList} />
-            <Stack.Screen options={{ gestureEnabled: false }} name="ProfileOfRole" component={ProfileOfRole} />
-            <Stack.Screen options={{ gestureEnabled: false }} name="Chat" component={Chat} />
-            <Stack.Screen options={{ gestureEnabled: false }} name="SchedulingOfCalls" component={SchedulingOfCalls} />
-            <Stack.Screen options={{ gestureEnabled: false }} name="Analytics" component={Analytics} />
-            <Stack.Screen options={{ gestureEnabled: false }} name="AddPerson" component={AddPerson} />
-          </Stack.Navigator>
-        </NavigationContainer>
-        :
-
-        props.initialRoute === 'GetStarted'
-          ?
-          <NavigationContainer>
-            <Stack.Navigator
-              screenOptions={{ headerShown: false }}
-              transparentCard={true}
-              initialRouteName={'GetStarted'}>
-              <Stack.Screen options={{ gestureEnabled: false }} name="GetStarted" component={GetStarted} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="Language" component={Language} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="TypesOfUser" component={TypesOfUser} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="Login" component={Login} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="SignUpFirstScreen" component={SignUpFirstScreen} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="SignUpSecondScreen" component={SignUpSecondScreen} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="ChooseProfile" component={ChooseProfile} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="ScheduleNow" component={ScheduleNow} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="Welcome" component={Welcome} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="HowTo" component={MyDrawer} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="WishLists" component={MyNewDrawer} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="ContactUs" component={ContactUs} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="Profile" component={Profile} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="Helped" component={Helped} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="ShelterWishList" component={ShelterWishList} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="RefugeesList" component={MyMasterDrawer} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="DonorsList" component={DonorsList} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="ContactRequests" component={ContactRequests} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="SheltersList" component={SheltersList} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="ProfileOfRole" component={ProfileOfRole} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="Chat" component={Chat} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="SchedulingOfCalls" component={SchedulingOfCalls} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="Analytics" component={Analytics} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="AddPerson" component={AddPerson} />
-            </Stack.Navigator>
-          </NavigationContainer> :
-          <NavigationContainer>
-            <Stack.Navigator
-              screenOptions={{ headerShown: false }}
-              transparentCard={true}
-              initialRouteName={'Welcome'}>
-              <Stack.Screen options={{ gestureEnabled: false }} name="Welcome" component={Welcome} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="HowTo" component={MyDrawer} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="WishLists" component={MyNewDrawer} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="ContactUs" component={ContactUs} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="Profile" component={Profile} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="Helped" component={Helped} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="ShelterWishList" component={ShelterWishList} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="RefugeesList" component={MyMasterDrawer} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="DonorsList" component={DonorsList} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="ContactRequests" component={ContactRequests} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="SheltersList" component={SheltersList} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="ProfileOfRole" component={ProfileOfRole} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="Chat" component={Chat} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="SchedulingOfCalls" component={SchedulingOfCalls} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="Analytics" component={Analytics} />
-              <Stack.Screen options={{ gestureEnabled: false }} name="AddPerson" component={AddPerson} />
-            </Stack.Navigator>
-          </NavigationContainer>
-      }
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{ headerShown: false }}
+          transparentCard={true}
+          initialRouteName={props.initialRoute}>
+          <Stack.Screen options={{ gestureEnabled: false }} name={props.initialRoute} component={MyDrawer} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </>
-
   );
 };
 

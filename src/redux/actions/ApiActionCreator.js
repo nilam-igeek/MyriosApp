@@ -60,6 +60,7 @@ const url = "http://18.233.84.195/api/"
 
 //======================== LOGIN =======================//
 export const loginApi = (data) => async (dispatch) => {
+  console.log("data");
   var role = await AsyncStorage.getItem('userType');
   dispatch(loginData());
   return new Promise(() => {
@@ -109,7 +110,7 @@ export const registerApi = (data) => async (dispatch) => {
       .then(async (response) => {
         console.log("registerApi=response=====>", response.data.data.user);
         if (response.data.success) {
-          Toast.show(response.data.message);
+          // Toast.show(response.data.message);
           dispatch(registerSuccess(response.data.data.user));
         }
       })
@@ -288,9 +289,10 @@ export const addPeopleApi = (data) => async (dispatch) => {
     axios
       .post(`${url}Refugee/add-people`, data, {
         headers: {
-          'Authorization': `Bearer ${isToken}`,
           Accept: 'application/json',
-          'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${isToken}`
+          //    Accept: 'application/json',
         },
       })
       .then(async (response) => {
@@ -312,9 +314,9 @@ export const editPeopleApi = (data) => async (dispatch) => {
     axios
       .post(`${url}Refugee/add-people`, data, {
         headers: {
-          'Authorization': `Bearer ${isToken}`,
           Accept: 'application/json',
-          'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${isToken}`,
         },
       })
       .then(async (response) => {
@@ -404,18 +406,19 @@ export const wishListApi = (data) => async (dispatch) => {
 };
 
 //======================== WISHLISTS ADD ========================//
-export const wishlistAddApi = (data) => async (dispatch) => {
+export const wishlistAddApi = (id) => async (dispatch) => {
   var isToken = await AsyncStorage.getItem('token');
-  console.log("isToken--->", isToken);
+  console.log("id--->", id);
   dispatch(wishlistAddData());
   return new Promise(() => {
     axios
-      .post(`http://18.233.84.195/api/add-wishlist/${data}`, null, {
+      .post(`${url}add-wishlist/${id}`, null, {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${isToken}`
       })
       .then((response) => {
-        console.log("wishlistAddApi of response=========>", JSON.stringify(response.data));
+        console.log("wishlistAddApi=========>", JSON.stringify(response.data));
         if (response.data.success) {
           // Toast.show(response.data.message);
           dispatch(wishlistAddSuccess(response.data));
@@ -433,18 +436,19 @@ export const wishlistAddApi = (data) => async (dispatch) => {
 };
 
 //======================== WISHLISTS DELETE========================//
-export const wishlistRemoveApi = (data) => async (dispatch) => {
-  console.log("data--sdsdssdf->", data);
+export const wishlistRemoveApi = (id) => async (dispatch) => {
+  console.log("data--sdsdssdf->", id);
   var isToken = await AsyncStorage.getItem('token');
   dispatch(wishlistRemoveData());
   return new Promise(() => {
     axios
-      .delete(`http://18.233.84.195/api/add-wishlist/${data}`, null, {
+      .delete(`${url}add-wishlist/${id}`, null, {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${isToken}`
       })
       .then((response) => {
-        console.log("wishlistRemoveApi of response=========>", JSON.stringify(response));
+        console.log("wishlistRemoveApi=========>", JSON.stringify(response));
         if (response.data.success) {
           // Toast.show(response.data.message);
           dispatch(wishlistRemoveSuccess(response.data));
@@ -486,8 +490,6 @@ export const imagesListOfRoleApi = () => async (dispatch) => {
 
 //======================== USER STATUS ========================//
 export const userStatusApi = (id) => async (dispatch) => {
-  console.log("id------>", id);
-  var role = await AsyncStorage.getItem('userType');
   var isToken = await AsyncStorage.getItem('token');
   dispatch(userStatusData());
   return new Promise(() => {
@@ -500,7 +502,7 @@ export const userStatusApi = (id) => async (dispatch) => {
         },
       })
       .then(async (response) => {
-        // console.log("error.response.data.11111----->", response.data.message);
+        console.log("error.response.data.11111----->", response.data.message);
         dispatch(userStatusSuccess(response.data));
         if (response.data.success) {
           Toast.show(response.data.message);

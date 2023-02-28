@@ -50,10 +50,9 @@ const Login = (props) => {
     const loginValidationSchema = yup.object().shape({
         email: yup
             .string()
-            .required(t('emailRequired')),
-        // .matches(EMAIL_PATTERN, 'Please enter valid email')
-        // // .email(t("Please enter valid email"))
-        // .required(t('Email Address is Required')),
+            .required(t('emailRequired'))
+            .matches(EMAIL_PATTERN, 'Please enter valid email')
+            .email("Please enter valid email"),
         password: yup
             .string()
             .required(t('passRequired'))
@@ -69,6 +68,7 @@ const Login = (props) => {
             password: password,
             email: email
         };
+        // await AsyncStorage.setItem('userType', isRole);
         await AsyncStorage.setItem('userPassword', password);
         await AsyncStorage.setItem('userEmail', email);
         dispatch(loginApi(body));
@@ -131,7 +131,7 @@ const Login = (props) => {
                                                 onBlur={handleBlur('email')}
                                                 width={(BaseStyle.WIDTH / 100) * 80}
                                                 inputWidth={(BaseStyle.WIDTH / 100) * 60}
-                                                placeholder={t('enterEmail')}
+                                                placeholder={'Create you email'}
                                                 keyboardType="email-address"
                                                 isError={errors.email}>
                                                 <EmailSvg marginRight={10} />
@@ -148,7 +148,7 @@ const Login = (props) => {
                                                 onBlur={handleBlur('password')}
                                                 width={(BaseStyle.WIDTH / 100) * 80}
                                                 inputWidth={(BaseStyle.WIDTH / 100) * 60}
-                                                placeholder={t('enterPassword')}
+                                                placeholder={'Create your password'}
                                                 isError={errors.password}>
                                                 <Pressable onPress={() => { setIsShow(!isShow) }}>
                                                     {isShow ? <LockOpenSvg marginRight={10} /> : <LockSvg marginRight={10} />}

@@ -11,7 +11,7 @@ import { signUpDataOfUser } from '../../redux/actions/ApiActionCreator';
 import { useDispatch, useSelector } from 'react-redux';
 import { IMAGES } from '../../common/style/Images';
 import ArrowLeftSvg from '../../common/svgs/ArrowLeftSvg';
-const ScheduleNow = (props) => {
+const EnterShelterName = (props) => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const [isShelterUser, setShelterUser] = useState('isDefault');
@@ -45,15 +45,13 @@ const ScheduleNow = (props) => {
                 <View style={styles.card}>
                     <ScrollView contentContainerStyle={{ flexGrow: 1, }} bounces={false}>
                         <View style={styles.subContainer}>
-                            <Text style={styles.titleNameText}>{t('chat')}</Text>
-                            <Text style={styles.subText}>{t('chatSubDes')}</Text>
-                            <Button borderRadius={50} title={t('scheduleNow')} fontSize={18} color={COLORS.white} height={50} marginTop={35} width={'70%'}
-                                onPress={() => {
-                                    Linking.openURL('https://calendly.com/vatsal-igeek');
-                                    // props.navigation.navigate('ChooseProfile');
-                                }}
-                            />
-                            <Text style={styles.desText}>{`Thanks for signing up! In order to verify your account, schedule a call with myrios representative.`}</Text>
+                            <Text style={[styles.titleNameText, { textAlign: "left" }]}>{t('enterShelterName')}</Text>
+                            <TextInput
+                                placeholder={t('enterSName')}
+                                value={name}
+                                onEndEditing={onSubmit}
+                                style={styles.inputView}
+                                onChangeText={(text) => setName(text)} />
                         </View>
                     </ScrollView>
                 </View>
@@ -62,4 +60,4 @@ const ScheduleNow = (props) => {
     );
 };
 
-export default ScheduleNow;
+export default EnterShelterName;

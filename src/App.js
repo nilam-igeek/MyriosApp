@@ -15,16 +15,17 @@ import SplashScreen from "react-native-splash-screen";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { loginApi } from './redux/actions/ApiActionCreator';
 import { ROLE } from './constants/types';
-import { isDate } from 'lodash';
 const App = () => {
 
   const [id, setId] = useState('');
-  const [isToken, setIsToken] = useState('');
   const dispatch = useDispatch();
   const [initialRouteName, setInitialRouteName] = useState('GetStarted');
   const [isRole, setIsRole] = useState('');
   const isMaster = isRole === ROLE.MASTER
   const isDonor = isRole === ROLE.DONOR
+  const isRefugee = isRole === ROLE.REFUGEE
+  const isShelter = isRole === ROLE.SHELTER
+
   useEffect(() => {
     // onProductView();
     DeviceInfo.getUniqueId().then((uniqueId) => {
@@ -44,7 +45,6 @@ const App = () => {
     setTimeout(() => {
       SplashScreen.hide();
     }, 3000)
-
   }, []);
 
   useEffect(() => {
@@ -55,35 +55,48 @@ const App = () => {
     check();
   }, []);
 
-
-
+  console.log("isRole111----->", isRole);
   const getAccessToken = async () => {
     const token = await AsyncStorage.getItem('token');
     const isPassword = await AsyncStorage.getItem('userPassword');
     const isEmail = await AsyncStorage.getItem('userEmail');
-    console.log("isPassword", isPassword);
-    console.log("isEmail", isEmail);
-    setIsToken(token)
+
     if (token) {
-      console.log("dsf11");
-      await AsyncStorage.setItem('token', token)
-      if (isMaster) {
-        setInitialRouteName('RefugeesList')
-      }
-      else {
-        setInitialRouteName('Welcome')
-        var body = {
+      if (isDonor) {
+        const body = {
           password: isPassword,
           email: isEmail
         };
         dispatch(loginApi(body));
+        setInitialRouteName('WishLists');
+      }
+      else if (isRefugee) {
+        const body = {
+          password: isPassword,
+          email: isEmail
+        };
+        dispatch(loginApi(body));
+        setInitialRouteName('ShelterWishList')
+      }
+      else if (isShelter) {
+        const body = {
+          password: isPassword,
+          email: isEmail
+        };
+        dispatch(loginApi(body));
+        setInitialRouteName('ShelterWishList')
+      }
+      else if (isMaster) {
+        const body = {
+          password: isPassword,
+          email: isEmail
+        };
+        dispatch(loginApi(body));
+        setInitialRouteName('RefugeesList')
       }
     } else {
-      console.log("dsf222");
       setInitialRouteName('GetStarted')
     }
-    // await AsyncStorage.setItem('token', token)
-    // console.log("isToken--111->", isToken);
   };
 
   useEffect(() => {
