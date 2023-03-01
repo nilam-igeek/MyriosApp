@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StatusBar, Image, FlatList, Pressable, Switch } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Text, StatusBar, Image, FlatList, Pressable } from 'react-native';
 import styles from './styles';
 import '../../../assets/i18n/i18n';
 import { useTranslation } from 'react-i18next';
 import { COLORS } from '../../common/style/Colors';
 import Header from '../../components/core/Header';
-import { requestsListApi, userStatusApi } from '../../redux/actions/ApiActionCreator';
+import { requestsListApi } from '../../redux/actions/ApiActionCreator';
 import { useDispatch, useSelector } from 'react-redux';
 import ProfileSvg from '../../common/svgs/ProfileSvg';
 import Indicator from '../../components/core/Indicator';
@@ -25,21 +25,6 @@ const ContactRequests = (props) => {
         fetchProduct();
     }, [requestsListApi]);
 
-
-    const onClickUserStatus = (id) => {
-        dispatch(userStatusApi(id));
-        // let data = [...isRequestsData.data];
-        // let newData = data.map(item => {
-        //     if (item.id === id) {
-        //         item.is_active = !item.is_active;
-        //     }
-        //     return item
-        // })
-        // setDataOfList(newData);
-    }
-
-
-    console.log("isRequestsData.data---->", isRequestsData.data);
     return (
         <View style={styles.container}>
             <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.seashell} />
@@ -75,10 +60,6 @@ const ContactRequests = (props) => {
                                             {item.type && <Text style={styles.userName}>{', '}{item.type}</Text>}
                                         </Text>
                                     </Pressable>
-                                    <Switch
-                                        value={item.is_active ? true : false}
-                                        style={{ transform: [{ scaleX: .7 }, { scaleY: .7 }] }}
-                                        onValueChange={() => onClickUserStatus(item.id)} />
                                 </View>)
                         }
                         }

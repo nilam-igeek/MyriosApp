@@ -10,9 +10,6 @@ import { refugeesListApi, userStatusApi } from '../../redux/actions/ApiActionCre
 import { useDispatch, useSelector } from 'react-redux';
 import Indicator from '../../components/core/Indicator';
 import _ from 'lodash';
-import ACTION_TYPES from '../../redux/actions/ActionTypes';
-import { useFocusEffect } from '@react-navigation/native';
-import { refugeesSuccess } from '../../redux/actions/ApiAction';
 const RefugeesList = (props) => {
 
     const { t } = useTranslation();
@@ -20,19 +17,51 @@ const RefugeesList = (props) => {
     const dataOfRefugees = useSelector((state) => !_.isEmpty(state.apiReducer.refugeeData) && state.apiReducer.refugeeData);
     const refugeesList = (!_.isEmpty(dataOfRefugees.data) && dataOfRefugees.data)
     const loading = useSelector((state) => state.apiReducer.loading);
+    const [showModalFav, setShowModalFav] = useState(false);
 
+    const [isFavItem, setIsFavItem] = useState();
+
+    const [data, setData] = useState(null);
+
+    const [refreshing, setRefreshing] = React.useState(false);
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        dispatch(refugeesListApi());
+        setTimeout(() => {
+            setRefreshing(false);
+            dispatch(refugeesListApi());
+        }, 2000);
+    }, []);
 
     useEffect(() => {
-        function fetchProduct() {
-            dispatch(refugeesListApi);
+        onRefresh();
+    }, []);
+
+    // // const [, updateState] = React.useState();
+    // const forceUpdate = React.useCallback(() => dispatch(refugeesListApi()), []);
+
+    useEffect(() => {
+        onRefresh();
+        dispatch(refugeesListApi());
+    }, [refugeesListApi])
+
+
+    const onClickUserStatus = (item, index) => {
+        setIsFavItem(index)
+        if (item.is_active) {
+            setShowModalFav(true);
+            dispatch(userStatusApi(item.id))
+            dispatch(refugeesListApi());
+        } else {
+            dispatch(userStatusApi(item.id))
+            dispatch(refugeesListApi());
         }
-        fetchProduct();
-    }, [refugeesListApi]);
-
-
-    const onClickUserStatus = (id) => {
-        dispatch(userStatusApi(id));
     }
+
+
+
+
 
     return (
         <View style={styles.container}>
@@ -79,15 +108,15 @@ const RefugeesList = (props) => {
                                     <Text style={{ color: COLORS.white, padding: 5, textAlign: 'center' }}>{item.is_active ? 'Active' : 'Deactivate'}</Text>
                                 </Pressable> */}
                                 <Switch
-                                    value={item.is_active ? true : false}
+                                    value={item.is_active === 1 ? true : false}
                                     style={{ transform: [{ scaleX: .7 }, { scaleY: .7 }] }}
-                                    onValueChange={() => onClickUserStatus(item.id)} />
+                                    onValueChange={() => onClickUserStatus(item)} />
                             </View>)
                         }
                         } />
                 </View>
             </View>
-            <Indicator isLoader animate={loading} />
+            <Indicator isLoader animate={refreshing} />
         </View>
     );
 };

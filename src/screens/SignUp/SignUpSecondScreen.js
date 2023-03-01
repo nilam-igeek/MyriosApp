@@ -39,13 +39,19 @@ const SignUpSecondScreen = (props) => {
     const isShelter = isRole === ROLE.SHELTER
     const isDonor = isRole === ROLE.DONOR
 
+    // useEffect(() => {
+    //     async function check() {
+    //         var item = await AsyncStorage.getItem('userType');
+    //         setIsRole(item)
+    //     }
+    //     check();
+    // }, []);
+
     useEffect(() => {
-        async function check() {
-            var item = await AsyncStorage.getItem('userType');
-            setIsRole(item)
-        }
-        check();
-    }, []);
+        AsyncStorage.getItem("userType").then(value => {
+            setIsRole(value)
+        })
+    })
 
     const loginValidationSchema = yup.object().shape({
         email: yup
@@ -61,6 +67,17 @@ const SignUpSecondScreen = (props) => {
 
     const onClickSubmit = async (values, actions) => {
         const { email, password } = values;
+
+        // var data = new FormData();
+        // data.append("email", email);
+        // data.append("password", password);
+        // data.append("name", isdataProfile.firstName);
+        // data.append("country", isdataProfile.country);
+        // data.append("age", isdataProfile.age);
+        // data.append("type", isdataProfile.isUserType);
+        // data.append("shelter", isdataProfile.shelterNam);
+        // data.append("photo", isdataProfile.photo);
+
         var donorData = {
             email: email,
             password: password,
@@ -80,9 +97,11 @@ const SignUpSecondScreen = (props) => {
             type: isdataProfile.isUserType,
             shelter: isdataProfile.shelterName,
             photo: isdataProfile.photo,
-            watchlist_link: '',
-            watchlist_description: ''
+            // watchlist_link: '',
+            // watchlist_description: ''
         }
+
+
         var shelterData = {
             email: email,
             password: password,
@@ -98,8 +117,9 @@ const SignUpSecondScreen = (props) => {
             ...isdataProfile,
             email: email,
         }
-        console.log("donorData===11111=>", donorData);
+        console.log("donorData=======>", refugeeData);
         dispatch(signUpDataOfUser(body));
+        // dispatch(registerApi(data));
         dispatch(registerApi(isRefugee ? refugeeData : isDonor ? donorData : shelterData));
         // actions.resetForm();
         // if (isData) {
@@ -115,7 +135,7 @@ const SignUpSecondScreen = (props) => {
                 if (userData.is_active === true) {
                     props.navigation.navigate('Welcome');
                 } else if (userData.is_active === false) {
-                    props.navigation.navigate('ScheduleNow');
+                    props.navigation.navigate('ScheduleNow', { islogin: '' });
                     // Alert.alert(
                     //     "Thanks for signing up!",
                     //     `Thanks for signing up! In order to finalize your account, you need to your shelter to register you as a Myrios verified refugee on their 'People' page, and if your shelter does not user Myrios, register your account with 'not currently staying at shelter', so you can schedule a 5-minute call with a Myrios representative to get verified!`,
@@ -130,7 +150,7 @@ const SignUpSecondScreen = (props) => {
                 if (userData.is_active === true) {
                     props.navigation.navigate('Welcome');
                 } else if (userData.is_active === false) {
-                    props.navigation.navigate('ScheduleNow');
+                    props.navigation.navigate('ScheduleNow', { islogin: '' });
                     // Alert.alert(
                     //     "Thanks for signing up!",
                     //     `Thanks for signing up! In order to finalize your account, you need to your shelter to register you as a Myrios verified refugee on their 'People' page, and if your shelter does not user Myrios, register your account with 'not currently staying at shelter', so you can schedule a 5-minute call with a Myrios representative to get verified!`,
@@ -152,7 +172,7 @@ const SignUpSecondScreen = (props) => {
                 resizeMode='cover'
                 style={{ flex: 1 }}
                 source={IMAGES.languageBg}>
-                <CloseButton onPress={() => props.navigation.goBack()}>
+                <CloseButton onPress={() => props.navigation.navigate('SignUpFirstScreen')}>
                     <ArrowLeftSvg fill={COLORS.white} />
                 </CloseButton>
             </ImageBackground>
@@ -183,7 +203,7 @@ const SignUpSecondScreen = (props) => {
                                                 onBlur={handleBlur('email')}
                                                 width={(BaseStyle.WIDTH / 100) * 80}
                                                 inputWidth={(BaseStyle.WIDTH / 100) * 60}
-                                                placeholder={'Create you email'}
+                                                placeholder={'Create your email'}
                                                 keyboardType="email-address"
                                                 isError={errors.email}>
                                                 <EmailSvg marginRight={10} />
@@ -215,7 +235,7 @@ const SignUpSecondScreen = (props) => {
                                                 width={'60%'}
                                                 onPress={handleSubmit}
                                             />
-                                            <Text onPress={() => { props.navigation.navigate('Login') }} style={styles.signUpText}>{t('signIn')}</Text>
+                                            <Text onPress={() => { props.navigation.navigate('Login', { role: isRole }) }} style={styles.signUpText}>{t('signIn')}</Text>
                                         </>
                                     )}
                                 </Formik>

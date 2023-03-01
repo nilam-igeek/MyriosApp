@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StatusBar, FlatList, Modal, Pressable, Linking, Image } from 'react-native';
+import { View, Text, StatusBar, FlatList, Modal, Pressable, Linking, Image, Platform } from 'react-native';
 import '../../../assets/i18n/i18n';
 import { useTranslation } from 'react-i18next';
 import { COLORS } from '../../common/style/Colors';
@@ -19,7 +19,9 @@ import CountryPickerModal from '../../components/core/CountryPickerModal';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import _ from 'lodash';
 import HeartFillSvg from '../../common/svgs/HeartFillSvg';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const WishLists = (props) => {
+
     console.log("props.navigation----->", props.navigation);
 
     // const defaultValues = [
@@ -28,6 +30,9 @@ const WishLists = (props) => {
     // ];
     const { t } = useTranslation();
     const dispatch = useDispatch();
+    const [isRole, setIsRole] = useState('');
+
+    console.log("item-WishLists --->,item", isRole);
     const [isItems, setItems] = useState(false);
     const [country, setCountry] = useState('');
     const [showModal, setShowModal] = useState(false);
@@ -45,35 +50,33 @@ const WishLists = (props) => {
     // const dataOfwishListFilterData = useSelector((state) => !_.isEmpty(state.apiReducer.wishListFilterData) && state.apiReducer.wishListFilterData);
     // const dataOfwishListFilterDataList = (!_.isEmpty(dataOfwishListFilterData.data) && dataOfwishListFilterData.data)
 
-    const wishListData = [
-        { id: 1, image: IMAGES.wishList1, name: 'Kvitkas', gender: 'Girl', age: '6', country: 'Ukraine', selected: false },
-        { id: 2, image: IMAGES.wishList2, name: 'Stefan', gender: 'Girl', age: '10', country: 'Ukraine', selected: false },
-        { id: 3, image: IMAGES.wishList1, name: 'Zosia', gender: 'Girl', age: '2', country: 'Ukraine', selected: false },
-        { id: 4, image: IMAGES.wishList2, name: 'Marta', gender: 'Mom', age: '32', country: 'Ukraine', selected: false },
-        { id: 5, image: IMAGES.wishList1, name: 'Zosia', gender: 'Girl', age: '2', country: 'Ukraine', selected: false },
-        { id: 6, image: IMAGES.wishList2, name: 'Marta', gender: 'Mom', age: '32', country: 'Ukraine', selected: false }
-    ]
+
+
+
+    useEffect(() => {
+        AsyncStorage.getItem("userType").then(value => {
+            setIsRole(value)
+        })
+    })
+
 
     const selectedItem = (item) => {
         setItemsData(item)
         setItems(true)
     }
 
+
     const onClickFev = (item, index) => {
         setIsFavItem(index)
-
-        console.log("item.is_wishlist111--------------->", item.is_wishlist);
         if (item.is_wishlist) {
-            console.log("item.is_wishlist2222--------------->");
             setShowModalFav(true);
             dispatch(wishlistRemoveApi(item.id))
+            dispatch(wishListApi());
         } else {
-            console.log("item.is_wishlist33333--------------->");
             dispatch(wishlistAddApi(item.id))
+            dispatch(wishListApi());
         }
-
     }
-
 
     const onClickShowModal = () => {
         setShowModal(!showModal)
@@ -97,8 +100,10 @@ const WishLists = (props) => {
         dispatch(wishListFilterApi(body))
     }
 
+    const [multiSliderValue, setMultiSliderValue] = useState([0, 100])
 
-    console.log("dataOfwishListDataList.data---->", dataOfwishListDataList.data);
+    const multiSliderValuesChange = (values) => setMultiSliderValue(values)
+
     return (
         <>
             <View style={styles.container}>
@@ -173,13 +178,59 @@ const WishLists = (props) => {
                                     </View>
                                     <Text style={styles.chooseOneText}>{'Age Range'}</Text>
                                     <View style={styles.range}>
+                                        <Text style={styles.rangeText}>{multiSliderValue[0]}</Text>
                                         <MultiSlider
-                                            values={start}
-                                            sliderLength={240}
+                                            markerStyle={{
+                                                ...Platform.select({
+                                                    ios: {
+                                                        height: 20,
+                                                        width: 20,
+                                                        shadowColor: '#000000',
+                                                        shadowOffset: {
+                                                            width: 0,
+                                                            height: 3
+                                                        },
+                                                        shadowRadius: 1,
+                                                        shadowOpacity: 0.1
+                                                    },
+                                                    android: {
+                                                        height: 30,
+                                                        width: 30,
+                                                        borderRadius: 50,
+                                                        backgroundColor: '#1792E8'
+                                                    }
+                                                })
+                                            }}
+                                            pressedMarkerStyle={{
+                                                ...Platform.select({
+                                                    android: {
+                                                        height: 30,
+                                                        width: 30,
+                                                        borderRadius: 20,
+                                                        backgroundColor: '#148ADC'
+                                                    }
+                                                })
+                                            }}
+                                            selectedStyle={{
+                                                backgroundColor: '#1792E8'
+                                            }}
+                                            trackStyle={{
+                                                backgroundColor: '#CECECE'
+                                            }}
+                                            touchDimensions={{
+                                                height: 40,
+                                                width: 40,
+                                                borderRadius: 20,
+                                                slipDisplacement: 40
+                                            }}
+                                            values={[multiSliderValue[0], multiSliderValue[1]]}
+                                            sliderLength={225}
+                                            onValuesChange={multiSliderValuesChange}
                                             min={0}
                                             max={100}
-                                            onValuesChange={(value) => { setStart(value) }} />
-                                        <Text style={styles.rangeText}>{start}</Text>
+                                            allowOverlap={false}
+                                            minMarkerOverlapDistance={10} />
+                                        <Text style={styles.rangeText}>{multiSliderValue[1]}</Text>
                                     </View>
                                     <Text style={styles.chooseOneText}>{'Home Country'}</Text>
                                     <CountryPickerModal
@@ -196,7 +247,6 @@ const WishLists = (props) => {
                                         width={'60%'}
                                         title={'Done'}
                                     />
-
                                 </View>
                             </View>
                         </View>

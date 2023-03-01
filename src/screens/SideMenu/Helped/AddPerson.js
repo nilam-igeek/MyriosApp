@@ -15,29 +15,25 @@ import CountryPickerModal from '../../../components/core/CountryPickerModal';
 import { addPeopleApi, editPeopleApi } from '../../../redux/actions/ApiActionCreator';
 import { useDispatch, useSelector } from 'react-redux';
 import Indicator from '../../../components/core/Indicator';
-import { PASSWORD_PATTERN, EMAIL_PATTERN } from '../../../constants/BaseValidation';
+
 const AddPerson = (props) => {
     const loading = useSelector((state) => state.apiReducer.loading);
     const { t } = useTranslation();
     const [isRole, setIsRole] = useState('');
     const isShelter = isRole === ROLE.SHELTER
 
+    const [country, setCountry] = useState('India');
+
     // const isData = useSelector((state) => state.apiReducer.loginData);
     // const userDetails = isData.data.user
     // console.log("userDetails=====>", userDetails);
 
     const dispatch = useDispatch();
-    // useEffect(() => {
-    //     async function check() {
-    //         var item = await AsyncStorage.getItem('userType');
-    //         setIsRole(item)
-    //     }
-    //     check();
-    // }, []);
-
     useEffect(() => {
+
         const unsubscribe = props.navigation.addListener('focus', () => {
             console.log("data...", props.route.params.data);
+
         })
         async function check() {
             var item = await AsyncStorage.getItem('userType');
@@ -49,46 +45,59 @@ const AddPerson = (props) => {
 
     const loginValidationSchema = yup.object().shape({
         firstName: yup
-            .string()
-            .required(t('nameRequired')),
+            .string(),
+        // .required(t('nameRequired')),
         email: yup
             .string()
-            .required(t('emailRequired'))
-            .matches(EMAIL_PATTERN, 'Please enter valid email')
-            .email("Please enter valid email"),
+        // .required(t('emailRequired')),
 
     })
 
     const onClickSubmit = async (values, actions) => {
         const { firstName, email } = values;
+
         var body = new FormData();
         body.append('email', email);
         body.append('password', "");
         body.append('name', firstName);
-        body.append('country', 'India');
+        body.append('country', country);
         body.append('age', "");
         body.append('type', "");
         body.append('shelter', "");
-        body.append('photo', "");
+        body.append('photo', "")
+
+        console.log("new add.....", body);
+
         dispatch(addPeopleApi(body));
+        // props.navigation.replace('Helped');
         props.navigation.navigate('Helped');
         actions.resetForm();
     };
+
     const onEditSubmit = async (values, actions) => {
         const { firstName, email } = values;
-        console.log("firstname...", firstName);
+        console.log("firstname...", values);
+
         var body = new FormData();
-        body.append('email', "deep.igeek@gmail.com");
+        body.append('email', email);
         body.append('password', "");
-        body.append('name', "1");
-        body.append('country', 'India');
+        body.append('name', firstName);
+        body.append('country', country);
         body.append('age', '');
         body.append('type', "");
         body.append('shelter', "");
         body.append('photo', "")
-        dispatch(editPeopleApi(body));
+
+        console.log("edit.....", body);
+
+
+        dispatch(editPeopleApi(body, props.route.params.data.id));
+        props.navigation.replace('Helped');
         actions.resetForm();
+
+
     }
+
 
 
     return (
@@ -100,9 +109,11 @@ const AddPerson = (props) => {
 
                 <Formik
                     validationSchema={loginValidationSchema}
-                    // initialValues={{ firstName: '', message: '', email: '' }}
+                    enableReinitialize
+                    validateOnChange={false}
+                    validateOnBlur={false}
                     initialValues={{ firstName: props.route.params.data == '' ? '' : props.route.params.data.name, message: '', email: props.route.params.data == '' ? '' : props.route.params.data.email, }}
-                    onSubmit={onClickSubmit}>
+                    onSubmit={props.route.params.data == '' ? onClickSubmit : onEditSubmit}>
                     {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, }) => (
                         <>
                             <Field
@@ -131,7 +142,7 @@ const AddPerson = (props) => {
                                 onBlur={handleBlur('email')}
                                 width={(BaseStyle.WIDTH / 100) * 80}
                                 inputWidth={(BaseStyle.WIDTH / 100) * 80}
-                                placeholder={'Create you email'}
+                                placeholder={t('emailAdd')}
                                 keyboardType="email-address"
                                 isError={errors.email}
                                 placeholderColor={COLORS.black} />
@@ -139,7 +150,7 @@ const AddPerson = (props) => {
                             <CountryPickerModal
                                 marginTop={30}
                                 isPerson
-                                isOnSelect={(text) => { console.log(text) }}
+                                isOnSelect={(text) => { console.log(text); setCountry(text) }}
                                 placeholder={t('countryResidence')} />
 
                             <Button
@@ -151,7 +162,7 @@ const AddPerson = (props) => {
                                 height={50}
                                 marginTop={70}
                                 width={(BaseStyle.WIDTH / 100) * 80}
-                                onPress={props.route.params.data == '' ? handleSubmit : onEditSubmit}
+                                onPress={handleSubmit}
                             />
                         </>
                     )}

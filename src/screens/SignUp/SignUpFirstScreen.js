@@ -47,13 +47,19 @@ const SignUpFirstScreen = (props) => {
     const d = new Date();
     let year = d.getFullYear();
 
+    // useEffect(() => {
+    //     async function check() {
+    //         var item = await AsyncStorage.getItem('userType');
+    //         setIsRole(item)
+    //     }
+    //     check();
+    // }, []);
+
     useEffect(() => {
-        async function check() {
-            var item = await AsyncStorage.getItem('userType');
-            setIsRole(item)
-        }
-        check();
-    }, []);
+        AsyncStorage.getItem("userType").then(value => {
+            setIsRole(value)
+        })
+    })
 
     const loginDonorValidationSchema = yup.object().shape({
         firstName: yup
@@ -98,12 +104,14 @@ const SignUpFirstScreen = (props) => {
         };
 
         dispatch(signUpDataOfUser(body));
+        // actions.resetForm();
         if (isRefugee) {
             if (!_.isEmpty(isProfile.profile)) {
                 props.navigation.navigate('SignUpSecondScreen');
             }
             else {
-                props.navigation.navigate('Chat');
+                // props.navigation.navigate('Chat');
+                props.navigation.navigate('ShelterOrNot');
             }
         } else if (isDonor && !_.isEmpty(isProfile.profile)) {
             props.navigation.navigate('SignUpSecondScreen');
@@ -138,7 +146,7 @@ const SignUpFirstScreen = (props) => {
                 resizeMode='cover'
                 style={{ flex: 1 }}
                 source={IMAGES.languageBg}>
-                <CloseButton onPress={() => props.navigation.goBack()}>
+                <CloseButton onPress={() => props.navigation.navigate('Login', { role: isRole })}>
                     <ArrowLeftSvg fill={COLORS.white} />
                 </CloseButton>
             </ImageBackground>

@@ -52,13 +52,19 @@ const Profile = (props) => {
     const isShelter = isRole === ROLE.SHELTER
     const isDonor = isRole === ROLE.DONOR
 
+    // useEffect(() => {
+    //     async function check() {
+    //         var item = await AsyncStorage.getItem('userType');
+    //         setIsRole(item)
+    //     }
+    //     check();
+    // }, []);
+
     useEffect(() => {
-        async function check() {
-            var item = await AsyncStorage.getItem('userType');
-            setIsRole(item)
-        }
-        check();
-    }, []);
+        AsyncStorage.getItem("userType").then(value => {
+            setIsRole(value)
+        })
+    })
 
     const loginValidationSchema = yup.object().shape({
         firstName: yup
@@ -98,8 +104,9 @@ const Profile = (props) => {
 
     const logout = async () => {
         try {
-            await AsyncStorage.removeItem('token');
-            await AsyncStorage.removeItem('userType');
+            await AsyncStorage.clear();
+            // await AsyncStorage.removeItem('token');
+            // await AsyncStorage.removeItem('userType');
             RNRestart.restart();
             // props.navigation.navigate('GetStartedd')
             return true;

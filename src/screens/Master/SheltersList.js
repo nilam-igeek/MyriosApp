@@ -18,24 +18,25 @@ const SheltersList = (props) => {
     const dataOfShelters = useSelector((state) => !_.isEmpty(state.apiReducer.shelterData) && state.apiReducer.shelterData);
     const isShelterData = (!_.isEmpty(dataOfShelters.data) && dataOfShelters.data);
 
+    const [showModalFav, setShowModalFav] = useState(false);
+
+    const [isFavItem, setIsFavItem] = useState();
 
     useEffect(() => {
-        function fetchProduct() {
-            dispatch(sheltersListApi);
-        }
-        fetchProduct();
-    }, [sheltersListApi]);
+        dispatch(sheltersListApi());
+    }, [sheltersListApi])
 
-    const onClickUserStatus = (id) => {
-        dispatch(userStatusApi(id));
-        // let data = [...isShelterData.data];
-        // let newData = data.map(item => {
-        //     if (item.id === id) {
-        //         item.is_active = !item.is_active;
-        //     }
-        //     return item
-        // })
-        // setDataOfList(newData);
+
+    const onClickUserStatus = (item, index) => {
+        setIsFavItem(index)
+        if (item.is_active) {
+            setShowModalFav(true);
+            dispatch(userStatusApi(item.id))
+            dispatch(sheltersListApi());
+        } else {
+            dispatch(userStatusApi(item.id))
+            dispatch(sheltersListApi());
+        }
     }
 
 
@@ -53,7 +54,6 @@ const SheltersList = (props) => {
                         extraData={isShelterData.data}
                         keyExtractor={item => item.id}
                         renderItem={({ item }) => {
-                            console.log("item.is_active===>", item);
                             return (
                                 <View style={styles.itemCard}>
                                     <Pressable
@@ -74,14 +74,12 @@ const SheltersList = (props) => {
                                             <Text style={styles.userName}>{item.name}</Text>
                                         </Text>
                                     </Pressable>
-
                                     <Switch
-                                        value={item.is_active ? true : false}
+                                        value={item.is_active === 1 ? true : false}
                                         style={{ transform: [{ scaleX: .7 }, { scaleY: .7 }] }}
-                                        onValueChange={() => onClickUserStatus(item.id)} />
+                                        onValueChange={() => onClickUserStatus(item)} />
                                 </View>)
                         }
-
                         } />
                 </View>
             </View>

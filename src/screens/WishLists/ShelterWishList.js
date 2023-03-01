@@ -24,13 +24,20 @@ const ShelterWishList = (props) => {
     console.log("isData=====>", isData);
     // const isData = isData.data.user
 
+    // useEffect(() => {
+    //     async function check() {
+    //         var item = await AsyncStorage.getItem('userType');
+    //         setIsRole(item)
+    //     }
+    //     check();
+    // }, []);
+
+
     useEffect(() => {
-        async function check() {
-            var item = await AsyncStorage.getItem('userType');
-            setIsRole(item)
-        }
-        check();
-    }, []);
+        AsyncStorage.getItem("userType").then(value => {
+            setIsRole(value)
+        })
+    })
 
     const onSubmit = () => {
         // var body = {

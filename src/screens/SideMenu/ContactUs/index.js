@@ -27,13 +27,20 @@ const ContactUs = (props) => {
     const isDonor = isRole === ROLE.DONOR
     const dispatch = useDispatch();
 
+    // useEffect(() => {
+    //     async function check() {
+    //         var item = await AsyncStorage.getItem('userType');
+    //         setIsRole(item)
+    //     }
+    //     check();
+    // }, []);
+
+
     useEffect(() => {
-        async function check() {
-            var item = await AsyncStorage.getItem('userType');
-            setIsRole(item)
-        }
-        check();
-    }, []);
+        AsyncStorage.getItem("userType").then(value => {
+            setIsRole(value)
+        })
+    })
 
     const loginValidationSchema = yup.object().shape({
         firstName: yup
@@ -125,7 +132,7 @@ const ContactUs = (props) => {
                                 onBlur={handleBlur('email')}
                                 width={(BaseStyle.WIDTH / 100) * 80}
                                 inputWidth={(BaseStyle.WIDTH / 100) * 80}
-                                placeholder={'Create you email'}
+                                placeholder={t('enterEmail')}
                                 keyboardType="email-address"
                                 isError={errors.email}
                                 placeholderColor={COLORS.black} />

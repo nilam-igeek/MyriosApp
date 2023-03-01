@@ -7,34 +7,17 @@ import '../../../assets/i18n/i18n';
 import { useTranslation } from 'react-i18next';
 import CloseButton from '../../components/core/CloseButton';
 import { ROLE } from '../../constants/types';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { IMAGES } from '../../common/style/Images';
 import ArrowLeftSvg from '../../common/svgs/ArrowLeftSvg';
 const TypesOfUser = (props) => {
 
     const { t } = useTranslation();
     const [isRole, setIsRole] = useState(ROLE.MASTER);
-    const onClick = async (type) => {
-        await AsyncStorage.removeItem('token');
-        setIsRole(type);
-        try {
-            await AsyncStorage.setItem('userType', type)
-        } catch (e) {
-        }
-    }
 
-    useEffect(() => {
-        if (isRole === ROLE.MASTER && (
-            isRole !== ROLE.DONOR ||
-            isRole !== ROLE.SHELTER ||
-            isRole !== ROLE.REFUGEE)) {
-            async function check() {
-                var item = await AsyncStorage.setItem('userType', ROLE.MASTER);
-                setIsRole(item)
-            }
-            check();
-        }
-    }, [isRole]);
+
+    const onClick = async (type) => {
+        setIsRole(type)
+    }
 
     return (
         <>
@@ -42,13 +25,13 @@ const TypesOfUser = (props) => {
                 resizeMode='cover'
                 style={{ flex: 1 }}
                 source={IMAGES.languageBg}>
-                <CloseButton onPress={() => props.navigation.goBack()}>
+                <CloseButton onPress={() => { setIsRole(''), props.navigation.navigate('Language') }}>
                     <ArrowLeftSvg fill={COLORS.white} />
                 </CloseButton>
             </ImageBackground>
             <View style={styles.container}>
                 <View style={styles.card}>
-                    <Text style={styles.titleText}>{`${t('am')} ${isRole ? isRole : '...'}`}</Text>
+                    <Text style={styles.titleText}>{isRole === 'Admin' ? `I'm a...` : `${t('am')} ${isRole ? isRole : '...'}`}</Text>
                     <ScrollView showsVerticalScrollIndicator={false}
                         showsHorizontalScrollIndicator={false}
                         contentContainerStyle={{ flexGrow: 1 }}
@@ -98,9 +81,8 @@ const TypesOfUser = (props) => {
                                 marginTop={35}
                                 width={'60%'}
                                 onPress={() => {
-                                    props.navigation.navigate('Login')
-                                }
-                                }
+                                    props.navigation.navigate('Login', { role: isRole })
+                                }}
                             />
                         </View>
                     </ScrollView>

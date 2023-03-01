@@ -47,13 +47,20 @@ const App = () => {
     }, 3000)
   }, []);
 
+  // useEffect(() => {
+  //   async function check() {
+  //     var item = await AsyncStorage.getItem('userType');
+  //     setIsRole(item)
+  //   }
+  //   check();
+  // }, []);
+
+
   useEffect(() => {
-    async function check() {
-      var item = await AsyncStorage.getItem('userType');
-      setIsRole(item)
-    }
-    check();
-  }, []);
+    AsyncStorage.getItem("userType").then(value => {
+      setIsRole(value)
+    })
+  })
 
   console.log("isRole111----->", isRole);
   const getAccessToken = async () => {

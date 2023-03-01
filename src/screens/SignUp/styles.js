@@ -200,8 +200,10 @@ export default styles = StyleSheet.create({
         backgroundColor: COLORS.black
     },
     desText: {
+        width: '100%',
         fontSize: 14,
-        marginTop: 20,
+        // marginTop: 30,
+        // marginVertical: 20,
         textAlign: 'center',
         fontFamily: FONTS.Poppins_Regular,
     },

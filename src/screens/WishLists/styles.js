@@ -170,7 +170,7 @@ export default styles = StyleSheet.create({
         fontFamily: FONTS.Poppins_Regular,
         fontSize: 14,
         color: COLORS.black,
-        marginRight: 10
+        // marginRight: 10
     },
     blurViewShelter: {
         flex: 1,

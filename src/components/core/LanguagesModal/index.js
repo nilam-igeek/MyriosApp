@@ -74,7 +74,7 @@ const LanguagesModal = () => {
     return (
         <>
             <Pressable onPress={() => setShowList(!showList)} style={styles.mainContainer}>
-                <Text style={styles.titleText}>{isLanguage ? isLanguage : 'Selecte Language'}</Text>
+                <Text style={styles.titleText}>{isLanguage ? isLanguage : 'Select Language'}</Text>
             </Pressable>
             <Modal
                 animationType='fade'

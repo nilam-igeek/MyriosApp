@@ -37,7 +37,7 @@ const ShelterOrNot = (props) => {
                 resizeMode='cover'
                 style={{ flex: 1 }}
                 source={IMAGES.languageBg}>
-                <CloseButton onPress={() => props.navigation.goBack()}>
+                <CloseButton onPress={() => props.navigation.navigate('SignUpFirstScreen')}>
                     <ArrowLeftSvg fill={COLORS.white} />
                 </CloseButton>
             </ImageBackground>
@@ -53,7 +53,7 @@ const ShelterOrNot = (props) => {
                                     color={COLORS.white}
                                     height={45}
                                     width={'45%'}
-                                    onPress={() => { onClick('YES') }}
+                                    onPress={() => { props.navigation.navigate('EnterShelterName') }}
                                 />
                                 <Button
                                     title={t('no')}
@@ -61,7 +61,10 @@ const ShelterOrNot = (props) => {
                                     color={COLORS.white}
                                     height={45}
                                     width={'45%'}
-                                    onPress={() => { onClick('NO') }}
+                                    onPress={() => {
+                                        // props.navigation.navigate('ScheduleNow') 
+                                        props.navigation.navigate('ChooseProfile')
+                                    }}
                                 />
                             </View>
                         </View>

@@ -11,16 +11,20 @@ import { ROLE } from '../../constants/types';
 const Welcome = (props) => {
 
     const { t } = useTranslation();
-    useEffect(() => {
-        async function check() {
-            var item = await AsyncStorage.getItem('userType');
-            setIsRole(item)
-        }
-        check();
-    }, []);
     const [isRole, setIsRole] = useState('');
+
+
+    useEffect(() => {
+        AsyncStorage.getItem("userType").then(value => {
+            setIsRole(value)
+        })
+    })
+
+
     const isShelter = isRole === ROLE.SHELTER
     const isDonor = isRole === ROLE.DONOR
+
+    // { console.log("isRole_welcome screen----->", isRole); }
 
     return (
         <ImageBackground
@@ -38,8 +42,8 @@ const Welcome = (props) => {
                         color={COLORS.black}
                         borderRadius={10}
                         fontSize={16}
-                        onPress={() => { props.navigation.navigate('HowTo') }}
-                    />
+                        onPress={() => { props.navigation.navigate('HowTo') }} />
+
                     <Button
                         width={'100%'}
                         title={t('skipNow')}

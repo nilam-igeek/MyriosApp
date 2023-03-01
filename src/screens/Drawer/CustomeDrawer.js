@@ -13,23 +13,29 @@ import { useTranslation } from 'react-i18next';
 import RNRestart from 'react-native-restart';
 import { refugeesListApi } from '../../redux/actions/ApiActionCreator';
 // import { wishListApi } from '../../redux/actions/ApiActionCreator';
-
+import { useIsFocused } from '@react-navigation/native';
 export const CustomeDrawer = (props) => {
-  // console.log("props-CustomeDrawer-11->", props.routes);
+  // console.log("propsCustomeDrawer======>", props);
   const dispatch = useDispatch();
   const [menu, setMenu] = useState(0);
   const [isRole, setIsRole] = useState('');
+  const [isTure, setTrue] = useState(false);
   const { t } = useTranslation();
 
   useEffect(() => {
-    async function check() {
-      var item = await AsyncStorage.getItem('userType');
-      setIsRole(item)
-    }
-    check();
-  }, []);
+    AsyncStorage.getItem("userType").then(value => {
+      setIsRole(value);
+    })
+    console.log("isRole_welcomepropsCustomeDrawer----->", isRole);
+  })
 
+  useEffect(() => {
+    isRole === ROLE.MASTER && dispatch(refugeesListApi)
+  }, [refugeesListApi])
 
+  // const fetchData = () => {
+  //   { isRole === ROLE.MASTER && dispatch(refugeesListApi) }
+  // }
 
 
   const Donor = [
@@ -66,8 +72,9 @@ export const CustomeDrawer = (props) => {
 
   const logout = async () => {
     try {
-      await AsyncStorage.removeItem('token');
-      await AsyncStorage.removeItem('userType');
+      // await AsyncStorage.removeItem('token');
+      // await AsyncStorage.removeItem('userType');
+      await AsyncStorage.clear();
       RNRestart.restart();
       return true;
     }
@@ -76,10 +83,18 @@ export const CustomeDrawer = (props) => {
     }
   }
 
-  // const onClickRefugee = () => {
-  //   console.log("fdfgdfg");
-  //   // dispatch(refugeesListApi());
-  // };
+  //   useEffect(() => {
+  //     fetchData();
+  // }, []);
+
+  // const fetchData = () => {
+  //     dispatch(refugeesListApi)
+  // }
+
+  //   const onClickRefugee = () => {
+  //     console.log("fdfgdfg");
+  //     // dispatch(refugeesListApi());
+  //   };
 
   // const Data = (isShelter || isDonor) ? Donor_Shelter : isRefugee ? Refugee : Master
 
@@ -129,11 +144,8 @@ export const CustomeDrawer = (props) => {
     else if (item.title === 'SIGN OUT') {
       logout();
     }
-    else if (item.title === t('refugeeType')) {
-      onClickRefugee();
-    }
   }
-  console.log("isRole---->", isRole);
+  console.log("isRole-custom drawer--->", isRole);
 
 
   return (
@@ -142,7 +154,6 @@ export const CustomeDrawer = (props) => {
         style={styles.closeIcon}>
         <CloseSvg fill={COLORS.black} />
       </Pressable>
-
       {
         isRole === 'Refugee' ?
           <>
@@ -210,8 +221,6 @@ export const CustomeDrawer = (props) => {
                 })}
               </>
       }
-
-
     </DrawerContentScrollView>
   );
 }

@@ -49,12 +49,13 @@ const Chat = (props) => {
                         {isShelterUser === 'NO' && <View style={styles.subContainer}>
                             <Text style={styles.titleText}>{t('chat')}</Text>
                             <Text style={styles.subText}>{t('chatSubDes')}</Text>
-                            <Button borderRadius={50} title={t('scheduleNow')} fontSize={18} color={COLORS.white} height={50} marginTop={35} width={'70%'}
+                            <Button borderRadius={50} title={t('scheduleNow', { islogin: '' })} fontSize={18} color={COLORS.white} height={50} marginTop={35} width={'70%'}
                                 onPress={() => {
                                     props.navigation.navigate('ChooseProfile');
                                     // Linking.openURL('https://calendly.com/vatsal-igeek');
                                 }}
                             />
+                            <Text style={styles.desText}>{`Thanks for signing up! In order to verify your account, schedule a call with myrios representative.`}</Text>
                         </View>}
 
                         {isShelterUser === 'YES' &&

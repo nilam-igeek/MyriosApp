@@ -22,13 +22,22 @@ const HowTo = (props) => {
     const isDonor = isRole === ROLE.DONOR
     const dispatch = useDispatch();
 
+
+    // useEffect(() => {
+    //     async function check() {
+    //         var item = await AsyncStorage.getItem('userType');
+    //         setIsRole(item)
+    //     }
+    //     check();
+    // }, []);
+
+    // { console.log("isRole How scren screen----->", isRole); }
+
     useEffect(() => {
-        async function check() {
-            var item = await AsyncStorage.getItem('userType');
-            setIsRole(item)
-        }
-        check();
-    }, []);
+        AsyncStorage.getItem("userType").then(value => {
+            setIsRole(value)
+        })
+    })
 
     const slidesData = [
         {

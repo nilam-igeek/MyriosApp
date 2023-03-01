@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, ImageBackground, Platform, ScrollView, Pressable, KeyboardAvoidingView } from 'react-native';
 import { COLORS } from '../../common/style/Colors';
 import Button from '../../components/core/Button';
 import styles from './styles';
-import CloseSvg from '../../common/svgs/CloseSvg';
 import '../../../assets/i18n/i18n';
 import { useTranslation } from 'react-i18next';
 import Input from '../../components/core/InputField';
@@ -21,28 +20,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import Indicator from '../../components/core/Indicator';
 import _ from 'lodash';
 import { IMAGES } from '../../common/style/Images';
-import Toast from 'react-native-simple-toast';
 import ArrowLeftSvg from '../../common/svgs/ArrowLeftSvg';
 const Login = (props) => {
-    // const emailRef = useRef();
-    // const passwordRef = useRef();
-    const dispatch = useDispatch();
 
+    const dispatch = useDispatch();
     const isUserData = useSelector((state) => state.apiReducer.loginData);
     const loading = useSelector((state) => state.apiReducer.loading);
-
+    const role = props.route.params.role;
     const { t } = useTranslation();
     const [isShow, setIsShow] = useState(false);
-    const [isRole, setIsRole] = useState('');
-    const isMaster = isRole === ROLE.MASTER
-    const isDonor = isRole === ROLE.DONOR
-    const isShelter = isRole === ROLE.SHELTER
-    const isRefugee = isRole === ROLE.REFUGEE
+    const isMaster = role === ROLE.MASTER
+    const isDonor = role === ROLE.DONOR
+    const isShelter = role === ROLE.SHELTER
+    const isRefugee = role === ROLE.REFUGEE
 
     useEffect(() => {
         async function check() {
-            var item = await AsyncStorage.getItem('userType');
-            setIsRole(item)
+            await AsyncStorage.setItem('userType', role);
         }
         check();
     }, []);
@@ -56,8 +50,6 @@ const Login = (props) => {
         password: yup
             .string()
             .required(t('passRequired'))
-        // //.min(8, ({ min }) => { `${('Password must be at least')} ${min} ${('characters')}` })
-        // .matches(PASSWORD_PATTERN,'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character')
 
     })
 
@@ -68,25 +60,36 @@ const Login = (props) => {
             password: password,
             email: email
         };
-        // await AsyncStorage.setItem('userType', isRole);
-        await AsyncStorage.setItem('userPassword', password);
-        await AsyncStorage.setItem('userEmail', email);
         dispatch(loginApi(body));
+        // actions.resetForm();
     };
 
+    console.log("role---->", role);
     useEffect(() => {
+
+
         if (!_.isEmpty(isUserData)) {
             if (isDonor) {
+                console.log("if donor===>");
                 props.navigation.navigate('Welcome');
             }
-            else if (isRefugee || isShelter) {
+            else if (role === 'Refugee') {
+                console.log("if regugee==11=>", isUserData.is_active);
                 if (isUserData.is_active === 0) {
-                    props.navigation.navigate('ScheduleNow');
+                    props.navigation.navigate('ScheduleNow', { islogin: 'login' });
+                } else if (isUserData.is_active === 1) {
+                    props.navigation.navigate('Welcome');
+                }
+            } else if (role === 'Shelter') {
+                console.log("if regugee==22=>", isUserData.is_active);
+                if (isUserData.is_active === 0) {
+                    props.navigation.navigate('ScheduleNow', { islogin: 'login' });
                 } else if (isUserData.is_active === 1) {
                     props.navigation.navigate('Welcome');
                 }
             }
             else if (isMaster) {
+                console.log("if master===>");
                 props.navigation.navigate('RefugeesList');
             }
         }
@@ -98,7 +101,7 @@ const Login = (props) => {
                 resizeMode='cover'
                 style={{ flex: 1 }}
                 source={IMAGES.languageBg}>
-                <CloseButton onPress={() => props.navigation.goBack()}>
+                <CloseButton onPress={() => props.navigation.navigate('TypesOfUser')}>
                     <ArrowLeftSvg fill={COLORS.white} />
                 </CloseButton>
             </ImageBackground>
@@ -131,7 +134,7 @@ const Login = (props) => {
                                                 onBlur={handleBlur('email')}
                                                 width={(BaseStyle.WIDTH / 100) * 80}
                                                 inputWidth={(BaseStyle.WIDTH / 100) * 60}
-                                                placeholder={'Create you email'}
+                                                placeholder={t('enterEmail')}
                                                 keyboardType="email-address"
                                                 isError={errors.email}>
                                                 <EmailSvg marginRight={10} />
@@ -148,7 +151,7 @@ const Login = (props) => {
                                                 onBlur={handleBlur('password')}
                                                 width={(BaseStyle.WIDTH / 100) * 80}
                                                 inputWidth={(BaseStyle.WIDTH / 100) * 60}
-                                                placeholder={'Create your password'}
+                                                placeholder={t('enterPassword')}
                                                 isError={errors.password}>
                                                 <Pressable onPress={() => { setIsShow(!isShow) }}>
                                                     {isShow ? <LockOpenSvg marginRight={10} /> : <LockSvg marginRight={10} />}
@@ -163,7 +166,10 @@ const Login = (props) => {
                                                 width={'60%'}
                                                 onPress={handleSubmit}
                                             />
-                                            {!isMaster && <Text onPress={() => { props.navigation.navigate('SignUpFirstScreen') }} style={styles.signUpText}>{t('signUp')}</Text>}
+                                            {(isDonor ||
+                                                isShelter ||
+                                                isRefugee) &&
+                                                <Text onPress={() => { props.navigation.navigate('SignUpFirstScreen') }} style={styles.signUpText}>{t('signUp')}</Text>}
                                         </>
                                     )}
                                 </Formik>

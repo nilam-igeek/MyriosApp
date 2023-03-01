@@ -18,7 +18,7 @@ import ContactUs from '../screens/SideMenu/ContactUs/index';
 import HowTo from '../screens/SideMenu/HowTo/index';
 import Profile from '../screens/SideMenu/Profile/index';
 import Helped from '../screens/SideMenu/Helped/index';
-import Chat from '../screens/Chat/index';
+// import Chat from '../screens/Chat/index';
 import ProfileOfRole from '../screens/Master/ProfileOfRole';
 import DonorsList from '../screens/Master/DonorsList';
 import ContactRequests from '../screens/Master/ContactRequestsList';
@@ -39,18 +39,26 @@ const Router = (props) => {
   const routeNameRef = React.useRef();
   const navigationRef = React.useRef();
   const [isToken, setIsToken] = useState('');
+  const [isTokenRole, setIsRole] = useState('');
   // const initialRouteName = isToken !== '' ? 'Welcome' : 'GetStarted'
 
   const getAccessToken = async () => {
     const isToken = await AsyncStorage.getItem('token');
-    setIsToken(isToken)
-
+    setIsToken(isToken);
   };
+
+
+  useEffect(() => {
+    AsyncStorage.getItem("userType").then(value => {
+      setIsRole(value)
+    })
+  })
 
   useEffect(() => {
     getAccessToken();
   }, [getAccessToken])
 
+  console.log("isToken--------------->", isToken);
 
   function MyDrawer() {
     return (
@@ -65,9 +73,10 @@ const Router = (props) => {
           headerShown: false,
         }}
         drawerContent={(props) => <CustomeDrawer {...props} />}>
-        <Stack.Screen options={{ swipeEnabled: false }} name={'GetStarted'} component={GetStarted} />
+        {console.log("{props.initialRoute----->", props.initialRoute)}
+        <DrawerStack.Screen options={{ swipeEnabled: false }} name="GetStarted" component={GetStarted} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="Language" component={Language} />
-        <DrawerStack.Screen options={{ swipeEnabled: false }} name={'TypesOfUser'} component={TypesOfUser} />
+        <DrawerStack.Screen options={{ swipeEnabled: false }} name="TypesOfUser" component={TypesOfUser} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="Login" component={Login} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="SignUpFirstScreen" component={SignUpFirstScreen} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="SignUpSecondScreen" component={SignUpSecondScreen} />
@@ -87,7 +96,7 @@ const Router = (props) => {
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="ContactRequests" component={ContactRequests} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="SheltersList" component={SheltersList} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="ProfileOfRole" component={ProfileOfRole} />
-        <DrawerStack.Screen options={{ swipeEnabled: false }} name="Chat" component={Chat} />
+        {/* <DrawerStack.Screen options={{ swipeEnabled: false }} name="Chat" component={Chat} /> */}
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="SchedulingOfCalls" component={SchedulingOfCalls} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="Analytics" component={Analytics} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="AddPerson" component={AddPerson} />
