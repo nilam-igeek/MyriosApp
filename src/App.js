@@ -60,6 +60,7 @@ const App = () => {
     AsyncStorage.getItem("userType").then(value => {
       setIsRole(value)
     })
+
   })
 
   console.log("isRole111----->", isRole);

@@ -42,7 +42,7 @@ const DonorsList = (props) => {
                             return (
                                 <View style={styles.itemCard}>
                                     <Pressable
-                                        onPress={() => { props.navigation.navigate('ProfileOfRole') }}
+                                        // onPress={() => { props.navigation.navigate('ProfileOfRole') }}
                                         style={{
                                             flexDirection: 'row', alignItems: 'center',
                                             width: (BaseStyle.WIDTH / 100) * 52,

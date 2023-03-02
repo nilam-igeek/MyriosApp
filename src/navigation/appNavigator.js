@@ -32,6 +32,7 @@ import EnterShelterName from '../screens/SignUp/EnterShelterName';
 import ShelterOrNot from '../screens/SignUp/ShelterOrNot';
 import analytics from '@react-native-firebase/analytics';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import RefugeeProfile from '../screens/SideMenu/Profile/RefugeeProfile';
 
 const Stack = createNativeStackNavigator();
 const DrawerStack = createDrawerNavigator();
@@ -73,7 +74,6 @@ const Router = (props) => {
           headerShown: false,
         }}
         drawerContent={(props) => <CustomeDrawer {...props} />}>
-        {console.log("{props.initialRoute----->", props.initialRoute)}
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="GetStarted" component={GetStarted} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="Language" component={Language} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="TypesOfUser" component={TypesOfUser} />
@@ -88,6 +88,7 @@ const Router = (props) => {
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="HowTo" component={HowTo} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="WishLists" component={WishLists} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="ContactUs" component={ContactUs} />
+        <DrawerStack.Screen options={{ swipeEnabled: false }} name="RefugeeProfile" component={RefugeeProfile} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="Profile" component={Profile} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="Helped" component={Helped} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="ShelterWishList" component={ShelterWishList} />

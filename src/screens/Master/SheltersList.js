@@ -57,7 +57,7 @@ const SheltersList = (props) => {
                             return (
                                 <View style={styles.itemCard}>
                                     <Pressable
-                                        onPress={() => { props.navigation.navigate('ProfileOfRole', {}) }}
+                                        // onPress={() => { props.navigation.navigate('ProfileOfRole', {}) }}
                                         style={{
                                             flexDirection: 'row', alignItems: 'center',
                                             width: (BaseStyle.WIDTH / 100) * 52,
@@ -74,10 +74,18 @@ const SheltersList = (props) => {
                                             <Text style={styles.userName}>{item.name}</Text>
                                         </Text>
                                     </Pressable>
-                                    <Switch
+                                    <Pressable
+                                        onPress={() => onClickUserStatus(item)}
+                                        style={{
+                                            width: (BaseStyle.WIDTH / 100) * 25,
+                                            alignSelf: 'center', backgroundColor: COLORS.blue, width: 100, borderRadius: 20
+                                        }}>
+                                        <Text style={{ color: COLORS.white, padding: 5, textAlign: 'center' }}>{item.is_active === 1 ? 'Active' : 'Deactivate'}</Text>
+                                    </Pressable>
+                                    {/* <Switch
                                         value={item.is_active === 1 ? true : false}
                                         style={{ transform: [{ scaleX: .7 }, { scaleY: .7 }] }}
-                                        onValueChange={() => onClickUserStatus(item)} />
+                                        onValueChange={() => onClickUserStatus(item)} /> */}
                                 </View>)
                         }
                         } />

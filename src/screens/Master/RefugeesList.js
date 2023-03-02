@@ -38,11 +38,7 @@ const RefugeesList = (props) => {
         onRefresh();
     }, []);
 
-    // // const [, updateState] = React.useState();
-    // const forceUpdate = React.useCallback(() => dispatch(refugeesListApi()), []);
-
     useEffect(() => {
-        onRefresh();
         dispatch(refugeesListApi());
     }, [refugeesListApi])
 
@@ -58,10 +54,6 @@ const RefugeesList = (props) => {
             dispatch(refugeesListApi());
         }
     }
-
-
-
-
 
     return (
         <View style={styles.container}>
@@ -79,7 +71,7 @@ const RefugeesList = (props) => {
                         renderItem={({ item }) => {
                             return (<View style={styles.itemCard}>
                                 <Pressable
-                                    onPress={() => { props.navigation.navigate('ProfileOfRole') }}
+                                    // onPress={() =>onClickUser(item)}
                                     style={{
                                         flexDirection: 'row', alignItems: 'center',
                                         width: (BaseStyle.WIDTH / 100) * 52,
@@ -99,18 +91,21 @@ const RefugeesList = (props) => {
                                         {item.age && <Text style={styles.userName}>{', '}{item.age}</Text>}
                                     </Text>
                                 </Pressable>
-                                {/* <Pressable
-                                    onPress={() => onClickUserStatus(item.id)}
+                                <Pressable
+                                    onPress={() => onClickUserStatus(item)}
                                     style={{
                                         width: (BaseStyle.WIDTH / 100) * 25,
-                                        alignSelf: 'center', backgroundColor: COLORS.blue, width: 100, borderRadius: 20
+                                        alignSelf: 'center',
+                                        backgroundColor: COLORS.blue,
+                                        width: 100,
+                                        borderRadius: 20
                                     }}>
-                                    <Text style={{ color: COLORS.white, padding: 5, textAlign: 'center' }}>{item.is_active ? 'Active' : 'Deactivate'}</Text>
-                                </Pressable> */}
-                                <Switch
-                                    value={item.is_active === 1 ? true : false}
+                                    <Text style={{ color: COLORS.white, padding: 5, textAlign: 'center' }}>{item.is_active === 1 ? 'Active' : 'Deactivate'}</Text>
+                                </Pressable>
+                                {/* <Switch
+                                    value={item.is_active ? true : false}
                                     style={{ transform: [{ scaleX: .7 }, { scaleY: .7 }] }}
-                                    onValueChange={() => onClickUserStatus(item)} />
+                                    onValueChange={() => onClickUserStatus(item)} /> */}
                             </View>)
                         }
                         } />

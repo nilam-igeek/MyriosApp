@@ -110,5 +110,6 @@ export default styles = StyleSheet.create({
         color: COLORS.black,
         paddingHorizontal: 12,
         paddingVertical: 6
-    }
+    },
+
 });

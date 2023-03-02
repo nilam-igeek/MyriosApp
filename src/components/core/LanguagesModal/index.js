@@ -10,7 +10,7 @@ import CloseSvg from '../../../common/svgs/CloseSvg';
 const LanguagesModal = () => {
 
     const [showList, setShowList] = React.useState(false);
-    const [isLanguage, setLanguage] = React.useState(false);
+    const [isLanguage, setLanguage] = React.useState('English');
     const { i18n } = useTranslation();
 
     const [items, setItems] = React.useState([
@@ -74,7 +74,7 @@ const LanguagesModal = () => {
     return (
         <>
             <Pressable onPress={() => setShowList(!showList)} style={styles.mainContainer}>
-                <Text style={styles.titleText}>{isLanguage ? isLanguage : 'Select Language'}</Text>
+                <Text style={styles.titleText}>{isLanguage}</Text>
             </Pressable>
             <Modal
                 animationType='fade'
@@ -99,7 +99,6 @@ const LanguagesModal = () => {
                                         }} >{item.label}</Text>
                                     </Pressable>
                                 )
-
                             })}
                         </ScrollView>
                     </View>

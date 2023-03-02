@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ImageBackground, ScrollView, TextInput, Linking } from 'react-native';
+import { View, Text, ImageBackground, ScrollView, Pressable, Linking } from 'react-native';
 import { COLORS } from '../../common/style/Colors';
 import Button from '../../components/core/Button';
 import styles from './styles';
-import CloseSvg from '../../common/svgs/CloseSvg';
 import '../../../assets/i18n/i18n';
 import { useTranslation } from 'react-i18next';
-import CloseButton from '../../components/core/CloseButton';
 import { signUpDataOfUser } from '../../redux/actions/ApiActionCreator';
 import { useDispatch, useSelector } from 'react-redux';
 import { IMAGES } from '../../common/style/Images';
-import ArrowLeftSvg from '../../common/svgs/ArrowLeftSvg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import RNRestart from 'react-native-restart';
 const ScheduleNow = (props) => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
@@ -39,23 +37,32 @@ const ScheduleNow = (props) => {
         AsyncStorage.getItem("userType").then(value => {
             setIsRole(value);
         })
-        // console.log("isRole_welcomepropsCustomeDrawer----->", isRpropole);
     })
+
+    const logout = async () => {
+        try {
+            await AsyncStorage.clear();
+            RNRestart.restart();
+            return true;
+        }
+        catch (exception) {
+            return false;
+        }
+    }
+
     return (
         <>
             <ImageBackground
                 resizeMode='cover'
                 style={{ flex: 1 }}
                 source={IMAGES.languageBg}>
-                <CloseButton onPress={() =>
-                    props.route.params.islogin === 'login' ?
-                        props.navigation.navigate('TypesOfUser') :
-                        isRole === 'Shelter' ?
-                            props.navigation.navigate('SignUpSecondScreen') :
-                            props.navigation.navigate('ShelterOrNot')
-                }>
-                    <ArrowLeftSvg fill={COLORS.white} />
-                </CloseButton>
+                <View style={styles.mainViewSignUp}>
+                    <Pressable
+                        onPress={logout}
+                        style={styles.signUpBtn}>
+                        <Text style={styles.signUpText}>{t('signOut')}</Text>
+                    </Pressable>
+                </View>
             </ImageBackground>
             <View style={styles.container}>
                 <View style={styles.card}>
@@ -70,7 +77,6 @@ const ScheduleNow = (props) => {
                                         isRole === 'Shelter' ?
                                             Linking.openURL('https://calendly.com/vatsal-igeek') :
                                             props.navigation.navigate('ChooseProfile')
-
                                 }}
                             />
                             {userData.is_active === false &&

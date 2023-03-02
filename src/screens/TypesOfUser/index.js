@@ -9,6 +9,7 @@ import CloseButton from '../../components/core/CloseButton';
 import { ROLE } from '../../constants/types';
 import { IMAGES } from '../../common/style/Images';
 import ArrowLeftSvg from '../../common/svgs/ArrowLeftSvg';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const TypesOfUser = (props) => {
 
     const { t } = useTranslation();
@@ -17,7 +18,23 @@ const TypesOfUser = (props) => {
 
     const onClick = async (type) => {
         setIsRole(type)
+        await AsyncStorage.setItem('userType', type);
     }
+
+    const onBackClick = async () => {
+        await AsyncStorage.clear();
+        setIsRole('');
+        props.navigation.navigate('Language')
+    }
+
+    useEffect(async () => {
+        if (isRole === "" || isRole === "Admin") {
+            await AsyncStorage.setItem('userType', isRole);
+        } else {
+            await AsyncStorage.setItem('userType', isRole);
+        }
+    }, [])
+
 
     return (
         <>
@@ -25,7 +42,7 @@ const TypesOfUser = (props) => {
                 resizeMode='cover'
                 style={{ flex: 1 }}
                 source={IMAGES.languageBg}>
-                <CloseButton onPress={() => { setIsRole(''), props.navigation.navigate('Language') }}>
+                <CloseButton onPress={onBackClick}>
                     <ArrowLeftSvg fill={COLORS.white} />
                 </CloseButton>
             </ImageBackground>

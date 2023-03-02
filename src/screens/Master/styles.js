@@ -16,7 +16,7 @@ export default styles = StyleSheet.create({
     },
     subProContainer: {
         flex: 1,
-        width: (BaseStyle.WIDTH / 100) * 80,
+        width: (BaseStyle.WIDTH / 100) * 85,
         alignSelf: 'center'
     },
     commonText: {
@@ -24,6 +24,12 @@ export default styles = StyleSheet.create({
         fontSize: 16,
         fontFamily: FONTS.Poppins_Regular,
         color: COLORS.black,
+    },
+    commonSubText: {
+        textAlign: 'left',
+        fontSize: 16,
+        fontFamily: FONTS.Poppins_Regular,
+        color: COLORS.grey,
     },
     roleOfProfile: {
         borderWidth: 1,

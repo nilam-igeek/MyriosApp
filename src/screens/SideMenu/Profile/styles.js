@@ -74,7 +74,7 @@ export default styles = StyleSheet.create({
         borderRadius: 5,
         padding: 15,
     },
-     blurIsSubView: {
+    blurIsSubView: {
         backgroundColor: COLORS.white,
         width: (BaseStyle.WIDTH / 100) * 85,
         alignSelf: 'center',
@@ -114,5 +114,70 @@ export default styles = StyleSheet.create({
         marginLeft: 23,
         color: COLORS.black,
         fontFamily: FONTS.Poppins_Regular
-    }
+    },
+    containerProfile: {
+        flex: 1,
+        justifyContent: 'flex-end'
+    },
+    card: {
+        backgroundColor: COLORS.white,
+        // height: (BaseStyle.HEIGHT / 100) * 60,
+        height: '120%',
+        width: '100%',
+        borderTopRightRadius: 40,
+        borderTopLeftRadius: 40,
+        alignSelf: 'center',
+        alignItems: 'center'
+    },
+    profileText: {
+        width: (BaseStyle.WIDTH / 100) * 80,
+        alignItems: 'center',
+        fontSize: 26,
+        marginTop: 25,
+        color: COLORS.black,
+        fontFamily: FONTS.Poppins_SemiBold,
+    },
+    subContainer: {
+        alignSelf: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: (BaseStyle.WIDTH / 100) * 80,
+    },
+    profileSubText: {
+        marginTop: 10,
+        width: '100%',
+        fontSize: 12,
+        color: COLORS.black,
+        fontFamily: FONTS.Poppins_Regular,
+    },
+    profileCard: {
+        width: '100%',
+        flex: 1,
+        marginVertical: 15,
+        backgroundColor: "green"
+    },
+    MainContainer: {
+        width: '100%',
+        justifyContent: 'center',
+        flex: 1,
+        margin: 10,
+        paddingTop: (Platform.OS) === 'ios' ? 20 : 0
+    },
+    GridViewBlockStyle: {
+        justifyContent: 'center',
+        flex: 1,
+        alignItems: 'center',
+        height: 85,
+        margin: 5,
+        backgroundColor: COLORS.white,
+    },
+    profilePic: {
+        width: '90%',
+        height: '100%',
+        justifyContent: 'center',
+        flex: 1,
+        alignItems: 'center',
+        margin: 5,
+    },
+
 });

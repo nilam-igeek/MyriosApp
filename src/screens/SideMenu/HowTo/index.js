@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StatusBar, Image, Pressable } from 'react-native';
 import styles from './styles';
 import '../../../../assets/i18n/i18n';
@@ -21,17 +21,9 @@ const HowTo = (props) => {
     const [isRole, setIsRole] = useState('');
     const isDonor = isRole === ROLE.DONOR
     const dispatch = useDispatch();
-
-
-    // useEffect(() => {
-    //     async function check() {
-    //         var item = await AsyncStorage.getItem('userType');
-    //         setIsRole(item)
-    //     }
-    //     check();
-    // }, []);
-
-    // { console.log("isRole How scren screen----->", isRole); }
+    const [swipeIndex, setSwipeIndex] = useState(0);
+    const [refreshing, setRefreshing] = React.useState(false);
+    const slider = useRef();
 
     useEffect(() => {
         AsyncStorage.getItem("userType").then(value => {
@@ -133,11 +125,11 @@ const HowTo = (props) => {
     const dataList = isDonor ? slidesDonorData : slidesData
     const _renderItem = ({ item }) => {
         return (
-            <>
+            <View key={item.key}>
                 {item.image && <Image resizeMode='contain' source={item.image} style={{ height: '65%', width: '100%' }} />}
                 {item.title && <Text style={styles.titleText}>{item.title}</Text>}
                 <Text style={styles.subText}>{item.text}</Text>
-            </>
+            </View>
         )
     }
 
@@ -149,14 +141,26 @@ const HowTo = (props) => {
         }
     }
 
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        slider.current.goToSlide(0, true)
+        setTimeout(() => {
+            setRefreshing(false);
+            slider.current.goToSlide(0, true)
+        }, 2000);
+    }, []);
+
+    useEffect(() => {
+        onRefresh();
+    }, []);
+
     return (
         <View style={styles.container}>
             <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.seashell} />
             <Header title={t('myrios')} onPress={() => { props.navigation.toggleDrawer() }} />
             <View style={{ flex: 1 }}>
                 <AppIntroSlider
-                    key={'list'}
-                    index={1}
+                    keyExtractor={(item, index) => index.toString()}
                     renderNextButton={() => {
                         return (
                             <View style={styles.btn}><Text style={styles.btnText}>Go!</Text></View>)
@@ -167,7 +171,9 @@ const HowTo = (props) => {
                     }}
                     dotStyle={{ backgroundColor: 'black' }} activeDotStyle={{ backgroundColor: 'grey' }} renderItem={_renderItem}
                     data={dataList}
-                    onDone={onDone} />
+                    onDone={onDone}
+                    ref={(ref) => (slider.current = ref)}
+                />
             </View>
         </View>
     );

@@ -29,17 +29,27 @@ const Login = (props) => {
     const role = props.route.params.role;
     const { t } = useTranslation();
     const [isShow, setIsShow] = useState(false);
-    const isMaster = role === ROLE.MASTER
-    const isDonor = role === ROLE.DONOR
-    const isShelter = role === ROLE.SHELTER
-    const isRefugee = role === ROLE.REFUGEE
+    const [isRole, setIsRole] = useState('');
+    const isMaster = isRole === ROLE.MASTER
+    const isDonor = isRole === ROLE.DONOR
+    const isShelter = isRole === ROLE.SHELTER
+    const isRefugee = isRole === ROLE.REFUGEE
+
+    // useEffect(() => {
+    //     async function check() {
+    //         await AsyncStorage.setItem('userType', role);
+    //     }
+    //     check();
+    // }, []);
+    console.log("props.route.params111111----->", role);
+    console.log("props.route.params222222----->", isRole);
 
     useEffect(() => {
-        async function check() {
-            await AsyncStorage.setItem('userType', role);
-        }
-        check();
-    }, []);
+        AsyncStorage.getItem("userType").then(value => {
+            setIsRole(value);
+        })
+
+    })
 
     const loginValidationSchema = yup.object().shape({
         email: yup
@@ -64,7 +74,7 @@ const Login = (props) => {
         // actions.resetForm();
     };
 
-    console.log("role---->", role);
+    // console.log("role---->", role);
     useEffect(() => {
 
 

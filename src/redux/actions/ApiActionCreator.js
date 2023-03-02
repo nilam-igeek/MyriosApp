@@ -263,35 +263,37 @@ export const signUpDataOfUser = (data) => {
 
 //======================== PROFILE ========================//
 export const updateProfileApi = (data) => async (dispatch) => {
-  // console.log("data-------->", data);
+  console.log("data url-------->", `${url}update-profile`);
   var isToken = await AsyncStorage.getItem('token');
   // dispatch(profileData());
   return new Promise(() => {
     axios
       .post(`${url}update-profile`, data, {
         headers: {
-          'Authorization': `Bearer ${isToken}`,
           Accept: 'application/json',
-          'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${isToken}`
         },
       })
       .then(async (response) => {
         console.log("res1111---11--->", response.data);
-        // dispatch(profileSuccess(response.data));
+        Toast.show(response.data.message);
+        dispatch(loginSuccess(response.data.data));
+        //dispatch(profileSuccess(response.data));
       })
       .catch((error) => {
-        console.log("res1111=====11---->", response.data.success);
+        console.log("res1111=====11---->", error);
         // dispatch(profileError(error));
         return error
       });
   });
 };
-
 //======================== ADD PEOPLE ========================//
 export const addPeopleApi = (data) => async (dispatch) => {
   var isToken = await AsyncStorage.getItem('token');
   dispatch(addProfileData());
   return new Promise(() => {
+
     axios
       .post(`${url}Refugee/add-people`, data, {
         headers: {
@@ -299,11 +301,13 @@ export const addPeopleApi = (data) => async (dispatch) => {
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${isToken}`
           //    Accept: 'application/json',
+
         },
       })
       .then(async (response) => {
         // Toast.show(response.data.message);
         dispatch(addProfileSuccess(response.data));
+
       })
       .catch((error) => {
         dispatch(addProfileError(error));

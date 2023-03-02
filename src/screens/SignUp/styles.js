@@ -245,5 +245,25 @@ export default styles = StyleSheet.create({
         alignSelf: 'center',
         flexDirection: "row",
         justifyContent: "space-between"
+    },
+    signUpBtn: {
+        width: 100,
+        alignItems: "center",
+        backgroundColor: COLORS.transparent,
+        borderWidth: 1.5,
+        borderColor: COLORS.white,
+        borderRadius: 20
+    },
+    signUpText: {
+        padding: 5,
+        color: COLORS.white,
+        fontSize: 15,
+        fontFamily: FONTS.Poppins_SemiBold
+    },
+    mainViewSignUp: {
+        marginTop: 60,
+        width: '85%',
+        alignSelf: "center",
+        alignItems: "flex-end"
     }
 });

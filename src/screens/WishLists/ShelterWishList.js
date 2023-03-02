@@ -18,19 +18,16 @@ const ShelterWishList = (props) => {
     const { t } = useTranslation();
     const [isRole, setIsRole] = useState('');
     const [isShowModal, setShowModal] = useState(false);
+    const [alertModal, setAlertModal] = useState(false);
     const [name, setName] = useState('');
+    const [wishListLink, setWishListLink] = useState('');
+    const [wishListDes, setWishListDes] = useState('');
+    const [asyncWishListLink, setAsyncWishListLink] = useState('');
+    const [asyncWishListDes, setAsyncWishListDes] = useState('');
     const isShelter = isRole === ROLE.SHELTER
+    const url = asyncWishListLink !== null ? asyncWishListLink : wishListLink
     const isData = useSelector((state) => state.apiReducer.loginData);
-    console.log("isData=====>", isData);
-    // const isData = isData.data.user
-
-    // useEffect(() => {
-    //     async function check() {
-    //         var item = await AsyncStorage.getItem('userType');
-    //         setIsRole(item)
-    //     }
-    //     check();
-    // }, []);
+    console.log("asyncWishListLink=====>", asyncWishListLink);
 
 
     useEffect(() => {
@@ -39,13 +36,27 @@ const ShelterWishList = (props) => {
         })
     })
 
-    const onSubmit = () => {
-        // var body = {
-        //     ...isdataProfile,
-        //     shelterName: name
-        // }
-        // dispatch(signUpDataOfUser(body));
-        // props.navigation.navigate('SignUpSecondScreen');
+    const getUploadLink = async () => {
+        setShowModal(false)
+        await AsyncStorage.setItem('uploadLink', wishListLink);
+        await AsyncStorage.setItem('uploadDesLink', wishListDes);
+    }
+
+    useEffect(() => {
+        AsyncStorage.getItem("uploadLink").then(value => {
+            setAsyncWishListLink(value)
+        });
+        AsyncStorage.getItem("uploadDesLink").then(value => {
+            setAsyncWishListDes(value)
+        });
+    })
+
+    const onClickClose = async () => {
+        setShowModal(false);
+        // setWishListLink('');
+        // setWishListDes('');
+        // await AsyncStorage.setItem('uploadLink', '');
+        // await AsyncStorage.setItem('uploadDesLink', '');
     }
 
     return (
@@ -62,10 +73,9 @@ const ShelterWishList = (props) => {
                 </Pressable>
                 <View style={styles.myriosContainer}>
                     <Text style={styles.myriosText}>{`${t('hi')} ${isData.name}`}</Text>
-                    <Text onPress={() =>
-                        setShowModal(true)
-                        // Linking.openURL(isData.watchlist_link)
-                    } style={styles.myriosSubText}>{t('seeWishList')}</Text>
+                    <Text onPress={() => {
+                        url ? Linking.openURL(url) : setAlertModal(true)
+                    }} style={styles.myriosSubText}>{t('seeWishList')}</Text>
                     <Text onPress={() => setShowModal(true)} style={[styles.myriosSubText, { marginVertical: 10 }]}>{t('uploadWishList')}</Text>
                     <Text onPress={() => { props.navigation.navigate('HowTo') }} style={styles.myriosSubText}>{t('createWishList')}</Text>
                 </View>
@@ -77,7 +87,7 @@ const ShelterWishList = (props) => {
                 onRequestClose={() => { setShowModal(false) }}>
                 <View style={styles.blurView}>
                     <View style={styles.blurSubView}>
-                        <Pressable onPress={() => setShowModal(false)} style={styles.closeBtn}>
+                        <Pressable onPress={onClickClose} style={styles.closeBtn}>
                             <CloseSvg fill={COLORS.white} width={10} height={10} />
                         </Pressable>
                         <View style={{ justifyContent: 'center', alignItems: "center" }}>
@@ -85,58 +95,17 @@ const ShelterWishList = (props) => {
                             <Text style={[styles.titleText]}>{'Wishlist Link'}</Text>
                             <TextInput
                                 placeholder={'Wishilist Link'}
-                                value={name}
-                                // onEndEditing={()=>{}}
+                                value={wishListLink}
                                 style={styles.inputView}
-                                onChangeText={(text) => setName(text)} />
+                                onChangeText={(text) => setWishListLink(text)} />
                             <Text style={[styles.titleText]}>{'Tell us a little about why you need the items on your wishlist..'}</Text>
-
                             <TextInput
                                 placeholder={'Wishilist Link Description'}
-                                value={name}
-                                // onEndEditing={onSubmit}
+                                value={wishListDes}
                                 style={styles.inputView}
-                                onChangeText={(text) => setName(text)} />
-
-                            {/* {!isDonor &&
-                                                <>
-                                                    <View style={{ marginTop: 20 }}>
-                                                        <Text style={{ marginBottom: 10, width: (BaseStyle.WIDTH / 100) * 80 }}>{'Tell us a little about why you need the items on your wishlist..'}</Text>
-                                                        <Field
-                                                            // title={'Tell us a little about why you need the items on your wishlist..'}
-                                                            // mt={20}
-                                                            name={'wishListLink'}
-                                                            component={Input}
-                                                            value={values.wishListLink}
-                                                            onChangeText={handleChange('wishListLink')}
-                                                            onBlur={handleBlur('wishListLink')}
-                                                            width={(BaseStyle.WIDTH / 100) * 80}
-                                                            inputWidth={(BaseStyle.WIDTH / 100) * 70}
-                                                            placeholder={'WishList Link'}
-                                                            isError={errors.wishListLink}
-                                                        // inputColor={COLORS.blue}
-                                                        />
-                                                    </View>
-
-                                                    <Field
-                                                        mt={20}
-                                                        name={'wishListDescription'}
-                                                        component={Input}
-                                                        value={values.wishListDescription}
-                                                        onChangeText={handleChange('wishListDescription')}
-                                                        onBlur={handleBlur('wishListDescription')}
-                                                        width={(BaseStyle.WIDTH / 100) * 80}
-                                                        inputWidth={(BaseStyle.WIDTH / 100) * 70}
-                                                        placeholder={'WishList Description'}
-                                                        isError={errors.wishListDescription}
-                                                    // inputColor={COLORS.blue}
-                                                    />
-                                                </>} */}
+                                onChangeText={(text) => setWishListDes(text)} />
                             <Button
-                                onPress={() => {
-                                    setShowModal(false)
-                                    // Linking.openURL(name) 
-                                }}
+                                onPress={getUploadLink}
                                 borderRadius={50}
                                 fontSize={16}
                                 color={COLORS.white}
@@ -144,6 +113,22 @@ const ShelterWishList = (props) => {
                                 marginTop={20}
                                 width={'60%'}
                                 title={`Upload`} />
+                        </View>
+                    </View>
+                </View>
+            </Modal>
+            <Modal
+                visible={alertModal}
+                animationType="fade"
+                transparent={true}
+                onRequestClose={() => { setAlertModal(false) }}>
+                <View style={styles.blurView}>
+                    <View style={styles.blurSubView}>
+                        <Pressable onPress={() => setAlertModal(false)} style={styles.closeBtn}>
+                            <CloseSvg fill={COLORS.white} width={10} height={10} />
+                        </Pressable>
+                        <View style={{ justifyContent: 'center', alignItems: "center" }}>
+                            <Text style={[styles.titleMainText, { marginVertical: 5 }]}>{'Please Upload a Wishlist first!'}</Text>
                         </View>
                     </View>
                 </View>

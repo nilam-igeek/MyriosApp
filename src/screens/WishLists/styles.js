@@ -198,6 +198,7 @@ export default styles = StyleSheet.create({
         width: (BaseStyle.WIDTH / 100) * 80,
         alignSelf: 'center'
     },
+
     inputView: {
         color: COLORS.black,
         flexDirection: 'row',
@@ -208,6 +209,6 @@ export default styles = StyleSheet.create({
         width: (BaseStyle.WIDTH / 100) * 75,
         backgroundColor: COLORS.skyBlue,
         borderRadius: 50,
-        paddingLeft: 30
+        paddingHorizontal: 20,
     },
 });

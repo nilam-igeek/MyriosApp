@@ -26,7 +26,7 @@ export const CustomeDrawer = (props) => {
     AsyncStorage.getItem("userType").then(value => {
       setIsRole(value);
     })
-    console.log("isRole_welcomepropsCustomeDrawer----->", isRole);
+    // console.log("isRole_welcomepropsCustomeDrawer----->", isRole);
   })
 
   useEffect(() => {

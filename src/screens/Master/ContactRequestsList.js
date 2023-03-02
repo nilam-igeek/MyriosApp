@@ -25,6 +25,11 @@ const ContactRequests = (props) => {
         fetchProduct();
     }, [requestsListApi]);
 
+    const onClickUser = (item) => {
+        props.navigation.navigate('ProfileOfRole', { data: item, role: 'contactRequest' })
+    }
+
+
     return (
         <View style={styles.container}>
             <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.seashell} />
@@ -42,7 +47,7 @@ const ContactRequests = (props) => {
                             return (
                                 <View style={styles.itemCard}>
                                     <Pressable
-                                        onPress={() => { props.navigation.navigate('ProfileOfRole') }}
+                                        onPress={() => onClickUser(item)}
                                         style={{
                                             flexDirection: 'row', alignItems: 'center',
                                             width: (BaseStyle.WIDTH / 100) * 52,

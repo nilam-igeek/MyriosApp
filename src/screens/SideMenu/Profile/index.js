@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StatusBar, Pressable, ScrollView, Image, Modal, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, StatusBar, Pressable, ScrollView, Image, Modal, KeyboardAvoidingView, Platform, RefreshControl } from 'react-native';
 import Button from '../../../components/core/Button';
 import styles from './styles';
 import '../../../../assets/i18n/i18n';
@@ -20,14 +20,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import Indicator from '../../../components/core/Indicator';
 import ButtonWithIcon from '../../../components/core/ButtonWithIcon';
 import RNRestart from 'react-native-restart';
+import DatePicker from 'react-native-date-picker';
+import { peopleApi, helpedApi, wishListApi, refugeesListApi } from '../../../redux/actions/ApiActionCreator';
 import _ from 'lodash';
+import moment from 'moment';
+import { loginData } from '../../../redux/actions/ApiAction';
 const Profile = (props) => {
-    const loading = useSelector((state) => state.apiReducer.loading);
-    const isData = useSelector((state) => state.apiReducer.loginData);
-    const isNewData = useSelector((state) => state.apiReducer.regiData);
+    let loading = useSelector((state) => state.apiReducer.loading);
+    let isData = useSelector((state) => state.apiReducer.loginData);
+    let isNewData = useSelector((state) => state.apiReducer.regiData);
+    let isProfile = useSelector((state) => state.apiReducer.dataProfile);
+    // let profileDataList = useSelector((state) => state.apiReducer.profileData);
 
-    const data = isNewData ? isNewData : isData;
-    console.log("const isUserData 111111==========-->", data);
+
+    let data = isNewData ? isNewData : isData;
+
+    console.log("isProfile---adaddad=update data ---->", data);
+    // console.log("const isUserData 111111========11==-->", profileDataList);
     // const isData = (!_.isEmpty(isData.data.user) && isData.data.user)
 
 
@@ -45,26 +54,45 @@ const Profile = (props) => {
     const [isName, setName] = useState(false);
     const [isAbout, setAbout] = useState(false);
     const [isCountry, setIsCountry] = useState(false);
-    const [isAge, setAge] = useState(false);
+    // const [isAge, setAge] = useState(false);
     const [isType, setType] = useState(false);
-
+    const [refreshing, setRefreshing] = useState(false);
+    const [date, setDate] = useState(new Date(34555646456))
+    const [isAge, setAge] = useState(0);
+    const [open, setOpen] = useState(false)
     const isRefugee = isRole === ROLE.REFUGEE
     const isShelter = isRole === ROLE.SHELTER
     const isDonor = isRole === ROLE.DONOR
 
-    // useEffect(() => {
-    //     async function check() {
-    //         var item = await AsyncStorage.getItem('userType');
-    //         setIsRole(item)
-    //     }
-    //     check();
-    // }, []);
-
+    const d = new Date();
+    let year = d.getFullYear();
     useEffect(() => {
-        AsyncStorage.getItem("userType").then(value => {
-            setIsRole(value)
-        })
-    })
+        async function check() {
+            var item = await AsyncStorage.getItem('userType');
+            setIsRole(item)
+        }
+        check();
+    }, []);
+
+    const onRefresh = React.useCallback(() => {
+
+        //dispatch(refugeesListApi());
+
+        setRefreshing(true);
+
+        // dispatch(refugeesListApi);
+        setTimeout(() => {
+            console.log("shelter value...", isRole);
+            setRefreshing(false);
+            //  dispatch(refugeesListApi);
+            setName(false)
+            setAbout(false)
+            setIsCountry(false)
+            setAge(false)
+            setType(false)
+            // setDate(false)
+        }, 200);
+    }, []);
 
     const loginValidationSchema = yup.object().shape({
         firstName: yup
@@ -77,36 +105,32 @@ const Profile = (props) => {
     })
 
 
-    const onClickSubmit = () => {
-        // const { firstName, about, age } = values;
-        // // if (isModalVisible) {
-        // if (isName) {
+    const onClickSubmit = (values, actions) => {
+        const { firstName, about } = values;
+        // if (isModalVisible) {
+        if (isName || isAbout || isCountry || isAge || isType || data.image || isProfile.profile) {
+            var body = new FormData();
 
-        //     var body = {
-        //         image: '/Users/dreamworld/Downloads/16_16.png',
-        //         email: '',
-        //         name: firstName,
-        //         country: '',
-        //         description: '',
-        //         age: '',
-        //         type: ''
-        //     };
-        //     console.log("body=====>", body);
-        //     dispatch(updateProfileApi(body));
-        // }
-        // // }
-        // // else {
-        // //     // logout();
-        // // }
-        logout();
+            body.append('image', (data.image || isProfile.profile) ? (data.image ? data.image : isProfile.profile) : '');
+            body.append('email', '');
+            body.append('name', firstName);
+            body.append('country', isShelter || isRefugee ? country : '');
+            body.append('description', isShelter ? about : '');
+            body.append('dob', isRefugee ? moment(date).format('YYYY-MM-DD') : '');
+            body.append('type', isRefugee ? isSelected : '');
+            console.log("updateProfileApi---->", body);
+            dispatch(updateProfileApi(body));
+            onRefresh();
+        }
+        else {
+            logout();
+        }
     };
 
 
     const logout = async () => {
         try {
-            await AsyncStorage.clear();
-            // await AsyncStorage.removeItem('token');
-            // await AsyncStorage.removeItem('userType');
+            await AsyncStorage.removeItem('token');
             RNRestart.restart();
             // props.navigation.navigate('GetStartedd')
             return true;
@@ -120,82 +144,54 @@ const Profile = (props) => {
         setIsSelected(type)
     }
 
-    // const openLibrary = () => {
-    //     ImagePicker.openPicker({
-    //         width: 300,
-    //         height: 400,
-    //         cropping: true
-    //     }).then(image => {
-    //         setIsImages(image.path)
-    //         setModalVisible(false)
-    //     });
-    // }
-
-    // const openCamera = () => {
-    //     ImagePicker.openCamera({
-    //         width: 300,
-    //         height: 400,
-    //         cropping: true,
-    //     }).then(image => {
-    //         setIsImages(image.path)
-    //         setModalVisible(false)
-    //     });
-    // }
-
-    // const onClickEdit = () => {
-    //     setIsModalVisible(true)
-    // }
+    function inputChangeHandler(e) {
+        var theAge = year - e;
+        setAge(theAge);
+    }
 
     return (
-        <View style={styles.container}>
+        <View style={styles.container} >
             <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.seashell} />
             <Header title={t('myrios')} onPress={() => { props.navigation.toggleDrawer() }} />
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 style={{ flex: 1 }}>
-                <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                <ScrollView contentContainerStyle={{ flexGrow: 1 }}
+                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                    }
+                >
                     <View style={{ justifyContent: 'center', alignItems: "center" }}>
                         <Text style={styles.titleText}>{t('profile')}</Text>
 
                         <Formik
                             validationSchema={loginValidationSchema}
-                            initialValues={{ firstName: '', about: '', age: '', }}
+                            enableReinitialize
+                            validateOnChange={false}
+                            validateOnBlur={false}
+                            initialValues={{ firstName: data.name, about: data.description, }}
                             onSubmit={onClickSubmit}>
                             {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, }) => (
                                 <>
                                     <View style={styles.profileNameContainer}>
 
-                                        {data.image &&
-                                            <Image
-                                                resizeMode='cover'
-                                                source={{ uri: data.image }}
-                                                style={styles.profileStyle} />}
 
+                                        <Image
+                                            resizeMode='contain'
+                                            source={{ uri: data.image ? data.image : isProfile.profile }}
+                                            style={[styles.profileStyle, { backgroundColor: 'white', borderWidth: 0.5 }]} />
 
-                                        {/* <View style={styles.profile}>
-                                            {isImages ?
-                                                <Image
-                                                    resizeMode='cover'
-                                                    source={{ uri: isImages }}
-                                                    style={styles.profileStyle} /> :
-                                                <ProfileSvg />}
-                                        </View> */}
-                                        {/* <Modal
-                                            animationType="slide"
-                                            transparent={true}
-                                            visible={modalVisible}
-                                            onRequestClose={() => {
-                                                setModalVisible(!modalVisible);
+                                        <Pressable
+                                            onPress={() => props.navigation.navigate('RefugeeProfile')}
+                                            style={{
+                                                position: 'absolute', right: 170, top: 80,
+                                                backgroundColor: 'white',
+                                                alignItems: 'center',
+                                                borderRadius: 25 / 2,
+                                                justifyContent: "center", width: 30, height: 30
                                             }}>
-                                            <View style={styles.blurView}>
-                                                <View style={styles.blurSubView}>
-                                                    <Text style={styles.titleOfPicker}>{t('selectImage')}</Text>
-                                                    <Text onPress={openCamera} style={styles.takePhotoText}>{t('takePhoto')}</Text>
-                                                    <Text onPress={openLibrary} style={styles.takePhotoText}>{t('chooseLibrary')}</Text>
-                                                    <Text onPress={() => setModalVisible(false)} style={styles.cancelText}>{t('cancel')}</Text>
-                                                </View>
-                                            </View>
-                                        </Modal> */}
+                                            <EditSvg />
+                                        </Pressable>
+
 
                                         {isName ?
                                             <Field
@@ -219,6 +215,7 @@ const Profile = (props) => {
                                                 {(isShelter || isRefugee) &&
                                                     <CountryPickerModal
                                                         marginTop={30}
+                                                        //   value={data.country}
                                                         isOnSelect={(text) => { setCountry(text) }}
                                                         // isOnSelect={(text) => { console.log(text) }}
                                                         placeholder={t("country")} />}
@@ -231,26 +228,23 @@ const Profile = (props) => {
                                             )
                                         }
 
-
                                         {isRefugee &&
                                             <>
-                                                {isAge ? <Field
-                                                    name={'age'}
-                                                    component={Input}
-                                                    mt={30}
-                                                    value={values.age}
-                                                    onChangeText={handleChange('age')}
-                                                    onBlur={handleBlur('age')}
-                                                    width={(BaseStyle.WIDTH / 100) * 80}
-                                                    inputWidth={(BaseStyle.WIDTH / 100) * 70}
-                                                    placeholder={t('age')}
-                                                    maxLength={2}
-                                                    placeholderColor={COLORS.black}
-                                                    isError={errors.age}
-                                                /> :
-                                                    <ButtonWithIcon title={data.age} onPress={() => { setAge(true) }} />
-                                                }
-
+                                                <DatePicker
+                                                    modal
+                                                    mode='date'
+                                                    open={open}
+                                                    date={date}
+                                                    onConfirm={(date) => {
+                                                        inputChangeHandler(date.getFullYear());
+                                                        setOpen(false)
+                                                        setDate(date)
+                                                    }}
+                                                    onCancel={() => {
+                                                        setOpen(false)
+                                                    }}
+                                                />
+                                                <ButtonWithIcon title={isAge} onPress={() => setOpen(true)} />
 
                                                 {isType ? <>
                                                     <Text style={styles.chooseOneText}>{t('chooseOne')}</Text>
@@ -319,26 +313,26 @@ const Profile = (props) => {
                                                     placeholder={t('about')}
                                                     placeholderColor={COLORS.black}
                                                     isError={errors.about}
-                                                    multiline
-                                                    height={110}
+                                                    // multiline
                                                     borderRadius={20}
-                                                    numberOfLines={3}
+                                                    height={82}
+                                                    // numberOfLines={3}
                                                     mt={30}
                                                 /> :
                                                     <ButtonWithIcon title={data.description ? data.description : 'description'} onPress={() => { setAbout(true) }} />
                                                 }
                                             </>
                                         }
-                                        <ButtonWithIcon title={t('editProfile')}
+                                        {/* <ButtonWithIcon title={t('editProfile')}
                                             onPress={() => {
                                                 props.navigation.navigate('ChooseProfile');
                                                 // setModalVisible(!modalVisible) 
-                                            }} />
+                                            }} /> */}
                                     </View>
                                     <Button
                                         marginBottom={30}
                                         // title={t('signOut')}
-                                        title={isName ? t('updateProfile') : t('signOut')}
+                                        title={data.image || isProfile.profile || isName || isAbout || isCountry || isType || isAge ? t('updateProfile') : t('signOut')}
                                         fontSize={18}
                                         color={COLORS.white}
                                         height={50}
