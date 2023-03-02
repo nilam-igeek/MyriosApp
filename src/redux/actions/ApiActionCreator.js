@@ -263,7 +263,7 @@ export const signUpDataOfUser = (data) => {
 
 //======================== PROFILE ========================//
 export const updateProfileApi = (data) => async (dispatch) => {
-  console.log("data url-------->", `${url}update-profile`);
+  console.log("updateProfileApi-111------->", data);
   var isToken = await AsyncStorage.getItem('token');
   // dispatch(profileData());
   return new Promise(() => {
@@ -276,10 +276,10 @@ export const updateProfileApi = (data) => async (dispatch) => {
         },
       })
       .then(async (response) => {
-        console.log("res1111---11--->", response.data);
+        console.log("updateProfileApi response1111--->", response.data);
         Toast.show(response.data.message);
         dispatch(loginSuccess(response.data.data));
-        //dispatch(profileSuccess(response.data));
+        dispatch(profileSuccess(response.data.data));
       })
       .catch((error) => {
         console.log("res1111=====11---->", error);

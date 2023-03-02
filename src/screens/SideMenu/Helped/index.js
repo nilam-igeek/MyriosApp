@@ -16,6 +16,7 @@ import Indicator from '../../../components/core/Indicator';
 import EditSvg from '../../../common/svgs/EditSvg';
 
 import _, { forEach } from 'lodash';
+import { RefreshControl } from 'react-native-gesture-handler';
 const Helped = (props) => {
 
     const { t } = useTranslation();
@@ -24,7 +25,7 @@ const Helped = (props) => {
     const isDonor = isRole === ROLE.DONOR
     const dispatch = useDispatch();
     const loading = useSelector((state) => state.apiReducer.loading);
-
+    const [refreshing, setRefreshing] = useState(false)
     const dataOfPeople = useSelector((state) => !_.isEmpty(state.apiReducer.refugeeData) && state.apiReducer.refugeeData);
     //const dataOfPeople = useSelector((state) => !_.isEmpty(state.apiReducer.peopleData) && state.apiReducer.peopleData);
     // const dataOfHelped = useSelector((state) => !_.isEmpty(state.apiReducer.helpedData) && state.apiReducer.helpedData);
@@ -44,15 +45,26 @@ const Helped = (props) => {
             fetchData(item)
         }
         check();
+    }, []);
 
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        dispatch(refugeesListApi());
+        setTimeout(() => {
+            setRefreshing(false);
+            dispatch(refugeesListApi());
+        }, 2000);
+    }, []);
 
+    useEffect(() => {
+        // onRefresh();
     }, []);
 
     const fetchData = (role) => {
 
-        // console.log("role .....", role);
-        { role === ROLE.SHELTER && dispatch(refugeesListApi) }
-        { role === ROLE.DONOR && dispatch(helpedApi) }
+        console.log("role .....", role === ROLE.SHELTER);
+        { role === ROLE.SHELTER && dispatch(refugeesListApi()) }
+        { role === ROLE.DONOR && dispatch(helpedApi()) }
 
 
     }
@@ -106,6 +118,7 @@ const Helped = (props) => {
                             data={isShelter ? isDataPeople.data : dataOfwishListDataList.data}
                             extraData={isShelter ? isDataPeople.data : dataOfwishListDataList.data}
                             keyExtractor={item => item.id}
+                            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
                             renderItem={({ item }) => {
                                 return (
                                     isShelter ?

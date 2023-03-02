@@ -151,8 +151,6 @@ export default styles = StyleSheet.create({
         height: 85,
         margin: 5,
         backgroundColor: COLORS.white,
-
-
     },
     blurView: {
         flex: 1,

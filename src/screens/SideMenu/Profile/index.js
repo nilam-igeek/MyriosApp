@@ -21,22 +21,15 @@ import Indicator from '../../../components/core/Indicator';
 import ButtonWithIcon from '../../../components/core/ButtonWithIcon';
 import RNRestart from 'react-native-restart';
 import DatePicker from 'react-native-date-picker';
-import { peopleApi, helpedApi, wishListApi, refugeesListApi } from '../../../redux/actions/ApiActionCreator';
 import _ from 'lodash';
 import moment from 'moment';
-import { loginData } from '../../../redux/actions/ApiAction';
 const Profile = (props) => {
     let loading = useSelector((state) => state.apiReducer.loading);
     let isData = useSelector((state) => state.apiReducer.loginData);
     let isNewData = useSelector((state) => state.apiReducer.regiData);
     let isProfile = useSelector((state) => state.apiReducer.dataProfile);
-    // let profileDataList = useSelector((state) => state.apiReducer.profileData);
-
-
     let data = isNewData ? isNewData : isData;
-
-    console.log("isProfile---adaddad=update data ---->", data);
-    // console.log("const isUserData 111111========11==-->", profileDataList);
+    console.log("const isUserData 111111===111=data======-->", data);
     // const isData = (!_.isEmpty(isData.data.user) && isData.data.user)
 
 
@@ -54,18 +47,19 @@ const Profile = (props) => {
     const [isName, setName] = useState(false);
     const [isAbout, setAbout] = useState(false);
     const [isCountry, setIsCountry] = useState(false);
-    // const [isAge, setAge] = useState(false);
+    const [isAge, setAge] = useState(false);
     const [isType, setType] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
-    const [date, setDate] = useState(new Date(34555646456))
-    const [isAge, setAge] = useState(0);
-    const [open, setOpen] = useState(false)
+
     const isRefugee = isRole === ROLE.REFUGEE
     const isShelter = isRole === ROLE.SHELTER
     const isDonor = isRole === ROLE.DONOR
-
+    const [date, setDate] = useState(new Date(34555646456))
+    const [open, setOpen] = useState(false);
+    const [newAge, setNewAge] = useState(0);
     const d = new Date();
     let year = d.getFullYear();
+
     useEffect(() => {
         async function check() {
             var item = await AsyncStorage.getItem('userType');
@@ -74,23 +68,37 @@ const Profile = (props) => {
         check();
     }, []);
 
+    function getAge() {
+        var today = new Date();
+        var birthDate = new Date(data.dob);
+        var age = today.getFullYear() - birthDate.getFullYear();
+        setNewAge(age);
+        return age;
+
+    }
+
+    useEffect(() => {
+        if (isRefugee) {
+            getAge();
+        }
+    })
+
+    function inputChangeHandler(e) {
+        var theAge = year - e;
+        setAge(theAge);
+    }
+
     const onRefresh = React.useCallback(() => {
-
-        //dispatch(refugeesListApi());
-
         setRefreshing(true);
-
-        // dispatch(refugeesListApi);
         setTimeout(() => {
             console.log("shelter value...", isRole);
             setRefreshing(false);
-            //  dispatch(refugeesListApi);
             setName(false)
             setAbout(false)
             setIsCountry(false)
             setAge(false)
             setType(false)
-            // setDate(false)
+
         }, 200);
     }, []);
 
@@ -106,19 +114,17 @@ const Profile = (props) => {
 
 
     const onClickSubmit = (values, actions) => {
-        const { firstName, about } = values;
+        const { firstName, about, } = values;
         // if (isModalVisible) {
-        if (isName || isAbout || isCountry || isAge || isType || data.image || isProfile.profile) {
+        if (isName || isAbout || isCountry || newAge || isType) {
             var body = new FormData();
-
-            body.append('image', (data.image || isProfile.profile) ? (data.image ? data.image : isProfile.profile) : '');
+            body.append('image', '');
             body.append('email', '');
             body.append('name', firstName);
             body.append('country', isShelter || isRefugee ? country : '');
             body.append('description', isShelter ? about : '');
             body.append('dob', isRefugee ? moment(date).format('YYYY-MM-DD') : '');
             body.append('type', isRefugee ? isSelected : '');
-            console.log("updateProfileApi---->", body);
             dispatch(updateProfileApi(body));
             onRefresh();
         }
@@ -144,11 +150,6 @@ const Profile = (props) => {
         setIsSelected(type)
     }
 
-    function inputChangeHandler(e) {
-        var theAge = year - e;
-        setAge(theAge);
-    }
-
     return (
         <View style={styles.container} >
             <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.seashell} />
@@ -158,28 +159,23 @@ const Profile = (props) => {
                 style={{ flex: 1 }}>
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }}
                     refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-                    }
-                >
+                    }>
                     <View style={{ justifyContent: 'center', alignItems: "center" }}>
                         <Text style={styles.titleText}>{t('profile')}</Text>
-
                         <Formik
                             validationSchema={loginValidationSchema}
                             enableReinitialize
                             validateOnChange={false}
                             validateOnBlur={false}
-                            initialValues={{ firstName: data.name, about: data.description, }}
+                            initialValues={{ firstName: data.name, about: data.description, age: '', }}
                             onSubmit={onClickSubmit}>
                             {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, }) => (
                                 <>
                                     <View style={styles.profileNameContainer}>
-
-
                                         <Image
                                             resizeMode='contain'
                                             source={{ uri: data.image ? data.image : isProfile.profile }}
                                             style={[styles.profileStyle, { backgroundColor: 'white', borderWidth: 0.5 }]} />
-
                                         <Pressable
                                             onPress={() => props.navigation.navigate('RefugeeProfile')}
                                             style={{
@@ -191,7 +187,6 @@ const Profile = (props) => {
                                             }}>
                                             <EditSvg />
                                         </Pressable>
-
 
                                         {isName ?
                                             <Field
@@ -228,6 +223,7 @@ const Profile = (props) => {
                                             )
                                         }
 
+
                                         {isRefugee &&
                                             <>
                                                 <DatePicker
@@ -244,7 +240,25 @@ const Profile = (props) => {
                                                         setOpen(false)
                                                     }}
                                                 />
-                                                <ButtonWithIcon title={isAge} onPress={() => setOpen(true)} />
+                                                <ButtonWithIcon title={newAge} onPress={() => setOpen(true)} />
+                                                {/* {isAge ? 
+                                                <Field
+                                                    name={'age'}
+                                                    component={Input}
+                                                    mt={30}
+                                                    value={values.age}
+                                                    onChangeText={handleChange('age')}
+                                                    onBlur={handleBlur('age')}
+                                                    width={(BaseStyle.WIDTH / 100) * 80}
+                                                    inputWidth={(BaseStyle.WIDTH / 100) * 70}
+                                                    placeholder={t('age')}
+                                                    maxLength={2}
+                                                    placeholderColor={COLORS.black}
+                                                    isError={errors.age}
+                                                /> :
+                                                    <ButtonWithIcon title={data.age} onPress={() => { setAge(true) }} />
+                                                } */}
+
 
                                                 {isType ? <>
                                                     <Text style={styles.chooseOneText}>{t('chooseOne')}</Text>
@@ -332,7 +346,7 @@ const Profile = (props) => {
                                     <Button
                                         marginBottom={30}
                                         // title={t('signOut')}
-                                        title={data.image || isProfile.profile || isName || isAbout || isCountry || isType || isAge ? t('updateProfile') : t('signOut')}
+                                        title={isProfile.profile || isName || isAbout || isCountry || isType || isAge ? t('updateProfile') : t('signOut')}
                                         fontSize={18}
                                         color={COLORS.white}
                                         height={50}

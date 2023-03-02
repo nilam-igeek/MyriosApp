@@ -92,7 +92,7 @@ const AddPerson = (props) => {
 
 
         dispatch(editPeopleApi(body, props.route.params.data.id));
-        props.navigation.replace('Helped');
+        props.navigation.navigate('Helped');
         actions.resetForm();
 
 
