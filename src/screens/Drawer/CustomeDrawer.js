@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import '../../../assets/i18n/i18n';
 import { useTranslation } from 'react-i18next';
 import RNRestart from 'react-native-restart';
-import { refugeesListApi } from '../../redux/actions/ApiActionCreator';
+import { refugeesListApi, wishListApi } from '../../redux/actions/ApiActionCreator';
 // import { wishListApi } from '../../redux/actions/ApiActionCreator';
 import { useIsFocused } from '@react-navigation/native';
 export const CustomeDrawer = (props) => {
@@ -30,12 +30,8 @@ export const CustomeDrawer = (props) => {
   })
 
   useEffect(() => {
-    isRole === ROLE.MASTER && dispatch(refugeesListApi)
-  }, [refugeesListApi])
-
-  // const fetchData = () => {
-  //   { isRole === ROLE.MASTER && dispatch(refugeesListApi) }
-  // }
+    isRole === ROLE.MASTER && dispatch(refugeesListApi())
+  }, [])
 
 
   const Donor = [
@@ -83,24 +79,9 @@ export const CustomeDrawer = (props) => {
     }
   }
 
-  //   useEffect(() => {
-  //     fetchData();
-  // }, []);
 
-  // const fetchData = () => {
-  //     dispatch(refugeesListApi)
-  // }
-
-  //   const onClickRefugee = () => {
-  //     console.log("fdfgdfg");
-  //     // dispatch(refugeesListApi());
-  //   };
-
-  // const Data = (isShelter || isDonor) ? Donor_Shelter : isRefugee ? Refugee : Master
 
   const onClickMenu = async (item, i) => {
-
-    console.log("item----->", item);
 
     if (item.title === t('howTo')) {
       props.navigation.navigate('HowTo')
@@ -118,7 +99,7 @@ export const CustomeDrawer = (props) => {
       props.navigation.navigate('Helped')
     }
     else if (item.title === 'FAVORITE') {
-      props.navigation.navigate('Helped')
+      props.navigation.navigate('DonorFavorite')
     }
     else if (item.title === t('contact')) {
       props.navigation.navigate('ContactUs')
@@ -145,8 +126,6 @@ export const CustomeDrawer = (props) => {
       logout();
     }
   }
-  console.log("isRole-custom drawer--->", isRole);
-
 
   return (
     <DrawerContentScrollView {...props}>

@@ -10,6 +10,11 @@ export const loginSuccess = (data) => ({
   payload: data,
 });
 
+export const loginToken = (data) => ({
+  type: ACTION_TYPES.LOGIN_API_TOKEN,
+  payload: data,
+});
+
 export const loginError = (error) => ({
   type: ACTION_TYPES.LOGIN_API_ERROR,
   payload: error,
@@ -22,6 +27,10 @@ export const registerData = () => ({
 
 export const registerSuccess = (data) => ({
   type: ACTION_TYPES.REGISTER_API_SUCCESS,
+  payload: data,
+});
+export const registerToken = (data) => ({
+  type: ACTION_TYPES.REGISTER_API_TOKEN,
   payload: data,
 });
 

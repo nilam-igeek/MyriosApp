@@ -72,15 +72,20 @@ export const loginApi = (data) => async (dispatch) => {
         },
       })
       .then(async (response) => {
+        console.log("loginApi=response=====>", response.data.data);
+        console.log("response.data.data.token-login---->", response.data.data.token);
         if (response.data.success) {
           // Toast.show(response.data.message);
           dispatch(loginSuccess(response.data.data.user));
+          dispatch(loginToken(response.data.data.token));
+
           // await AsyncStorage.setItem('userType', role);
           await AsyncStorage.setItem('userPassword', data.password);
           await AsyncStorage.setItem('userEmail', data.email);
-          if (response && response.data && response.data.data.token) {
-            await AsyncStorage.setItem('token', response.data.data.token)
-          }
+          // if (response && response.data && response.data.data.token) {
+          //   dispatch(loginToken(response.data.data.token));
+          //   // await AsyncStorage.setItem('token', response.data.data.token)
+          // }
         }
       })
       .catch((error) => {
@@ -107,10 +112,19 @@ export const registerApi = (data) => async (dispatch) => {
         },
       })
       .then(async (response) => {
-        console.log("registerApi=response=====>", response.data.data.user);
+        console.log("registerApi=response=====>", JSON.stringify(response.data));
+        // console.log("response.data.data.token rig----->", response.data.data.token);
         if (response.data.success) {
-          // Toast.show(response.data.message);
           dispatch(registerSuccess(response.data.data.user));
+          dispatch(registerToken(response.data.data.token));
+          // console.log("response.data.data.token rig----->", response.data.data.token);
+          // if (response && response.data && response.data.data.token) {
+          //   dispatch(registerToken(response.data.data.toke));
+          //   // await AsyncStorage.setItem('token', response.data.data.token)
+          // }
+          // if (response && response.data && response.data.data.token && role === 'Donor') {
+          //   await AsyncStorage.setItem('token', response.data.data.token)
+          // }
         }
       })
       .catch((error) => {
@@ -366,32 +380,32 @@ export const contactUsApi = (data) => async (dispatch) => {
 };
 
 // //======================== WISHLISTS ========================//
-export const wishListFilterApi = (data) => async (dispatch) => {
-  var isToken = await AsyncStorage.getItem('token');
-  dispatch(wishlistData());
-  return new Promise(() => {
-    axios
-      .get(`${url}wishlists?${data.type}${data.country}${data.age}`, {
-        headers: { 'Authorization': `Bearer ${isToken}` }
-      })
-      .then((response) => {
-        if (response.data.success) {
-          // Toast.show(response.data.message);
-          dispatch(wishlistSuccess(response.data));
-        }
-      })
-      .catch((error) => {
-        dispatch(wishlistError(error.response));
-        if (!error.response.data.success) {
-          // Toast.show('please try again');
-        }
-        return error
-      });
-  });
-};
+// export const wishListFilterApi = (data) => async (dispatch) => {
+//   var isToken = await AsyncStorage.getItem('token');
+//   dispatch(wishlistData());
+//   return new Promise(() => {
+//     axios
+//       .get(`${url}wishlists?${data.type}${data.country}${data.age}`, {
+//         headers: { 'Authorization': `Bearer ${isToken}` }
+//       })
+//       .then((response) => {
+//         if (response.data.success) {
+//           // Toast.show(response.data.message);
+//           dispatch(wishlistSuccess(response.data));
+//         }
+//       })
+//       .catch((error) => {
+//         dispatch(wishlistError(error.response));
+//         if (!error.response.data.success) {
+//           // Toast.show('please try again');
+//         }
+//         return error
+//       });
+//   });
+// };
 
 //======================== WISHLISTS ========================//
-export const wishListApi = (data) => async (dispatch) => {
+export const wishListApi = () => async (dispatch) => {
   var isToken = await AsyncStorage.getItem('token');
   dispatch(wishlistData());
   return new Promise(() => {

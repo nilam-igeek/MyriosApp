@@ -16,7 +16,6 @@ const HowTo = (props) => {
     const { t } = useTranslation();
     const [isRole, setIsRole] = useState('');
     const isDonor = isRole === ROLE.DONOR
-    const dispatch = useDispatch();
     const [refreshing, setRefreshing] = React.useState(false);
     const slider = useRef();
 
@@ -124,7 +123,7 @@ const HowTo = (props) => {
             <View key={item.key}>
                 {item.image && <Image resizeMode='contain' source={item.image} style={{ height: '75%', width: '100%' }} />}
                 {item.title && <Text style={styles.titleText}>{item.title}</Text>}
-                <Text style={[styles.subText, { fontSize: isDonor ? 18 : 14 }]}>{item.text}</Text>
+                <Text style={[styles.subText, { fontSize: isDonor ? 16 : 14 }]}>{item.text}</Text>
             </View>
         )
     }

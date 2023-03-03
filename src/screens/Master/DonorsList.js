@@ -21,8 +21,8 @@ const DonorsList = (props) => {
     const isDonorData = (!_.isEmpty(dataOfDonors.data) && dataOfDonors.data)
 
     useEffect(() => {
-        dispatch(donorsListApi);
-    }, [donorsListApi]);
+        dispatch(donorsListApi());
+    }, []);
 
 
     return (

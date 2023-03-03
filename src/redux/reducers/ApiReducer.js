@@ -23,7 +23,9 @@ const initialState = {
   wishlistRemoveData: '',
   userStatusData: '',
   addPeopleData: '',
-  eidtPeopleData: ''
+  eidtPeopleData: '',
+  loginToken: '',
+  regiToken: ''
 };
 
 const apiReducer = (state = initialState, action) => {
@@ -39,6 +41,12 @@ const apiReducer = (state = initialState, action) => {
       return {
         ...state,
         loginData: action.payload,
+        loading: false,
+      };
+    case ACTION_TYPES.LOGIN_API_TOKEN:
+      return {
+        ...state,
+        loginToken: action.payload,
         loading: false,
       };
     case ACTION_TYPES.LOGIN_API_ERROR:
@@ -58,6 +66,12 @@ const apiReducer = (state = initialState, action) => {
       return {
         ...state,
         regiData: action.payload,
+        loading: false,
+      };
+    case ACTION_TYPES.REGISTER_API_TOKEN:
+      return {
+        ...state,
+        regiToken: action.payload,
         loading: false,
       };
     case ACTION_TYPES.REGISTER_API_ERROR:

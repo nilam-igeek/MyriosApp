@@ -2,11 +2,13 @@ const ACTION_TYPES = {
   //======================== LOGIN =======================//
   LOGIN_API_PENDING: 'LOGIN_API_PENDING',
   LOGIN_API_SUCCESS: 'LOGIN_API_SUCCESS',
+  LOGIN_API_TOKEN: 'LOGIN_API_TOKEN',
   LOGIN_API_ERROR: 'LOGIN_API_ERROR',
 
   //======================== REGISTER ========================//
   REGISTER_API_PENDING: 'REGISTER_API_PENDING',
   REGISTER_API_SUCCESS: 'REGISTER_API_SUCCESS',
+  REGISTER_API_TOKEN: 'REGISTER_API_TOKEN',
   REGISTER_API_ERROR: 'REGISTER_API_ERROR',
 
   //======================== WISHLISTS ========================//

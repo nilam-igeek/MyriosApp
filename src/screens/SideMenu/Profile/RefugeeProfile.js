@@ -87,7 +87,7 @@ const RefugeeProfile = (props) => {
                                         return (
                                             <Pressable onPress={() => { onClickProfile(item, index) }}
                                                 style={[styles.GridViewBlockStyle, {
-                                                    borderWidth: roleOfProfile === index ? 1.5 : 0.5,
+                                                    borderWidth: roleOfProfile === index ? 1 : 1,
                                                     borderColor: roleOfProfile === index ? COLORS.blue : COLORS.grey,
                                                 }]}>
                                                 <Image resizeMode='contain' source={{ uri: item }} style={styles.profilePic} />

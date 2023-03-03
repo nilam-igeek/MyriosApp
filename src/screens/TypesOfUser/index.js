@@ -27,14 +27,25 @@ const TypesOfUser = (props) => {
         props.navigation.navigate('Language')
     }
 
-    useEffect(async () => {
+
+
+
+    useEffect(() => {
+        async function fetchData() {
+            // You can await here
+            const response = isAdmin();
+            // ...
+        }
+        fetchData();
+    }, []);
+
+    const isAdmin = async () => {
         if (isRole === "" || isRole === "Admin") {
             await AsyncStorage.setItem('userType', isRole);
         } else {
             await AsyncStorage.setItem('userType', isRole);
         }
-    }, [])
-
+    }
 
     return (
         <>

@@ -20,10 +20,10 @@ const ContactRequests = (props) => {
 
     useEffect(() => {
         function fetchProduct() {
-            dispatch(requestsListApi);
+            dispatch(requestsListApi());
         }
         fetchProduct();
-    }, [requestsListApi]);
+    }, []);
 
     const onClickUser = (item) => {
         props.navigation.navigate('ProfileOfRole', { data: item, role: 'contactRequest' })

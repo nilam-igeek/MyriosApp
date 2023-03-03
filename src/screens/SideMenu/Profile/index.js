@@ -93,14 +93,12 @@ const Profile = (props) => {
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
         setTimeout(() => {
-            console.log("shelter value...", isRole);
             setRefreshing(false);
             setName(false)
             setAbout(false)
             setIsCountry(false)
             setAge(false)
             setType(false)
-
         }, 200);
     }, []);
 
@@ -119,22 +117,21 @@ const Profile = (props) => {
         const { firstName, about, } = values;
         // if (isName || isAbout || isCountry || newAge || isType) {
         var profileUrl = isProfile.profile
-        var words = profileUrl.split('http://18.233.84.195/img/');
+        var words = profileUrl && profileUrl.split('http://18.233.84.195/img/');
         let url = words[1]
-        // console.log("url---->", url);
         var body = new FormData();
-        body.append('image', url ? url : '');
+        body.append('image', isProfile.profile ? url : '');
         body.append('email', '');
         body.append('name', firstName);
         body.append('country', isShelter || isRefugee ? country : '');
         body.append('description', isShelter ? about : '');
         body.append('dob', isRefugee ? moment(date).format('YYYY-MM-DD') : '');
         body.append('type', isRefugee ? isSelected : '');
+        // console.log("body--->", body);
         dispatch(updateProfileApi(body));
         onRefresh();
         // }
     };
-
 
 
     const logout = async () => {
@@ -173,7 +170,7 @@ const Profile = (props) => {
                             enableReinitialize
                             validateOnChange={false}
                             validateOnBlur={false}
-                            initialValues={{ firstName: data.name, about: data.description, age: '', }}
+                            initialValues={{ firstName: data.name, about: data.description }}
                             onSubmit={onClickSubmit}>
                             {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, }) => (
                                 <>
@@ -185,7 +182,7 @@ const Profile = (props) => {
                                         <Pressable
                                             onPress={() => props.navigation.navigate('RefugeeProfile')}
                                             style={{
-                                                position: 'absolute', right: 170, top: 80,
+                                                position: 'absolute', right: 150, top: 80,
                                                 backgroundColor: 'white',
                                                 alignItems: 'center',
                                                 borderRadius: 25 / 2,
@@ -344,9 +341,11 @@ const Profile = (props) => {
                                             onPress={onClicksignOut}
                                         />
                                         <Button
+                                            // disabled={isProfile.profile || isName || isAbout || isCountry || newAge || isType}
                                             marginBottom={30}
                                             title={t('updateProfile')}
                                             fontSize={16}
+                                            // bgColor={!isProfile.profile || !isName || !isAbout || !isCountry || !newAge || !isType ? COLORS.grey : COLORS.cornflowerblue}
                                             color={COLORS.white}
                                             height={50}
                                             marginTop={40}

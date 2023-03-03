@@ -1,35 +1,19 @@
 import React, { useState } from 'react';
-import { View, Text, ImageBackground, ScrollView, TextInput, Linking } from 'react-native';
+import { View, Text, ImageBackground, ScrollView } from 'react-native';
 import { COLORS } from '../../common/style/Colors';
 import Button from '../../components/core/Button';
 import styles from './styles';
-import CloseSvg from '../../common/svgs/CloseSvg';
 import '../../../assets/i18n/i18n';
 import { useTranslation } from 'react-i18next';
 import CloseButton from '../../components/core/CloseButton';
-import { signUpDataOfUser } from '../../redux/actions/ApiActionCreator';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { IMAGES } from '../../common/style/Images';
 import ArrowLeftSvg from '../../common/svgs/ArrowLeftSvg';
 const ShelterOrNot = (props) => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
-    const [isShelterUser, setShelterUser] = useState('isDefault');
-    const [name, setName] = useState('');
-    const isdataProfile = useSelector((state) => state.apiReducer.dataProfile);
 
-    const onClick = (type) => {
-        setShelterUser(type)
-    }
 
-    const onSubmit = () => {
-        var body = {
-            ...isdataProfile,
-            shelterName: name
-        }
-        dispatch(signUpDataOfUser(body));
-        props.navigation.navigate('SignUpSecondScreen');
-    }
 
     return (
         <>

@@ -109,7 +109,7 @@ const RefugeesList = (props) => {
                         } />
                 </View>
             </View>
-            <Indicator isLoader animate={refreshing} />
+            <Indicator isLoader animate={refreshing || loading} />
         </View>
     );
 };

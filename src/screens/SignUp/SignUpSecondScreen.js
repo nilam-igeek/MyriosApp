@@ -120,19 +120,17 @@ const SignUpSecondScreen = (props) => {
             ...isdataProfile,
             email: email,
         }
-        // console.log("donorData=======>", refugeeData);
+
         dispatch(signUpDataOfUser(body));
-        // dispatch(registerApi(data));
         dispatch(registerApi(isRefugee ? refugeeData : isDonor ? donorData : shelterData));
         // actions.resetForm();
-        // if (isData) {
-        //     props.navigation.navigate('Welcome');
-        // }
+
     };
 
     useEffect(() => {
         if (!_.isEmpty(userData)) {
             if (isDonor) {
+                console.log("isdonor");
                 props.navigation.navigate('Welcome');
             } else if (isShelter) {
                 if (userData.is_active === true) {

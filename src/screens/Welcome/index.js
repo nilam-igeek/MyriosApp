@@ -8,23 +8,31 @@ import styles from './styles';
 import { IMAGES } from '../../common/style/Images';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ROLE } from '../../constants/types';
+import { useDispatch, useSelector } from 'react-redux';
+import { wishlistAddApi, wishlistRemoveApi, wishListApi, wishListFilterApi } from '../../redux/actions/ApiActionCreator';
+
 const Welcome = (props) => {
 
     const { t } = useTranslation();
+    const dispatch = useDispatch();
     const [isRole, setIsRole] = useState('');
+
 
 
     useEffect(() => {
         AsyncStorage.getItem("userType").then(value => {
             setIsRole(value)
+            if (value === 'Donor') {
+                dispatch(wishListApi());
+            }
         })
     })
+
 
 
     const isShelter = isRole === ROLE.SHELTER
     const isDonor = isRole === ROLE.DONOR
 
-    // { console.log("isRole_welcome screen----->", isRole); }
 
     return (
         <ImageBackground
@@ -54,8 +62,9 @@ const Welcome = (props) => {
                         fontSize={16}
                         onPress={() => {
                             if (isDonor) {
-                                props.navigation.navigate('WishLists')
+                                props.navigation.navigate('WishLists');
                             } else {
+
                                 props.navigation.navigate('ShelterWishList')
                             }
                         }}

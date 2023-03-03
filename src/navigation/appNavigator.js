@@ -18,7 +18,7 @@ import ContactUs from '../screens/SideMenu/ContactUs/index';
 import HowTo from '../screens/SideMenu/HowTo/index';
 import Profile from '../screens/SideMenu/Profile/index';
 import Helped from '../screens/SideMenu/Helped/index';
-// import Chat from '../screens/Chat/index';
+import DonorFavorite from '../screens/SideMenu/Helped/DonorFavorite';
 import ProfileOfRole from '../screens/Master/ProfileOfRole';
 import DonorsList from '../screens/Master/DonorsList';
 import ContactRequests from '../screens/Master/ContactRequestsList';
@@ -59,7 +59,6 @@ const Router = (props) => {
     getAccessToken();
   }, [getAccessToken])
 
-  console.log("isToken--------------->", isToken);
 
   function MyDrawer() {
     return (
@@ -91,13 +90,14 @@ const Router = (props) => {
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="RefugeeProfile" component={RefugeeProfile} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="Profile" component={Profile} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="Helped" component={Helped} />
+        <DrawerStack.Screen options={{ swipeEnabled: false }} name="DonorFavorite" component={DonorFavorite} />
+
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="ShelterWishList" component={ShelterWishList} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="RefugeesList" component={RefugeesList} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="DonorsList" component={DonorsList} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="ContactRequests" component={ContactRequests} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="SheltersList" component={SheltersList} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="ProfileOfRole" component={ProfileOfRole} />
-        {/* <DrawerStack.Screen options={{ swipeEnabled: false }} name="Chat" component={Chat} /> */}
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="SchedulingOfCalls" component={SchedulingOfCalls} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="Analytics" component={Analytics} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="AddPerson" component={AddPerson} />

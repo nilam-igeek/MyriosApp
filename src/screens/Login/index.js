@@ -25,6 +25,7 @@ const Login = (props) => {
 
     const dispatch = useDispatch();
     const isUserData = useSelector((state) => state.apiReducer.loginData);
+    const isUserRegisterData = useSelector((state) => state.apiReducer.regiData);
     const loading = useSelector((state) => state.apiReducer.loading);
     const role = props.route.params.role;
     const { t } = useTranslation();
@@ -71,13 +72,12 @@ const Login = (props) => {
             email: email
         };
         dispatch(loginApi(body));
-        // actions.resetForm();
+        actions.resetForm();
     };
 
-    // console.log("role---->", role);
+    console.log("isUserRegisterData-11--->", isUserData);
+
     useEffect(() => {
-
-
         if (!_.isEmpty(isUserData)) {
             if (isDonor) {
                 console.log("if donor===>");
@@ -85,16 +85,16 @@ const Login = (props) => {
             }
             else if (role === 'Refugee') {
                 console.log("if regugee==11=>", isUserData.is_active);
-                if (isUserData.is_active === 0) {
+                if (isUserRegisterData.is_active === 0 || isUserData.is_active === 0 || isUserData.is_active === false || isUserRegisterData.is_active === false) {
                     props.navigation.navigate('ScheduleNow', { islogin: 'login' });
-                } else if (isUserData.is_active === 1) {
+                } else if (isUserData.is_active === 1 || isUserData.is_active === true || isUserRegisterData.is_active === true || isUserRegisterData.is_active === 1) {
                     props.navigation.navigate('Welcome');
                 }
             } else if (role === 'Shelter') {
                 console.log("if regugee==22=>", isUserData.is_active);
-                if (isUserData.is_active === 0) {
+                if (isUserRegisterData.is_active === 0 || isUserData.is_active === 0 || isUserData.is_active === false || isUserRegisterData.is_active === false) {
                     props.navigation.navigate('ScheduleNow', { islogin: 'login' });
-                } else if (isUserData.is_active === 1) {
+                } else if (isUserData.is_active === 1 || isUserData.is_active === true || isUserRegisterData.is_active === true || isUserRegisterData.is_active === 1) {
                     props.navigation.navigate('Welcome');
                 }
             }

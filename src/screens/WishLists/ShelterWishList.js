@@ -6,12 +6,8 @@ import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ROLE } from '../../constants/types';
 import { IMAGES } from '../../common/style/Images';
-import CloseButton from '../../components/core/CloseButton';
 import { COLORS } from '../../common/style/Colors';
-import ArrowLeftSvg from '../../common/svgs/ArrowLeftSvg';
 import CloseSvg from '../../common/svgs/CloseSvg';
-import Header from '../../components/core/Header';
-import { wishlistAddApi, wishListApi, wishListFilterApi } from '../../redux/actions/ApiActionCreator';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../components/core/Button';
 const ShelterWishList = (props) => {
@@ -91,7 +87,7 @@ const ShelterWishList = (props) => {
                             <CloseSvg fill={COLORS.white} width={10} height={10} />
                         </Pressable>
                         <View style={{ justifyContent: 'center', alignItems: "center" }}>
-                            <Text style={[styles.titleMainText]}>{'Please Upload a Wishlist first!'}</Text>
+                            <Text style={[styles.titleMainText]}>{'Upload a Wishlist'}</Text>
                             <Text style={[styles.titleText]}>{'Wishlist Link'}</Text>
                             <TextInput
                                 placeholder={'Wishilist Link'}
