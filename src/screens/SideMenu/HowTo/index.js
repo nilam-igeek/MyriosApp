@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StatusBar, Image, Pressable } from 'react-native';
+import { View, Text, StatusBar, Image, } from 'react-native';
 import styles from './styles';
 import '../../../../assets/i18n/i18n';
 import { useTranslation } from 'react-i18next';
@@ -7,21 +7,16 @@ import { COLORS } from '../../../common/style/Colors';
 import Header from '../../../components/core/Header';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ROLE } from '../../../constants/types';
-import { donorSwiper } from './ArrayOfSwiperData';
-import ArrowLeftSvg from '../../../common/svgs/ArrowLeftSvg';
-import ArrowRightSvg from '../../../common/svgs/ArrowRightSvg';
 import { IMAGES } from '../../../common/style/Images';
 import AppIntroSlider from 'react-native-app-intro-slider';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 const HowTo = (props) => {
 
     const { t } = useTranslation();
-    const [keyNumber, setKeyNumber] = useState();
     const [isRole, setIsRole] = useState('');
     const isDonor = isRole === ROLE.DONOR
     const dispatch = useDispatch();
-    const [swipeIndex, setSwipeIndex] = useState(0);
     const [refreshing, setRefreshing] = React.useState(false);
     const slider = useRef();
 
@@ -29,7 +24,8 @@ const HowTo = (props) => {
         AsyncStorage.getItem("userType").then(value => {
             setIsRole(value)
         })
-    })
+    }, [])
+
 
     const slidesData = [
         {
@@ -126,9 +122,9 @@ const HowTo = (props) => {
     const _renderItem = ({ item }) => {
         return (
             <View key={item.key}>
-                {item.image && <Image resizeMode='contain' source={item.image} style={{ height: '65%', width: '100%' }} />}
+                {item.image && <Image resizeMode='contain' source={item.image} style={{ height: '75%', width: '100%' }} />}
                 {item.title && <Text style={styles.titleText}>{item.title}</Text>}
-                <Text style={styles.subText}>{item.text}</Text>
+                <Text style={[styles.subText, { fontSize: isDonor ? 18 : 14 }]}>{item.text}</Text>
             </View>
         )
     }
@@ -147,11 +143,14 @@ const HowTo = (props) => {
         setTimeout(() => {
             setRefreshing(false);
             slider.current.goToSlide(0, true)
-        }, 2000);
+        }, 500);
     }, []);
 
     useEffect(() => {
-        onRefresh();
+        const unsubscribe = props.navigation.addListener('focus', () => {
+            onRefresh();
+        });
+        return unsubscribe;
     }, []);
 
     return (

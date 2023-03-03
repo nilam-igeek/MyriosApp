@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StatusBar, Image, TextInput, ScrollView } from 'react-native';
 import styles from './styles';
 import '../../../assets/i18n/i18n';
+import ProfileSvg from '../../common/svgs/ProfileSvg';
 import { IMAGES } from '../../common/style/Images';
 import { useTranslation } from 'react-i18next';
 import { COLORS } from '../../common/style/Colors';
@@ -38,7 +39,13 @@ const ProfileOfRole = (props) => {
             <Header title={t('myrios')} onPress={onClick} />
             <View style={styles.subProContainer}>
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                    <Image resizeMode='contain' style={styles.roleOfProfile} source={{ uri: data.image }} />
+                    {data.image ? <Image resizeMode='contain'
+                        style={styles.roleOfProfile}
+                        source={{ uri: data.image }} /> :
+                        <View style={[styles.roleEmptyOfProfile, { backgroundColor: COLORS.black }]}>
+                            <ProfileSvg height={80} width={80} />
+                        </View>}
+
                     <Text style={styles.userTitleText}>{`${data.name}`}</Text>
                     <Text style={[styles.commonText, { marginTop: 20 }]}>{t('descAbout')}</Text>
                     <Text style={{ marginTop: 8 }}>

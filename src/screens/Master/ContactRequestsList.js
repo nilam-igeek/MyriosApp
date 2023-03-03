@@ -55,10 +55,14 @@ const ContactRequests = (props) => {
                                         }}>
                                         <View style={styles.profile}>
                                             {item.image ? <Image
-                                                resizeMode='cover'
-                                                source={item.image}
+                                                resizeMode='contain'
+                                                source={{ uri: item.image }}
                                                 style={styles.profileStyle} />
-                                                : <ProfileSvg height={30} width={30} />}
+                                                :
+                                                <View style={[styles.profile, { backgroundColor: COLORS.black }]}>
+                                                    <ProfileSvg height={30} width={30} />
+                                                </View>
+                                            }
                                         </View>
                                         <Text style={{ marginLeft: 20 }} >
                                             <Text style={styles.userName}>{item.name}</Text>

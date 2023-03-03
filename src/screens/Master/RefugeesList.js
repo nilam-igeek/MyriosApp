@@ -17,11 +17,8 @@ const RefugeesList = (props) => {
     const dataOfRefugees = useSelector((state) => !_.isEmpty(state.apiReducer.refugeeData) && state.apiReducer.refugeeData);
     const refugeesList = (!_.isEmpty(dataOfRefugees.data) && dataOfRefugees.data)
     const loading = useSelector((state) => state.apiReducer.loading);
-    const [showModalFav, setShowModalFav] = useState(false);
 
     const [isFavItem, setIsFavItem] = useState();
-
-    const [data, setData] = useState(null);
 
     const [refreshing, setRefreshing] = React.useState(false);
 
@@ -44,17 +41,12 @@ const RefugeesList = (props) => {
 
 
     const onClickUserStatus = (item, index) => {
-
-        console.log("on switch item......", item, item.is_active === 1);
         setIsFavItem(index)
         if (item.is_active == 1) {
-            // setShowModalFav(true);
             dispatch(userStatusApi(item.id))
             onRefresh();
-            // dispatch(refugeesListApi());
         } else {
             dispatch(userStatusApi(item.id))
-            // dispatch(refugeesListApi());
             onRefresh();
         }
     }
@@ -75,7 +67,6 @@ const RefugeesList = (props) => {
                         renderItem={({ item }) => {
                             return (<View style={styles.itemCard}>
                                 <Pressable
-                                    // onPress={() =>onClickUser(item)}
                                     style={{
                                         flexDirection: 'row', alignItems: 'center',
                                         width: (BaseStyle.WIDTH / 100) * 52,
@@ -83,10 +74,13 @@ const RefugeesList = (props) => {
                                     }}>
                                     <View style={styles.profile}>
                                         {item.image ? <Image
-                                            resizeMode='cover'
-                                            source={item.image}
+                                            resizeMode='contain'
+                                            source={{ uri: item.image }}
                                             style={styles.profileStyle} />
-                                            : <ProfileSvg height={30} width={30} />}
+                                            :
+                                            <View style={[styles.profile, { backgroundColor: COLORS.black }]}>
+                                                <ProfileSvg height={30} width={30} />
+                                            </View>}
                                     </View>
                                     <Text style={{ marginLeft: 20 }} >
                                         <Text style={styles.userName}>{item.name}</Text>

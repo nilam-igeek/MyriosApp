@@ -40,6 +40,15 @@ export default styles = StyleSheet.create({
         borderRadius: 150 / 2,
         backgroundColor: COLORS.white
     },
+    roleEmptyOfProfile: {
+        justifyContent: 'center',
+        alignItems: "center",
+        marginVertical: 30,
+        width: 150,
+        height: 150,
+        borderRadius: 150 / 2,
+        backgroundColor: COLORS.white
+    },
     userTitleText: {
         fontSize: 26,
         fontFamily: FONTS.Poppins_Regular,
@@ -284,7 +293,7 @@ export default styles = StyleSheet.create({
         width: 60,
         height: 60,
         borderRadius: 60 / 2,
-        backgroundColor: COLORS.black,
+        // backgroundColor: COLORS.black,
         justifyContent: 'center',
         alignItems: "center",
     },
