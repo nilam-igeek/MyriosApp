@@ -23,6 +23,7 @@ import RNRestart from 'react-native-restart';
 import DatePicker from 'react-native-date-picker';
 import _ from 'lodash';
 import moment from 'moment';
+import CloseSvg from '../../../common/svgs/CloseSvg';
 const Profile = (props) => {
     let loading = useSelector((state) => state.apiReducer.loading);
     let isData = useSelector((state) => state.apiReducer.loginData);
@@ -52,7 +53,7 @@ const Profile = (props) => {
     const [isAge, setAge] = useState(false);
     const [isType, setType] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
-
+    const [editShow, setEditShow] = useState(false);
     const isRefugee = isRole === ROLE.REFUGEE
     const isShelter = isRole === ROLE.SHELTER
     const isDonor = isRole === ROLE.DONOR
@@ -153,6 +154,16 @@ const Profile = (props) => {
     const onClicksignOut = () => {
         logout();
     }
+
+    const onClickEdit = () => {
+        setEditShow(true);
+        // if (editShow) {
+        //     console.log("editShow=if==>", editShow);
+        // } else {
+        //     console.log("editShow==else=>", editShow);
+        //     // props.navigation.navigate('RefugeeProfile')
+        // }
+    }
     return (
         <View style={styles.container} >
             <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.seashell} />
@@ -180,7 +191,7 @@ const Profile = (props) => {
                                             source={{ uri: data.image ? data.image : isProfile.profile }}
                                             style={[styles.profileStyle, { backgroundColor: 'white', borderWidth: 0.5 }]} />
                                         <Pressable
-                                            onPress={() => props.navigation.navigate('RefugeeProfile')}
+                                            onPress={onClickEdit}
                                             style={{
                                                 position: 'absolute', right: 150, top: 80,
                                                 backgroundColor: 'white',
@@ -356,6 +367,33 @@ const Profile = (props) => {
                                 </>
                             )}
                         </Formik>
+                        <Modal
+                            visible={editShow}
+                            animationType="fade"
+                            transparent={true}
+                            onRequestClose={() => { setEditShow(false) }}>
+                            <View style={styles.blurView}>
+                                <View style={styles.blurSubView}>
+                                    <Pressable onPress={() => setEditShow(false)} style={styles.closeBtn}>
+                                        <CloseSvg fill={COLORS.white} width={10} height={10} />
+                                    </Pressable>
+                                    <View style={{ justifyContent: 'center', alignItems: "center" }}>
+                                        <Text style={styles.modalSubText}>{'Are You Sure to Change the Profile ?'}</Text>
+                                        <Button
+                                            onPress={() => { setEditShow(false), props.navigation.navigate('RefugeeProfile') }}
+                                            borderRadius={50}
+                                            fontSize={18}
+                                            color={COLORS.white}
+                                            height={40}
+                                            marginTop={35}
+                                            width={'50%'}
+                                            title={`Yes`}
+                                        />
+                                    </View>
+                                </View>
+                            </View>
+                        </Modal>
+
                     </View>
                 </ScrollView>
             </KeyboardAvoidingView>

@@ -82,7 +82,11 @@ const ScheduleNow = (props) => {
             </ImageBackground>
             <View style={styles.container}>
                 <View style={styles.card}>
-                    <ScrollView contentContainerStyle={{ flexGrow: 1, }} bounces={false}>
+                    <ScrollView
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={{ flexGrow: 1 }}
+                        bounces={false}>
                         <View style={styles.subContainer}>
                             <Text style={styles.titleNameText}>{t('chat')}</Text>
                             <Text style={styles.subText}>{t('chatSubDes')}</Text>
