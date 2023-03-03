@@ -28,9 +28,11 @@ const Profile = (props) => {
     let isData = useSelector((state) => state.apiReducer.loginData);
     let isNewData = useSelector((state) => state.apiReducer.regiData);
     let isProfile = useSelector((state) => state.apiReducer.dataProfile);
+    let isProfileupdate = useSelector((state) => state.apiReducer.profileData);
     let data = isNewData ? isNewData : isData;
-    console.log("const isUserData 111111===111=data======-->", data);
+    console.log("const isUserData 111111===111=data11======-->", isProfileupdate.success);
     // const isData = (!_.isEmpty(isData.data.user) && isData.data.user)
+
 
 
     const { t } = useTranslation();
@@ -115,23 +117,24 @@ const Profile = (props) => {
 
     const onClickSubmit = (values, actions) => {
         const { firstName, about, } = values;
-        // if (isModalVisible) {
-        if (isName || isAbout || isCountry || newAge || isType) {
-            var body = new FormData();
-            body.append('image', '');
-            body.append('email', '');
-            body.append('name', firstName);
-            body.append('country', isShelter || isRefugee ? country : '');
-            body.append('description', isShelter ? about : '');
-            body.append('dob', isRefugee ? moment(date).format('YYYY-MM-DD') : '');
-            body.append('type', isRefugee ? isSelected : '');
-            dispatch(updateProfileApi(body));
-            onRefresh();
-        }
-        else {
-            logout();
-        }
+        // if (isName || isAbout || isCountry || newAge || isType) {
+        var profileUrl = isProfile.profile
+        var words = profileUrl.split('http://18.233.84.195/img/');
+        let url = words[1]
+        // console.log("url---->", url);
+        var body = new FormData();
+        body.append('image', url ? url : '');
+        body.append('email', '');
+        body.append('name', firstName);
+        body.append('country', isShelter || isRefugee ? country : '');
+        body.append('description', isShelter ? about : '');
+        body.append('dob', isRefugee ? moment(date).format('YYYY-MM-DD') : '');
+        body.append('type', isRefugee ? isSelected : '');
+        dispatch(updateProfileApi(body));
+        onRefresh();
+        // }
     };
+
 
 
     const logout = async () => {
@@ -150,6 +153,9 @@ const Profile = (props) => {
         setIsSelected(type)
     }
 
+    const onClicksignOut = () => {
+        logout();
+    }
     return (
         <View style={styles.container} >
             <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.seashell} />
@@ -241,24 +247,6 @@ const Profile = (props) => {
                                                     }}
                                                 />
                                                 <ButtonWithIcon title={newAge} onPress={() => setOpen(true)} />
-                                                {/* {isAge ? 
-                                                <Field
-                                                    name={'age'}
-                                                    component={Input}
-                                                    mt={30}
-                                                    value={values.age}
-                                                    onChangeText={handleChange('age')}
-                                                    onBlur={handleBlur('age')}
-                                                    width={(BaseStyle.WIDTH / 100) * 80}
-                                                    inputWidth={(BaseStyle.WIDTH / 100) * 70}
-                                                    placeholder={t('age')}
-                                                    maxLength={2}
-                                                    placeholderColor={COLORS.black}
-                                                    isError={errors.age}
-                                                /> :
-                                                    <ButtonWithIcon title={data.age} onPress={() => { setAge(true) }} />
-                                                } */}
-
 
                                                 {isType ? <>
                                                     <Text style={styles.chooseOneText}>{t('chooseOne')}</Text>
@@ -337,23 +325,35 @@ const Profile = (props) => {
                                                 }
                                             </>
                                         }
-                                        {/* <ButtonWithIcon title={t('editProfile')}
-                                            onPress={() => {
-                                                props.navigation.navigate('ChooseProfile');
-                                                // setModalVisible(!modalVisible) 
-                                            }} /> */}
+
                                     </View>
-                                    <Button
-                                        marginBottom={30}
-                                        // title={t('signOut')}
-                                        title={isProfile.profile || isName || isAbout || isCountry || isType || isAge ? t('updateProfile') : t('signOut')}
-                                        fontSize={18}
-                                        color={COLORS.white}
-                                        height={50}
-                                        marginTop={40}
-                                        width={'60%'}
-                                        onPress={handleSubmit}
-                                    />
+                                    <View style={{
+                                        flexDirection: 'row',
+                                        width: (BaseStyle.WIDTH / 100) * 80,
+                                        alignItems: 'center',
+                                        justifyContent: 'space-between'
+                                    }}>
+                                        <Button
+                                            marginBottom={30}
+                                            title={t('signOut')}
+                                            fontSize={16}
+                                            color={COLORS.white}
+                                            height={50}
+                                            marginTop={40}
+                                            width={'46%'}
+                                            onPress={onClicksignOut}
+                                        />
+                                        <Button
+                                            marginBottom={30}
+                                            title={t('updateProfile')}
+                                            fontSize={16}
+                                            color={COLORS.white}
+                                            height={50}
+                                            marginTop={40}
+                                            width={'46%'}
+                                            onPress={handleSubmit}
+                                        />
+                                    </View>
                                 </>
                             )}
                         </Formik>

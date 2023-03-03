@@ -77,13 +77,16 @@ const SignUpSecondScreen = (props) => {
         // data.append("type", isdataProfile.isUserType);
         // data.append("shelter", isdataProfile.shelterNam);
         // data.append("photo", isdataProfile.photo);
+        var profileUrl = isdataProfile.photo
+        var words = profileUrl.split('http://18.233.84.195/img/');
+        let url = words[1]
 
         var donorData = {
             email: email,
             password: password,
             name: isdataProfile.firstName,
             country: isdataProfile.country,
-            photo: isdataProfile.photo,
+            photo: url,
             watchlist_link: '',
             watchlist_description: ''
         }
@@ -96,7 +99,7 @@ const SignUpSecondScreen = (props) => {
             dob: isdataProfile.age,
             type: isdataProfile.isUserType,
             shelter: isdataProfile.shelterName,
-            photo: isdataProfile.photo,
+            photo: url,
             // watchlist_link: '',
             // watchlist_description: ''
         }
@@ -108,7 +111,7 @@ const SignUpSecondScreen = (props) => {
             name: isdataProfile.firstName,
             country: isdataProfile.country,
             description: isdataProfile.about,
-            photo: isdataProfile.photo,
+            photo: url,
             watchlist_link: '',
             watchlist_description: ''
         }
@@ -117,7 +120,7 @@ const SignUpSecondScreen = (props) => {
             ...isdataProfile,
             email: email,
         }
-        console.log("donorData=======>", refugeeData);
+        // console.log("donorData=======>", refugeeData);
         dispatch(signUpDataOfUser(body));
         // dispatch(registerApi(data));
         dispatch(registerApi(isRefugee ? refugeeData : isDonor ? donorData : shelterData));

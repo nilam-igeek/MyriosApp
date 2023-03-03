@@ -44,14 +44,18 @@ const RefugeesList = (props) => {
 
 
     const onClickUserStatus = (item, index) => {
+
+        console.log("on switch item......", item, item.is_active === 1);
         setIsFavItem(index)
-        if (item.is_active) {
-            setShowModalFav(true);
+        if (item.is_active == 1) {
+            // setShowModalFav(true);
             dispatch(userStatusApi(item.id))
-            dispatch(refugeesListApi());
+            onRefresh();
+            // dispatch(refugeesListApi());
         } else {
             dispatch(userStatusApi(item.id))
-            dispatch(refugeesListApi());
+            // dispatch(refugeesListApi());
+            onRefresh();
         }
     }
 
@@ -91,7 +95,7 @@ const RefugeesList = (props) => {
                                         {item.age && <Text style={styles.userName}>{', '}{item.age}</Text>}
                                     </Text>
                                 </Pressable>
-                                <Pressable
+                                {/* <Pressable
                                     onPress={() => onClickUserStatus(item)}
                                     style={{
                                         width: (BaseStyle.WIDTH / 100) * 25,
@@ -101,11 +105,11 @@ const RefugeesList = (props) => {
                                         borderRadius: 20
                                     }}>
                                     <Text style={{ color: COLORS.white, padding: 5, textAlign: 'center' }}>{item.is_active === 1 ? 'Active' : 'Deactivate'}</Text>
-                                </Pressable>
-                                {/* <Switch
-                                    value={item.is_active ? true : false}
+                                </Pressable> */}
+                                <Switch
+                                    value={item.is_active == 1 ? true : false}
                                     style={{ transform: [{ scaleX: .7 }, { scaleY: .7 }] }}
-                                    onValueChange={() => onClickUserStatus(item)} /> */}
+                                    onValueChange={() => onClickUserStatus(item)} />
                             </View>)
                         }
                         } />

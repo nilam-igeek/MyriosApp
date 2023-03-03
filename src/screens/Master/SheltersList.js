@@ -21,21 +21,34 @@ const SheltersList = (props) => {
     const [showModalFav, setShowModalFav] = useState(false);
 
     const [isFavItem, setIsFavItem] = useState();
+    const [refreshing, setRefreshing] = React.useState(false);
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        dispatch(sheltersListApi());
+        setTimeout(() => {
+            setRefreshing(false);
+            dispatch(sheltersListApi());
+        }, 2000);
+    }, []);
+
+    useEffect(() => {
+        onRefresh();
+    }, []);
 
     useEffect(() => {
         dispatch(sheltersListApi());
     }, [sheltersListApi])
-
 
     const onClickUserStatus = (item, index) => {
         setIsFavItem(index)
         if (item.is_active) {
             setShowModalFav(true);
             dispatch(userStatusApi(item.id))
-            dispatch(sheltersListApi());
+            onRefresh();
         } else {
             dispatch(userStatusApi(item.id))
-            dispatch(sheltersListApi());
+            onRefresh();
         }
     }
 
@@ -74,24 +87,24 @@ const SheltersList = (props) => {
                                             <Text style={styles.userName}>{item.name}</Text>
                                         </Text>
                                     </Pressable>
-                                    <Pressable
+                                    {/* <Pressable
                                         onPress={() => onClickUserStatus(item)}
                                         style={{
                                             width: (BaseStyle.WIDTH / 100) * 25,
                                             alignSelf: 'center', backgroundColor: COLORS.blue, width: 100, borderRadius: 20
                                         }}>
                                         <Text style={{ color: COLORS.white, padding: 5, textAlign: 'center' }}>{item.is_active === 1 ? 'Active' : 'Deactivate'}</Text>
-                                    </Pressable>
-                                    {/* <Switch
+                                    </Pressable> */}
+                                    <Switch
                                         value={item.is_active === 1 ? true : false}
                                         style={{ transform: [{ scaleX: .7 }, { scaleY: .7 }] }}
-                                        onValueChange={() => onClickUserStatus(item)} /> */}
+                                        onValueChange={() => onClickUserStatus(item)} />
                                 </View>)
                         }
                         } />
                 </View>
             </View>
-            <Indicator isLoader animate={loading} />
+            <Indicator isLoader animate={refreshing} />
         </View>
     );
 };
