@@ -77,15 +77,15 @@ export const loginApi = (data) => async (dispatch) => {
         if (response.data.success) {
           // Toast.show(response.data.message);
           dispatch(loginSuccess(response.data.data.user));
-          dispatch(loginToken(response.data.data.token));
+          // dispatch(loginToken(response.data.data.token));
 
           // await AsyncStorage.setItem('userType', role);
           await AsyncStorage.setItem('userPassword', data.password);
           await AsyncStorage.setItem('userEmail', data.email);
-          // if (response && response.data && response.data.data.token) {
-          //   dispatch(loginToken(response.data.data.token));
-          //   // await AsyncStorage.setItem('token', response.data.data.token)
-          // }
+          if (response && response.data && response.data.data.token) {
+            // dispatch(loginToken(response.data.data.token));
+            await AsyncStorage.setItem('token', response.data.data.token)
+          }
         }
       })
       .catch((error) => {

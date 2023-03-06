@@ -257,10 +257,10 @@ const WishLists = (props) => {
                             renderItem={({ item, index }) => {
                                 return (<WishListCard
                                     onClick={() => { onClickFev(item, index) }}
-                                    name={item.name}
-                                    gender={item.type}
-                                    age={item.age}
-                                    // country={item.country}
+                                    name={item.name ? item.name : ''}
+                                    gender={item.type ? item.type : ''}
+                                    age={item.age ? item.age : ''}
+                                    country={item.country ? item.country : ''}
                                     onPress={() => { selectedItem(item) }}
                                     source={{ uri: item.image }}>
                                     {item.is_wishlist ? <HeartFillSvg /> : <HeartSvg />}
@@ -279,33 +279,27 @@ const WishLists = (props) => {
                         <Pressable onPress={() => setItems(false)} style={styles.closeBtn}>
                             <CloseSvg fill={COLORS.white} width={10} height={10} />
                         </Pressable>
-                        <View style={{ justifyContent: 'center', alignItems: "center" }}>
+                        <View style={{ width: '100%', alignSelf: 'center', justifyContent: 'center', alignItems: "center" }}>
                             {
                                 [isItemsData].map((item, i) => {
                                     return (
-                                        <View key={i}>
-                                            <Image source={item.image} style={styles.modalProfile} />
+                                        <View key={i} style={{ width: '100%', alignSelf: 'center', justifyContent: 'center', alignItems: "center", }}>
+                                            <Image source={{ uri: item.image }} style={styles.modalProfile} resizeMode={'contain'} />
                                             <Text style={styles.modalTitleText}>{item.name}</Text>
-                                            {item.gender && <Text style={styles.modalSubText}>User Type: {item.gender}</Text>}
-                                            {item.age && <Text style={styles.modalSubText}>Age: {`${item.age} ${'years'}`}</Text>}
-                                            {item.country && <Text style={styles.modalSubText}>Country: {item.country}</Text>}
-                                            {item.watchlist_description && <Text style={styles.modalSubText}>{`${'Why'} ${item.name} ${'needs'} ${'it:'}${item.watchlist_description}`}</Text>}
-                                            <Button
+                                            <Text style={styles.modalSubText}>User Type : {item.gender ? item.gender : ''}</Text>
+                                            <Text style={styles.modalSubText}>Age : {item.age ? `${item.age} ${'years'}` : ''}</Text>
+                                            <Text style={styles.modalSubText}>Country : {item.country}</Text>
+                                            <Text style={styles.modalSubText}>{`${'Why'} ${item.name} ${'needs'} ${'it :'} ${item.watchlist_description ? item.watchlist_description : ''}`}</Text>
+                                            <Pressable
                                                 onPress={() => { Linking.openURL('https://www.amazon.in/hz/wishlist/ls/9JG1X38OVUYE?ref_=wl_share') }}
-                                                borderRadius={50}
-                                                fontSize={16}
-                                                color={COLORS.white}
-                                                height={40}
-                                                marginTop={35}
-                                                width={'60%'}
-                                                title={`${item.name}${`'s`} ${'Wishlist'}`}
-                                            />
+                                                style={{ marginTop: 35, borderRadius: 50, backgroundColor: COLORS.cornflowerblue }}>
+                                                <Text style={{ paddingHorizontal: 20, paddingVertical: 8, color: COLORS.white, fontSize: 16, fontFamily: FONTS.Poppins_Regular }}>{`${item.name}${`'s`} ${'Wishlist'}`}</Text>
+                                            </Pressable>
                                         </View>
                                     )
                                 })
                             }
                         </View>
-
                     </View>
                 </View>
             </Modal>

@@ -115,6 +115,7 @@ const Profile = (props) => {
 
 
     const onClickSubmit = (values, actions) => {
+        setEditShow(false)
         const { firstName, about, } = values;
         // if (isName || isAbout || isCountry || newAge || isType) {
         var profileUrl = isProfile.profile
@@ -156,13 +157,8 @@ const Profile = (props) => {
     }
 
     const onClickEdit = () => {
-        setEditShow(true);
-        // if (editShow) {
-        //     console.log("editShow=if==>", editShow);
-        // } else {
-        //     console.log("editShow==else=>", editShow);
-        //     // props.navigation.navigate('RefugeeProfile')
-        // }
+        props.navigation.navigate('RefugeeProfile')
+
     }
     return (
         <View style={styles.container} >
@@ -207,7 +203,7 @@ const Profile = (props) => {
                                                 name={'firstName'}
                                                 placeholderColor={COLORS.black}
                                                 component={Input}
-                                                mt={10}
+                                                mt={20}
                                                 value={values.firstName}
                                                 onChangeText={handleChange('firstName')}
                                                 onBlur={handleBlur('firstName')}
@@ -361,39 +357,53 @@ const Profile = (props) => {
                                             height={50}
                                             marginTop={40}
                                             width={'46%'}
-                                            onPress={handleSubmit}
+                                            onPress={() => { setEditShow(true) }}
+                                        // onPress={handleSubmit}
                                         />
                                     </View>
+                                    <>
+                                        <Modal
+                                            visible={editShow}
+                                            animationType="fade"
+                                            transparent={true}
+                                            onRequestClose={() => { setEditShow(false) }}>
+                                            <View style={styles.blurView}>
+                                                <View style={styles.blurSubView}>
+                                                    <Pressable onPress={() => setEditShow(false)} style={styles.closeBtn}>
+                                                        <CloseSvg fill={COLORS.white} width={10} height={10} />
+                                                    </Pressable>
+                                                    <View style={{ justifyContent: 'center', alignItems: "center" }}>
+                                                        <Text style={styles.modalSubText}>{'Are You Sure to Change the Profile ?'}</Text>
+                                                        <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
+                                                            <Button
+                                                                onPress={handleSubmit}
+                                                                borderRadius={50}
+                                                                fontSize={18}
+                                                                color={COLORS.white}
+                                                                height={40}
+                                                                marginTop={35}
+                                                                width={'45%'}
+                                                                title={`Yes`}
+                                                            />
+                                                            <Button
+                                                                onPress={() => setEditShow(false)}
+                                                                borderRadius={50}
+                                                                fontSize={18}
+                                                                color={COLORS.white}
+                                                                height={40}
+                                                                marginTop={35}
+                                                                width={'45%'}
+                                                                title={`No`}
+                                                            />
+                                                        </View>
+                                                    </View>
+                                                </View>
+                                            </View>
+                                        </Modal>
+                                    </>
                                 </>
                             )}
                         </Formik>
-                        <Modal
-                            visible={editShow}
-                            animationType="fade"
-                            transparent={true}
-                            onRequestClose={() => { setEditShow(false) }}>
-                            <View style={styles.blurView}>
-                                <View style={styles.blurSubView}>
-                                    <Pressable onPress={() => setEditShow(false)} style={styles.closeBtn}>
-                                        <CloseSvg fill={COLORS.white} width={10} height={10} />
-                                    </Pressable>
-                                    <View style={{ justifyContent: 'center', alignItems: "center" }}>
-                                        <Text style={styles.modalSubText}>{'Are You Sure to Change the Profile ?'}</Text>
-                                        <Button
-                                            onPress={() => { setEditShow(false), props.navigation.navigate('RefugeeProfile') }}
-                                            borderRadius={50}
-                                            fontSize={18}
-                                            color={COLORS.white}
-                                            height={40}
-                                            marginTop={35}
-                                            width={'50%'}
-                                            title={`Yes`}
-                                        />
-                                    </View>
-                                </View>
-                            </View>
-                        </Modal>
-
                     </View>
                 </ScrollView>
             </KeyboardAvoidingView>

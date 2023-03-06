@@ -127,6 +127,9 @@ export default styles = StyleSheet.create({
         backgroundColor: COLORS.black
     },
     modalSubText: {
+        width: '100%',
+        // backgroundColor: 'red',
+        textAlign: 'left',
         fontSize: 16,
         fontFamily: FONTS.Poppins_Regular,
         color: COLORS.black

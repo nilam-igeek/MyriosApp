@@ -165,7 +165,7 @@ const HowTo = (props) => {
                     }}
                     renderDoneButton={() => {
                         return (
-                            <View style={styles.btn}><Text style={styles.btnText}>{isDonor ? 'See my Wishlist!!' : 'Done'}</Text></View>)
+                            <View style={styles.btn}><Text style={styles.btnText}>{isDonor ? 'Explore wishlists' : 'Done'}</Text></View>)
                     }}
                     dotStyle={{ backgroundColor: 'black' }} activeDotStyle={{ backgroundColor: 'grey' }} renderItem={_renderItem}
                     data={dataList}

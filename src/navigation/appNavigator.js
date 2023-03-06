@@ -63,7 +63,8 @@ const Router = (props) => {
   function MyDrawer() {
     return (
       <DrawerStack.Navigator
-        initialRouteName={props.initialRoute}
+        // initialRouteName={props.initialRoute}
+        initialRouteName={'GetStartedd'}
         screenOptions={{
           drawerStyle: {
             backgroundColor: COLORS.seashell,
@@ -73,7 +74,7 @@ const Router = (props) => {
           headerShown: false,
         }}
         drawerContent={(props) => <CustomeDrawer {...props} />}>
-        <DrawerStack.Screen options={{ swipeEnabled: false }} name="GetStarted" component={GetStarted} />
+        <DrawerStack.Screen options={{ swipeEnabled: false }} name="GetStartedd" component={GetStarted} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="Language" component={Language} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="TypesOfUser" component={TypesOfUser} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="Login" component={Login} />
@@ -91,7 +92,6 @@ const Router = (props) => {
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="Profile" component={Profile} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="Helped" component={Helped} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="DonorFavorite" component={DonorFavorite} />
-
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="ShelterWishList" component={ShelterWishList} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="RefugeesList" component={RefugeesList} />
         <DrawerStack.Screen options={{ swipeEnabled: false }} name="DonorsList" component={DonorsList} />

@@ -14,7 +14,10 @@ const WishListCard = ({
     return (
         <View style={styles.container}>
             <Pressable onPress={onPress} style={styles.GridViewBlockStyle}>
-                <ImageBackground resizeMode='cover' source={source}
+                <ImageBackground
+                    // resizeMode='cover'
+                    source={source}
+                    resizeMode={'contain'}
                     style={styles.profilePic}
                     imageStyle={{ borderRadius: 15 }}>
                     <Pressable
@@ -26,7 +29,7 @@ const WishListCard = ({
             </Pressable>
             <View style={styles.textContainer}>
                 <Text style={styles.firstTitle}>{`${name}, ${gender}`}</Text>
-                <Text style={styles.secondTitle}>{`${age} years, ${country}`}</Text>
+                <Text style={styles.secondTitle}>{`${age}years, ${country}`}</Text>
             </View>
         </View>
     );

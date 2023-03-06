@@ -47,8 +47,8 @@ export default styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: "flex-end",
         position: 'absolute',
-        bottom: 10,
-        right: 15,
+        bottom: -10,
+        right: 5,
     },
     textContainer: {
         flex: 1,
